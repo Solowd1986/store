@@ -1,0 +1,30 @@
+
+.slider {
+  position: relative;
+  height: 430px;
+  overflow: hidden;
+
+  @media (max-width: 1380px) {
+    height: auto;
+  }
+
+  @media (min-width: 2080px) {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  @media (max-width: 592px) {
+    display: none;
+  }
+}
+
+// Фикс для IE, иначе слайд не занимал всю ширину экрана и справа оставалось пустое место. Так мы только в IE
+// растягиваем слайд на 100% экрана.
+.img {
+  vertical-align: bottom;
+  @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    width: 100%;
+  }
+}
+
+

@@ -1,0 +1,50 @@
+@import "@scss/utils/utils.scss";
+
+.promotion_badge {
+  display: flex;
+  justify-content: space-between; //IE11 фикс
+  justify-content: space-evenly;
+  padding: 35px 20px;
+
+  @media (max-width: 750px) {
+    display: none;
+  }
+}
+
+
+.promotion_badge__item {
+  display: flex;
+  align-items: center;
+
+  &:first-child {
+    margin-right: 20px;
+  }
+}
+
+.promotion_badge__img {
+  fill: $red;
+}
+
+
+.promotion_badge__caption_wrapper {
+  margin-left: 5px;
+}
+
+
+.promotion_badge__caption_lg {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 300;
+  color: $black-100;
+  text-align: center;
+}
+
+.promotion_badge__caption_sm {
+  margin: 0;
+  font-size: 13px;
+
+  font-weight: 300;
+  color: $grey;
+  text-align: center;
+}
+

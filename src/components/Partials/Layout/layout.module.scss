@@ -1,0 +1,21 @@
+@import "~scss/main.scss";
+
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+// Данный блок тянется вниз максимально, пространство обеспечивается за счет height: 100vh для вышеуказанного layout
+// Таким образом и прижимается вниз блок footer, для которого отпадает необходимость в margin-top: auto
+.main {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+
+
+
+

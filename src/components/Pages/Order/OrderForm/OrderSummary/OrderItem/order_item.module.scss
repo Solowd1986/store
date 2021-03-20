@@ -1,0 +1,129 @@
+@import "@scss/utils/utils.scss";
+
+
+.info {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.img_sm {
+  vertical-align: bottom;
+}
+
+.info_inner_wrapper {
+  max-width: 50%;
+  margin-right: 10px;
+}
+
+.product_title {
+  margin-top: 0;
+  font-size: 14px;
+  font-weight: 400;
+  color: $grey;
+  text-align: center;
+
+  & span {
+    display: inline-block;
+  }
+}
+
+.price__sm {
+  min-width: 90px;
+  font-size: 18px;
+}
+
+
+.counter_block {
+  display: flex;
+  width: 50%;
+  min-width: 110px;
+  max-width: 220px;
+  justify-content: space-between;
+  margin: 0 auto;
+  border: 1px solid $white-300;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+}
+
+
+.counter_block input {
+  display: inline-block;
+  width: 55px;
+  height: 34px;
+  font-size: 22px;
+  text-align: center;
+  vertical-align: middle;
+  border-radius: 4px;
+}
+
+.counter {
+  position: relative;
+  width: 30px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: .3s linear;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+
+  &:hover {
+    background-color: darken($white-300, 30%);
+  }
+}
+
+
+.counter_minus {
+  &::after {
+    content: "";
+    position: absolute;
+    width: 18px;
+    top: 50%;
+    left: 50%;
+    margin-top: -1px;
+    margin-left: -9px;
+    border-top: 2px solid $white-300;
+  }
+}
+
+
+.counter_plus {
+  &::before {
+    content: "";
+    position: absolute;
+    width: 22px;
+    top: 50%;
+    left: 50%;
+    margin-top: -1px;
+    margin-left: -11px;
+    border-top: 2px solid $grey-700;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    height: 21px;
+    top: 50%;
+    left: 50%;
+    margin-top: -10px;
+    margin-left: -1px;
+    border-left: 2px solid $grey-700;
+  }
+}
+
+.delete {
+  font-size: 40px;
+  font-weight: 700;
+  color: $grey-200;
+  cursor: pointer;
+  transition: .2s linear;
+
+  &:hover {
+    color: $grey-400;
+  }
+}

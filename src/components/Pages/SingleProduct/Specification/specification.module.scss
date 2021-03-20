@@ -1,0 +1,41 @@
+@import "@scss/utils/utils.scss";
+
+.attributes {
+  padding: 0 5px;
+  @media (max-width: 870px) {
+    padding: 0 10px;
+  }
+}
+
+.table_title {
+  margin-bottom: 30px;
+  font-size: 25px;
+  font-weight: 500;
+  color: $grey-100;
+
+  @media (max-width: 870px) {
+    text-align: center;
+  }
+}
+
+
+.table_data {
+  width: 100%;
+  margin-bottom: 15px;
+  border-spacing: 50px 0;
+  border-collapse: separate;
+
+  & td {
+    width: 30%;
+    margin: 0;
+    padding: 10px 0;
+    font-size: 14px;
+    font-weight: 400;
+    border-bottom: 1px solid $white-300;
+  }
+
+}
+
+
+
+

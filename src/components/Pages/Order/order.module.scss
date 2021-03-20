@@ -1,0 +1,96 @@
+@import "@scss/utils/utils.scss";
+
+.container_checkout_bg {
+  background-color: $white-500;
+  @media (max-width: 446px) {
+    padding-top: 20px;
+  }
+}
+
+.order {
+  margin-bottom: 35px;
+  -webkit-box-shadow: 0px 10px 13px -7px $black-200, 2px 5px 13px -3px rgba(0, 0, 0, 0);
+  box-shadow: 0px 10px 13px -7px $black-200, 2px 5px 13px -3px rgba(0, 0, 0, 0);
+}
+
+
+.line {
+  display: flex;
+  margin: 30px;
+  background-color: $white-500;
+  @media (max-width: 446px) {
+    display: none;
+  }
+}
+
+.line_stage {
+  position: relative;
+  flex-grow: 1;
+  padding: 25px;
+  text-align: center;
+  border-bottom: 2px solid $red;
+
+  &::after {
+    content: "";
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    right: 0;
+    bottom: -7px;
+    left: 0;
+    margin: 0 auto;
+    border-radius: 50%;
+    background-color: $red;
+  }
+}
+
+.line_stage__unactive {
+  border-bottom: 2px solid $grey;
+  opacity: .5;
+
+  &::after {
+    background-color: $grey;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

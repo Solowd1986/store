@@ -1,0 +1,107 @@
+
+html {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+}
+
+body, body > div {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+body {
+  overflow-y: scroll;
+  font-family: "Open Sans", "Arial", sans-serif;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+
+  /* стилизация скролла с постоянной видимостью, но меньших размеров*/
+  -moz-osx-font-smoothing: grayscale;
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: lightgrey; /* color of the tracking area */
+  }
+
+  &::-webkit-scrollbar-thumb {
+
+    border: 5px solid darkgrey; /* creates padding around scroll thumb */
+    border-radius: 20px; /* roundness of the scroll thumb */
+  }
+}
+
+
+/*  Базовый контейнер для блоков, не центруется, тянется до краев экрана (максимум взят за 2133px), доавлен padding
+    для того, чтобы не мобильных текст не прижимался к краям, до мобильных разрешений padding не влияет
+    Добавлятся блокам div или section, которые идут до краев экрана.
+================================
+*/
+:global(.container) {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+/*  Обертка-центровщик. Добавлятся блокам, которые занимают фиксированную максимальную ширину.
+================================
+*/
+
+:global(.wrapper) {
+  width: 100%;
+  max-width: $wrapper-max-width;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+:global(.overlay) {
+  display: flex;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  justify-content: center;
+  align-items: center;
+}
+
+
+:global(.btn) {
+  position: relative;
+  z-index: 0;
+  align-self: center;
+
+  font-size: 14px;
+  font-weight: 300;
+
+  color: $white;
+  border-radius: 4px;
+  background-color: $red;
+
+  &::before {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    border-radius: 4px;
+    background-color: $red-500;
+    transition: .5s;
+  }
+
+  &:hover::before {
+    width: 100%;
+  }
+
+  &:active, &:focus {
+    outline: none;
+  }
+}
+

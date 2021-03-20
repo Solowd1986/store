@@ -1,0 +1,16 @@
+
+.header__logo_link {
+  min-width: 55px;
+  max-width: 55px;
+
+  @media (max-width: 1028px) {
+    order: 2;
+  }
+  @media (max-width: 510px) {
+    display: none;
+  }
+}
+
+.header__logo_img {
+  vertical-align: bottom;
+}

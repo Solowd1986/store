@@ -1,0 +1,63 @@
+@import "@scss/utils/utils.scss";
+
+/*  Portfolio controls
+================================
+*/
+.portfolio_controls {
+  position: absolute;
+  z-index: 1;
+  font-size: 13px;
+  color: $grey-100;
+  text-transform: uppercase;
+
+  &:hover {
+    color: darken($grey-100, 30%);
+  }
+
+  @media (max-width: 1605px) {
+    display: none;
+  }
+}
+
+.portfolio_controls__left {
+  top: 20px;
+  left: 20px;
+}
+
+.portfolio_controls__right {
+  top: 20px;
+  right: 20px;
+}
+
+.common {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  transition: .3s linear;
+  // Для задания точки отсчета иконки мобильного меню
+  @media (max-width: 1028px) {
+    position: relative;
+  }
+}
+
+.header_fixed {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  background-color: $white;
+
+  -webkit-box-shadow: 0px 10px 13px -7px #000000, 5px 5px 15px 5px rgba(0, 0, 0, 0);
+  box-shadow: 0px 10px 13px -7px #000000, 5px 5px 15px 5px rgba(0, 0, 0, 0);
+
+}
+
+
+
+
+
+
+
+

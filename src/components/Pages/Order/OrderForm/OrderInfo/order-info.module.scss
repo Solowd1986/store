@@ -1,0 +1,215 @@
+@import "@scss/utils/utils.scss";
+
+
+/*  Блок данных пользователя. Общие стили
+================================
+*/
+
+.info {
+  width: 55%;
+  flex-grow: 1;
+  margin-right: 30px;
+  @media (max-width: 1120px) {
+    order: 2;
+    margin-right: 0;
+  }
+  @media (max-width: 1010px) {
+    width: 100%;
+  }
+
+}
+
+.order_title {
+  height: 64px;
+  margin-top: 0;
+  margin-bottom: 2px;
+  padding-right: 40px;
+  padding-left: 40px;
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 64px;
+  color: $white;
+  text-align: left;
+  background-color: $grey-400;
+}
+
+
+/*  Customer
+================================
+*/
+.customer {
+  background-color: $white;
+}
+
+.form_user_data {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  background-color: $white;
+  @media (max-width: 830px) {
+    justify-content: center;
+  }
+}
+
+.form__label {
+  position: relative;
+  @include generate-columns-for-item(6);
+  min-width: 230px;
+  @media (max-width: 830px) {
+    @include generate-columns-for-item(10);
+  }
+  margin-bottom: 30px;
+}
+
+.form__label__full_width {
+  @include generate-columns-for-item(12);
+  @media (max-width: 830px) {
+    @include generate-columns-for-item(10);
+  }
+
+  &:last-child {
+    margin-bottom: 40px;
+  }
+}
+
+
+.form__input {
+  width: 100%;
+  padding: 15px 30px;
+  background-color: $white-800;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+
+  &:hover {
+    -webkit-box-shadow: 4px 4px 10px $white-700;
+    box-shadow: 4px 4px 10px $white-700;
+  }
+}
+
+/*  ================================*/
+
+
+.cards_wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: $white-600;
+  @media (max-width: 1032px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  & input[type="radio"] {
+    display: none;
+  }
+}
+
+
+input[type="radio"]:checked + label {
+  color: $black-300;
+  border: 2px solid $red;
+}
+
+
+.card {
+  @include generate-columns-for-item(6);
+  min-width: 230px;
+  min-height: 100px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  background-color: $white;
+  cursor: pointer;
+  transition: .2s linear;
+
+  &:hover {
+    -webkit-box-shadow: 4px 4px 10px $white-700;
+    box-shadow: 4px 4px 10px $white-700;
+  }
+
+  &:last-child {
+    @media (max-width: 1032px) {
+      margin-bottom: 15px;
+    }
+  }
+
+  @media (max-width: 1032px) {
+    @include generate-columns-for-item(8, 12, 0, 0);
+  }
+
+  @media (max-width: 560px) {
+    @include generate-columns-for-item(10, 12, 0, 0);
+  }
+}
+
+
+.card__info {
+  display: flex;
+  align-items: center;
+  margin: 15px 20px 15px 24px;
+
+  & > span:first-child {
+    @media (max-width: 490px) {
+      font-size: 15px;
+    }
+  }
+}
+
+.card__pay {
+  margin-left: auto;
+  font-size: 16px;
+}
+
+.card__extra {
+  margin: 15px 24px;
+  font-size: 14px;
+  font-weight: 300;
+  text-align: left;
+
+  img {
+    vertical-align: bottom;
+  }
+}
+
+.card__title {
+  font-size: 18px;
+  font-weight: 300;
+  text-align: left;
+}
+
+.field_error {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  left: 0;
+  z-index: 1;
+  padding: 5px 5px;
+  font-size: 14px;
+  font-weight: bold;
+  color: $red;
+  text-align: center;
+  border: 2px solid $red;
+  border-radius: 5px;
+  background-color: $grey-700;
+  opacity: 0.7;
+  animation: shake .8s cubic-bezier(.36, .07, .19, .97) both;
+}
+
+
+@keyframes shake {
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  20%, 80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}

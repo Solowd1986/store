@@ -1,0 +1,68 @@
+@import "@scss/utils/utils.scss";
+
+
+.delivery_wrapper {
+  margin-bottom: 50px;
+  padding: 0 10px;
+}
+
+.title {
+  position: relative;
+  margin-bottom: 35px;
+  font-size: 24px;
+  font-weight: 300;
+  text-align: center;
+
+
+  &::after {
+    content: "";
+    position: absolute;
+    width: 50px;
+    height: 2px;
+    bottom: -15px;
+    left: 50%;
+    background-color: $black-400;
+    transform: translateX(-50%);
+  }
+}
+
+
+.payment_methods {
+  margin: 0;
+  list-style-position: inside;
+  list-style-type: disc;
+
+  & > li {
+    margin: 10px 0;
+  }
+}
+
+.delivery_wrapper h3:not(:last-of-type) {
+  padding-left: 25px;
+  background: url("./img/check.png") no-repeat left center;
+}
+
+.sign_bg {
+  position: relative;
+}
+
+.sign_bg__img {
+  width: 100%;
+}
+
+
+.sign_bg__title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: 0;
+  font-size: 30px;
+  font-weight: 300;
+  color: $white-100;
+  text-align: center;
+  transform: translate(-50%, -50%);
+
+  @media (max-width: 465px) {
+    font-size: 26px;
+  }
+}

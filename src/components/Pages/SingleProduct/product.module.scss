@@ -1,0 +1,108 @@
+@import "@scss/utils/utils.scss";
+
+
+.item_bg {
+  background-color: $white-100;
+}
+
+.order {
+  display: flex;
+  padding-bottom: 15px;
+  @media (max-width: 870px) {
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-bottom: 25px;
+  }
+
+}
+
+.order__info_wrapper {
+  display: flex;
+  max-width: 56%;
+  flex-direction: column;
+  justify-content: center;
+
+  @media (max-width: 870px) {
+    align-items: center;
+    padding: 0 10px;
+  }
+  @media (max-width: 650px) {
+    max-width: 90%;
+  }
+}
+
+
+.order__title {
+  margin-top: -40px;
+  margin-bottom: 0;
+  font-size: 25px;
+  font-weight: 300;
+  color: $black-100;
+
+  @media (max-width: 870px) {
+    margin-top: 20px;
+    text-align: center;
+  }
+}
+
+
+.order__desc {
+  font-size: 17px;
+  font-weight: 300;
+  color: $grey;
+
+  @media (max-width: 650px) {
+    text-align: center;
+  }
+}
+
+
+.price {
+  display: flex;
+  align-items: center;
+  margin-top: 0;
+  margin-bottom: 25px;
+  font-size: 28px;
+  font-weight: 400;
+  color: $black-100;
+}
+
+.discount {
+  margin-right: 15px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: $grey;
+  text-decoration: line-through;
+}
+
+
+.btn_wrapper {
+  width: 50%;
+  min-width: 325px;
+  margin-bottom: 20px;
+
+  @media (max-width: 448px) {
+    width: 100%;
+  }
+}
+
+.btn_order {
+  width: 100%;
+  margin-bottom: 10px;
+  font-size: 24px !important;
+  color: $white;
+
+  & svg {
+    width: 30px;
+    height: 30px;
+    left: 28px;
+  }
+
+}
+
+
+
+
+
+

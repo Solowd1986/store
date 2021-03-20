@@ -1,0 +1,37 @@
+@import "~scss/utils/utils.scss";
+
+.content {
+  text-align: center;
+}
+
+.title {
+  padding-top: 20px;
+  font-size: 24px;
+  font-weight: 400;
+  color: #b0afaf;
+  letter-spacing: 8px;
+  border-top: 1px solid #ef6258;
+
+}
+
+.btn {
+  display: inline-block;
+  position: relative;
+
+  margin-top: 0;
+  padding: 8px 50px 8px;
+  font-size: 24px;
+  font-weight: 400;
+
+  color: #ef6258;
+  text-decoration: none;
+  letter-spacing: 0;
+
+  text-transform: uppercase;
+  border: 3px solid #ef6258;
+  cursor: pointer;
+
+  &:hover {
+    color: #333333;
+  }
+}

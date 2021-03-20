@@ -1,0 +1,48 @@
+/* Импорты шрифтов прописаны в css-файле, так как url-импорты в scss не подхватывались корректно*/
+@font-face {
+    font-family: "Open Sans";
+    src: local("Open Sans");
+    src: url("../../fonts/opensans-bold.eot?#iefix") format("embedded-opentype"),
+    url("../../fonts/opensans-regular.woff2") format("woff2"),
+    url("../../fonts/opensans-regular.woff") format("woff"),
+    url("../../fonts/opensans-regular.ttf") format("truetype");
+
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: "Open Sans";
+    src: local("Open Sans");
+    src: url("../../fonts/opensans-bold.eot?#iefix") format("embedded-opentype"),
+    url("../../fonts/opensans-bold.woff") format("woff"),
+    url("../../fonts/opensans-regular.woff2") format("woff2"),
+    url("../../fonts/opensans-bold.ttf") format("truetype");
+
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+
+@font-face {
+    font-family: "Open Sans";
+    src: local("Open Sans");
+    src: url("../../fonts/opensans-light.eot?#iefix") format("embedded-opentype"),
+    url("../../fonts/opensans-light.woff2") format("woff2"),
+    url("../../fonts/opensans-regular.woff") format("woff"),
+    url("../../fonts/opensans-light.ttf") format("truetype");
+
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+
+
+
+
+
+
+

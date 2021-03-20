@@ -1,0 +1,157 @@
+@import "~scss/utils/utils.scss";
+
+.order__btn {
+  position: relative;
+  margin-top: auto;
+  padding: 14px 10px 14px 45px;
+  overflow: hidden;
+  font-size: 20px;
+  font-weight: 400;
+  border-radius: 3px;
+}
+
+
+.btn_img {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  fill: $white;
+
+  &__order {
+    width: 30px;
+    height: 30px;
+    left: 24px;
+  }
+}
+
+.btn_cart {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  fill: $white;
+
+  &__order {
+    width: 30px;
+    height: 30px;
+    left: 24px;
+  }
+}
+
+
+.btn_grey_bg {
+  padding: 14px 30px 14px;
+  background-color: $grey-400;
+
+  &::before {
+    display: none;
+  }
+
+  & svg {
+    display: none;
+  }
+}
+
+.btn_disabled {
+  cursor: not-allowed;
+}
+
+
+/* Стилизация кнопки на время обработки клика*/
+.disabled {
+  &:disabled {
+    color: rgba($black, 0.2);
+    background-color: rgba($black, 0.70);;
+  }
+
+  &:disabled svg {
+    fill: rgba($black, 0.2);
+  }
+
+  &:disabled::before {
+    width: 0;
+    transition: initial;
+  }
+
+  &:disabled .loader {
+    display: inline-block;
+  }
+}
+
+
+.add_to_cart {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 12px 15px 12px 30px;
+  font-size: 24px;
+  color: $white;
+
+  & svg {
+    width: 30px;
+    height: 30px;
+    left: 24px;
+  }
+}
+
+.remove_from_cart {
+  @extend .add_to_cart;
+  padding: 12px 15px 12px 12px;
+}
+
+
+.loader {
+  display: none;
+  box-sizing: border-box;
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  top: 50%;
+  left: 50%;
+  border: 10px solid;
+
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: animloader 1s linear infinite alternate;
+}
+@keyframes animloader {
+  0% {
+    border-color: white rgba(255, 255, 255, 0) rgba(255, 255, 255, 0) rgba(255, 255, 255, 0);
+  }
+  33% {
+    border-color: white white rgba(255, 255, 255, 0) rgba(255, 255, 255, 0);
+  }
+  66% {
+    border-color: white white white rgba(255, 255, 255, 0);
+  }
+  100% {
+    border-color: white white white white;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

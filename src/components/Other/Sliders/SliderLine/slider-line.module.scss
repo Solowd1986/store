@@ -1,0 +1,26 @@
+.slide_wrp {
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
+  overflow: hidden;
+  border: 2px solid yellow;
+}
+
+.slide {
+  display: flex;
+  position: relative;
+  width: 800px;
+  height: 200px;
+  left: 0;
+  transition: left .6s linear, right .6s linear;
+}
+
+
+.btn_sl span {
+
+  margin: 10px 100px;
+  padding: 10px;
+  font-size: 20px;
+  background-color: red;
+  cursor: pointer;
+}

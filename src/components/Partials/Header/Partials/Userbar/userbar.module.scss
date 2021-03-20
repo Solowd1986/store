@@ -1,0 +1,73 @@
+@import "@scss/utils/utils.scss";
+
+.header__order_wrapper {
+  display: flex;
+  min-width: 265px;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.header__order_phone {
+  display: flex;
+  align-items: center;
+  font-size: 22px;
+  font-weight: bold;
+  color: $blue;
+  transition: 0.2s;
+
+  &:hover {
+    color: $red;
+  }
+
+  &:hover .header__order_phone_icon {
+    transform: scale(1.1);
+    fill: $red;
+  }
+
+  @media (max-width: 360px) {
+    display: none;
+  }
+}
+
+
+.header__order_phone_icon {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+  transition: .2s linear;
+  fill: $blue;
+}
+
+
+.header__cart {
+  position: relative;
+
+  &:hover {
+    fill: $red-500;
+  }
+
+  @media (max-width: 360px) {
+    margin-left: auto;
+  }
+
+  & > span.basket_counter_bg {
+    position: absolute;
+    width: 23px;
+    height: 23px;
+    top: 0;
+    right: -8px;
+    z-index: 1;
+    border-radius: 50%;
+    background-color: $red;
+
+    & > span.basket_counter {
+      position: absolute;
+      top: 50%;
+      left: 47%;
+      z-index: 2;
+      font-weight: bold;
+      color: $white;
+      transform: translate(-50%, -50%);
+    }
+  }
+}

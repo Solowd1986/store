@@ -1,0 +1,40 @@
+@import "~scss/utils/utils.scss";
+
+.list {
+  display: flex;
+  max-width: 800px;
+  flex-direction: column;
+  margin: 0 auto;
+  padding: 20px 0;
+  background-color: grey;
+}
+
+
+.item {
+  margin: 20px 0;
+  color: black;
+  text-align: center;
+  background-color: lightgrey;
+}
+
+
+.title {
+  display: inline-block;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 5px 10px;
+  background-color: darkseagreen;
+  cursor: pointer;
+
+  &:hover {
+    color: red;
+  }
+}
+
+.content {
+  height: 0;
+  margin-top: 0;
+  overflow: hidden;
+}
+
+
