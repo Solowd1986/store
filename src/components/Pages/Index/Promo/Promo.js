@@ -8,7 +8,6 @@ import ProductCard from "@components/Partials/ProductCard/ProductCard";
 import Spinner from "@components/Partials/Spinner/Spinner";
 import withModal from "@components/Helpers/Hoc/withModal/withModal";
 
-
 import CartModal from "@components/Other/CartModal/CartModal";
 
 import { NavLink } from "react-router-dom";

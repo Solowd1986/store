@@ -34,6 +34,7 @@
   "scripts": {
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
+    "analyze": "source-map-explorer 'build/static/js/*.js'",
     "test": "react-app-rewired test"
   },
   "eslintConfig": {
@@ -65,12 +66,15 @@
   "proxy": "http://react.test/src/rest/php/index.php",
   "devDependencies": {
     "customize-cra": "1.0.0",
+    "eslint": "7.22.0",
+    "eslint-plugin-react": "7.22.0",
     "prettier": "2.2.1",
     "prop-types": "15.7.2",
     "react-app-rewire-aliases": "0.2.0",
     "react-app-rewired": "2.1.8",
     "react-dev-utils": "11.0.4",
     "redux-devtools-extension": "2.13.9",
-    "redux-logger": "3.0.6"
+    "redux-logger": "3.0.6",
+    "source-map-explorer": "2.5.2"
   }
 }
