@@ -16,37 +16,35 @@ import * as serverSelectors from "@redux/entities/server/selectors/serverSelecto
 import { connect } from "react-redux";
 
 class MainPage extends Component {
+  componentDidMount() {
+    this.props.fetchPageData(this.props);
+  }
 
-    componentDidMount() {
-        this.props.fetchPageData(this.props);
-    }
-
-    render() {
-        const SpinnerModal = withModal(Spinner, { bg: false, interactionsDisabled: true });
-        if (!this.props.index) return <SpinnerModal/>;
-        return (
-            <>
-                <Slider/>
-                <Promo index={this.props.index}/>
-                <BrandStory/>
-                <Announcements/>
-                <About/>
-                <PromoBadge/>
-            </>
-        )
-    }
+  render() {
+    const SpinnerModal = withModal(Spinner, {
+      bg: false,
+      interactionsDisabled: true,
+    });
+    if (!this.props.index) return <SpinnerModal />;
+    return (
+      <>
+        <Slider />
+        <Promo index={this.props.index} />
+        <BrandStory />
+        <Announcements />
+        <About />
+        <PromoBadge />
+      </>
+    );
+  }
 }
 
 function mapStateToProps(state) {
-    return {
-        index: serverSelectors.serverIndexSelector(state),
-    }
+  return {
+    index: serverSelectors.serverIndexSelector(state),
+  };
 }
 
-const mapDispatchToProps = dispatch => bindActionCreators({ fetchPageData: serverActions.fetchPageData }, dispatch);
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators({ fetchPageData: serverActions.fetchPageData }, dispatch);
 export default connect(mapStateToProps, mapDispatchToProps)(MainPage);
-
-
-
-
-

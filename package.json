@@ -35,13 +35,18 @@
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
-    "test": "react-app-rewired test"
+    "test": "react-app-rewired test",
+    "prettier scss": "prettier --write ./src/**/*.scss",
+    "prettier js": "prettier --write ./src/**/*.js"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
       "react-app/jest"
     ]
+  },
+  "prettier": {
+    "singleQuote": false
   },
   "browserslist": {
     "production": [

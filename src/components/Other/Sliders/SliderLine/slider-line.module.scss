@@ -12,12 +12,10 @@
   width: 800px;
   height: 200px;
   left: 0;
-  transition: left .6s linear, right .6s linear;
+  transition: left 0.6s linear, right 0.6s linear;
 }
 
-
 .btn_sl span {
-
   margin: 10px 100px;
   padding: 10px;
   font-size: 20px;

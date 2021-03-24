@@ -31,7 +31,6 @@
   }
 }
 
-
 .tag {
   align-self: flex-end;
   margin-bottom: 10px;
@@ -39,7 +38,6 @@
   color: $white;
   text-transform: uppercase;
   background-color: $red-100;
-
 
   &__categorie {
     align-self: center;
@@ -52,11 +50,6 @@
   text-decoration: line-through;
   background-color: $grey;
 }
-
-
-
-
-
 
 .img {
   vertical-align: bottom;
@@ -80,7 +73,6 @@
   }
 }
 
-
 .installment {
   align-self: center;
   margin-bottom: 10px;
@@ -103,7 +95,6 @@
   background-color: green;
 }
 
-
 .most_endorsed {
   align-self: center;
   margin-bottom: 10px;
@@ -113,7 +104,6 @@
   border-radius: 5px;
   background-color: $red-100;
 }
-
 
 %base {
   align-self: center;
@@ -136,7 +126,6 @@
   font-weight: 600;
 }
 
-
 .installment {
   align-self: center;
   margin-bottom: 10px;
@@ -147,7 +136,6 @@
   border-radius: 5px;
   background-color: $blue;
 }
-
 
 .most_endorsed {
   align-self: center;
@@ -169,10 +157,5 @@
 
   & > span {
     color: #e30611;
-
   }
 }
-
-
-
-

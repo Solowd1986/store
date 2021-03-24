@@ -9,10 +9,10 @@
 
 .order {
   margin-bottom: 35px;
-  -webkit-box-shadow: 0px 10px 13px -7px $black-200, 2px 5px 13px -3px rgba(0, 0, 0, 0);
+  -webkit-box-shadow: 0px 10px 13px -7px $black-200,
+    2px 5px 13px -3px rgba(0, 0, 0, 0);
   box-shadow: 0px 10px 13px -7px $black-200, 2px 5px 13px -3px rgba(0, 0, 0, 0);
 }
-
 
 .line {
   display: flex;
@@ -46,51 +46,9 @@
 
 .line_stage__unactive {
   border-bottom: 2px solid $grey;
-  opacity: .5;
+  opacity: 0.5;
 
   &::after {
     background-color: $grey;
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

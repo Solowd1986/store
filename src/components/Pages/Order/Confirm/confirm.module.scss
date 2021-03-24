@@ -37,7 +37,6 @@
   }
 }
 
-
 .close {
   position: absolute;
   width: 32px;
@@ -47,15 +46,16 @@
   z-index: 99;
   opacity: 0.3;
   cursor: pointer;
-  transition: opacity .2s linear;
+  transition: opacity 0.2s linear;
 }
 
 .close:hover {
   opacity: 1;
 }
 
-.close:before, .close:after {
-  content: ' ';
+.close:before,
+.close:after {
+  content: " ";
   position: absolute;
   width: 2px;
   height: 33px;

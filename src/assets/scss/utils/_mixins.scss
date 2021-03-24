@@ -1,13 +1,16 @@
-
 @mixin wrapper-negative-margins($margin: 15) {
   margin-left: -$margin + px;
   margin-right: -$margin + px;
 }
 
-@mixin generate-columns-for-item($item-columns, $columns: 12, $offset: 30, $margin-bottom: 20) {
+@mixin generate-columns-for-item(
+  $item-columns,
+  $columns: 12,
+  $offset: 30,
+  $margin-bottom: 20
+) {
   width: calc(100% / #{$columns} * #{$item-columns} - #{$offset}#{px});
   margin-left: $offset/2 + px;
   margin-right: $offset/2 + px;
   margin-bottom: $margin-bottom + px;
 }
-

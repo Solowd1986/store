@@ -25,12 +25,10 @@
   }
 }
 
-
 .wrapper {
   padding-bottom: 20px;
   background-color: $white-500;
 }
-
 
 .content {
   padding-bottom: 15px;
@@ -44,13 +42,11 @@
   color: $grey;
 }
 
-
 .list {
   display: flex;
   flex-wrap: wrap;
   @include wrapper-negative-margins();
 }
-
 
 .list__item {
   display: flex;
@@ -83,7 +79,6 @@
   }
 }
 
-
 .promo_list__tag {
   align-self: flex-end;
   margin-bottom: 10px;
@@ -106,9 +101,7 @@
 
 .promo_list__link {
   margin-bottom: 10px;
-
 }
-
 
 .promo_list__img {
   vertical-align: bottom;
@@ -139,7 +132,6 @@
   background-color: $blue;
 }
 
-
 .most_endorsed {
   align-self: center;
   margin-bottom: 10px;
@@ -160,10 +152,8 @@
 
   & > span {
     color: #e30611;
-
   }
 }
-
 
 .price {
   margin-top: auto;
@@ -173,7 +163,6 @@
   line-height: 1.7;
   text-align: center;
 
-
   &__discount {
     margin-right: 10px;
     font-size: 15px;
@@ -181,13 +170,3 @@
     text-decoration: line-through;
   }
 }
-
-
-
-
-
-
-
-
-
-

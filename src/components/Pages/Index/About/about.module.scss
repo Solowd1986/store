@@ -11,7 +11,7 @@
   font-size: 28px;
   font-weight: 300;
   color: $grey-300;
-  text-shadow: 0 0 1px rgba(0, 0, 0, .01);
+  text-shadow: 0 0 1px rgba(0, 0, 0, 0.01);
   @media (max-width: 560px) {
     font-size: 18px;
   }
@@ -32,4 +32,3 @@
     font-size: 14px;
   }
 }
-

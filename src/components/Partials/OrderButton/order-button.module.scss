@@ -10,7 +10,6 @@
   border-radius: 3px;
 }
 
-
 .btn_img {
   position: absolute;
   top: 50%;
@@ -41,7 +40,6 @@
   }
 }
 
-
 .btn_grey_bg {
   padding: 14px 30px 14px;
   background-color: $grey-400;
@@ -59,12 +57,11 @@
   cursor: not-allowed;
 }
 
-
 /* Стилизация кнопки на время обработки клика*/
 .disabled {
   &:disabled {
     color: rgba($black, 0.2);
-    background-color: rgba($black, 0.70);;
+    background-color: rgba($black, 0.7);
   }
 
   &:disabled svg {
@@ -80,7 +77,6 @@
     display: inline-block;
   }
 }
-
 
 .add_to_cart {
   width: 100%;
@@ -101,7 +97,6 @@
   padding: 12px 15px 12px 12px;
 }
 
-
 .loader {
   display: none;
   box-sizing: border-box;
@@ -118,7 +113,8 @@
 }
 @keyframes animloader {
   0% {
-    border-color: white rgba(255, 255, 255, 0) rgba(255, 255, 255, 0) rgba(255, 255, 255, 0);
+    border-color: white rgba(255, 255, 255, 0) rgba(255, 255, 255, 0)
+      rgba(255, 255, 255, 0);
   }
   33% {
     border-color: white white rgba(255, 255, 255, 0) rgba(255, 255, 255, 0);
@@ -130,28 +126,3 @@
     border-color: white white white white;
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

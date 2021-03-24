@@ -1,6 +1,5 @@
 @import "@scss/utils/utils.scss";
 
-
 /*  Блок данных пользователя. Общие стили
 ================================
 */
@@ -16,7 +15,6 @@
   @media (max-width: 1010px) {
     width: 100%;
   }
-
 }
 
 .order_title {
@@ -32,7 +30,6 @@
   text-align: left;
   background-color: $grey-400;
 }
-
 
 /*  Customer
 ================================
@@ -72,7 +69,6 @@
   }
 }
 
-
 .form__input {
   width: 100%;
   padding: 15px 30px;
@@ -86,7 +82,6 @@
 }
 
 /*  ================================*/
-
 
 .cards_wrapper {
   display: flex;
@@ -103,12 +98,10 @@
   }
 }
 
-
 input[type="radio"]:checked + label {
   color: $black-300;
   border: 2px solid $red;
 }
-
 
 .card {
   @include generate-columns-for-item(6);
@@ -120,7 +113,7 @@ input[type="radio"]:checked + label {
   border-radius: 10px;
   background-color: $white;
   cursor: pointer;
-  transition: .2s linear;
+  transition: 0.2s linear;
 
   &:hover {
     -webkit-box-shadow: 4px 4px 10px $white-700;
@@ -141,7 +134,6 @@ input[type="radio"]:checked + label {
     @include generate-columns-for-item(10, 12, 0, 0);
   }
 }
-
 
 .card__info {
   display: flex;
@@ -192,24 +184,28 @@ input[type="radio"]:checked + label {
   border-radius: 5px;
   background-color: $grey-700;
   opacity: 0.7;
-  animation: shake .8s cubic-bezier(.36, .07, .19, .97) both;
+  animation: shake 0.8s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
 }
 
-
 @keyframes shake {
-  10%, 90% {
+  10%,
+  90% {
     transform: translate3d(-1px, 0, 0);
   }
 
-  20%, 80% {
+  20%,
+  80% {
     transform: translate3d(2px, 0, 0);
   }
 
-  30%, 50%, 70% {
+  30%,
+  50%,
+  70% {
     transform: translate3d(-4px, 0, 0);
   }
 
-  40%, 60% {
+  40%,
+  60% {
     transform: translate3d(4px, 0, 0);
   }
 }

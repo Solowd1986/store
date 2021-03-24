@@ -67,9 +67,8 @@
   & > div {
     height: 60px;
     background-color: red;
-    transition: width .5s linear;
+    transition: width 0.5s linear;
   }
-
 }
 
 /*  Category Title
@@ -92,7 +91,6 @@
 
 /*  ================================*/
 
-
 .filters_wrapper {
   margin-bottom: 70px;
   @media (max-width: 1165px) {
@@ -103,11 +101,9 @@
   }
 }
 
-
 /*  Category Item List
 ================================
 */
-
 
 .list_wrapper {
   margin-bottom: 45px;
@@ -118,7 +114,6 @@
   flex-wrap: wrap;
   @include wrapper-negative-margins();
 }
-
 
 .item {
   display: flex;
@@ -138,7 +133,6 @@
   box-shadow: 0px -7px 31px -10px $grey;
   transition: 0.2s linear;
 
-
   &:hover {
     box-shadow: -3px 4px 14px 3px $grey;
   }
@@ -156,7 +150,6 @@
   }
 }
 
-
 .tag {
   align-self: flex-end;
   margin-bottom: 10px;
@@ -171,29 +164,26 @@
   }
 }
 
-
 .img_centered {
   align-self: center;
 }
-
 
 .img_wrapper {
   display: flex;
   justify-content: center;
   cursor: pointer;
-  transition: all .6s ease;
-
+  transition: all 0.6s ease;
 
   & > img:first-child {
     position: relative;
     right: -50px;
-    transition: all .6s ease;
+    transition: all 0.6s ease;
   }
 
   & > img:last-child {
     position: relative;
     left: -35px;
-    transition: all .6s ease;
+    transition: all 0.6s ease;
   }
 
   &:hover {
@@ -225,10 +215,8 @@
   &:last-of-type {
     font-size: 16px;
     font-weight: 400;
-
   }
 }
-
 
 .price {
   margin-top: auto;
@@ -238,7 +226,6 @@
   line-height: 1.7;
   text-align: center;
 
-
   &__discount {
     margin-right: 10px;
     font-size: 15px;
@@ -247,16 +234,13 @@
   }
 }
 
-
 .item_buy_btn {
   padding: 10px 30px;
 }
 
-
 .categorie-item__img--other {
   align-self: center;
 }
-
 
 .container-outer--no-offset {
   padding-right: 0;
@@ -284,9 +268,3 @@
     transform: translateY(-50%);
   }
 }
-
-
-
-
-
-

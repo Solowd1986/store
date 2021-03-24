@@ -36,7 +36,6 @@
   }
 }
 
-
 .order_btn {
   display: block;
   position: relative;
@@ -56,7 +55,7 @@
     background-color: rgba(99, 110, 117, 0.4);
   }
 
-  &[data-touched='true']:disabled {
+  &[data-touched="true"]:disabled {
     &::after {
       content: "";
       position: absolute;
@@ -80,12 +79,11 @@
         color: $white;
         border-radius: 8px;
         background: initial;
-        background-color: rgba(255, 0, 0, .8);
+        background-color: rgba(255, 0, 0, 0.8);
       }
     }
   }
 }
-
 
 @keyframes show-arrow {
   0% {

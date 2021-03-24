@@ -34,7 +34,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px;
-  transition: .3s linear;
+  transition: 0.3s linear;
   // Для задания точки отсчета иконки мобильного меню
   @media (max-width: 1028px) {
     position: relative;
@@ -49,15 +49,7 @@
   z-index: 10;
   background-color: $white;
 
-  -webkit-box-shadow: 0px 10px 13px -7px #000000, 5px 5px 15px 5px rgba(0, 0, 0, 0);
+  -webkit-box-shadow: 0px 10px 13px -7px #000000,
+    5px 5px 15px 5px rgba(0, 0, 0, 0);
   box-shadow: 0px 10px 13px -7px #000000, 5px 5px 15px 5px rgba(0, 0, 0, 0);
-
 }
-
-
-
-
-
-
-
-

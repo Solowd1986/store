@@ -1,6 +1,5 @@
 @import "@scss/utils/utils.scss";
 
-
 .delivery_wrapper {
   margin-bottom: 50px;
   padding: 0 10px;
@@ -13,7 +12,6 @@
   font-weight: 300;
   text-align: center;
 
-
   &::after {
     content: "";
     position: absolute;
@@ -25,7 +23,6 @@
     transform: translateX(-50%);
   }
 }
-
 
 .payment_methods {
   margin: 0;
@@ -49,7 +46,6 @@
 .sign_bg__img {
   width: 100%;
 }
-
 
 .sign_bg__title {
   position: absolute;

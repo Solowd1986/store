@@ -1,6 +1,5 @@
 @import "@scss/utils/utils.scss";
 
-
 .item_bg {
   background-color: $white-100;
 }
@@ -13,7 +12,6 @@
     justify-content: center;
     padding-bottom: 25px;
   }
-
 }
 
 .order__info_wrapper {
@@ -31,7 +29,6 @@
   }
 }
 
-
 .order__title {
   margin-top: -40px;
   margin-bottom: 0;
@@ -45,7 +42,6 @@
   }
 }
 
-
 .order__desc {
   font-size: 17px;
   font-weight: 300;
@@ -55,7 +51,6 @@
     text-align: center;
   }
 }
-
 
 .price {
   display: flex;
@@ -75,7 +70,6 @@
   color: $grey;
   text-decoration: line-through;
 }
-
 
 .btn_wrapper {
   width: 50%;
@@ -98,11 +92,4 @@
     height: 30px;
     left: 28px;
   }
-
 }
-
-
-
-
-
-

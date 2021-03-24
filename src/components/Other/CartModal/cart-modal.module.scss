@@ -76,23 +76,20 @@
     text-align: center;
     border-radius: 3px;
     background-color: $red;
-    transition: background-color .2s linear;
+    transition: background-color 0.2s linear;
 
     &:hover {
       background-color: darken($red, 10%);
     }
-
   }
 
   & > .continue {
     border-bottom: 1px dotted $black;
     cursor: pointer;
-    transition: border-bottom .2s linear;
+    transition: border-bottom 0.2s linear;
 
     &:hover {
       border-bottom: 1px dotted transparent;
     }
   }
 }
-
-
