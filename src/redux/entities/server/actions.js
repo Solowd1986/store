@@ -2,7 +2,7 @@ import * as types from "./constants/server"
 
 export const fetchPageData = (params) => async (dispatch, getState, api) => {
     const { match: { path: route, params: data }, history } = params;
-    const pageType = !Object.keys(data).length ? "index" : route.match(/\/([a-z]*)\/\:/)[1];
+    const pageType = !Object.keys(data).length ? "index" : route.match(/\/([a-z]*)\/:/)[1];
 
     try {
         const response = await api.fetchData(params);
@@ -20,6 +20,9 @@ export const clearCategoryPageReduxData = () => {
         type: types.SERVER_CLEAR_CATEGORY_PAGE_REDUX_DATA,
     }
 };
+
+
+
 
 
 export const fetchLazyCategoryProducts = (category, index, history) => async (dispatch, getState, api) => {

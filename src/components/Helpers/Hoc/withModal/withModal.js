@@ -25,13 +25,13 @@ function withModal(WrappedComponent, { fixed = false, bg = true, interactionsDis
             });
         };
 
-        closeModalFromChildren = (evt) => {
+        closeModalFromChildren = () => {
             this.setState({
                 isModalActive: false
             });
         };
 
-        componentDidUpdate(prevProps, prevState) {
+        componentDidUpdate() {
             if (!this.state.isModalActive) {
                 util.removeScrollbarOffset();
             }

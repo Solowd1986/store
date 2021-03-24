@@ -4,6 +4,7 @@ import * as PropTypes from "prop-types";
 import CategoryProductsList from "./CategoryProductsList/CategoryProductsList";
 import Spinner from "@components/Partials/Spinner/Spinner";
 import withModal from "@components/Helpers/Hoc/withModal/withModal";
+import * as utils from "@components/Helpers/Functions/scrollbarHelper";
 
 import { bindActionCreators } from 'redux';
 import * as serverActions from "@redux/entities/server/actions";
@@ -15,8 +16,6 @@ import { connect } from "react-redux";
 import arrayShuffle from "@components/Helpers/Functions/arrayShuffle";
 import createDeepCopyOfObject from "@components/Helpers/Lodash/lodashCloning";
 import produce from "immer";
-
-import $ from "jquery";
 
 
 //<editor-fold desc="Описание компонента">
@@ -147,7 +146,8 @@ class Category extends Component {
         if ((this.props.lastIndex > 0 || this.props.lastIndex === -1)
             && !this.isThisAnotherCategoryPage() &&
             !this.isSorted && this.state.lastIndex === this.props.lastIndex) {
-            $('html, body').animate({ scrollTop: $(document).height() }, 'slow');
+            utils.scrollToBottom();
+
         }
         if (prevProps.sortType === this.props.sortType) this.isSorted = false;
     }

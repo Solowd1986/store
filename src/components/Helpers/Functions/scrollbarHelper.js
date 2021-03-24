@@ -1,3 +1,5 @@
+import $ from "jquery";
+
 export const calcScrollBarWidth = () => {
     // Получаем ширину окна, это аналог width: 100vw (то есть ширина 100% + ширина scrollbar)
     const windowWidth = window.innerWidth;
@@ -19,4 +21,13 @@ export const addScrollbarOffset = () => {
 export const removeScrollbarOffset = () => {
     document.body.style.removeProperty("overflow");
     document.body.style.removeProperty("padding-right");
+};
+
+
+export const scrollToTop = () => {
+    $('html, body').animate({ scrollTop: 0}, 'slow');
+};
+
+export const scrollToBottom = () => {
+    $('html, body').animate({ scrollTop: $(document).height() }, 'slow');
 };

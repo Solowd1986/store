@@ -30,6 +30,15 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
 
         } elseif (preg_match("/^lazy\/(?P<category>[a-z]+)\/(?P<index>[0-9-]+)$/", $res, $matches)) {
             print json_encode(Request::getLazyLoadItems($matches["category"], $matches["index"]));
+
+        } elseif (preg_match("/^token$/", $res)) {
+            sleep(12);
+            //http_response_code(404);
+            //die();
+
+            //throw new Error("Code 401");
+            //print json_encode("from token");
+
         } else {
             throw new Error("Page with this parametres not exist");
         }

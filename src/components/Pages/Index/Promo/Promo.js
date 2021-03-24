@@ -30,11 +30,6 @@ class Promo extends Component {
 
 
                     <DataStore/>
-                    <Alert>
-                        {(color) => (<p style={{ color: [color] }}>Hell1212o</p>)}
-                    </Alert>
-
-
 
 
                     <h2 className={styles.section_title}>Рекомендуем</h2>

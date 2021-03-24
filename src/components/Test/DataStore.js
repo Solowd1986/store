@@ -1,6 +1,11 @@
 import React, { Component } from "react";
 
 
+import * as serverSelectors from "@redux/entities/server/selectors/serverSelectors";
+import { bindActionCreators } from "redux";
+import * as authActions from "@redux/entities/auth/actions";
+import { connect } from "react-redux";
+
 
 
 export const Alert = ( {children} ) => {
@@ -11,40 +16,20 @@ export const Alert = ( {children} ) => {
 };
 
 
-
-
 class DataStore extends Component {
-
-    state = {
-        users: [
-            {
-                age: 12
-            }
-        ],
-        shared: "pick"
-
-    };
-
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        console.log(this.state);
-    }
-
     render() {
         return (
             <>
                 <h2>STORE 1</h2>
-                <input/>
-                <button onClick={() => this.setState({
-                    users: [
-                        {
-                            age: 13
-                        }
-                    ]})}>Change</button>
+                <button onClick={() => this.props.getToken("ask for token")}>Server</button>
             </>
         )
     }
 }
 
-export default DataStore;
+
+const mapDispatchToProps = dispatch => bindActionCreators(authActions, dispatch);
+export default connect(null, mapDispatchToProps)(DataStore);
+
 
 

@@ -16,6 +16,7 @@ import * as serverSelectors from "@redux/entities/server/selectors/serverSelecto
 import { connect } from "react-redux";
 
 class MainPage extends Component {
+
     componentDidMount() {
         this.props.fetchPageData(this.props);
     }
