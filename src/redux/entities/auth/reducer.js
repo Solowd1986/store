@@ -1,16 +1,26 @@
-import * as types from "./constants/user";
+import * as types from "./constants/auth";
 
 const initialState = {
+    isUserAuthorized: false,
+    isTokenExpired: false,
     token: null,
     user: null
 };
 
 export default (state = initialState, action) => {
     switch (action.type) {
-        case types.USER_AUTH: {
+        case types.AUTH_REQUIRE_AUTHORIZATION: {
             return {
+                ...state,
                 token: "12dfg5464e534",
                 user: "bob"
+            }
+        }
+
+        case types.AUTH_SUCCESS_AUTHORIZATION: {
+            return {
+                ...state,
+                isUserAuthorized: true
             }
         }
 

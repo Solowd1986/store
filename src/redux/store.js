@@ -30,6 +30,9 @@ store.subscribe(() => {
     if (store.getState().auth.token) {
         localStorage.setItem("auth", encodeURIComponent(JSON.stringify({ auth: store.getState().auth })));
     }
+    if (store.getState().auth.isTokenExpired) {
+        localStorage.removeItem("auth");
+    }
 });
 
 export default store;

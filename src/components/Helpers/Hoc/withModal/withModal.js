@@ -9,7 +9,6 @@ import * as util from "@components/Helpers/Functions/scrollbarHelper";
  *  interactionsDisabled - не закрывать оверлей по клику, если логика его скрытия другая
  */
 //</editor-fold>
-
 function withModal(WrappedComponent, { fixed = false, bg = true, interactionsDisabled = false } = {}) {
     return class extends Component {
         constructor(props) {
@@ -64,7 +63,6 @@ function withModal(WrappedComponent, { fixed = false, bg = true, interactionsDis
         }
     }
 }
-
 
 export default withModal;
 

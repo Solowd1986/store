@@ -2,10 +2,10 @@ import React, { Component } from "react";
 import Error400 from "@components/Pages/Error/Error400/Error400";
 
 class ErrorBoundary extends Component {
-    constructor(props) {
-        super(props);
-        this.state = { hasError: false };
-    }
+
+    state = {
+        hasError: false
+    };
 
     static getDerivedStateFromError(error) {
         return { hasError: true };
@@ -16,7 +16,7 @@ class ErrorBoundary extends Component {
         console.log(errorInfo.componentStack);
     }
 
-    resetErrorState = () => this.setState({ hasError: false});
+    resetErrorState = () => this.setState({ hasError: false });
 
     render() {
         if (this.state.hasError) {

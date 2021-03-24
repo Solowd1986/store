@@ -5,99 +5,37 @@ import cn from "classnames";
 import * as PropTypes from "prop-types";
 
 import ProductCard from "@components/Partials/ProductCard/ProductCard";
-import Spinner from "@components/Partials/Spinner/Spinner";
-import withModal from "@components/Helpers/Hoc/withModal/withModal";
-
-import CartModal from "@components/Other/CartModal/CartModal";
-
-import { NavLink } from "react-router-dom";
-
-import DataStore from "../../../Test/DataStore";
-import Stores from "../../../Test/Stores"
-
-
-class Inner extends Component {
-    render() {
-        console.log(this.props);
-        return (
-            <section style={{ padding: "40px", color: "white", backgroundColor: "green" }}>
-                HELLO
-                <button onClick={this.props.closeModal}>Close</button>
-            </section>
-        );
-    }
-}
 
 
 
-// import Confirm from "@components/Pages/Order/Confirm/Confirm";
-// import withDelay from "@components/Helpers/Hoc/withDelay/withDelay";
-// import Login from "@components/Other/Auth/Login";
-// import produce from "immer";
+import DataStore from "@components/Test/DataStore";
+import { Alert } from "@components/Test/DataStore"
 
 
 
 class Promo extends Component {
-    constructor(props) {
-        super(props);
-        this.state = { index: this.props.index }
-    }
-
-    // state = {
-    //     index: null
-    // };
-
     static propTypes = {
-        index: PropTypes.object,
+        index: PropTypes.shape({
+            phones: PropTypes.object.isRequired,
+            accessoires: PropTypes.object.isRequired,
+            gadgets: PropTypes.object.isRequired,
+        }),
     };
 
-    // componentDidUpdate(prevProps, prevState, snapshot) {
-    //     if (!this.state.index && this.props.index) {
-    //         this.setState({ index: this.props.index })
-    //     }
-    // }
-
-
-    componentWillUnmount() {
-        this.setState({ index: null });
-    }
-
-
     render() {
-
-
-        //console.log(this.props);
-        // localStorage.setItem("auth", JSON.stringify({
-        //     token: "asrgretdvtyrty",
-        //     user: "bob"
-        // }));
-
-        const SpinnerModal = withModal(Spinner, { bg: false, interactionsDisabled: true });
-
-        if (!this.state.index) return <div className={styles.spin_wrap}><SpinnerModal/></div>;
-        const { phones, accessoires, gadgets } = this.state.index;
-
+        const { phones, accessoires, gadgets } = this.props.index;
         return (
-            <section className={`container ${styles.wrapper}`}>
-                <main className={`wrapper ${styles.content}`}>
-
-                    {/*<NavLink to={"/secret"}>Go to secret page </NavLink>*/}
-                    {/*<NavLink to={"/login"}>Go to login page </NavLink>*/}
-
-                    {/*<FormikForm/>*/}
-
-                    {/*<MyForm/>*/}
-
-                    {/*<DataStore data={12}/>*/}
-
-                    {/*<Stores/>*/}
-
-                    {/*<ModalState/>*/}
-
-                    {/*<Login/>*/}
+            <section className={cn("container", styles.wrapper)}>
+                <main className={cn("wrapper", styles.content)}>
 
 
-                    {/*<button onClick={this.toggle}>Active</button>*/}
+                    <DataStore/>
+                    <Alert>
+                        {(color) => (<p style={{ color: [color] }}>Hell1212o</p>)}
+                    </Alert>
+
+
+
 
                     <h2 className={styles.section_title}>Рекомендуем</h2>
                     <ul className={styles.list}>
