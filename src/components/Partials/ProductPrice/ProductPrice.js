@@ -11,38 +11,29 @@ import cn from "classnames";
  *
  * В конце округляем результат преобразования цены до сотен
  */
-    //endregion
+//endregion
 const ProductPrice = ({ product: { price, discount, rest }, classList = { main: "", discount: "" } }) => {
-        const formatPrice = price => new Intl.NumberFormat().format(price);
+  const formatPrice = (price) => new Intl.NumberFormat().format(price);
 
-        let initialPriceClassList = cn(styles.discount, {
-            [classList.discount]: classList
-        });
-        let finalPriceClassList = cn(styles.price, {
-            [classList.main]: classList
-        });
+  let initialPriceClassList = cn(styles.discount, {
+    [classList.discount]: classList,
+  });
+  let finalPriceClassList = cn(styles.price, {
+    [classList.main]: classList,
+  });
 
-        let initialPrice = discount ? <span className={initialPriceClassList}>{formatPrice(price)} р.</span> : null;
-        let finalPrice = discount
-            ? formatPrice(Math.round((price - (price * 10 / 100)) / 100 * 100)) + " р."
-            : formatPrice(price) + " р.";
+  let initialPrice = discount ? <span className={initialPriceClassList}>{formatPrice(price)} р.</span> : null;
+  let finalPrice = discount
+    ? formatPrice(Math.round(((price - (price * 10) / 100) / 100) * 100)) + " р."
+    : formatPrice(price) + " р.";
 
-        if (!rest) return null;
-        return (
-            <span className={finalPriceClassList}>
-                {initialPrice}
-                {finalPrice}
-            </span>
-        )
+  if (!rest) return null;
+  return (
+    <span className={finalPriceClassList}>
+      {initialPrice}
+      {finalPrice}
+    </span>
+  );
 };
 
 export default ProductPrice;
-
-
-
-
-
-
-
-
-

@@ -10,10 +10,7 @@ const validationSchemaFields = [
       .max(15, "Имя должно включать не более 15 символов"),
   },
   {
-    email: yup
-      .string()
-      .required("Данное поле обязательно")
-      .email("Введите корректный email"),
+    email: yup.string().required("Данное поле обязательно").email("Введите корректный email"),
   },
   {
     address: yup
@@ -30,9 +27,7 @@ const validationSchemaFields = [
       .max(18, "Телефон должен включать не более 11 символов"),
   },
   {
-    comment: yup
-      .string()
-      .max(300, "Комментарий должен включать не более 300 символов"),
+    comment: yup.string().max(300, "Комментарий должен включать не более 300 символов"),
   },
 ];
 

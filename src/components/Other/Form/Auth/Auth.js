@@ -1,12 +1,7 @@
-import React, {Component} from "react";
-
+import React, { Component } from "react";
 
 export default class extends Component {
-    render() {
-        return (
-            <h3>Auth</h3>
-        )
-    }
+  render() {
+    return <h3>Auth</h3>;
+  }
 }
-
-

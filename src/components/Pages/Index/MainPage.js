@@ -45,6 +45,5 @@ function mapStateToProps(state) {
   };
 }
 
-const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ fetchPageData: serverActions.fetchPageData }, dispatch);
+const mapDispatchToProps = (dispatch) => bindActionCreators({ fetchPageData: serverActions.fetchPageData }, dispatch);
 export default connect(mapStateToProps, mapDispatchToProps)(MainPage);

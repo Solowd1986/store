@@ -1,4 +1,1 @@
-export const sortTypeSelector = state => state.sort.sortType;
-
-
-
+export const sortTypeSelector = (state) => state.sort.sortType;

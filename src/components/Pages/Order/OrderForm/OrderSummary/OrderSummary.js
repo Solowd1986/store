@@ -7,25 +7,27 @@ import * as cartSelectors from "@redux/entities/cart/selectors/cartSelectors";
 import { connect } from "react-redux";
 
 class OrderSummary extends Component {
-    render() {
-        const { listOfProducts, shipping, isFormValid } = this.props;
-        return (
-            <section className={styles.summary}>
-                <h2 className={styles.caption}>Ваш заказ</h2>
-                {listOfProducts.map(item => <OrderItem key={item.title} item={item}/>)}
-                <OrderPrice listOfProducts={listOfProducts} shipping={shipping}/>
-                <button type="submit" disabled={!isFormValid} className={styles.order_btn}>
-                    Оформить заказ
-                </button>
-            </section>
-        )
-    }
+  render() {
+    const { listOfProducts, shipping, isFormValid } = this.props;
+    return (
+      <section className={styles.summary}>
+        <h2 className={styles.caption}>Ваш заказ</h2>
+        {listOfProducts.map((item) => (
+          <OrderItem key={item.title} item={item} />
+        ))}
+        <OrderPrice listOfProducts={listOfProducts} shipping={shipping} />
+        <button type="submit" disabled={!isFormValid} className={styles.order_btn}>
+          Оформить заказ
+        </button>
+      </section>
+    );
+  }
 }
 
 function mapStateToProps(state) {
-    return {
-        listOfProducts: cartSelectors.cartItemsSelector(state),
-    }
+  return {
+    listOfProducts: cartSelectors.cartItemsSelector(state),
+  };
 }
 
 export default connect(mapStateToProps)(OrderSummary);

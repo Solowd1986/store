@@ -10,46 +10,51 @@ import styles from "./product-card.module.scss";
 import cn from "classnames";
 
 class ProductCard extends Component {
+  static propTypes = {
+    item: PropTypes.object,
+    specifications: PropTypes.object,
+    color: PropTypes.string,
+  };
 
-    static propTypes = {
-        item: PropTypes.object,
-        specifications: PropTypes.object,
-        color: PropTypes.string
-    };
+  render() {
+    const {
+      category,
+      item,
+      item: { rest },
+    } = this.props;
+    const tagClassList = cn(styles.tag, {
+      [styles.not_in_stock]: !rest,
+    });
 
-    render() {
+    const productColor = item.specifications ? (
+      <span className={styles.color}>{`"${item.specifications.color}"`}</span>
+    ) : null;
 
-        const { category, item, item: { rest } } = this.props;
-        const tagClassList = cn(styles.tag, {
-            [styles.not_in_stock]: !rest
-        });
+    return (
+      <li key={item.id} className={styles.item}>
+        <span className={tagClassList}>В наличии</span>
 
-        const productColor = item.specifications ? <span className={styles.color}>{`"${item.specifications.color}"`}</span> : null;
+        <NavLink to={`/product/${category.alias}/${item.id}`}>
+          <img className={styles.img} src={item.img.md} alt={item["img_alt"]} />
+        </NavLink>
 
-        return (
-            <li key={item.id} className={styles.item}>
-                <span className={tagClassList}>В наличии</span>
+        <div className={styles.title}>
+          <span>{item.title}</span>
+          {productColor}
+        </div>
 
-                <NavLink to={`/product/${category.alias}/${item.id}`}>
-                    <img className={styles.img} src={item.img.md} alt={item["img_alt"]}/>
-                </NavLink>
-
-                <div className={styles.title}>
-                    <span>{item.title}</span>
-                    {productColor}
-                </div>
-
-                <PromoProductCard item={{ alias: category.alias, rest: item.rest, adsType: item["ads_type"] }}/>
-                <ProductPrice product={item}/>
-                <OrderButton product={item}/>
-            </li>
-        )
-    }
+        <PromoProductCard
+          item={{
+            alias: category.alias,
+            rest: item.rest,
+            adsType: item["ads_type"],
+          }}
+        />
+        <ProductPrice product={item} />
+        <OrderButton product={item} />
+      </li>
+    );
+  }
 }
 
-
 export default ProductCard;
-
-
-
-
