@@ -37,7 +37,8 @@
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "test": "react-app-rewired test",
     "prettier scss": "prettier --write ./src/**/*.scss",
-    "prettier js": "prettier --write ./src/**/*.js"
+    "prettier js": "prettier --write ./src/**/*.js",
+    "prettier-lint": "prettier-eslint --write ./src/components/Pages/Delivery/Delivery.js"
   },
   "eslintConfig": {
     "extends": [
@@ -75,9 +76,11 @@
     "eslint": "7.22.0",
     "eslint-config-airbnb": "18.2.1",
     "eslint-plugin-import": "2.22.1",
-    "eslint-plugin-prettier": "3.3.1",
+    "eslint-plugin-jsx-a11y": "6.4.1",
     "eslint-plugin-react": "7.23.1",
+    "eslint-plugin-react-hooks": "4.2.0",
     "prettier": "2.2.1",
+    "prettier-eslint-cli": "5.0.1",
     "prop-types": "15.7.2",
     "react-app-rewire-aliases": "0.2.0",
     "react-app-rewired": "2.1.8",
