@@ -56,7 +56,6 @@ class Category extends Component {
   isThisAnotherCategoryPage = () => this.getCurrentCategoryAlias() !== this.props.match.params.type;
   clearComponentState = () => this.setState((state) => ({ categoryProductsList: null, lastIndex: 0 }));
 
-
   sortProductsList = () => {
     let stateProductsCopy = createDeepCopyOfObject(this.state.categoryProductsList.data);
     switch (this.props.sortType) {

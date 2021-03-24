@@ -14,7 +14,7 @@ export default class App extends Component {
   render() {
     return (
       <React.StrictMode>
-        <Provider store={store} value={"Provide"}>
+        <Provider store={store} value="Provide">
           <BrowserRouter>
             <ErrorBoundary>
               <Layout>
@@ -23,7 +23,7 @@ export default class App extends Component {
                     {routes.map((route) => (
                       <Route key={route.url} path={route.url} component={route.component} exact={route.exact} />
                     ))}
-                    <Redirect to={"/404"} /> {/*редирект, если рута не нашлось*/}
+                    <Redirect to="/404" /> {/*редирект, если рута не нашлось*/}
                   </Switch>
                 </ScrollToTop>
               </Layout>
