@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import styles from "./order-summary.module.scss";
 
 import OrderPrice from "@components/Pages/Order/OrderForm/OrderSummary/OrderPrice/OrderPrice";
 import OrderItem from "@components/Pages/Order/OrderForm/OrderSummary/OrderItem/OrderItem";
 import * as cartSelectors from "@redux/entities/cart/selectors/cartSelectors";
 import { connect } from "react-redux";
+import styles from "./order-summary.module.scss";
 
 class OrderSummary extends Component {
   render() {

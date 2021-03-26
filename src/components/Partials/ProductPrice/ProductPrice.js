@@ -1,8 +1,8 @@
 import React from "react";
-import styles from "./product-price.module.scss";
 import cn from "classnames";
+import styles from "./product-price.module.scss";
 
-//region Описание
+// region Описание
 /**
  * classList приходит от компонента SingleProduct, формат по-умолчанию ему дан, чтобы не выбрасывало ошибку,
  * при попытке обратиться к свойству от null или undeifned (то есть если бы classList = null, например), по сути условие
@@ -11,21 +11,21 @@ import cn from "classnames";
  *
  * В конце округляем результат преобразования цены до сотен
  */
-//endregion
+// endregion
 const ProductPrice = ({ product: { price, discount, rest }, classList = { main: "", discount: "" } }) => {
   const formatPrice = (price) => new Intl.NumberFormat().format(price);
 
-  let initialPriceClassList = cn(styles.discount, {
+  const initialPriceClassList = cn(styles.discount, {
     [classList.discount]: classList,
   });
-  let finalPriceClassList = cn(styles.price, {
+  const finalPriceClassList = cn(styles.price, {
     [classList.main]: classList,
   });
 
-  let initialPrice = discount ? <span className={initialPriceClassList}>{formatPrice(price)} р.</span> : null;
-  let finalPrice = discount
-    ? formatPrice(Math.round(((price - (price * 10) / 100) / 100) * 100)) + " р."
-    : formatPrice(price) + " р.";
+  const initialPrice = discount ? <span className={initialPriceClassList}>{formatPrice(price)} р.</span> : null;
+  const finalPrice = discount
+    ? `${formatPrice(Math.round(((price - (price * 10) / 100) / 100) * 100))} р.`
+    : `${formatPrice(price)} р.`;
 
   if (!rest) return null;
   return (

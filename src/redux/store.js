@@ -1,12 +1,12 @@
 import { applyMiddleware, createStore } from "redux";
+import reduxThunk from "redux-thunk";
+import loggerExample from "@redux/middlware/loggerExample";
 import composeEnhancers from "./middlware/composeEnhancers";
 import reducer from "./entities/rootReducer";
-import reduxThunk from "redux-thunk";
 import reduxLogger from "./middlware/reduxLogger";
-import loggerExample from "@redux/middlware/loggerExample";
 import ApiService from "./api/ApiService/ApiService";
 
-const activeMiddlewareList = [reduxThunk.withExtraArgument(ApiService), loggerExample];
+const activeMiddlewareList = [loggerExample, reduxThunk.withExtraArgument(ApiService)];
 
 const preloadedState = {
   ...JSON.parse(decodeURIComponent(localStorage.getItem("cart"))),
@@ -25,7 +25,7 @@ store.subscribe(() => {
   if (localStorage.getItem("cart") && !store.getState().cart.products.length) {
     localStorage.removeItem("cart");
   }
-  if (store.getState().auth.token) {
+  if (store.getState().auth.rememberMe && store.getState().auth.token) {
     localStorage.setItem("auth", encodeURIComponent(JSON.stringify({ auth: store.getState().auth })));
   }
   if (store.getState().auth.isTokenExpired) {

@@ -7,10 +7,9 @@ function getTokenFromServer(res) {
 
 function getErrorFromServer(err) {
   console.log("we got error");
-
   console.dir(err);
-  return err;
-  //return Promise.reject(err);
+  //return err;
+  return Promise.reject(err);
 }
 
 class ApiService {

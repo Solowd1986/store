@@ -3,11 +3,10 @@ import React, { Component } from "react";
 import styles from "@components/Pages/Order/order.module.scss";
 import cn from "classnames";
 
-import EmptyOrderPage from "./EmptyOrderPage/EmptyOrderPage";
-import OrderForm from "./OrderForm/OrderForm";
-
 import * as cartSelectors from "@redux/entities/cart/selectors/cartSelectors";
 import { connect } from "react-redux";
+import EmptyOrderPage from "./EmptyOrderPage/EmptyOrderPage";
+import OrderForm from "./OrderForm/OrderForm";
 
 class Order extends Component {
   render() {

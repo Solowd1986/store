@@ -1,14 +1,14 @@
-const loggerExample = (store) => (next) => (action) => {
-  if (action === "string") {
-    return {
-      type: action,
-    };
-  }
+const loggerExample = ({ dispatch, getState }) => (next) => (action) => {
+  //console.log(dispatch);
+  //console.log(getState);
   //console.log(next);
-  //action.payload.num = 1;
-  //console.log('action', action);
-  //console.log('middle', store.getState());
+  console.log(action);
 
+  // if (action === "string") {
+  //   return {
+  //     type: action,
+  //   };
+  // }
   return next(action);
 };
 

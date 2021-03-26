@@ -3,6 +3,7 @@ import * as types from "./constants/auth";
 const initialState = {
   isUserAuthorized: false,
   isTokenExpired: false,
+  rememberMe: false,
   token: null,
   user: null,
 };

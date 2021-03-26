@@ -10,7 +10,12 @@ export default function withParent(Component) {
 
     render() {
       console.log(this.props);
-      return <div>parent {super.render()}</div>;
+      return (
+        <div>
+          parent
+          {super.render()}
+        </div>
+      );
     }
   };
 }

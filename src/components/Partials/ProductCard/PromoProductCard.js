@@ -63,9 +63,9 @@ class PromoProductCard extends Component {
 
     return (
       <>
-        {promo.map((item, i) => {
-          return <React.Fragment key={i}>{item}</React.Fragment>;
-        })}
+        {promo.map((item, i) => (
+          <React.Fragment key={i}>{item}</React.Fragment>
+        ))}
       </>
     );
   }

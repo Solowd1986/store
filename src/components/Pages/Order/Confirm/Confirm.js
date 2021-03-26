@@ -1,7 +1,7 @@
 import React, { Component } from "react";
+import cn from "classnames";
 import styles from "./confirm.module.scss";
 import img from "./img/thanks_sir.png";
-import cn from "classnames";
 
 class Confirm extends Component {
   render() {

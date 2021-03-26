@@ -38,7 +38,7 @@
     "test": "react-app-rewired test",
     "prettier scss": "prettier --write ./src/**/*.scss",
     "prettier js": "prettier --write ./src/**/*.js",
-    "prettier-lint": "prettier-eslint --write ./src/components/Pages/Delivery/Delivery.js"
+    "prettier-lint": "prettier-eslint --write ./src/**/*.js"
   },
   "eslintConfig": {
     "extends": [
@@ -75,6 +75,7 @@
     "customize-cra": "1.0.0",
     "eslint": "7.22.0",
     "eslint-config-airbnb": "18.2.1",
+    "immutable": "4.0.0-rc.12",
     "prettier": "2.2.1",
     "prettier-eslint-cli": "5.0.1",
     "prop-types": "15.7.2",

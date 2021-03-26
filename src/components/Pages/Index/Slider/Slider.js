@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import styles from "./slider.module.scss";
 import { NavLink } from "react-router-dom";
 
 import $ from "jquery";
+import styles from "./slider.module.scss";
 import "slick-carousel/slick/slick.min";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -11,7 +11,7 @@ class Slider extends Component {
   // Инициализация слайдера после отрисовки компонента. Была ошибка "cant't call add", это из-за
   // двойной инициализации, поэтому тут проверка - not('.slick-initialized'), и только потом инициализация
   componentDidMount() {
-    $(document).ready(function () {
+    $(document).ready(() => {
       $(".slider-slick").not(".slick-initialized").slick({
         arrows: false,
         slidesToShow: 1,
@@ -66,15 +66,13 @@ class Slider extends Component {
     return (
       <div className={styles.slider}>
         <div className="slider-slick">
-          {slider.map((item, i) => {
-            return (
-              <div key={i}>
-                <NavLink className="" to={"/category/phones"}>
-                  <img className={styles.img} src={item.src.lg} alt={item.alt} />
-                </NavLink>
-              </div>
-            );
-          })}
+          {slider.map((item, i) => (
+            <div key={i}>
+              <NavLink className="" to="/category/phones">
+                <img className={styles.img} src={item.src.lg} alt={item.alt} />
+              </NavLink>
+            </div>
+          ))}
         </div>
       </div>
     );

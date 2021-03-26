@@ -7,17 +7,9 @@ import Order from "@components/Pages/Order/Order";
 import Error400 from "@components/Pages/Error/Error400/Error400";
 import Error404 from "@components/Pages/Error/Error404/Error404";
 import Error500 from "@components/Pages/Error/Error500/Error500";
+import Profile from "@components/Pages/Profile/Profile";
 
-/**
- * Ход работы:
- * 1. В цикле выводятся компоненты Route, со всеми вариациями путей и соответствующих им компонентов
- *    включая путь /404 и компонент для этого пути. Но этот путь 404 нужно вызвать откуда-то
- * 2. Вызов выполнятеся в располооженном в App.js компоненте Redirect, который и отвечает за перенаправление на
- *    URI формата 404, а компонент для этого пути мы ранее указали
- * @type {*[]}
- */
-
-const routes = [
+const publicRoutes = [
   { url: "/", component: MainPage, exact: true },
   { url: "/category/:type", component: Category, exact: true },
   { url: "/product/:category/:id", component: Product, exact: true },
@@ -28,4 +20,13 @@ const routes = [
   { url: "/500", component: Error500, exact: true },
 ];
 
-export default routes;
+const privateRoutes = [
+  { url: "/profile/:id", component: Profile, exact: true },
+];
+
+const getRoutes = (isAuth = false) => {
+  if (isAuth) return [...publicRoutes, ...privateRoutes];
+  return publicRoutes;
+};
+
+export default getRoutes;

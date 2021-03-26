@@ -51,12 +51,12 @@ class Category extends Component {
     };
   }
 
-  isProductListStateEmpty = () => !this.state.categoryProductsList;
-  getCurrentCategoryAlias = () => this.state.categoryProductsList && this.state.categoryProductsList.main.alias;
-  isThisAnotherCategoryPage = () => this.getCurrentCategoryAlias() !== this.props.match.params.type;
-  clearComponentState = () => this.setState((state) => ({ categoryProductsList: null, lastIndex: 0 }));
+  _isProductListStateEmpty = () => !this.state.categoryProductsList;
+  _getCurrentCategoryAlias = () => this.state.categoryProductsList && this.state.categoryProductsList.main.alias;
+  _isThisAnotherCategoryPage = () => this._getCurrentCategoryAlias() !== this.props.match.params.type;
+  _clearComponentState = () => this.setState((state) => ({ categoryProductsList: null, lastIndex: 0 }));
 
-  sortProductsList = () => {
+  _sortProductsList = () => {
     let stateProductsCopy = createDeepCopyOfObject(this.state.categoryProductsList.data);
     switch (this.props.sortType) {
       case "по популярности": {
@@ -123,16 +123,16 @@ class Category extends Component {
    */
   //</editor-fold>
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (this.isProductListStateEmpty() && this.props.category) {
+    if (this._isProductListStateEmpty() && this.props.category) {
       this.setState((state) => ({ categoryProductsList: this.props.category }));
     }
-    if (this.isThisAnotherCategoryPage() && !this.isProductListStateEmpty()) {
-      this.clearComponentState();
+    if (this._isThisAnotherCategoryPage() && !this._isProductListStateEmpty()) {
+      this._clearComponentState();
       this.props.clearCategoryPageReduxData();
       this.props.discardSortType();
       this.props.fetchPageData(this.props);
     }
-    if (!this.isProductListStateEmpty() && this.state.lastIndex !== this.props.lastIndex) {
+    if (!this._isProductListStateEmpty() && this.state.lastIndex !== this.props.lastIndex) {
       this.setState(
         produce(this.state, (draft) => {
           draft["lastIndex"] = this.props.lastIndex;
@@ -141,14 +141,14 @@ class Category extends Component {
         })
       );
     }
-    if (prevProps.sortType !== this.props.sortType && !this.isThisAnotherCategoryPage()) {
-      this.sortProductsList();
+    if (prevProps.sortType !== this.props.sortType && !this._isThisAnotherCategoryPage()) {
+      this._sortProductsList();
       this.isSorted = true;
     }
 
     if (
       (this.props.lastIndex > 0 || this.props.lastIndex === -1) &&
-      !this.isThisAnotherCategoryPage() &&
+      !this._isThisAnotherCategoryPage() &&
       !this.isSorted &&
       this.state.lastIndex === this.props.lastIndex
     ) {
@@ -166,7 +166,7 @@ class Category extends Component {
   }
 
   render() {
-    if (this.isProductListStateEmpty() || this.isThisAnotherCategoryPage()) {
+    if (this._isProductListStateEmpty() || this._isThisAnotherCategoryPage()) {
       const SpinnerModal = withModal(Spinner, {
         bg: false,
         interactionsDisabled: true,

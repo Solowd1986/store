@@ -1,6 +1,6 @@
-import * as types from "./constants/cart";
 import lodashCloning from "@components/Helpers/Lodash/lodashCloning";
 import produce from "immer";
+import * as types from "./constants/cart";
 
 const initialState = {
   minAmountOfProduct: 1,
@@ -18,7 +18,7 @@ export default (state = initialState, action) => {
       }
 
       return produce(state, (draft) => {
-        draft["products"] = products;
+        draft.products = products;
       });
     }
 
@@ -29,7 +29,7 @@ export default (state = initialState, action) => {
       products.splice(index, 1);
 
       return produce(state, (draft) => {
-        draft["products"] = products;
+        draft.products = products;
       });
     }
 
@@ -43,7 +43,7 @@ export default (state = initialState, action) => {
       product.quantity = Math.max(state.minAmountOfProduct, Math.min(product.rest, quantity));
 
       return produce(state, (draft) => {
-        draft["products"] = products;
+        draft.products = products;
       });
     }
 

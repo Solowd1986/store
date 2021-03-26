@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-//import * as cartSelector from "@redux/entities/cart/selectors/cartSelectors";
+// import * as cartSelector from "@redux/entities/cart/selectors/cartSelectors";
 import * as authActions from "@redux/entities/auth/actions";
 import { connect } from "react-redux";
 

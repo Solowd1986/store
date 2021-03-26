@@ -1,16 +1,14 @@
 import React from "react";
-import styles from "./empty-order-page.module.scss";
 import cn from "classnames";
+import styles from "./empty-order-page.module.scss";
 
-const EmptyOrderPage = (props) => {
-  return (
-    <div className={cn("wrapper")}>
-      <div className={cn(styles.empty_order)}>
-        <h1>Корзина покупок</h1>
-        <p>У вас нет товаров для заказа</p>
-      </div>
+const EmptyOrderPage = (props) => (
+  <div className={cn("wrapper")}>
+    <div className={cn(styles.empty_order)}>
+      <h1>Корзина покупок</h1>
+      <p>У вас нет товаров для заказа</p>
     </div>
-  );
-};
+  </div>
+);
 
 export default EmptyOrderPage;

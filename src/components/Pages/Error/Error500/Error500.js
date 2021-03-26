@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import styles from "./error-500.module.scss";
+import cn from "classnames";
 import { withRouter } from "react-router";
 
 class Error500 extends Component {
@@ -9,7 +10,7 @@ class Error500 extends Component {
 
   render() {
     return (
-      <div className={"overlay"}>
+      <div className={cn("overlay", "overlay__w-bg")}>
         <div className={styles.content}>
           <div id={styles.error}>
             <div id={styles.box} />

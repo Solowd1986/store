@@ -1,8 +1,8 @@
 import React from "react";
-import styles from "./userbar.module.scss";
 import { NavLink } from "react-router-dom";
 import * as cartSelectors from "@redux/entities/cart/selectors/cartSelectors";
 import { connect } from "react-redux";
+import styles from "./userbar.module.scss";
 
 class Userbar extends React.Component {
   render() {
@@ -15,7 +15,7 @@ class Userbar extends React.Component {
           <span>+7&nbsp;(800)&nbsp;88-8888</span>
         </a>
 
-        <NavLink to={"/order"} className={`${styles.header__cart}`}>
+        <NavLink to="/order" className={`${styles.header__cart}`}>
           <svg width={35} height={35} viewBox="0 0 26 26">
             <path d="M22.684 7.136a.75.75 0 00-.75-.703h-3.97V5.26C17.965 2.91 15.738 1 13 1S8.035 2.911 8.035 5.26v1.173h-3.97a.75.75 0 00-.749.703L2.251 24.203A.752.752 0 003 25h20a.752.752 0 00.749-.797L22.684 7.136zM9.535 5.26C9.535 3.738 11.09 2.5 13 2.5s3.465 1.238 3.465 2.76v1.173h-6.93V5.26zm-1.5 2.673v1.629a.75.75 0 001.5 0v-1.63h6.93v1.63a.75.75 0 001.5 0v-1.63h3.264l.65 10.401H4.121l.65-10.4h3.264zM3.798 23.5l.26-4.167h17.884l.26 4.167H3.798z" />
           </svg>

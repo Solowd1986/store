@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import styles from "./category-products-list.module.scss";
 import cn from "classnames";
 
 import SortPorducts from "@components/Partials/SortProducts/SortProducts";
 import LazyLoad from "@components/Partials/LazyLoad/LazyLoad";
 import ProductCard from "@components/Partials/ProductCard/ProductCard";
+import styles from "./category-products-list.module.scss";
 
 class CategoryProductsList extends Component {
   render() {

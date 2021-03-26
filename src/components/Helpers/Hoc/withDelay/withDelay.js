@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import cn from "classnames";
 import Spinner from "@components/Partials/Spinner/Spinner";
 import * as util from "@components/Helpers/Functions/scrollbarHelper";
 
@@ -13,11 +14,9 @@ function withDelay(PropsComponent, ms = 1500) {
     componentDidMount() {
       util.addScrollbarOffset();
       this.timer = setTimeout(() => {
-        this.setState((state) => {
-          return {
-            isDelayEnded: true,
-          };
-        });
+        this.setState((state) => ({
+          isDelayEnded: true,
+        }));
       }, ms);
     }
 
@@ -26,12 +25,13 @@ function withDelay(PropsComponent, ms = 1500) {
     }
 
     render() {
-      if (!this.state.isDelayEnded)
+      if (!this.state.isDelayEnded) {
         return (
-          <div className="overlay">
+          <div className={cn("overlay", "overlay__b-bg")}>
             <Spinner />
           </div>
         );
+      }
       return <PropsComponent />;
     }
   };
