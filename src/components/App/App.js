@@ -27,8 +27,12 @@ const store2 = state.setIn([0, "name"], "deo");
 //console.log(store2.getIn([0, "name"]));
 
 
+let arrayblock = ["Bob", "Stan", "Bill"];
+arrayblock.splice(1, 2, "log", "hof");
+//console.log(arrayblock);
 
-
+const elem = arrayblock[Math.floor(Math.random() * arrayblock.length)];
+//console.log(elem);
 
 
 
@@ -57,6 +61,7 @@ const state4 = state3.setIn(["users"], state3.get("users").push(Map({age: 44})))
 
 
 const isAuth = true;
+const routes = getRoutes(isAuth);
 
 export default class App extends Component {
   render() {
@@ -68,7 +73,7 @@ export default class App extends Component {
               <Layout>
                 <ScrollToTop>
                   <Switch>
-                    {getRoutes(isAuth).map((route) => (
+                    {routes.map((route) => (
                       <Route key={route.url} path={route.url} component={route.component} exact={route.exact} />
                     ))}
                     <Redirect to="/404" /> {/* редирект, если рута не нашлось */}

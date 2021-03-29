@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import styles from "./up-button.module.scss";
 import cn from "classnames";
 
-class UpButton extends Component {
+class UpButton extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {

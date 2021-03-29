@@ -72,6 +72,7 @@
   },
   "proxy": "http://react.test/src/rest/php/index.php",
   "devDependencies": {
+    "@welldone-software/why-did-you-render": "6.1.1",
     "customize-cra": "1.0.0",
     "eslint": "7.22.0",
     "eslint-config-airbnb": "18.2.1",

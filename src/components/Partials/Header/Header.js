@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import styles from "./header.module.scss";
 import cn from "classnames";
 
@@ -7,7 +7,8 @@ import Logo from "./Partials/Logo/Logo";
 import NavbarList from "./Partials/NavbarList/NavbarList";
 import Userbar from "./Partials/Userbar/Userbar";
 
-class Header extends Component {
+
+class Header extends PureComponent {
   constructor(props) {
     super(props);
     this.header = React.createRef();
@@ -26,6 +27,8 @@ class Header extends Component {
   }
 
   handleScroll = () => {
+    if (window.scrollY > window.innerHeight + this.header.current.clientHeight && this.state.isPageScrolled) return;
+    if (window.scrollY < window.innerHeight + this.header.current.clientHeight && !this.state.isPageScrolled) return;
     window.scrollY > window.innerHeight + this.header.current.clientHeight
       ? this.setState({ isPageScrolled: true })
       : this.setState({ isPageScrolled: false });

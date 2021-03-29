@@ -7,31 +7,35 @@ const initialState = {
   lazy: null,
 
   lastIndex: 0,
-  fetchingLazyDataStart: false,
+  fetchingDataStart: false,
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case types.SERVER_FETCH_PAGE_DATA: {
-      // console.log('act', action);
-
       return {
         ...state,
         [action.payload.pageType]: action.payload.data,
       };
     }
 
-    case types.SERVER_START_FETCH_PAGE_DATA: {
+    case types.SERVER_START_FETCH_DATA: {
       return {
         ...state,
-        fetchingLazyDataStart: true,
+        fetchingDataStart: true,
+      };
+    }
+
+    case types.SERVER_END_FETCH_DATA: {
+      return {
+        ...state,
+        fetchingDataStart: false,
       };
     }
 
     case types.SERVER_FETCH_LAZY_PAGE_DATA: {
       return {
         ...state,
-        fetchingLazyDataStart: false,
         lastIndex: action.payload.lastIndex,
         lazy: action.payload.load,
       };

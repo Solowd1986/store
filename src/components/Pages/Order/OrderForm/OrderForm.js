@@ -91,6 +91,7 @@ class OrderForm extends Component {
       .reach(this.validationSchema, inputName)
       .validate(inputValue)
       .then((success) => {
+        if (!this.state.fields[inputName].error && !this.state.fields[inputName].msg) return;
         this.setState(
           produce(this.state, (draft) => {
             draft["fields"][inputName].error = false;
@@ -147,24 +148,23 @@ class OrderForm extends Component {
     this.isFormTouched = true;
     if (!Object.keys(this.state.fields).includes(inputName)) return;
     if (inputName === "phone") new Inputmask("+7 (999) 999-99-99").mask(target);
-    if (inputName === "shipping")
+    if (["shipping", "payment"].includes(inputName)) {
       this.setState(
-        produce(this.state, (draft) => {
-          draft["fields"].shipping = inputValue;
-        })
+          produce(this.state, (draft) => {
+            draft["fields"][inputName] = inputValue;
+          })
       );
-    if (inputName === "payment")
-      this.setState(
-        produce(this.state, (draft) => {
-          draft["fields"].payment = inputValue;
-        })
-      );
+      return;
+    }
     this.handleValidation(inputName, inputValue);
-    // каждый ввод тест на ошибки всей формы, еслли все ок - true в isFormValid, и снятие disabled с кнопки submit
+    // каждый ввод тест на ошибки всей формы, если все ок - true в isFormValid, и снятие disabled с кнопки submit
     this.checkFieldsErrors();
   };
 
+
   render() {
+    console.log('render');
+
     let ConfirmModalWindow = null;
     if (this.state.isUserConfirmOrder && this.isFormTouched) {
       ConfirmModalWindow = withDelay(withModal(Confirm));

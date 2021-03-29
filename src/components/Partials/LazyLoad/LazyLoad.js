@@ -51,7 +51,7 @@ class LazyLoad extends Component {
 function mapStateToProps(state) {
   return {
     lastIndex: serverSelectors.serverLastIndexSelector(state),
-    fetchStart: serverSelectors.serverfetchingLazyDataStartSelector(state),
+    fetchStart: serverSelectors.serverfetchingDataStartSelector(state),
   };
 }
 
