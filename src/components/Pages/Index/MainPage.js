@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import * as PropTypes from "prop-types";
 
 import PromoBadge from "@components/Partials/PromoBadge/PromoBadge";
 import withModal from "@components/Helpers/Hoc/withModal/withModal";
@@ -15,33 +16,35 @@ import Promo from "./Promo/Promo";
 import Slider from "./Slider/Slider";
 
 class MainPage extends Component {
-  componentDidMount() {
-      this.props.fetchPageData(this.props);
-  }
+    static propTypes = {
+        index: PropTypes.object,
+        slider: PropTypes.array,
+    };
 
-  render() {
-    const SpinnerModal = withModal(Spinner, {
-      bg: false,
-      interactionsDisabled: true,
-    });
-    if (!this.props.index) return <SpinnerModal />;
-    return (
-      <>
-        <Slider />
-        <Promo index={this.props.index} />
-        <BrandStory />
-        <Announcements />
-        <About />
-        <PromoBadge />
-      </>
-    );
-  }
+    componentDidMount() {
+        this.props.fetchPageData(this.props);
+    }
+
+    render() {
+        const SpinnerModal = withModal(Spinner, { bg: false, interactionsDisabled: true, });
+        if (!this.props.index) return <SpinnerModal/>;
+        return (
+            <>
+                <Slider slides={this.props.index.slider}/>
+                <Promo index={this.props.index}/>
+                <BrandStory/>
+                <Announcements/>
+                <About/>
+                <PromoBadge/>
+            </>
+        );
+    }
 }
 
 function mapStateToProps(state) {
-  return {
-    index: serverSelectors.serverIndexSelector(state),
-  };
+    return {
+        index: serverSelectors.serverIndexSelector(state),
+    };
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({ fetchPageData: serverActions.fetchPageData }, dispatch);

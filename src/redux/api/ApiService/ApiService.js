@@ -8,7 +8,7 @@ class ApiService {
 
     this.api = this._axios.create({
       baseURL: "/api/",
-      timeout: 1000 * 5,
+      timeout: 5000,
       withCredentials: true,
       headers: {
         Authorization: `Bearer ${localStorage.getItem("auth") && this._decodeRecord("auth").auth.token}`,

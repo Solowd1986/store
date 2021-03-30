@@ -1,9 +1,9 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import cn from "classnames";
 import styles from "./delivery.module.scss";
 import deliveryBanner from "./img/_delivery-banner.png";
 
-class Delivery extends Component {
+class Delivery extends PureComponent {
   render() {
     return (
       <>

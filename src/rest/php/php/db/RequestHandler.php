@@ -12,6 +12,7 @@ class RequestHandler extends DbConnect
         $data['phones'] = self::getCategoryItems("phones", 4);
         $data['gadgets'] = self::getCategoryItems("gadgets", 4);
         $data['accessoires'] = self::getCategoryItems("accessoires", 4);
+        $data['slider'] = self::getSlider();
         return $data;
     }
 
@@ -102,6 +103,17 @@ class RequestHandler extends DbConnect
             $pdo = Connect::exec()->prepare("SELECT * FROM {$tablename} WHERE {$field}={$id}");
             $pdo->execute();
             return $pdo->fetch();
+        } catch (\Exception $e) {
+            return "Ошибка при операции " . $e->getMessage();
+        }
+    }
+
+    private static function getSlider($tablename = "slider")
+    {
+        try {
+            $pdo = Connect::exec()->prepare("SELECT * FROM {$tablename}");
+            $pdo->execute();
+            return $pdo->fetchAll();
         } catch (\Exception $e) {
             return "Ошибка при операции " . $e->getMessage();
         }
