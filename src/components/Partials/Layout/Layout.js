@@ -6,11 +6,11 @@ import Footer from "@components/Partials/Footer/Footer";
 import styles from "./layout.module.scss";
 
 const Layout = ({ children }) => (
-  <div className={styles.layout}>
+    <div className={styles.layout}>
     <UpButton />
-    <Header />
-    <main className={styles.main}>{children}</main>
-    <Footer />
+        <Header />
+        <main className={styles.main}>{children}</main>
+        <Footer />
   </div>
 );
 

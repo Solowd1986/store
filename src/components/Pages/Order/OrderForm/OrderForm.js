@@ -33,164 +33,168 @@ import produce from "immer";
  */
 //</editor-fold>
 class OrderForm extends Component {
-  constructor(props) {
-    super(props);
-    this.isFormTouched = false;
-    this.form = React.createRef();
-    this.validationSchema = setValidateSchema(["name", "phone", "email", "address", "comment"]);
-    this.state = {
-      isUserConfirmOrder: false,
-      isFormValid: true,
-      fields: {
-        name: {
-          error: false,
-          msg: "",
-        },
-        phone: {
-          error: false,
-          msg: "",
-        },
-        email: {
-          error: false,
-          msg: "",
-        },
-        address: {
-          error: false,
-          msg: "",
-        },
-        comment: {
-          error: false,
-          msg: "",
-        },
-        shipping: "moscow",
-        payment: "cash",
-      },
-    };
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return this.isFormTouched && !this.state.isUserConfirmOrder;
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (!this.isFormTouched && this.state.isUserConfirmOrder) {
-      this.setState({ isUserConfirmOrder: false });
-    }
-  }
-
-  checkFieldsErrors = () => {
-    const verifyFields = Object.values(this.state.fields).filter((item) => item.error !== undefined);
-    if (!this.state.isFormValid && verifyFields.every((item) => !item.error)) {
-      this.setState({ isFormValid: true });
-    }
-  };
-
-  handleValidation = (inputName, inputValue) => {
-    if (!(inputName in this.validationSchema.fields)) return;
-    yup
-      .reach(this.validationSchema, inputName)
-      .validate(inputValue)
-      .then((success) => {
-        if (!this.state.fields[inputName].error && !this.state.fields[inputName].msg) return;
-        this.setState(
-          produce(this.state, (draft) => {
-            draft["fields"][inputName].error = false;
-            draft["fields"][inputName].msg = "";
-          })
-        );
-      })
-      .catch((error) => {
-        if (error.message === this.state.fields[inputName].msg) return;
-        this.setState(
-          produce(this.state, (draft) => {
-            draft["fields"][inputName].error = true;
-            draft["fields"][inputName].msg = error.message;
-            draft["isFormValid"] = false;
-          })
-        );
-      });
-  };
-
-  handleSubmit = (evt) => {
-    evt.preventDefault();
-    this.isFormTouched = true;
-    const fields = {};
-
-    Array.from(this.form.current.elements).forEach((item) => {
-      if (Object.keys(this.state.fields).includes(item.name)) {
-        fields[item.name] = item.value;
-        this.handleValidation(item.name, item.value);
-      }
-    });
-
-    if (!this.validationSchema.isValidSync(fields)) {
-      this.setState({ isFormValid: false });
-      return;
+    constructor(props) {
+        super(props);
+        this.isFormTouched = false;
+        this.form = React.createRef();
+        this.validationSchema = setValidateSchema(["name", "phone", "email", "address", "comment"]);
+        this.state = {
+            isUserConfirmOrder: false,
+            isFormValid: true,
+            fields: {
+                name: {
+                    error: false,
+                    msg: "",
+                },
+                phone: {
+                    error: false,
+                    msg: "",
+                },
+                email: {
+                    error: false,
+                    msg: "",
+                },
+                address: {
+                    error: false,
+                    msg: "",
+                },
+                comment: {
+                    error: false,
+                    msg: "",
+                },
+                shipping: "moscow",
+                payment: "cash",
+            },
+        };
     }
 
-    const form = new FormData(this.form.current);
-    const userOrderInfo = {
-      userInfo: {},
-      userOrder: [],
+    shouldComponentUpdate(nextProps, nextState) {
+        return this.isFormTouched && !this.state.isUserConfirmOrder;
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (!this.isFormTouched && this.state.isUserConfirmOrder) {
+            this.setState({ isUserConfirmOrder: false });
+        }
+    }
+
+    checkFieldsErrors = () => {
+        const verifyFields = Object.values(this.state.fields).filter((item) => item.error !== undefined);
+        if (!this.state.isFormValid && verifyFields.every((item) => !item.error)) {
+            this.setState({ isFormValid: true });
+        }
     };
 
-    for (const [key, value] of form.entries()) {
-      this.props.listOfProducts.some((item) => item.title === key)
-        ? userOrderInfo.userOrder.push(this.props.listOfProducts.find((item) => item.title === key))
-        : (userOrderInfo.userInfo[key] = value);
+    handleValidation = (inputName, inputValue) => {
+        if (!(inputName in this.validationSchema.fields)) return;
+        yup.reach(this.validationSchema, inputName)
+            .validate(inputValue)
+            .then((success) => {
+                if (!this.state.fields[inputName].error && !this.state.fields[inputName].msg) return;
+                this.setState(
+                    produce(this.state, (draft) => {
+                        draft["fields"][inputName].error = false;
+                        draft["fields"][inputName].msg = "";
+                    }),
+                );
+            })
+            .catch((error) => {
+                if (error.message === this.state.fields[inputName].msg) return;
+                this.setState(
+                    produce(this.state, (draft) => {
+                        draft["fields"][inputName].error = true;
+                        draft["fields"][inputName].msg = error.message;
+                        draft["isFormValid"] = false;
+                    }),
+                );
+            });
+    };
+
+    handleSubmit = (evt) => {
+        evt.preventDefault();
+        this.isFormTouched = true;
+        const fields = {};
+
+        Array.from(this.form.current.elements).forEach((item) => {
+            if (Object.keys(this.state.fields).includes(item.name)) {
+                fields[item.name] = item.value;
+                this.handleValidation(item.name, item.value);
+            }
+        });
+
+        if (!this.validationSchema.isValidSync(fields)) {
+            this.setState({ isFormValid: false });
+            return;
+        }
+
+        const form = new FormData(this.form.current);
+        const userOrderInfo = {
+            userInfo: {},
+            userOrder: [],
+        };
+
+        for (const [key, value] of form.entries()) {
+            this.props.listOfProducts.some((item) => item.title === key)
+                ? userOrderInfo.userOrder.push(this.props.listOfProducts.find((item) => item.title === key))
+                : (userOrderInfo.userInfo[key] = value);
+        }
+
+        evt.target.reset();
+        this.setState({ isUserConfirmOrder: true });
+    };
+
+    handleChange = ({ target, target: { name: inputName, value: inputValue } }) => {
+        this.isFormTouched = true;
+        if (!Object.keys(this.state.fields).includes(inputName)) return;
+        if (inputName === "phone") new Inputmask("+7 (999) 999-99-99").mask(target);
+        if (["shipping", "payment"].includes(inputName)) {
+            this.setState(
+                produce(this.state, (draft) => {
+                    draft["fields"][inputName] = inputValue;
+                }),
+            );
+            return;
+        }
+        this.handleValidation(inputName, inputValue);
+        // каждый ввод тест на ошибки всей формы, если все ок - true в isFormValid, и снятие disabled с кнопки submit
+        this.checkFieldsErrors();
+    };
+
+    render() {
+        console.log("render");
+
+        let ConfirmModalWindow = null;
+        if (this.state.isUserConfirmOrder && this.isFormTouched) {
+            ConfirmModalWindow = withDelay(withModal(Confirm));
+            this.isFormTouched = false;
+        }
+        return (
+            <>
+                {ConfirmModalWindow ? <ConfirmModalWindow /> : null}
+                <form
+                    ref={this.form}
+                    onSubmit={this.handleSubmit}
+                    className={styles.form}
+                    name="order-form"
+                    method="POST"
+                >
+                    <OrderInfo
+                        handleChange={this.handleChange}
+                        fields={this.state.fields}
+                        shipping={this.state.fields.shipping}
+                        payment={this.state.fields.payment}
+                    />
+                    <OrderSummary isFormValid={this.state.isFormValid} shipping={this.state.fields.shipping} />
+                </form>
+            </>
+        );
     }
-
-    evt.target.reset();
-    this.setState({ isUserConfirmOrder: true });
-  };
-
-  handleChange = ({ target, target: { name: inputName, value: inputValue } }) => {
-    this.isFormTouched = true;
-    if (!Object.keys(this.state.fields).includes(inputName)) return;
-    if (inputName === "phone") new Inputmask("+7 (999) 999-99-99").mask(target);
-    if (["shipping", "payment"].includes(inputName)) {
-      this.setState(
-          produce(this.state, (draft) => {
-            draft["fields"][inputName] = inputValue;
-          })
-      );
-      return;
-    }
-    this.handleValidation(inputName, inputValue);
-    // каждый ввод тест на ошибки всей формы, если все ок - true в isFormValid, и снятие disabled с кнопки submit
-    this.checkFieldsErrors();
-  };
-
-
-  render() {
-    console.log('render');
-
-    let ConfirmModalWindow = null;
-    if (this.state.isUserConfirmOrder && this.isFormTouched) {
-      ConfirmModalWindow = withDelay(withModal(Confirm));
-      this.isFormTouched = false;
-    }
-    return (
-      <>
-        {ConfirmModalWindow ? <ConfirmModalWindow /> : null}
-        <form ref={this.form} onSubmit={this.handleSubmit} className={styles.form} name="order-form" method="POST">
-          <OrderInfo
-            handleChange={this.handleChange}
-            fields={this.state.fields}
-            shipping={this.state.fields.shipping}
-            payment={this.state.fields.payment}
-          />
-          <OrderSummary isFormValid={this.state.isFormValid} shipping={this.state.fields.shipping} />
-        </form>
-      </>
-    );
-  }
 }
 
 function mapStateToProps(state) {
-  return {
-    listOfProducts: cartSelectors.cartItemsSelector(state),
-  };
+    return {
+        listOfProducts: cartSelectors.cartItemsSelector(state),
+    };
 }
 
 export default connect(mapStateToProps)(OrderForm);

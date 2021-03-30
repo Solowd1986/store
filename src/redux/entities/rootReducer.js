@@ -6,8 +6,8 @@ import auth from "./auth/reducer";
 
 // экспортируем результат работы функции combineReducers
 export default combineReducers({
-  cart,
-  server,
-  sort,
-  auth,
+    cart,
+    server,
+    sort,
+    auth,
 });

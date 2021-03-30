@@ -1,23 +1,30 @@
-{
-
-}
-
 //{
-//  "extends": [
-//    "airbnb"
-//  ],
-//  "env": {
-//    "browser": true
-//  },
-//  "rules": {
-//    "quotes": [
-//      2, "double"
-//    ],
-//    "max-len": [
-//      "error", { "code": 120 }
-//    ],
-//    "import/no-unresolved": "off",
-//    "react/jsx-filename-extension": "off",
-//    "jsx-a11y/anchor-is-valid": "off"
-//  }
+//
 //}
+{
+  "extends": [
+    "airbnb"
+  ],
+  "env": {
+    "browser": true
+  },
+  "rules": {
+    "quotes": [
+      2, "double"
+    ],
+
+    "max-len": [
+      "error", { "code": 120 }
+    ],
+    "import/no-unresolved": "off",
+    "react/jsx-filename-extension": "off",
+    "jsx-a11y/anchor-is-valid": "off",
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
+
+
+
+
+    "react/jsx-indent": "off",
+    "indent": "off"
+  }
+}

@@ -15,68 +15,65 @@ import * as serverSelectors from "@redux/entities/server/selectors/serverSelecto
 import { connect } from "react-redux";
 
 class Product extends Component {
-  state = {
-    product: null,
-  };
-
-  //region Описание
-  /**
-   * Выставляем state для product когда приходят данные от сервера, до этого показываем спиннер
-   * Можно перейти полностью на props, но тогда нужно описать оистку redux-store при unmount компонента, иначе
-   * будут демонстрироваться старые данные до прихода новых.
-   */
-  //endregion
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if (!this.state.product && this.props.product) {
-      this.setState({ product: this.props.product });
-    }
-  }
-
-  componentDidMount() {
-    this.props.fetchPageData(this.props);
-  }
-
-  render() {
-    //console.log(this.props);
-    if (!this.state.product) return <Spinner />;
-
-    const { main: category, data: product } = this.state.product;
-    //console.log(product);
-
-    const productPriceClassList = {
-      main: `${styles.price}`,
-      discount: `${styles.discount}`,
+    state = {
+        product: null,
     };
-    const productAvailability = "Наличие: " + (product.rest === 0 ? "нет в наличии" : "в наличии");
 
-    return (
-      <>
-        <section className={cn("container", styles.item_bg)}>
-          <div className={cn("wrapper", styles.order)}>
-            <ProductSlider list={product.slider} alt={product.img_alt} />
-            <div className={styles.order__info_wrapper}>
-              <h1 className={styles.order__title}>{product.title}</h1>
-              <p className={styles.order__desc}>{product.desc}</p>
-              <ProductPrice product={product} classList={productPriceClassList} />
+    //region Описание
+    /**
+     * Выставляем state для product когда приходят данные от сервера, до этого показываем спиннер
+     * Можно перейти полностью на props, но тогда нужно описать оистку redux-store при unmount компонента, иначе
+     * будут демонстрироваться старые данные до прихода новых.
+     */
+    //endregion
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (!this.state.product && this.props.product) {
+            this.setState({ product: this.props.product });
+        }
+    }
 
-              <div className={styles.btn_wrapper}>
-                <OrderButton product={product} classList={styles.btn_order} />
-              </div>
-              <span>{productAvailability}</span>
-            </div>
-          </div>
-        </section>
-        <ProductTabs category={category} product={product} />
-        <PromoBadge />
-      </>
-    );
-  }
+    componentDidMount() {
+        this.props.fetchPageData(this.props);
+    }
+
+    render() {
+        if (!this.state.product) return <Spinner />;
+        const { main: category, data: product } = this.state.product;
+
+        const productPriceClassList = {
+            main: `${styles.price}`,
+            discount: `${styles.discount}`,
+        };
+        const productAvailability = "Наличие: " + (product.rest === 0 ? "нет в наличии" : "в наличии");
+
+        return (
+            <>
+                <section className={cn("container", styles.item_bg)}>
+                    <div className={cn("wrapper", styles.order)}>
+                        <ProductSlider list={product.slider} alt={product.img_alt} />
+                        <div className={styles.order__info_wrapper}>
+                            <h1 className={styles.order__title}>{product.title}</h1>
+                            <p className={styles.order__desc}>{product.desc}</p>
+                            <ProductPrice product={product} classList={productPriceClassList} />
+
+                            <div className={styles.btn_wrapper}>
+                                <OrderButton product={product} classList={styles.btn_order} />
+                            </div>
+                            <span>{productAvailability}</span>
+                        </div>
+                    </div>
+                </section>
+                <ProductTabs category={category} product={product} />
+                <PromoBadge />
+            </>
+        );
+    }
 }
 
 function mapStateToProps(state) {
-  return {
-    product: serverSelectors.serverProductSelector(state),
-  };
+    return {
+        product: serverSelectors.serverProductSelector(state),
+    };
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({ fetchPageData: serverActions.fetchPageData }, dispatch);

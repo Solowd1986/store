@@ -13,27 +13,33 @@ import styles from "./product-price.module.scss";
  */
 // endregion
 const ProductPrice = ({ product: { price, discount, rest }, classList = { main: "", discount: "" } }) => {
-  const formatPrice = (price) => new Intl.NumberFormat().format(price);
+    const formatPrice = (price) => new Intl.NumberFormat().format(price);
 
-  const initialPriceClassList = cn(styles.discount, {
-    [classList.discount]: classList,
-  });
-  const finalPriceClassList = cn(styles.price, {
-    [classList.main]: classList,
-  });
+    const initialPriceClassList = cn(styles.discount, {
+        [classList.discount]: classList,
+    });
+    const finalPriceClassList = cn(styles.price, {
+        [classList.main]: classList,
+    });
 
-  const initialPrice = discount ? <span className={initialPriceClassList}>{formatPrice(price)} р.</span> : null;
-  const finalPrice = discount
-    ? `${formatPrice(Math.round(((price - (price * 10) / 100) / 100) * 100))} р.`
-    : `${formatPrice(price)} р.`;
+    const initialPrice = discount ? (
+      <span className={initialPriceClassList}>
+          {formatPrice(price)}
+          {" "}
+          р.
+</span>
+    ) : null;
+    const finalPrice = discount
+        ? `${formatPrice(Math.round(((price - (price * 10) / 100) / 100) * 100))} р.`
+        : `${formatPrice(price)} р.`;
 
-  if (!rest) return null;
-  return (
-    <span className={finalPriceClassList}>
-      {initialPrice}
-      {finalPrice}
-    </span>
-  );
+    if (!rest) return null;
+    return (
+        <span className={finalPriceClassList}>
+            {initialPrice}
+            {finalPrice}
+      </span>
+    );
 };
 
 export default ProductPrice;

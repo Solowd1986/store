@@ -26,16 +26,16 @@ class MainPage extends Component {
     }
 
     render() {
-        const SpinnerModal = withModal(Spinner, { bg: false, interactionsDisabled: true, });
-        if (!this.props.index) return <SpinnerModal/>;
+        const SpinnerModal = withModal(Spinner, { bg: false, interactionsDisabled: true });
+        if (!this.props.index) return <SpinnerModal />;
         return (
             <>
-                <Slider slides={this.props.index.slider}/>
-                <Promo index={this.props.index}/>
-                <BrandStory/>
-                <Announcements/>
-                <About/>
-                <PromoBadge/>
+                <Slider slides={this.props.index.slider} />
+                <Promo index={this.props.index} />
+                <BrandStory />
+                <Announcements />
+                <About />
+                <PromoBadge />
             </>
         );
     }
