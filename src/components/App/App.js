@@ -28,10 +28,11 @@ const store2 = state.setIn([0, "name"], "deo");
 
 
 let arrayblock = ["Bob", "Stan", "Bill"];
-arrayblock.splice(1, 2, "log", "hof");
-//console.log(arrayblock);
+const res = arrayblock.splice();
 
-const elem = arrayblock[Math.floor(Math.random() * arrayblock.length)];
+//console.log(res);
+
+//const elem = arrayblock[Math.floor(Math.random() * arrayblock.length)];
 //console.log(elem);
 
 

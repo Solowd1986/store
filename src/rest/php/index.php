@@ -9,29 +9,23 @@ require_once "./php/db/RequestHandler.php";
 use php\db\RequestHandler as Request;
 
 //  /src/rest/php/index.php/api/category/phones
+
 if ($_SERVER["REQUEST_METHOD"] === "GET") {
-
-    $uri = trim(filter_var($_SERVER["REQUEST_URI"], FILTER_SANITIZE_URL));
-    //print $uri;
-
-    $prefix = "api/";
-    $cnt = strpos($uri, $prefix) + strlen($prefix);
-    $res = mb_substr($uri, $cnt, strlen($uri));
-
+    preg_match("/api\/(?P<path>[\w\d\/]+)$/", trim(filter_var($_SERVER["REQUEST_URI"], FILTER_SANITIZE_URL)), $uri);
     try {
-        if (preg_match("/^index$/", $res)) {
+        if (preg_match("/^index$/", $uri["path"])) {
             print json_encode(Request::getIndexPageData());
 
-        } elseif (preg_match("/^category\/(?P<category>[a-z]+)$/", $res, $matches)) {
+        } elseif (preg_match("/^category\/(?P<category>[a-z]+)$/", $uri["path"], $matches)) {
             print json_encode(Request::getCategoryItems($matches["category"]));
 
-        } elseif (preg_match("/^product\/(?P<category>[a-z]+)\/(?P<id>[0-9]+)$/", $res, $matches)) {
+        } elseif (preg_match("/^product\/(?P<category>[a-z]+)\/(?P<id>[0-9]+)$/", $uri["path"], $matches)) {
             print json_encode(Request::getOneItem($matches["id"], $matches["category"]));
 
-        } elseif (preg_match("/^lazy\/(?P<category>[a-z]+)\/(?P<index>[0-9-]+)$/", $res, $matches)) {
+        } elseif (preg_match("/^lazy\/(?P<category>[a-z]+)\/(?P<index>[0-9-]+)$/", $uri["path"], $matches)) {
             print json_encode(Request::getLazyLoadItems($matches["category"], $matches["index"]));
 
-        } elseif (preg_match("/^token$/", $res)) {
+        } elseif (preg_match("/^token$/", $uri["path"])) {
             //sleep(12);
             //http_response_code(404);
             //die();

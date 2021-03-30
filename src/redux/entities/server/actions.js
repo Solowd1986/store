@@ -15,6 +15,7 @@ export const fetchPageData = params => async (dispatch, getState, api) => {
     });
     dispatch({ type: types.SERVER_END_FETCH_DATA});
   } catch (error) {
+    dispatch({ type: types.SERVER_END_FETCH_DATA});
     const status = error.response ? error.response.status : error.code === "ECONNABORTED" ? 500 : 400;
     switch (status) {
       case (400): {
@@ -31,7 +32,6 @@ export const fetchPageData = params => async (dispatch, getState, api) => {
       }
       default: return;
     }
-    dispatch({ type: types.SERVER_END_FETCH_DATA});
   }
 };
 

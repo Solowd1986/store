@@ -5,6 +5,10 @@ import { withRouter } from "react-router";
 import img from "./img/error-400.png";
 
 class Error400 extends Component {
+  static defaultProps = {
+    resetErrorState: () => {}
+  };
+
   redirect = () => {
     this.props.resetErrorState();
     this.props.history.push("/");
