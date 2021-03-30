@@ -6,8 +6,8 @@ const loggerExample = ({ dispatch, getState }) => (next) => (action) => {
 
   //if (action.type === "server/fetchPageData") return;
 
-  const { fetchingDataStart } = getState().server;
-  if (fetchingDataStart && typeof action === "function") return;
+  //const { fetchingDataStart } = getState().server;
+  //if (fetchingDataStart && typeof action === "function") return;
 
   //console.log('logger', action);
 

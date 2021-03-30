@@ -1,33 +1,40 @@
 import * as types from "./constants/server";
 
 export const fetchPageData = params => async (dispatch, getState, api) => {
-  const {
-    match: { path: route, params: data },
-    history,
-  } = params;
-
+  const { match: { path: route, params: data }, history, } = params;
+  const isThatIndexPage = !Object.keys(data).length;
+  const uri = isThatIndexPage ? "index" : route.match(/\/([a-z]*)\/:/)[1] + "/" + Object.values(data).join("/");
   const pageType = !Object.keys(data).length ? "index" : route.match(/\/([a-z]*)\/:/)[1];
-
   dispatch({ type: types.SERVER_START_FETCH_DATA});
 
   try {
-    const response = await api.fetchData(params);
-    if (response.data.error) return;
+    const response = await api.get(uri);
     dispatch({
       type: types.SERVER_FETCH_PAGE_DATA,
       payload: { pageType, data: response.data },
     });
     dispatch({ type: types.SERVER_END_FETCH_DATA});
-
-  } catch (e) {
-    history.push("/500");
+  } catch (error) {
+    const status = error.response ? error.response.status : error.code === "ECONNABORTED" ? 500 : 400;
+    switch (status) {
+      case (400): {
+        history.push("/400");
+        break;
+      }
+      case (404): {
+        history.push("/404");
+        break;
+      }
+      case (500): {
+        history.push("/500");
+        break;
+      }
+      default: return;
+    }
     dispatch({ type: types.SERVER_END_FETCH_DATA});
   }
 };
 
-export const clearCategoryPageReduxData = () => ({
-  type: types.SERVER_CLEAR_CATEGORY_PAGE_REDUX_DATA,
-});
 
 export const fetchLazyCategoryProducts = (category, index, history) => async (dispatch, getState, api) => {
   dispatch({ type: types.SERVER_START_FETCH_DATA });
@@ -50,20 +57,6 @@ export const fetchLazyCategoryProducts = (category, index, history) => async (di
 };
 
 
-// export const f1etchLazyCategoryProducts = (category) => (dispatch, getState, api) => {
-//   dispatch({ type: types.SERVER_START_FETCH_PAGE_DATA });
-//   api
-//     .get(`category/${category}`)
-//     .then((responce) => {
-//       console.dir(responce);
-//       dispatch({
-//         type: types.SERVER_FETCH_LAZY_PAGE_DATA,
-//         payload: {
-//           load: responce.data,
-//         },
-//       });
-//     })
-//     .catch((error) => {
-//       console.log("error from server in action fetchLazyCategoryProducts: ", error);
-//     });
-// };
+export const clearCategoryPageReduxData = () => ({
+  type: types.SERVER_CLEAR_CATEGORY_PAGE_REDUX_DATA,
+});

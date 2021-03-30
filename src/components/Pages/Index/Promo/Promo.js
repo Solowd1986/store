@@ -7,7 +7,7 @@ import * as PropTypes from "prop-types";
 import ProductCard from "@components/Partials/ProductCard/ProductCard";
 
 import DataStore from "@components/Test/DataStore";
-import { Alert } from "@components/Test/DataStore";
+import { Alert, DataStore2 } from "@components/Test/DataStore";
 
 class Promo extends Component {
   static propTypes = {
@@ -23,7 +23,7 @@ class Promo extends Component {
     return (
       <section className={cn("container", styles.wrapper)}>
         <main className={cn("wrapper", styles.content)}>
-          <DataStore />
+          {/*<DataStore2 />*/}
 
           <h2 className={styles.section_title}>Рекомендуем</h2>
           <ul className={styles.list}>

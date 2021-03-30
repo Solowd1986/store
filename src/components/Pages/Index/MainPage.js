@@ -16,7 +16,7 @@ import Slider from "./Slider/Slider";
 
 class MainPage extends Component {
   componentDidMount() {
-    this.props.fetchPageData(this.props);
+      this.props.fetchPageData(this.props);
   }
 
   render() {

@@ -54,14 +54,7 @@ const state4 = state3.setIn(["users"], state3.get("users").push(Map({age: 44})))
 //console.log(state4.getIn(["users", 3, "age"]));
 
 
-
-
-
-
-
-
 const isAuth = true;
-const routes = getRoutes(isAuth);
 
 export default class App extends Component {
   render() {
@@ -73,7 +66,7 @@ export default class App extends Component {
               <Layout>
                 <ScrollToTop>
                   <Switch>
-                    {routes.map((route) => (
+                    {getRoutes(isAuth).map((route) => (
                       <Route key={route.url} path={route.url} component={route.component} exact={route.exact} />
                     ))}
                     <Redirect to="/404" /> {/* редирект, если рута не нашлось */}
