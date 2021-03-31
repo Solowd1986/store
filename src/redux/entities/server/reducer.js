@@ -48,7 +48,7 @@ export default (state = initialState, action) => {
             lastIndex: 0,
         };
     }
+    default:
+        return state;
     }
-
-    return state;
 };

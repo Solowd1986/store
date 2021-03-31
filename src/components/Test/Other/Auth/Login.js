@@ -6,9 +6,9 @@ import { connect } from "react-redux";
 
 const Profile = (props = "some data in props") => (
     <div>
-    <p>{props}</p>
+        <p>{props}</p>
         <button>Exit from account</button>
-  </div>
+    </div>
 );
 
 class Login extends Component {
@@ -21,7 +21,7 @@ class Login extends Component {
                 <input className="form__input" type="password" name="psw" placeholder="Enter psw..." required />
                 <input type="checkbox" name="rememberUser" id="checkbox" />
                 <input className="form__submit" type="submit" name="auth-submit" value="Send" />
-          </form>
+            </form>
         );
     }
 }

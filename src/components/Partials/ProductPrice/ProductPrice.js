@@ -22,13 +22,7 @@ const ProductPrice = ({ product: { price, discount, rest }, classList = { main: 
         [classList.main]: classList,
     });
 
-    const initialPrice = discount ? (
-      <span className={initialPriceClassList}>
-          {formatPrice(price)}
-          {" "}
-          р.
-</span>
-    ) : null;
+    const initialPrice = discount ? <span className={initialPriceClassList}>{formatPrice(price)} р.</span> : null;
     const finalPrice = discount
         ? `${formatPrice(Math.round(((price - (price * 10) / 100) / 100) * 100))} р.`
         : `${formatPrice(price)} р.`;
@@ -38,7 +32,7 @@ const ProductPrice = ({ product: { price, discount, rest }, classList = { main: 
         <span className={finalPriceClassList}>
             {initialPrice}
             {finalPrice}
-      </span>
+        </span>
     );
 };
 

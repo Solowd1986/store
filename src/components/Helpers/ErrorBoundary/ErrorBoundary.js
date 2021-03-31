@@ -1,7 +1,12 @@
 import React, { Component } from "react";
 import Error400 from "@components/Pages/Error/Error400/Error400";
+import * as PropTypes from "prop-types";
 
 class ErrorBoundary extends Component {
+    static propTypes = {
+        children: PropTypes.node,
+    };
+
     state = {
         hasError: false,
     };

@@ -40,7 +40,7 @@
     "prettier scss": "prettier --write ./src/**/*.scss",
     "prettier js": "prettier --write ./src/**/*.js",
     "prettier-lint": "prettier-eslint --write ./src/**/*.js",
-    "lint:fix": "eslint --fix --ext .js,.jsx ."
+    "fix": "npx eslint . --fix"
   },
   "eslintConfig": {
     "extends": [
@@ -74,10 +74,19 @@
   },
   "proxy": "http://react.test/src/rest/php/index.php",
   "devDependencies": {
+    "@types/jest": "26.0.22",
+    "@types/node": "14.14.37",
+    "@types/react": "17.0.3",
+    "@types/react-dom": "17.0.3",
+    "@typescript-eslint/eslint-plugin": "4.20.0",
+    "@typescript-eslint/parser": "4.20.0",
     "@welldone-software/why-did-you-render": "6.1.1",
+    "babel-eslint": "10.1.0",
     "customize-cra": "1.0.0",
-    "eslint": "7.22.0",
-    "eslint-config-airbnb": "18.2.1",
+    "eslint": "7.23.0",
+    "eslint-config-prettier": "8.1.0",
+    "eslint-plugin-prettier": "3.3.1",
+    "eslint-plugin-react": "7.23.1",
     "immutable": "4.0.0-rc.12",
     "prettier": "2.2.1",
     "prettier-eslint-cli": "5.0.1",
@@ -87,6 +96,7 @@
     "react-dev-utils": "11.0.4",
     "redux-devtools-extension": "2.13.9",
     "redux-logger": "3.0.6",
-    "source-map-explorer": "2.5.2"
+    "source-map-explorer": "2.5.2",
+    "typescript": "4.2.3"
   }
 }

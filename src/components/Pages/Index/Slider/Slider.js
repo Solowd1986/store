@@ -28,16 +28,16 @@ class Slider extends PureComponent {
         const { slides } = this.props;
         return (
             <div className={styles.slider}>
-            <div className="slider-slick">
+                <div className="slider-slick">
                     {slides.map((item, i) => (
                         <div key={i}>
                             <NavLink to="/category/phones">
                                 <img className={styles.img} src={item.imgFullPath} alt={item.imgAlt} />
-                          </NavLink>
-                      </div>
+                            </NavLink>
+                        </div>
                     ))}
-              </div>
-          </div>
+                </div>
+            </div>
         );
     }
 }

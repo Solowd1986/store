@@ -59,34 +59,34 @@ class Category extends Component {
     _sortProductsList = () => {
         let stateProductsCopy = createDeepCopyOfObject(this.state.categoryProductsList.data);
         switch (this.props.sortType) {
-            case "по популярности": {
-                stateProductsCopy = arrayShuffle(stateProductsCopy);
-                break;
-            }
-            case "по возрастанию цены": {
-                stateProductsCopy.sort((a, b) => a.price - b.price);
-                break;
-            }
-            case "по убыванию цены": {
-                stateProductsCopy.sort((a, b) => b.price - a.price);
-                break;
-            }
-            case "по новинкам": {
-                stateProductsCopy = arrayShuffle(stateProductsCopy);
-                break;
-            }
-            case "по скидкам": {
-                stateProductsCopy = arrayShuffle(stateProductsCopy);
-                break;
-            }
-            default: {
-                return;
-            }
+        case "по популярности": {
+            stateProductsCopy = arrayShuffle(stateProductsCopy);
+            break;
+        }
+        case "по возрастанию цены": {
+            stateProductsCopy.sort((a, b) => a.price - b.price);
+            break;
+        }
+        case "по убыванию цены": {
+            stateProductsCopy.sort((a, b) => b.price - a.price);
+            break;
+        }
+        case "по новинкам": {
+            stateProductsCopy = arrayShuffle(stateProductsCopy);
+            break;
+        }
+        case "по скидкам": {
+            stateProductsCopy = arrayShuffle(stateProductsCopy);
+            break;
+        }
+        default: {
+            return;
+        }
         }
         this.setState(
             produce(this.state, (draft) => {
                 draft["categoryProductsList"].data = stateProductsCopy;
-            }),
+            })
         );
     };
 
@@ -141,7 +141,7 @@ class Category extends Component {
                         ...this.state.categoryProductsList.data,
                         ...this.props.lazy,
                     ];
-                }),
+                })
             );
         }
         if (prevProps.sortType !== this.props.sortType && !this._isThisAnotherCategoryPage()) {

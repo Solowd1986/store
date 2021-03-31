@@ -95,7 +95,7 @@ class OrderForm extends Component {
                     produce(this.state, (draft) => {
                         draft["fields"][inputName].error = false;
                         draft["fields"][inputName].msg = "";
-                    }),
+                    })
                 );
             })
             .catch((error) => {
@@ -105,7 +105,7 @@ class OrderForm extends Component {
                         draft["fields"][inputName].error = true;
                         draft["fields"][inputName].msg = error.message;
                         draft["isFormValid"] = false;
-                    }),
+                    })
                 );
             });
     };
@@ -151,7 +151,7 @@ class OrderForm extends Component {
             this.setState(
                 produce(this.state, (draft) => {
                     draft["fields"][inputName] = inputValue;
-                }),
+                })
             );
             return;
         }

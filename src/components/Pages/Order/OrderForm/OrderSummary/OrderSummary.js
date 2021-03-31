@@ -15,15 +15,15 @@ class OrderSummary extends Component {
         });
         return (
             <section className={styles.summary}>
-            <h2 className={styles.caption}>Ваш заказ</h2>
+                <h2 className={styles.caption}>Ваш заказ</h2>
                 {listOfProducts.map((item) => (
                     <OrderItem key={item.title} item={item} />
                 ))}
                 <OrderPrice listOfProducts={listOfProducts} shipping={shipping} />
                 <button type="submit" disabled={!isFormValid} className={classList}>
-                Оформить заказ
+                    Оформить заказ
                 </button>
-          </section>
+            </section>
         );
     }
 }

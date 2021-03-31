@@ -35,7 +35,7 @@ class ProductSlider extends Component {
                 mainImg.classList.add(...this.fadeInClassList);
                 this.slideTransitionEnabled = false;
             },
-            { once: true },
+            { once: true }
         );
     };
 

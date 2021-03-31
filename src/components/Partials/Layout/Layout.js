@@ -7,11 +7,11 @@ import styles from "./layout.module.scss";
 
 const Layout = ({ children }) => (
     <div className={styles.layout}>
-    <UpButton />
+        <UpButton />
         <Header />
         <main className={styles.main}>{children}</main>
         <Footer />
-  </div>
+    </div>
 );
 
 export default Layout;

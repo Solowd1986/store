@@ -1,4 +1,3 @@
-import { useHistory } from "react-router";
 import * as types from "./constants/auth";
 
 export const authUser = (data = null) => ({

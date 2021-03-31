@@ -12,9 +12,9 @@ export default function withParent(Component) {
             console.log(this.props);
             return (
                 <div>
-                parent
+                    parent
                     {super.render()}
-              </div>
+                </div>
             );
         }
     };

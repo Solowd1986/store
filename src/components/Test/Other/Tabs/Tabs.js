@@ -41,7 +41,7 @@ class Tabs extends Component {
             () => {
                 this.transitionEnd = true;
             },
-            { once: true },
+            { once: true }
         );
 
         targetContent.setAttribute("data-active", "true");

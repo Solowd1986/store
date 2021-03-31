@@ -30,3 +30,35 @@ export const scrollToTop = () => {
 export const scrollToBottom = () => {
     $("html, body").animate({ scrollTop: $(document).height() }, "slow");
 };
+
+
+//Данная функция всегда держит скролл наверху страницы, дублирование подьема наверх нужно для кросссбраузерности.
+const blockScroll = () => {
+    document.body.scrollTop = document.documentElement.scrollTop = 0;
+    window.scrollTo(0, 0);
+};
+
+export const disableScroll = () => {
+    window.addEventListener("scroll", blockScroll);
+};
+
+export const enableScroll = () => {
+    window.removeEventListener("scroll", blockScroll);
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

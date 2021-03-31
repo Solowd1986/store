@@ -29,7 +29,7 @@ function withDelay(PropsComponent, ms = 1500) {
                 return (
                     <div className={cn("overlay", "overlay__b-bg")}>
                         <Spinner />
-                  </div>
+                    </div>
                 );
             }
             return <PropsComponent />;

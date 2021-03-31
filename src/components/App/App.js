@@ -4,13 +4,12 @@ import Layout from "@components/Partials/Layout/Layout";
 import ErrorBoundary from "@components/Helpers/ErrorBoundary/ErrorBoundary";
 import ScrollToTop from "@components/Helpers/Hoc/withScrollToTop/ScrollToTop";
 
-import {
-    BrowserRouter, Redirect, Route, Switch,
-} from "react-router-dom";
+import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import getRoutes from "@root/routes/routes";
 import { Provider } from "react-redux";
 import store from "@redux/store";
 import { List, Map } from "immutable";
+import { doc } from "prettier";
 
 const state = List([
     Map({
@@ -47,10 +46,30 @@ const state3 = Map({
         }),
     ]),
 });
+
 const state4 = state3.setIn(["users"], state3.get("users").push(Map({ age: 44 })));
 
-// console.log(state4.getIn(["users", 3, "age"]));
 
+
+// let flag = false;
+// let offset = null;
+//
+// document.addEventListener("scroll", function (evt) {
+//     if (offset) {
+//         document.body.scrollTop = document.documentElement.scrollTop = window.pageYOffset;
+//         window.scrollTo(0, offset);
+//     }
+//     if (window.pageYOffset > 300 && !flag) {
+//         flag = true;
+//         offset = window.pageYOffset;
+//         document.body.scrollTop = document.documentElement.scrollTop = window.pageYOffset;
+//         window.scrollTo(0, offset);
+//     }
+// });
+
+
+
+// console.log(state4.getIn(["users", 3, "age"]));
 const isAuth = true;
 
 export default class App extends Component {
@@ -58,29 +77,27 @@ export default class App extends Component {
         return (
             <React.StrictMode>
                 <Provider store={store} value="Provide">
-                <BrowserRouter>
-                    <ErrorBoundary>
+                    <BrowserRouter>
+                        <ErrorBoundary>
                             <Layout>
-                        <ScrollToTop>
-                                  <Switch>
-                                      {getRoutes(isAuth).map((route) => (
-                                          <Route
-                                              key={route.url}
+                                <ScrollToTop>
+                                    <Switch>
+                                        {getRoutes(isAuth).map((route) => (
+                                            <Route
+                                                key={route.url}
                                                 path={route.url}
                                                 component={route.component}
                                                 exact={route.exact}
                                             />
                                         ))}
-                                      <Redirect to="/404" />
-                                        {" "}
-                                        {/* редирект, если рута не нашлось */}
+                                        <Redirect to="/404" />
                                     </Switch>
                                 </ScrollToTop>
-                      </Layout>
-                  </ErrorBoundary>
-                  </BrowserRouter>
-              </Provider>
-          </React.StrictMode>
+                            </Layout>
+                        </ErrorBoundary>
+                    </BrowserRouter>
+                </Provider>
+            </React.StrictMode>
         );
     }
 }

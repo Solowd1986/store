@@ -1,95 +1,95 @@
 import React, { Component } from "react";
-// import styles from "./auth.module.scss";
+import styles from "./auth.module.scss";
 
 class Auth extends Component {
     render() {
         return (
             <>
                 <div className={styles.form}>
-                <ul className="tab-group">
+                    <ul className="tab-group">
                         <li className="tab active">
                             <a href="#signup">Sign Up</a>
-                  </li>
+                        </li>
                         <li className="tab">
-                    <a href="#login">Log In</a>
-                  </li>
-                  </ul>
+                            <a href="#login">Log In</a>
+                        </li>
+                    </ul>
 
-                <div className="tab-content">
-                      <div id="signup">
-                          <h1>Sign Up for Free</h1>
+                    <div className="tab-content">
+                        <div id="signup">
+                            <h1>Sign Up for Free</h1>
 
-                          <form action="/" method="post">
+                            <form action="/" method="post">
                                 <div className="top-row">
                                     <div className="field-wrap">
                                         <label>
-                                        First Name
-                                            <span className="req">*</span>
-                                      </label>
-                                    <input type="text" required autoComplete="off" />
-                                  </div>
-
-                                <div className="field-wrap">
-                                        <label>
-                                        Last Name
+                                            First Name
                                             <span className="req">*</span>
                                         </label>
                                         <input type="text" required autoComplete="off" />
-                                  </div>
-                              </div>
+                                    </div>
+
+                                    <div className="field-wrap">
+                                        <label>
+                                            Last Name
+                                            <span className="req">*</span>
+                                        </label>
+                                        <input type="text" required autoComplete="off" />
+                                    </div>
+                                </div>
 
                                 <div className="field-wrap">
-                                <label>
-                                      Email Address
+                                    <label>
+                                        Email Address
                                         <span className="req">*</span>
                                     </label>
-                                <input type="email" required autoComplete="off" />
-                              </div>
+                                    <input type="email" required autoComplete="off" />
+                                </div>
 
                                 <div className="field-wrap">
-                                <label>
-                                      Set A Password
+                                    <label>
+                                        Set A Password
                                         <span className="req">*</span>
                                     </label>
-                                <input type="password" required autoComplete="off" />
-                              </div>
+                                    <input type="password" required autoComplete="off" />
+                                </div>
 
-                          <button type="submit" className="button button-block">
-                                Get Started
+                                <button type="submit" className="button button-block">
+                                    Get Started
                                 </button>
-                        </form>
+                            </form>
                         </div>
                     </div>
 
                     <div id="login">
-                    <h1>Welcome Back!</h1>
+                        <h1>Welcome Back!</h1>
 
-                    <form action="/" method="post">
-                    <div className="field-wrap">
+                        <form action="/" method="post">
+                            <div className="field-wrap">
                                 <label>
-                        Email Address
+                                    Email Address
                                     <span className="req">*</span>
-                      </label>
+                                </label>
                                 <input type="email" required autoComplete="off" />
-                        </div>
+                            </div>
 
-                    <div className="field-wrap">
-                          <label>
-                        Password
+                            <div className="field-wrap">
+                                <label>
+                                    Password
                                     <span className="req">*</span>
-                      </label>
-                          <input type="password" required autoComplete="off" />
+                                </label>
+                                <input type="password" required autoComplete="off" />
                             </div>
 
                             <p className="forgot">
                                 <a href="#">Forgot Password?</a>
-                        </p>
+                            </p>
 
                             <button className="button button-block">Log In</button>
                         </form>
                     </div>
-              </div>
-          </>
+                </div>
+            </>
         );
     }
 }

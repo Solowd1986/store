@@ -49,7 +49,7 @@ class MobileNavbar extends React.Component {
             "animate__animated",
             "animate__fadeIn",
             "animate__fast",
-            styles.header__mobile_menu_wrapper,
+            styles.header__mobile_menu_wrapper
         );
 
         return (

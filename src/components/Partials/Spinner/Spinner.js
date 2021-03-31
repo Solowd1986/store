@@ -7,7 +7,7 @@ class Spinner extends Component {
         return (
             <div className={styles.wrapper}>
                 <img className={styles.spinner} src={img} alt="spinner" />
-          </div>
+            </div>
         );
     }
 }

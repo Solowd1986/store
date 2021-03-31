@@ -11,6 +11,7 @@ import { Alert, DataStore2 } from "@components/Test/DataStore";
 
 import Auth from "@components/Test/Other/Form/Auth/Auth";
 
+
 class Promo extends Component {
     static propTypes = {
         index: PropTypes.shape({
@@ -28,6 +29,7 @@ class Promo extends Component {
                     {/*<DataStore2 />*/}
 
                     {/*<Auth/>*/}
+
 
                     <h2 className={styles.section_title}>Рекомендуем</h2>
                     <ul className={styles.list}>
