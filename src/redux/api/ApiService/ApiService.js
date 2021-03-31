@@ -1,6 +1,8 @@
+import axios from "axios";
+
 class ApiService {
     constructor() {
-        this._axios = require("axios").default;
+        this._axios = axios;
         this._retryCount = 0;
         this._lastRequestURI = null;
         this._decodeRecord = (recordName) => JSON.parse(decodeURIComponent(localStorage.getItem(recordName)));
