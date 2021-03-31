@@ -4,6 +4,7 @@ import Spinner from "@components/Partials/Spinner/Spinner";
 import * as util from "@components/Helpers/Functions/scrollbarHelper";
 
 function withDelay(PropsComponent, ms = 1500) {
+    // eslint-disable-next-line react/display-name
     return class extends Component {
         constructor(props) {
             super(props);

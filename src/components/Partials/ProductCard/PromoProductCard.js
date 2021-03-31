@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import styles from "./product-card.module.scss";
 
+/* eslint-disable react/jsx-key */
 class PromoProductCard extends Component {
     render() {
         const { alias, rest, adsType } = this.props.item;

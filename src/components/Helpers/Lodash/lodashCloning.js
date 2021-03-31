@@ -1,4 +1,5 @@
+import clone from "lodash.clonedeep";
+
 export default function createDeepCopyOfObject(object) {
-    const cloneDeep = require("lodash.clonedeep");
-    return cloneDeep(object);
+    return clone(object);
 }

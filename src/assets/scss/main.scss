@@ -1,7 +1,7 @@
 @import "~normalize.css";
-@import "~scss/utils/utils.scss";
-@import "~scss/partials/custom-reset.scss";
-@import "~scss/partials/fonts.css";
-@import "~scss/partials/core.module.scss";
+@import "@scss/utils/utils.scss";
+@import "@scss/partials/custom-reset.scss";
+@import "@scss/partials/fonts.css";
+@import "@scss/partials/core.module.scss";
 
 $gre: blue;

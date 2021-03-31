@@ -50,7 +50,7 @@ class OrderInfo extends Component {
                                 <span className={styles.card__pay}>бесплатно</span>
                             </div>
                             <div className={styles.card__extra}>
-                                Москва, Барклая 6, стр. 5, БЦ "Барклай Плаза" (м. Парк Победы)
+                                Москва, Барклая 6, стр. 5, БЦ &rdquo;Барклай Плаза&rdquo; (м. Парк Победы)
                             </div>
                         </label>
 

@@ -7,7 +7,6 @@ module.exports = function override(config, env) {
     '@components': path.resolve('src/components/'),
     '@redux': path.resolve('src/redux/'),
     '@scss': path.resolve('src/assets/scss/'),
-    '~scss': path.resolve('src/assets/scss/'),
   })(config, env);
 
   return config;

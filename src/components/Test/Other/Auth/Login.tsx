@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 
-// import * as cartSelector from "@redux/entities/cart/selectors/cartSelectors";
 import * as authActions from "@redux/entities/auth/actions";
 import { connect } from "react-redux";
 
@@ -10,6 +9,7 @@ const Profile = (props = "some data in props") => (
         <button>Exit from account</button>
     </div>
 );
+
 
 class Login extends Component {
     render() {

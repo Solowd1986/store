@@ -9,7 +9,6 @@ import getRoutes from "@root/routes/routes";
 import { Provider } from "react-redux";
 import store from "@redux/store";
 import { List, Map } from "immutable";
-import { doc } from "prettier";
 
 const state = List([
     Map({
@@ -48,24 +47,6 @@ const state3 = Map({
 });
 
 const state4 = state3.setIn(["users"], state3.get("users").push(Map({ age: 44 })));
-
-
-
-// let flag = false;
-// let offset = null;
-//
-// document.addEventListener("scroll", function (evt) {
-//     if (offset) {
-//         document.body.scrollTop = document.documentElement.scrollTop = window.pageYOffset;
-//         window.scrollTo(0, offset);
-//     }
-//     if (window.pageYOffset > 300 && !flag) {
-//         flag = true;
-//         offset = window.pageYOffset;
-//         document.body.scrollTop = document.documentElement.scrollTop = window.pageYOffset;
-//         window.scrollTo(0, offset);
-//     }
-// });
 
 
 

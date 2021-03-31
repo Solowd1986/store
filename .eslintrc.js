@@ -21,7 +21,6 @@ module.exports = {
         "jsx-a11y/img-redundant-alt": "off",
         "react/prop-types": "off",
         "@typescript-eslint/no-empty-function": "off"
-
     },
     settings: {
         react: {
