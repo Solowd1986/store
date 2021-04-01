@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import styles from './logo.module.scss';
 
-export default class Logo extends React.Component {
+export default class Logo extends Component {
     render() {
         return (
             <NavLink to="/" className={styles.header__logo_link}>

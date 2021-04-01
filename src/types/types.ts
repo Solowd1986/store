@@ -1,4 +1,4 @@
-export interface ProductType {
+export interface ProductTypes {
     id: number,
     title: string,
     desc: string,
@@ -13,8 +13,8 @@ export interface ProductType {
     specifications? : any
 }
 
-export interface CategoryType {
-    data: Array<ProductType>,
+export interface CategoryTypes {
+    data: Array<ProductTypes>,
     main: {
         alias: string,
         img: { path: string, alt: string },
@@ -22,11 +22,11 @@ export interface CategoryType {
     }
 }
 
-export interface IndexPageType {
+export interface IndexPageTypes {
     readonly index: {
-        phones: CategoryType
-        gadgets: CategoryType,
-        accessoires: CategoryType
+        phones: CategoryTypes
+        gadgets: CategoryTypes,
+        accessoires: CategoryTypes
     }
 }
 

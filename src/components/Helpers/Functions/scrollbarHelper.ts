@@ -1,6 +1,6 @@
 import $ from 'jquery';
 
-export const calcScrollBarWidth = () => {
+export const calcScrollBarWidth = ():number => {
     // Получаем ширину окна, это аналог width: 100vw (то есть ширина 100% + ширина scrollbar)
     const windowWidth = window.innerWidth;
     // Получаем ширину документа, это аналог width: 100%
@@ -10,7 +10,7 @@ export const calcScrollBarWidth = () => {
     return windowWidth - documentWidth;
 };
 
-export const addScrollbarOffset = () => {
+export const addScrollbarOffset = ():void => {
     const scrollBarWidth = calcScrollBarWidth();
     document.body.style.overflow = 'hidden';
     if (scrollBarWidth > 0) {
@@ -18,29 +18,29 @@ export const addScrollbarOffset = () => {
     }
 };
 
-export const removeScrollbarOffset = () => {
+export const removeScrollbarOffset = ():void => {
     document.body.style.removeProperty('overflow');
     document.body.style.removeProperty('padding-right');
 };
 
-export const scrollToTop = () => {
+export const scrollToTop = ():void => {
     $('html, body').animate({ scrollTop: 0 }, 'slow');
 };
 
-export const scrollToBottom = () => {
+export const scrollToBottom = ():void => {
     $('html, body').animate({ scrollTop: $(document).height() }, 'slow');
 };
 
 //Данная функция всегда держит скролл наверху страницы, дублирование подьема наверх нужно для кросссбраузерности.
-const blockScroll = () => {
+const blockScroll = ():void => {
     document.body.scrollTop = document.documentElement.scrollTop = 0;
     window.scrollTo(0, 0);
 };
 
-export const disableScroll = () => {
+export const disableScroll = ():void => {
     window.addEventListener('scroll', blockScroll);
 };
 
-export const enableScroll = () => {
+export const enableScroll = ():void => {
     window.removeEventListener('scroll', blockScroll);
 };

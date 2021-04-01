@@ -52,7 +52,7 @@ const state3 = Map({
 const isAuth = true;
 
 export default class App extends Component {
-    render() {
+    render(): React.ReactNode {
         return (
             <React.StrictMode>
                 <Provider store={store}>

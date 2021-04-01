@@ -18,7 +18,7 @@ class ErrorBoundary extends Component<{ children: React.ReactNode }, { hasError:
 
     resetErrorState = ():void => this.setState({ hasError: false });
 
-    render() {
+    render(): React.ReactNode{
         if (this.state.hasError) {
             return <Error400 resetErrorState={this.resetErrorState}/>;
         }

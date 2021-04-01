@@ -2,34 +2,24 @@ import React, { PureComponent } from 'react';
 import styles from './up-button.module.scss';
 import cn from 'classnames';
 
-class UpButton extends PureComponent {
-    constructor(props) {
-        super(props);
-        this.state = {
-            isPageScrolledToBottom: false,
-        };
-    }
+class UpButton extends PureComponent<{ isisPageScrolledToBottom: boolean }> {
 
-    componentDidMount() {
+    state = {
+        isPageScrolledToBottom: false,
+    };
+
+    componentDidMount(): void {
         window.addEventListener('scroll', this.handleScroll);
     }
 
-    componentWillUnmount() {
+    componentWillUnmount(): void {
         window.removeEventListener('scroll', this.handleScroll);
     }
 
-    handleScroll = () => {
+    handleScroll = ():void => {
         const offset = window.scrollY;
         const viewport = document.documentElement.clientHeight;
-        if (offset > viewport) {
-            this.setState({
-                isPageScrolledToBottom: true,
-            });
-        } else {
-            this.setState({
-                isPageScrolledToBottom: false,
-            });
-        }
+        offset > viewport ? this.setState({ isPageScrolledToBottom: true}) : this.setState({ isPageScrolledToBottom: false});
     };
 
     scrollUp = () => {
