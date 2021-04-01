@@ -1,11 +1,11 @@
-import React, { PureComponent } from "react";
-import styles from "./header.module.scss";
-import cn from "classnames";
+import React, { PureComponent } from 'react';
+import styles from './header.module.scss';
+import cn from 'classnames';
 
-import MobileNavbar from "./Partials/MobileNavbar/MobileNavbar";
-import Logo from "./Partials/Logo/Logo";
-import NavbarList from "./Partials/NavbarList/NavbarList";
-import Userbar from "./Partials/Userbar/Userbar";
+import MobileNavbar from './Partials/MobileNavbar/MobileNavbar';
+import Logo from './Partials/Logo/Logo';
+import NavbarList from './Partials/NavbarList/NavbarList';
+import Userbar from './Partials/Userbar/Userbar';
 
 class Header extends PureComponent {
     constructor(props) {
@@ -18,20 +18,17 @@ class Header extends PureComponent {
     }
 
     componentDidMount() {
-        window.addEventListener("scroll", this.handleScroll);
+        window.addEventListener('scroll', this.handleScroll);
     }
 
     componentWillUnmount() {
-        window.removeEventListener("scroll", this.handleScroll);
+        window.removeEventListener('scroll', this.handleScroll);
     }
 
     handleScroll = () => {
         if (window.scrollY > window.innerHeight + this.header.current.clientHeight && this.state.isPageScrolled) return;
-        if (window.scrollY < window.innerHeight + this.header.current.clientHeight && !this.state.isPageScrolled)
-            return;
-        window.scrollY > window.innerHeight + this.header.current.clientHeight
-            ? this.setState({ isPageScrolled: true })
-            : this.setState({ isPageScrolled: false });
+        if (window.scrollY < window.innerHeight + this.header.current.clientHeight && !this.state.isPageScrolled) return;
+        window.scrollY > window.innerHeight + this.header.current.clientHeight ? this.setState({ isPageScrolled: true }) : this.setState({ isPageScrolled: false });
     };
 
     //region Механизм фиксации header
@@ -55,9 +52,7 @@ class Header extends PureComponent {
         });
 
         if (this.offset.current) {
-            this.state.isPageScrolled
-                ? (this.offset.current.style.minHeight = `${this.header.current.clientHeight}px`)
-                : this.offset.current.style.removeProperty("min-height");
+            this.state.isPageScrolled ? (this.offset.current.style.minHeight = `${this.header.current.clientHeight}px`) : this.offset.current.style.removeProperty('min-height');
         }
         return (
             <>
@@ -66,7 +61,7 @@ class Header extends PureComponent {
                     <a className={`${styles.portfolio_controls} ${styles.portfolio_controls__right}`} href="#">
                         перейти на GitHub проекта
                     </a>
-                    <nav className={cn("wrapper", styles.common)}>
+                    <nav className={cn('wrapper', styles.common)}>
                         <MobileNavbar />
                         <Logo />
                         <NavbarList />

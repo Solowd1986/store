@@ -1,6 +1,6 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
-import styles from "./logo.module.scss";
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+import styles from './logo.module.scss';
 
 export default class Logo extends React.Component {
     render() {

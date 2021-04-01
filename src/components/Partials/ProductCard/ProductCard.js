@@ -1,13 +1,13 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
-import ProductPrice from "@components/Partials/ProductPrice/ProductPrice";
-import OrderButton from "@components/Partials/OrderButton/OrderButton";
-import PromoProductCard from "./PromoProductCard";
-import { NavLink } from "react-router-dom";
-import * as PropTypes from "prop-types";
+import ProductPrice from '@components/Partials/ProductPrice/ProductPrice';
+import OrderButton from '@components/Partials/OrderButton/OrderButton';
+import PromoProductCard from './PromoProductCard';
+import { NavLink } from 'react-router-dom';
+import * as PropTypes from 'prop-types';
 
-import styles from "./product-card.module.scss";
-import cn from "classnames";
+import styles from './product-card.module.scss';
+import cn from 'classnames';
 
 class ProductCard extends Component {
     static propTypes = {
@@ -26,16 +26,14 @@ class ProductCard extends Component {
             [styles.not_in_stock]: !rest,
         });
 
-        const productColor = item.specifications ? (
-            <span className={styles.color}>{`"${item.specifications.color}"`}</span>
-        ) : null;
+        const productColor = item.specifications ? <span className={styles.color}>{`"${item.specifications.color}"`}</span> : null;
 
         return (
             <li key={item.id} className={styles.item}>
                 <span className={tagClassList}>В наличии</span>
 
                 <NavLink to={`/product/${category.alias}/${item.id}`}>
-                    <img className={styles.img} src={item.img.md} alt={item["img_alt"]} />
+                    <img className={styles.img} src={item.img.md} alt={item['img_alt']} />
                 </NavLink>
 
                 <div className={styles.title}>
@@ -47,7 +45,7 @@ class ProductCard extends Component {
                     item={{
                         alias: category.alias,
                         rest: item.rest,
-                        adsType: item["ads_type"],
+                        adsType: item['ads_type'],
                     }}
                 />
                 <ProductPrice product={item} />

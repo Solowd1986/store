@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 export const o7t = (
     <svg viewBox="0 0 1000 1000" width={32} height={32}>

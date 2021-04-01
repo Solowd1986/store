@@ -1,5 +1,5 @@
-import React from "react";
-import styles from "../order-button.module.scss";
+import React from 'react';
+import styles from '../order-button.module.scss';
 
 const cartIcon = (
     <svg className={styles.btn_img} xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 1000 1000">

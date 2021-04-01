@@ -19,6 +19,9 @@
       ],
       "@scss/*": [
         "src/assets/scss/*"
+      ],
+      "@custom-types/*": [
+        "src/types/*"
       ]
     },
     "allowJs": true,
@@ -34,7 +37,6 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "sourceMap": true,
-    "declaration": true,
     "noUnusedLocals": false,
     "noUnusedParameters": true,
     "incremental": true,

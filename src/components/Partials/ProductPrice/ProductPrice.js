@@ -1,6 +1,6 @@
-import React from "react";
-import cn from "classnames";
-import styles from "./product-price.module.scss";
+import React from 'react';
+import cn from 'classnames';
+import styles from './product-price.module.scss';
 
 // region Описание
 /**
@@ -12,7 +12,7 @@ import styles from "./product-price.module.scss";
  * В конце округляем результат преобразования цены до сотен
  */
 // endregion
-const ProductPrice = ({ product: { price, discount, rest }, classList = { main: "", discount: "" } }) => {
+const ProductPrice = ({ product: { price, discount, rest }, classList = { main: '', discount: '' } }) => {
     const formatPrice = (price) => new Intl.NumberFormat().format(price);
 
     const initialPriceClassList = cn(styles.discount, {
@@ -23,9 +23,7 @@ const ProductPrice = ({ product: { price, discount, rest }, classList = { main: 
     });
 
     const initialPrice = discount ? <span className={initialPriceClassList}>{formatPrice(price)} р.</span> : null;
-    const finalPrice = discount
-        ? `${formatPrice(Math.round(((price - (price * 10) / 100) / 100) * 100))} р.`
-        : `${formatPrice(price)} р.`;
+    const finalPrice = discount ? `${formatPrice(Math.round(((price - (price * 10) / 100) / 100) * 100))} р.` : `${formatPrice(price)} р.`;
 
     if (!rest) return null;
     return (

@@ -1,15 +1,15 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
-import styles from "./mobile-navbar.module.scss";
-import cn from "classnames";
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+import styles from './mobile-navbar.module.scss';
+import cn from 'classnames';
 
 class MobileNavbar extends React.Component {
     state = {
         isMobileMenuVisible: false,
     };
 
-    disableScroll = () => (document.body.style.overflow = "hidden");
-    enableScroll = () => document.body.style.removeProperty("overflow");
+    disableScroll = () => (document.body.style.overflow = 'hidden');
+    enableScroll = () => document.body.style.removeProperty('overflow');
 
     toggleMobileMenu = (evt) => {
         !this.state.isMobileMenuVisible ? this.disableScroll() : this.enableScroll();
@@ -31,13 +31,13 @@ class MobileNavbar extends React.Component {
     };
 
     componentDidMount() {
-        window.addEventListener("resize", this.handlerResizePage);
+        window.addEventListener('resize', this.handlerResizePage);
     }
 
     componentWillUnmount() {
         this.enableScroll();
         this.setState((state) => ({ isMobileMenuVisible: false }));
-        window.removeEventListener("resize", this.handlerResizePage);
+        window.removeEventListener('resize', this.handlerResizePage);
     }
 
     render() {
@@ -45,12 +45,7 @@ class MobileNavbar extends React.Component {
             [styles.mobile_menu__icon__active]: this.state.isMobileMenuVisible,
         });
 
-        const classListMenuWrapper = cn(
-            "animate__animated",
-            "animate__fadeIn",
-            "animate__fast",
-            styles.header__mobile_menu_wrapper
-        );
+        const classListMenuWrapper = cn('animate__animated', 'animate__fadeIn', 'animate__fast', styles.header__mobile_menu_wrapper);
 
         return (
             <>
@@ -60,26 +55,26 @@ class MobileNavbar extends React.Component {
                 <div className={classListMenuWrapper}>
                     <ul className={styles.header__mobile_menu_list}>
                         <li>
-                            <NavLink onClick={this.handlerClickLink} to={"/category/phones"}>
-                                {" "}
+                            <NavLink onClick={this.handlerClickLink} to={'/category/phones'}>
+                                {' '}
                                 Смартфоны
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink onClick={this.handlerClickLink} to={"/category/accessoires"}>
-                                {" "}
+                            <NavLink onClick={this.handlerClickLink} to={'/category/accessoires'}>
+                                {' '}
                                 Аксессуары
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink onClick={this.handlerClickLink} to={"/category/gadgets"}>
-                                {" "}
+                            <NavLink onClick={this.handlerClickLink} to={'/category/gadgets'}>
+                                {' '}
                                 Гаджеты
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink onClick={this.handlerClickLink} to={"/delivery"}>
-                                {" "}
+                            <NavLink onClick={this.handlerClickLink} to={'/delivery'}>
+                                {' '}
                                 Доставка
                             </NavLink>
                         </li>

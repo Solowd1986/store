@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import styles from "./with-modal.module.scss";
-import classNames from "classnames";
-import * as util from "@components/Helpers/Functions/scrollbarHelper";
+import React, { Component } from 'react';
+import styles from './with-modal.module.scss';
+import classNames from 'classnames';
+import * as util from '@components/Helpers/Functions/scrollbarHelper';
 
 //<editor-fold desc="Описание">
 /**
@@ -19,7 +19,7 @@ function withModal(WrappedComponent, { fixed = false, bg = true, interactionsDis
         }
 
         closeModal = (evt) => {
-            if (!("modal" in evt.target.dataset) || interactionsDisabled) return;
+            if (!('modal' in evt.target.dataset) || interactionsDisabled) return;
             this.setState({
                 isModalActive: false,
             });
@@ -49,7 +49,7 @@ function withModal(WrappedComponent, { fixed = false, bg = true, interactionsDis
             if (!this.state.isModalActive) return null;
 
             const classList = classNames({
-                "overlay": !fixed,
+                overlay: !fixed,
                 [styles.wrapper]: fixed,
                 [styles.bg]: bg,
             });

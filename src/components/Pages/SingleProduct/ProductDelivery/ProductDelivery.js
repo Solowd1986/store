@@ -1,5 +1,5 @@
-import React from "react";
-import styles from "./delivery.module.scss";
+import React from 'react';
+import styles from './delivery.module.scss';
 
 const ProductDelivery = (props) => (
     <>
@@ -8,9 +8,7 @@ const ProductDelivery = (props) => (
             <h3 className={styles.shipping_city}>Доставка по Москве</h3>
             <p className={styles.shipping_conditions}>Самовывоз из магазина - сегодня, м. Парк Победы</p>
             <h3 className={styles.shipping_country}>Доставка по России</h3>
-            <p className={styles.shipping_conditions}>
-                Доставка транспортными компаниями: СДЭК, PickPoint, Boxberry, 390 р.
-            </p>
+            <p className={styles.shipping_conditions}>Доставка транспортными компаниями: СДЭК, PickPoint, Boxberry, 390 р.</p>
 
             <h2 className={styles.payment_title}>Оплата</h2>
             <p className={styles.payment_options}>Наличными</p>
@@ -21,9 +19,7 @@ const ProductDelivery = (props) => (
             <h3 className={styles.shipping_city}>Доставка по Москве</h3>
             <p className={styles.shipping_conditions}>Самовывоз из магазина - сегодня, м. Парк Победы</p>
             <h3 className={styles.shipping_country}>Доставка по России</h3>
-            <p className={styles.shipping_conditions}>
-                Доставка транспортными компаниями: СДЭК, PickPoint, Boxberry, 390 р.
-            </p>
+            <p className={styles.shipping_conditions}>Доставка транспортными компаниями: СДЭК, PickPoint, Boxberry, 390 р.</p>
 
             <h2 className={styles.payment_title}>Оплата</h2>
             <p className={styles.payment_options}>Наличными</p>

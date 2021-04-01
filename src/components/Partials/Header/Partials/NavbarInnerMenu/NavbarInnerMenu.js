@@ -1,21 +1,16 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
-import styles from "./nav-bar-inner-menu.module.scss";
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+import styles from './nav-bar-inner-menu.module.scss';
 
 const listMenuTitles = {
-    phones: ["OnePlus 7T Pro", "OnePlus 7T", "OnePlus 7", "OnePlus 6T Pro", "OnePlus 6"],
-    accessoires: ["Чехлы & Защита", "Зарядные кабели", "Аудио устройства", "Умные часы"],
-    gadgets: ["Умный дом", "Аккумуляторы", "Все для авто", "Роботы-пылесосы"],
+    phones: ['OnePlus 7T Pro', 'OnePlus 7T', 'OnePlus 7', 'OnePlus 6T Pro', 'OnePlus 6'],
+    accessoires: ['Чехлы & Защита', 'Зарядные кабели', 'Аудио устройства', 'Умные часы'],
+    gadgets: ['Умный дом', 'Аккумуляторы', 'Все для авто', 'Роботы-пылесосы'],
 };
 
 const NavbarInnerMenu = (props) => {
     const { category } = this.props.category;
-    const innerListClasses = classNames(
-        "animate__animated",
-        "animate__fadeIn",
-        "animate__fast",
-        styles.header__inner_list
-    );
+    const innerListClasses = classNames('animate__animated', 'animate__fadeIn', 'animate__fast', styles.header__inner_list);
 
     return (
         <ul className={innerListClasses}>

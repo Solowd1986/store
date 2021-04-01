@@ -1,6 +1,6 @@
-import React, { PureComponent } from "react";
-import styles from "./up-button.module.scss";
-import cn from "classnames";
+import React, { PureComponent } from 'react';
+import styles from './up-button.module.scss';
+import cn from 'classnames';
 
 class UpButton extends PureComponent {
     constructor(props) {
@@ -11,11 +11,11 @@ class UpButton extends PureComponent {
     }
 
     componentDidMount() {
-        window.addEventListener("scroll", this.handleScroll);
+        window.addEventListener('scroll', this.handleScroll);
     }
 
     componentWillUnmount() {
-        window.removeEventListener("scroll", this.handleScroll);
+        window.removeEventListener('scroll', this.handleScroll);
     }
 
     handleScroll = () => {
@@ -33,7 +33,7 @@ class UpButton extends PureComponent {
     };
 
     scrollUp = () => {
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     render() {

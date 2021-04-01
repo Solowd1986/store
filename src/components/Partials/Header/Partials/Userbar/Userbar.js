@@ -1,8 +1,8 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
-import * as cartSelectors from "@redux/entities/cart/selectors/cartSelectors";
-import { connect } from "react-redux";
-import styles from "./userbar.module.scss";
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+import * as cartSelectors from '@redux/entities/cart/selectors/cartSelectors';
+import { connect } from 'react-redux';
+import styles from './userbar.module.scss';
 
 class Userbar extends React.Component {
     render() {

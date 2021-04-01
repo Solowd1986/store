@@ -1,18 +1,18 @@
-import React, { Component } from "react";
-import styles from "./product.module.scss";
-import cn from "classnames";
+import React, { Component } from 'react';
+import styles from './product.module.scss';
+import cn from 'classnames';
 
-import OrderButton from "@components/Partials/OrderButton/OrderButton";
-import ProductPrice from "@components/Partials/ProductPrice/ProductPrice";
-import PromoBadge from "@components/Partials/PromoBadge/PromoBadge";
-import ProductSlider from "./ProductSlider/ProductSlider";
-import ProductTabs from "./ProductTabs/ProductTabs";
-import Spinner from "@components/Partials/Spinner/Spinner";
+import OrderButton from '@components/Partials/OrderButton/OrderButton';
+import ProductPrice from '@components/Partials/ProductPrice/ProductPrice';
+import PromoBadge from '@components/Partials/PromoBadge/PromoBadge';
+import ProductSlider from './ProductSlider/ProductSlider';
+import ProductTabs from './ProductTabs/ProductTabs';
+import Spinner from '@components/Partials/Spinner/Spinner';
 
-import { bindActionCreators } from "redux";
-import * as serverActions from "@redux/entities/server/actions";
-import * as serverSelectors from "@redux/entities/server/selectors/serverSelectors";
-import { connect } from "react-redux";
+import { bindActionCreators } from 'redux';
+import * as serverActions from '@redux/entities/server/actions';
+import * as serverSelectors from '@redux/entities/server/selectors/serverSelectors';
+import { connect } from 'react-redux';
 
 class Product extends Component {
     state = {
@@ -44,12 +44,12 @@ class Product extends Component {
             main: `${styles.price}`,
             discount: `${styles.discount}`,
         };
-        const productAvailability = "Наличие: " + (product.rest === 0 ? "нет в наличии" : "в наличии");
+        const productAvailability = 'Наличие: ' + (product.rest === 0 ? 'нет в наличии' : 'в наличии');
 
         return (
             <>
-                <section className={cn("container", styles.item_bg)}>
-                    <div className={cn("wrapper", styles.order)}>
+                <section className={cn('container', styles.item_bg)}>
+                    <div className={cn('wrapper', styles.order)}>
                         <ProductSlider list={product.slider} alt={product.img_alt} />
                         <div className={styles.order__info_wrapper}>
                             <h1 className={styles.order__title}>{product.title}</h1>

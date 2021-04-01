@@ -1,6 +1,6 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
-import styles from "./navbar-list.module.scss";
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+import styles from './navbar-list.module.scss';
 
 class NavbarList extends React.Component {
     render() {
@@ -8,11 +8,7 @@ class NavbarList extends React.Component {
             <ul className={styles.header__nav_list}>
                 {/* Смартфоны */}
                 <li className={styles.header__nav_item}>
-                    <NavLink
-                        to="/category/phones"
-                        className={styles.header__nav_link}
-                        activeClassName={styles.link_active_class}
-                    >
+                    <NavLink to="/category/phones" className={styles.header__nav_link} activeClassName={styles.link_active_class}>
                         Смартфоны
                         <span className={styles.header__nav_link__arrow} />
                     </NavLink>
@@ -67,11 +63,7 @@ class NavbarList extends React.Component {
                 </li>
                 {/* Аксессуары */}
                 <li className={styles.header__nav_item}>
-                    <NavLink
-                        to="/category/accessoires"
-                        className={styles.header__nav_link}
-                        activeClassName={styles.link_active_class}
-                    >
+                    <NavLink to="/category/accessoires" className={styles.header__nav_link} activeClassName={styles.link_active_class}>
                         Аксессуары
                         <span className={styles.header__nav_link__arrow} />
                     </NavLink>
@@ -145,11 +137,7 @@ class NavbarList extends React.Component {
 
                 {/* Гаджеты */}
                 <li className={styles.header__nav_item}>
-                    <NavLink
-                        to="/category/gadgets"
-                        className={styles.header__nav_link}
-                        activeClassName={styles.link_active_class}
-                    >
+                    <NavLink to="/category/gadgets" className={styles.header__nav_link} activeClassName={styles.link_active_class}>
                         Гаджеты
                         <span className={styles.header__nav_link__arrow} />
                     </NavLink>
@@ -195,17 +183,7 @@ class NavbarList extends React.Component {
                                         strokeMiterlimit={10}
                                         strokeWidth={2}
                                     />
-                                    <circle
-                                        cx={25}
-                                        cy={25}
-                                        fill="none"
-                                        r={4}
-                                        stroke="#000"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeMiterlimit={10}
-                                        strokeWidth={2}
-                                    />
+                                    <circle cx={25} cy={25} fill="none" r={4} stroke="#000" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit={10} strokeWidth={2} />
                                 </svg>
                                 <span>Все для авто</span>
                             </NavLink>

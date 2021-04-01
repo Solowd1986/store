@@ -1,5 +1,5 @@
-import React from "react";
-import styles from "./brandstory.module.scss";
+import React from 'react';
+import styles from './brandstory.module.scss';
 
 const BrandStory = (props) => (
     <section className={styles.brand_story}>
@@ -12,10 +12,7 @@ const BrandStory = (props) => (
                     <h4 className={styles.brand_story__subtitle}>
                         Завораживающий <br /> 120 Гц экран
                     </h4>
-                    <p className={styles.brand_story__desc}>
-                        Мы представили в OnePlus 8 Pro лидирующий в отрасли жидкостный жидкокристаллический дисплей с
-                        частотой 90 Гц.
-                    </p>
+                    <p className={styles.brand_story__desc}>Мы представили в OnePlus 8 Pro лидирующий в отрасли жидкостный жидкокристаллический дисплей с частотой 90 Гц.</p>
                     <a className={styles.brand_story__link} href="/">
                         Узнать больше...
                     </a>
@@ -31,10 +28,7 @@ const BrandStory = (props) => (
                     <h4 className={styles.brand_story__subtitle}>
                         Игровой режим <br /> «Fnatic Mode»
                     </h4>
-                    <p className={styles.brand_story__desc}>
-                        В сотрудничестве с профессиональной киберспортивной командой Fnatic был создан режим OnePlus
-                        Gaming
-                    </p>
+                    <p className={styles.brand_story__desc}>В сотрудничестве с профессиональной киберспортивной командой Fnatic был создан режим OnePlus Gaming</p>
                     <a className={styles.brand_story__link} href="/">
                         Узнать больше...
                     </a>
@@ -51,10 +45,7 @@ const BrandStory = (props) => (
                         Создаем наши устройства <br />
                         вместе с вами!
                     </h4>
-                    <p className={styles.brand_story__desc}>
-                        Мы провели множество глобальных ивентов и митапов в 11 странах и 26 городах, с более чем 15 000
-                        участников
-                    </p>
+                    <p className={styles.brand_story__desc}>Мы провели множество глобальных ивентов и митапов в 11 странах и 26 городах, с более чем 15 000 участников</p>
                     <a className={styles.brand_story__link} href="/">
                         Узнать больше...
                     </a>

@@ -4,5 +4,6 @@ System.config({
     '@components/*': './src/components/*',
     '@redux/*': './src/redux/*',
     '@scss/*': './src/assets/scss/*',
+    '@custom-types/*': './src/types*',
   },
 });

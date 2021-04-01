@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import cn from "classnames";
-import Spinner from "@components/Partials/Spinner/Spinner";
-import * as util from "@components/Helpers/Functions/scrollbarHelper";
+import React, { Component } from 'react';
+import cn from 'classnames';
+import Spinner from '@components/Partials/Spinner/Spinner';
+import * as util from '@components/Helpers/Functions/scrollbarHelper';
 
 function withDelay(PropsComponent, ms = 1500) {
     // eslint-disable-next-line react/display-name
@@ -28,7 +28,7 @@ function withDelay(PropsComponent, ms = 1500) {
         render() {
             if (!this.state.isDelayEnded) {
                 return (
-                    <div className={cn("overlay", "overlay__b-bg")}>
+                    <div className={cn('overlay', 'overlay__b-bg')}>
                         <Spinner />
                     </div>
                 );

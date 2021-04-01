@@ -1,4 +1,4 @@
-import * as types from "./constants/server";
+import * as types from './constants/server';
 
 export const fetchPageData = (params) => async (dispatch, getState, api) => {
     const {
@@ -6,8 +6,8 @@ export const fetchPageData = (params) => async (dispatch, getState, api) => {
         history,
     } = params;
     const isThatIndexPage = !Object.keys(data).length;
-    const uri = isThatIndexPage ? "index" : `${route.match(/\/([a-z]*)\/:/)[1]}/${Object.values(data).join("/")}`;
-    const pageType = !Object.keys(data).length ? "index" : route.match(/\/([a-z]*)\/:/)[1];
+    const uri = isThatIndexPage ? 'index' : `${route.match(/\/([a-z]*)\/:/)[1]}/${Object.values(data).join('/')}`;
+    const pageType = !Object.keys(data).length ? 'index' : route.match(/\/([a-z]*)\/:/)[1];
     dispatch({ type: types.SERVER_START_FETCH_DATA });
 
     try {
@@ -19,21 +19,21 @@ export const fetchPageData = (params) => async (dispatch, getState, api) => {
         dispatch({ type: types.SERVER_END_FETCH_DATA });
     } catch (error) {
         dispatch({ type: types.SERVER_END_FETCH_DATA });
-        const status = error.response ? error.response.status : error.code === "ECONNABORTED" ? 500 : 400;
+        const status = error.response ? error.response.status : error.code === 'ECONNABORTED' ? 500 : 400;
         switch (status) {
-        case 400: {
-            history.push("/400");
-            break;
-        }
-        case 404: {
-            history.push("/404");
-            break;
-        }
-        case 500: {
-            history.push("/500");
-            break;
-        }
-        default:
+            case 400: {
+                history.push('/400');
+                break;
+            }
+            case 404: {
+                history.push('/404');
+                break;
+            }
+            case 500: {
+                history.push('/500');
+                break;
+            }
+            default:
         }
     }
 };
@@ -53,21 +53,21 @@ export const fetchLazyCategoryProducts = (category, index, history) => async (di
         dispatch({ type: types.SERVER_END_FETCH_DATA });
     } catch (error) {
         dispatch({ type: types.SERVER_END_FETCH_DATA });
-        const status = error.response ? error.response.status : error.code === "ECONNABORTED" ? 500 : 400;
+        const status = error.response ? error.response.status : error.code === 'ECONNABORTED' ? 500 : 400;
         switch (status) {
-        case 400: {
-            history.push("/400");
-            break;
-        }
-        case 404: {
-            history.push("/404");
-            break;
-        }
-        case 500: {
-            history.push("/500");
-            break;
-        }
-        default:
+            case 400: {
+                history.push('/400');
+                break;
+            }
+            case 404: {
+                history.push('/404');
+                break;
+            }
+            case 500: {
+                history.push('/500');
+                break;
+            }
+            default:
         }
     }
 };

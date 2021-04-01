@@ -38,7 +38,7 @@
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "test": "react-app-rewired test",
     "prettier scss": "prettier --write ./src/**/*.scss",
-    "prettier js": "prettier --write ./src/**/*.js",
+    "prettier js": "prettier --write ./src/**/*.{js,tsx}",
     "prettier-lint": "prettier-eslint --write ./src/**/*.js",
     "fix": "npx eslint . --fix"
   },
@@ -47,10 +47,6 @@
       "react-app",
       "react-app/jest"
     ]
-  },
-  "prettier": {
-    "singleQuote": false,
-    "printWidth": 120
   },
   "browserslist": {
     "production": [
@@ -74,11 +70,13 @@
   },
   "proxy": "http://react.test/src/rest/php/index.php",
   "devDependencies": {
+    "@types/classnames": "2.2.11",
     "@types/jest": "26.0.22",
     "@types/node": "14.14.37",
     "@types/react": "17.0.3",
     "@types/react-dom": "17.0.3",
     "@types/react-redux": "7.1.16",
+    "@types/react-router-dom": "5.1.7",
     "@typescript-eslint/eslint-plugin": "4.20.0",
     "@typescript-eslint/parser": "4.20.0",
     "@welldone-software/why-did-you-render": "6.1.1",
