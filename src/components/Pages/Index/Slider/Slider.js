@@ -1,18 +1,18 @@
-import React, { PureComponent } from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { PureComponent } from "react";
+import { NavLink } from "react-router-dom";
 
-import $ from 'jquery';
-import styles from './slider.module.scss';
-import 'slick-carousel/slick/slick.min';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
+import $ from "jquery";
+import styles from "./slider.module.scss";
+import "slick-carousel/slick/slick.min";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 class Slider extends PureComponent {
     // Инициализация слайдера после отрисовки компонента. Была ошибка "cant't call add", это из-за
     // двойной инициализации, поэтому тут проверка - not('.slick-initialized'), и только потом инициализация
     componentDidMount() {
         $(document).ready(() => {
-            $('.slider-slick').not('.slick-initialized').slick({
+            $(".slider-slick").not(".slick-initialized").slick({
                 arrows: false,
                 slidesToShow: 1,
                 slidesToScroll: 1,

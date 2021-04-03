@@ -1,7 +1,7 @@
-import * as types from './constants/sort';
+import * as types from "./constants/sort";
 
 const initialState = {
-    sortType: 'по популярности',
+    sortType: "по популярности",
 };
 
 export default (state = initialState, action) => {
@@ -14,7 +14,7 @@ export default (state = initialState, action) => {
 
         case types.SORT_DISCARD_SORT_TYPE: {
             return {
-                sortType: 'по популярности',
+                sortType: "по популярности",
             };
         }
         default: {

@@ -1,30 +1,30 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-import Layout from '@components/Partials/Layout/Layout';
-import ErrorBoundary from '@components/Helpers/ErrorBoundary/ErrorBoundary';
-import ScrollToTop from '@components/Helpers/Hoc/withScrollToTop/ScrollToTop';
+import Layout from "@components/Partials/Layout/Layout";
+import ErrorBoundary from "@components/Helpers/ErrorBoundary/ErrorBoundary";
+import ScrollToTop from "@components/Helpers/Hoc/withScrollToTop/ScrollToTop";
 
-import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
-import getRoutes from '@root/routes/routes';
-import { Provider } from 'react-redux';
-import store from '@redux/store';
-import { List, Map } from 'immutable';
+import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
+import getRoutes from "@root/routes/routes";
+import { Provider } from "react-redux";
+import store from "@redux/store";
+import { List, Map } from "immutable";
 
 const state = List([
     Map({
-        name: 'glen',
+        name: "glen",
     }),
     Map({
-        name: 'stan',
+        name: "stan",
     }),
 ]);
 
-const store2 = state.setIn([0, 'name'], 'deo');
+const store2 = state.setIn([0, "name"], "deo");
 
 // console.log(store2.get(0).get("name"));
 // console.log(store2.getIn([0, "name"]));
 
-const arrayblock = ['Bob', 'Stan', 'Bill'];
+const arrayblock = ["Bob", "Stan", "Bill"];
 const res = arrayblock.splice(0);
 
 // console.log(res);
@@ -62,7 +62,12 @@ export default class App extends Component {
                                 <ScrollToTop>
                                     <Switch>
                                         {getRoutes(isAuth).map((route) => (
-                                            <Route key={route.url} path={route.url} component={route.component} exact={route.exact} />
+                                            <Route
+                                                key={route.url}
+                                                path={route.url}
+                                                component={route.component}
+                                                exact={route.exact}
+                                            />
                                         ))}
                                         <Redirect to="/404" />
                                     </Switch>

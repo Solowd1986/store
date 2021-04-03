@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
-import styles from './order_item.module.scss';
-import cn from 'classnames';
-import * as PropTypes from 'prop-types';
+import React, { Component } from "react";
+import styles from "./order_item.module.scss";
+import cn from "classnames";
+import * as PropTypes from "prop-types";
 
-import * as cartActions from '@redux/entities/cart/actions';
-import * as serverActions from '@redux/entities/server/actions';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import * as cartActions from "@redux/entities/cart/actions";
+import * as serverActions from "@redux/entities/server/actions";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
 
 class OrderItem extends Component {
     static propTypes = {
@@ -55,7 +55,7 @@ class OrderItem extends Component {
             item: { img_alt: alt, img },
         } = this.props;
         const discount = item.discount ? item.price - (item.price * 10) / 100 : item.price;
-        const price = new Intl.NumberFormat().format(discount * item.quantity) + ' р.';
+        const price = new Intl.NumberFormat().format(discount * item.quantity) + " р.";
 
         return (
             <div className={styles.info}>
@@ -67,13 +67,25 @@ class OrderItem extends Component {
                     </p>
 
                     <div className={styles.counter_block}>
-                        <span onClick={(evt) => this.changeAmount(item.id, item.title, item.quantity - 1)} className={cn(styles.counter, styles.counter_minus)} />
+                        <span
+                            onClick={(evt) => this.changeAmount(item.id, item.title, item.quantity - 1)}
+                            className={cn(styles.counter, styles.counter_minus)}
+                        />
 
                         <label>
-                            <input type="text" name={item.title} onChange={this.onChangeInput} onBlur={this.onBlurInput} value={this.state.item.quantity} />
+                            <input
+                                type="text"
+                                name={item.title}
+                                onChange={this.onChangeInput}
+                                onBlur={this.onBlurInput}
+                                value={this.state.item.quantity}
+                            />
                         </label>
 
-                        <span onClick={(evt) => this.changeAmount(item.id, item.title, item.quantity + 1)} className={cn(styles.counter, styles.counter_plus)} />
+                        <span
+                            onClick={(evt) => this.changeAmount(item.id, item.title, item.quantity + 1)}
+                            className={cn(styles.counter, styles.counter_plus)}
+                        />
                     </div>
                 </div>
                 <span className={styles.price__sm}>{price}</span>

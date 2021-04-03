@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import styles from './slider-line.module.scss';
+import React, { Component } from "react";
+import styles from "./slider-line.module.scss";
 
 export default class SliderLIne extends Component {
     constructor(props) {
@@ -8,14 +8,14 @@ export default class SliderLIne extends Component {
     }
 
     next = () => {
-        const list = document.querySelector('[data-list]');
+        const list = document.querySelector("[data-list]");
         this.offset += 200;
         if (this.offset > 600) this.offset = 0;
         list.style.left = `-${this.offset}px`;
     };
 
     prev = () => {
-        const list = document.querySelector('[data-list]');
+        const list = document.querySelector("[data-list]");
         this.offset -= 200;
         if (this.offset < 0) this.offset = 600;
         list.style.left = `-${this.offset}px`;

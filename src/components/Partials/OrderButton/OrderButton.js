@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import styles from './order-button.module.scss';
-import cn from 'classnames';
-import cartIcon from './img/cart';
+import React, { Component } from "react";
+import styles from "./order-button.module.scss";
+import cn from "classnames";
+import cartIcon from "./img/cart";
 
-import * as cart from '@redux/entities/cart/actions';
-import * as cartSelector from '@redux/entities/cart/selectors/cartSelectors';
-import { connect } from 'react-redux';
+import * as cart from "@redux/entities/cart/actions";
+import * as cartSelector from "@redux/entities/cart/selectors/cartSelectors";
+import { connect } from "react-redux";
 
 class OrderButton extends Component {
     constructor(props) {
@@ -39,11 +39,13 @@ class OrderButton extends Component {
         const isProductInCart = this.isProductInCart(cart, title, id);
 
         const spinnerIcon = <span className={styles.loader} />; //Спиннер появится при состоянии :disabled у кнопки
-        const innerText = !rest ? 'Нет в наличии' : !isProductInCart ? 'Добавить в заказ' : 'Убрать из заказа';
+        const innerText = !rest ? "Нет в наличии" : !isProductInCart ? "Добавить в заказ" : "Убрать из заказа";
 
-        const clickHandler = !isProductInCart ? (evt) => this.onClick(evt, product, this.props.onAddToCart) : (evt) => this.onClick(evt, product, this.props.onDeleteFromCart);
+        const clickHandler = !isProductInCart
+            ? (evt) => this.onClick(evt, product, this.props.onAddToCart)
+            : (evt) => this.onClick(evt, product, this.props.onDeleteFromCart);
 
-        const classList = cn('btn', styles.order__btn, {
+        const classList = cn("btn", styles.order__btn, {
             [styles.btn_grey_bg]: isProductInCart || rest === 0,
             [styles.btn_disabled]: !rest,
             [this.props.classList]: this.props.classList,

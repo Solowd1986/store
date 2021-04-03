@@ -1,7 +1,7 @@
-import React, { PureComponent } from 'react';
-import cn from 'classnames';
-import styles from './delivery.module.scss';
-import deliveryBanner from './img/_delivery-banner.png';
+import React, { PureComponent } from "react";
+import cn from "classnames";
+import styles from "./delivery.module.scss";
+import deliveryBanner from "./img/_delivery-banner.png";
 
 class Delivery extends PureComponent {
     render() {
@@ -12,7 +12,7 @@ class Delivery extends PureComponent {
                     <h3 className={styles.sign_bg__title}>Доставка и оплата</h3>
                 </div>
 
-                <div className={cn('wrapper', styles.delivery_wrapper)}>
+                <div className={cn("wrapper", styles.delivery_wrapper)}>
                     <h2 className={styles.title}>Доставка</h2>
 
                     <h3>Самовывоз на метро «Парк Победы»</h3>
@@ -24,15 +24,21 @@ class Delivery extends PureComponent {
 
                     <h3>Доставка курьером в пределах МКАД</h3>
 
-                    <p>Доставим Вам товар в день заказа, при его оформлении до 14:00, в ином случае, оператор сообщит Вам о ближайшем возможном времени доставки.</p>
+                    <p>
+                        Доставим Вам товар в день заказа, при его оформлении до 14:00, в ином случае, оператор сообщит
+                        Вам о ближайшем возможном времени доставки.
+                    </p>
                     <p>Стоимость услуги «В пределах МКАД», составляет 290 рублей, от 6000р. - бесплатно.</p>
-                    <p>Обратите внимание, передача курьером товара для проверки осуществляется только после оплаты. Оплата курьеру наличными.</p>
+                    <p>
+                        Обратите внимание, передача курьером товара для проверки осуществляется только после оплаты.
+                        Оплата курьеру наличными.
+                    </p>
 
                     <h3>Доставка по России</h3>
                     <p>Мы сотрудничаем с рядом транспортных компаний.</p>
                     <p>
-                        Вы можете воспользоваться услугами CDEK, PickPoint и BoxBerry. Вариативность позволит Вам выбрать либо курьерскую доставку до двери, либо доставку до пункта
-                        самовывоза выбранной Вами ТК.
+                        Вы можете воспользоваться услугами CDEK, PickPoint и BoxBerry. Вариативность позволит Вам
+                        выбрать либо курьерскую доставку до двери, либо доставку до пункта самовывоза выбранной Вами ТК.
                     </p>
                     <p>Мы отправим Вам трек-номер для отслеживания посылки в день ее отправления.</p>
                     <p>Стоимость услуги «Доставка по России», составляет 390 рублей, от 6000р. - бесплатно.</p>

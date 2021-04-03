@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 class Search extends Component {
     /**
@@ -12,7 +12,7 @@ class Search extends Component {
      * Также можно все это реализовать через редакс, но это все же локальные данные.
      * @type {{value: string}}
      */
-    state = { value: '' };
+    state = { value: "" };
 
     handleChange = (evt) => {
         this.setState((state) => ({ value: evt.target.value }));
@@ -25,10 +25,16 @@ class Search extends Component {
 
     render() {
         return (
-            <form name={'search-form'} method={'POST'}>
+            <form name={"search-form"} method={"POST"}>
                 <label htmlFor="search" />
-                <input onChange={this.handleChange} id={'search'} type={'input'} name={'search-field'} placeholder={'Find something...'} />
-                <input onSubmit={this.handleSubmit} type={'submit'} name={'search-submit'} value={'Find it!'} />
+                <input
+                    onChange={this.handleChange}
+                    id={"search"}
+                    type={"input"}
+                    name={"search-field"}
+                    placeholder={"Find something..."}
+                />
+                <input onSubmit={this.handleSubmit} type={"submit"} name={"search-submit"} value={"Find it!"} />
             </form>
         );
     }

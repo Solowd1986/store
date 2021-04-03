@@ -1,8 +1,8 @@
-import React from 'react';
-import classNames from 'classnames';
+import React from "react";
+import classNames from "classnames";
 
 const InputText = ({ type, children, name, classList: cl = null }) => {
-    const id = `${type || 'text'}-id-${Math.random().toString(34).slice(2)}`;
+    const id = `${type || "text"}-id-${Math.random().toString(34).slice(2)}`;
     const classList = classNames(cl);
     return (
         <>

@@ -1,19 +1,19 @@
-import React, { Component } from 'react';
-import styles from './order-form.module.scss';
+import React, { Component } from "react";
+import styles from "./order-form.module.scss";
 
-import OrderInfo from './OrderInfo/OrderInfo';
-import OrderSummary from './OrderSummary/OrderSummary';
+import OrderInfo from "./OrderInfo/OrderInfo";
+import OrderSummary from "./OrderSummary/OrderSummary";
 
-import Confirm from '@components/Pages/Order/Confirm/Confirm';
-import withDelay from '@components/Helpers/Hoc/withDelay/withDelay';
-import withModal from '@components/Helpers/Hoc/withModal/withModal';
-import * as cartSelectors from '@redux/entities/cart/selectors/cartSelectors';
-import { connect } from 'react-redux';
+import Confirm from "@components/Pages/Order/Confirm/Confirm";
+import withDelay from "@components/Helpers/Hoc/withDelay/withDelay";
+import withModal from "@components/Helpers/Hoc/withModal/withModal";
+import * as cartSelectors from "@redux/entities/cart/selectors/cartSelectors";
+import { connect } from "react-redux";
 
-import setValidateSchema from '@components/Helpers/Validation/validateSchema/validateSchema';
-import Inputmask from 'inputmask';
-import * as yup from 'yup';
-import produce from 'immer';
+import setValidateSchema from "@components/Helpers/Validation/validateSchema/validateSchema";
+import Inputmask from "inputmask";
+import * as yup from "yup";
+import produce from "immer";
 
 //<editor-fold desc="Описание работы submit формы">
 /**
@@ -37,33 +37,33 @@ class OrderForm extends Component {
         super(props);
         this.isFormTouched = false;
         this.form = React.createRef();
-        this.validationSchema = setValidateSchema(['name', 'phone', 'email', 'address', 'comment']);
+        this.validationSchema = setValidateSchema(["name", "phone", "email", "address", "comment"]);
         this.state = {
             isUserConfirmOrder: false,
             isFormValid: true,
             fields: {
                 name: {
                     error: false,
-                    msg: '',
+                    msg: "",
                 },
                 phone: {
                     error: false,
-                    msg: '',
+                    msg: "",
                 },
                 email: {
                     error: false,
-                    msg: '',
+                    msg: "",
                 },
                 address: {
                     error: false,
-                    msg: '',
+                    msg: "",
                 },
                 comment: {
                     error: false,
-                    msg: '',
+                    msg: "",
                 },
-                shipping: 'moscow',
-                payment: 'cash',
+                shipping: "moscow",
+                payment: "cash",
             },
         };
     }
@@ -93,8 +93,8 @@ class OrderForm extends Component {
                 if (!this.state.fields[inputName].error && !this.state.fields[inputName].msg) return;
                 this.setState(
                     produce(this.state, (draft) => {
-                        draft['fields'][inputName].error = false;
-                        draft['fields'][inputName].msg = '';
+                        draft["fields"][inputName].error = false;
+                        draft["fields"][inputName].msg = "";
                     }),
                 );
             })
@@ -102,9 +102,9 @@ class OrderForm extends Component {
                 if (error.message === this.state.fields[inputName].msg) return;
                 this.setState(
                     produce(this.state, (draft) => {
-                        draft['fields'][inputName].error = true;
-                        draft['fields'][inputName].msg = error.message;
-                        draft['isFormValid'] = false;
+                        draft["fields"][inputName].error = true;
+                        draft["fields"][inputName].msg = error.message;
+                        draft["isFormValid"] = false;
                     }),
                 );
             });
@@ -146,11 +146,11 @@ class OrderForm extends Component {
     handleChange = ({ target, target: { name: inputName, value: inputValue } }) => {
         this.isFormTouched = true;
         if (!Object.keys(this.state.fields).includes(inputName)) return;
-        if (inputName === 'phone') new Inputmask('+7 (999) 999-99-99').mask(target);
-        if (['shipping', 'payment'].includes(inputName)) {
+        if (inputName === "phone") new Inputmask("+7 (999) 999-99-99").mask(target);
+        if (["shipping", "payment"].includes(inputName)) {
             this.setState(
                 produce(this.state, (draft) => {
-                    draft['fields'][inputName] = inputValue;
+                    draft["fields"][inputName] = inputValue;
                 }),
             );
             return;
@@ -161,7 +161,7 @@ class OrderForm extends Component {
     };
 
     render() {
-        console.log('render');
+        console.log("render");
 
         let ConfirmModalWindow = null;
         if (this.state.isUserConfirmOrder && this.isFormTouched) {
@@ -171,8 +171,19 @@ class OrderForm extends Component {
         return (
             <>
                 {ConfirmModalWindow ? <ConfirmModalWindow /> : null}
-                <form ref={this.form} onSubmit={this.handleSubmit} className={styles.form} name="order-form" method="POST">
-                    <OrderInfo handleChange={this.handleChange} fields={this.state.fields} shipping={this.state.fields.shipping} payment={this.state.fields.payment} />
+                <form
+                    ref={this.form}
+                    onSubmit={this.handleSubmit}
+                    className={styles.form}
+                    name="order-form"
+                    method="POST"
+                >
+                    <OrderInfo
+                        handleChange={this.handleChange}
+                        fields={this.state.fields}
+                        shipping={this.state.fields.shipping}
+                        payment={this.state.fields.payment}
+                    />
                     <OrderSummary isFormValid={this.state.isFormValid} shipping={this.state.fields.shipping} />
                 </form>
             </>

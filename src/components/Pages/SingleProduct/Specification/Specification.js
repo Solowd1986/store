@@ -1,5 +1,5 @@
-import React from 'react';
-import styles from './specification.module.scss';
+import React from "react";
+import styles from "./specification.module.scss";
 
 const Specification = ({ specs }) => (
     <>

@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 function withHandlers(handlers) {
     return function (PropsComponent) {
-        const api = 'api';
+        const api = "api";
         return class withHandlers extends Component {
             render() {
                 return <PropsComponent api={api} handlers={handlers} />;
@@ -20,8 +20,8 @@ class FormAuth extends Component {
 
 export default withHandlers({
     fields: {
-        email: 'email',
-        imput: 'login',
+        email: "email",
+        imput: "login",
     },
     onClick: (evt) => console.log(evt),
 })(FormAuth);

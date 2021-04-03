@@ -1,4 +1,4 @@
-import * as types from './constants/server';
+import * as types from "./constants/server";
 
 const initialState = {
     index: null,

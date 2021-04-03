@@ -1,6 +1,6 @@
-import lodashCloning from '@components/Helpers/Lodash/lodashCloning';
-import produce from 'immer';
-import * as types from './constants/cart';
+import lodashCloning from "@components/Helpers/Lodash/lodashCloning";
+import produce from "immer";
+import * as types from "./constants/cart";
 
 const initialState = {
     minAmountOfProduct: 1,

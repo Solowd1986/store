@@ -1,16 +1,16 @@
-import React, { Component } from 'react';
-import styles from './error-500.module.scss';
-import cn from 'classnames';
-import { withRouter } from 'react-router';
+import React, { Component } from "react";
+import styles from "./error-500.module.scss";
+import cn from "classnames";
+import { withRouter } from "react-router";
 
 class Error500 extends Component {
     reload = () => {
-        this.props.history.push('/');
+        this.props.history.push("/");
     };
 
     render() {
         return (
-            <div className={cn('overlay', 'overlay__w-bg')}>
+            <div className={cn("overlay", "overlay__w-bg")}>
                 <div className={styles.content}>
                     <div id={styles.error}>
                         <div id={styles.box} />

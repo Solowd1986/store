@@ -1,11 +1,11 @@
-import React, { PureComponent } from 'react';
-import cn from 'classnames';
-import styles from './promo-badge.module.scss';
+import React, { PureComponent } from "react";
+import cn from "classnames";
+import styles from "./promo-badge.module.scss";
 
 class PromoBadge extends PureComponent {
     render() {
         return (
-            <ul className={cn('wrapper', styles.promotion_badge)}>
+            <ul className={cn("wrapper", styles.promotion_badge)}>
                 <li className={styles.promotion_badge__item}>
                     <svg className={styles.promotion_badge__img} viewBox="0 0 52 52" width={50} height={50}>
                         <path d="M35.64 1.99H16.36L7 11.36v15.53c0 7.84 3.67 15.05 9.81 19.3 2.78 1.92 5.7 3.16 8.94 3.79l.19.03.19-.03c3.31-.65 6.36-1.92 9.06-3.79C41.34 41.94 45 34.73 45 26.89V11.36l-9.36-9.37zM19.71 33.2l-1.145 1.145-3.511-10.535 1.896-.633 2.497 7.489c2.858-2.73 10.402-9.623 16.162-12.091l.787 1.838c-6.74 2.889-16.588 12.69-16.687 12.788z" />

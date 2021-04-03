@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 //
 // import * as authActions from "@redux/entities/auth/actions";
 // import { connect } from "react-redux";

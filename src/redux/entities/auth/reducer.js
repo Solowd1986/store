@@ -1,4 +1,4 @@
-import * as types from './constants/auth';
+import * as types from "./constants/auth";
 
 const initialState = {
     isUserAuthorized: false,
@@ -15,8 +15,8 @@ export default (state = initialState, action) => {
         case types.AUTH_REQUIRE_AUTHORIZATION: {
             return {
                 ...state,
-                token: '12dfg5464e534',
-                user: 'bob',
+                token: "12dfg5464e534",
+                user: "bob",
             };
         }
 

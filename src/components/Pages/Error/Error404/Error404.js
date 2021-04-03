@@ -1,12 +1,18 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
-import cn from 'classnames';
-import styles from './error-404.module.scss';
+import React from "react";
+import { NavLink } from "react-router-dom";
+import cn from "classnames";
+import styles from "./error-404.module.scss";
 
 const Error404 = (props) => (
-    <div className={cn('overlay', 'overlay__w-bg')}>
+    <div className={cn("overlay", "overlay__w-bg")}>
         <div className={styles.content}>
-            <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width={453} height={155} viewBox="0 0 453 155">
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                xmlnsXlink="http://www.w3.org/1999/xlink"
+                width={453}
+                height={155}
+                viewBox="0 0 453 155"
+            >
                 <defs>
                     <path
                         id="prefix__a"

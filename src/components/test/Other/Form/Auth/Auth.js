@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 //import styles from "./auth.module.scss";
 
 class Auth extends Component {

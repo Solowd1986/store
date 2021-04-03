@@ -1,5 +1,5 @@
-import React from 'react';
-import styles from './features.module.scss';
+import React from "react";
+import styles from "./features.module.scss";
 
 const Features = ({ promo }) => (
     <>

@@ -1,21 +1,21 @@
-import React, { Component } from 'react';
-import * as PropTypes from 'prop-types';
+import React, { Component } from "react";
+import * as PropTypes from "prop-types";
 
-import CategoryProductsList from './CategoryProductsList/CategoryProductsList';
-import Spinner from '@components/Partials/Spinner/Spinner';
-import withModal from '@components/Helpers/Hoc/withModal/withModal';
-import * as utils from '@components/Helpers/Functions/scrollbarHelper';
+import CategoryProductsList from "./CategoryProductsList/CategoryProductsList";
+import Spinner from "@components/Partials/Spinner/Spinner";
+import withModal from "@components/Helpers/Hoc/withModal/withModal";
+import * as utils from "@components/Helpers/Functions/scrollbarHelper";
 
-import { bindActionCreators } from 'redux';
-import * as serverActions from '@redux/entities/server/actions';
-import * as sortActions from '@redux/entities/sort/actions';
-import * as serverSelectors from '@redux/entities/server/selectors/serverSelectors';
-import * as sortSelectors from '@redux/entities/sort/selectors/sortSelectors';
-import { connect } from 'react-redux';
+import { bindActionCreators } from "redux";
+import * as serverActions from "@redux/entities/server/actions";
+import * as sortActions from "@redux/entities/sort/actions";
+import * as serverSelectors from "@redux/entities/server/selectors/serverSelectors";
+import * as sortSelectors from "@redux/entities/sort/selectors/sortSelectors";
+import { connect } from "react-redux";
 
-import arrayShuffle from '@components/Helpers/Functions/arrayShuffle';
-import createDeepCopyOfObject from '@components/Helpers/Lodash/lodashCloning';
-import produce from 'immer';
+import arrayShuffle from "@components/Helpers/Functions/arrayShuffle";
+import createDeepCopyOfObject from "@components/Helpers/Lodash/lodashCloning";
+import produce from "immer";
 
 //<editor-fold desc="Описание компонента">
 /**
@@ -54,29 +54,29 @@ class Category extends Component {
     // use private
     _isProductListStateEmpty = () => !this.state.categoryProductsList;
     _getCurrentCategoryAlias = () => this.state.categoryProductsList && this.state.categoryProductsList.main.alias;
-    _isThisAnotherCategoryPage = () => this._getCurrentCategoryAlias() !== this.props.match.params.type;
+    _isUserGoToAnotherCategoryPage = () => this._getCurrentCategoryAlias() !== this.props.match.params.type;
     _clearComponentState = () => this.setState((state) => ({ categoryProductsList: null, lastIndex: 0 }));
 
     _sortProductsList = () => {
         let stateProductsCopy = createDeepCopyOfObject(this.state.categoryProductsList.data);
         switch (this.props.sortType) {
-            case 'по популярности': {
+            case "по популярности": {
                 stateProductsCopy = arrayShuffle(stateProductsCopy);
                 break;
             }
-            case 'по возрастанию цены': {
+            case "по возрастанию цены": {
                 stateProductsCopy.sort((a, b) => a.price - b.price);
                 break;
             }
-            case 'по убыванию цены': {
+            case "по убыванию цены": {
                 stateProductsCopy.sort((a, b) => b.price - a.price);
                 break;
             }
-            case 'по новинкам': {
+            case "по новинкам": {
                 stateProductsCopy = arrayShuffle(stateProductsCopy);
                 break;
             }
-            case 'по скидкам': {
+            case "по скидкам": {
                 stateProductsCopy = arrayShuffle(stateProductsCopy);
                 break;
             }
@@ -86,7 +86,7 @@ class Category extends Component {
         }
         this.setState(
             produce(this.state, (draft) => {
-                draft['categoryProductsList'].data = stateProductsCopy;
+                draft["categoryProductsList"].data = stateProductsCopy;
             }),
         );
     };
@@ -127,7 +127,7 @@ class Category extends Component {
         if (this._isProductListStateEmpty() && this.props.category) {
             this.setState((state) => ({ categoryProductsList: this.props.category }));
         }
-        if (this._isThisAnotherCategoryPage() && !this._isProductListStateEmpty()) {
+        if (this._isUserGoToAnotherCategoryPage() && !this._isProductListStateEmpty()) {
             this._clearComponentState();
             this.props.clearCategoryPageReduxData();
             this.props.discardSortType();
@@ -136,18 +136,26 @@ class Category extends Component {
         if (!this._isProductListStateEmpty() && this.state.lastIndex !== this.props.lastIndex) {
             this.setState(
                 produce(this.state, (draft) => {
-                    draft['lastIndex'] = this.props.lastIndex;
-                    draft['categoryProductsList']['main'] = this.state.categoryProductsList.main;
-                    draft['categoryProductsList']['data'] = [...this.state.categoryProductsList.data, ...this.props.lazy];
+                    draft["lastIndex"] = this.props.lastIndex;
+                    draft["categoryProductsList"]["main"] = this.state.categoryProductsList.main;
+                    draft["categoryProductsList"]["data"] = [
+                        ...this.state.categoryProductsList.data,
+                        ...this.props.lazy,
+                    ];
                 }),
             );
         }
-        if (prevProps.sortType !== this.props.sortType && !this._isThisAnotherCategoryPage()) {
+        if (prevProps.sortType !== this.props.sortType && !this._isUserGoToAnotherCategoryPage()) {
             this._sortProductsList();
             this.isSorted = true;
         }
 
-        if ((this.props.lastIndex > 0 || this.props.lastIndex === -1) && !this._isThisAnotherCategoryPage() && !this.isSorted && this.state.lastIndex === this.props.lastIndex) {
+        if (
+            (this.props.lastIndex > 0 || this.props.lastIndex === -1) &&
+            !this._isUserGoToAnotherCategoryPage() &&
+            !this.isSorted &&
+            this.state.lastIndex === this.props.lastIndex
+        ) {
             utils.scrollToBottom();
         }
         if (prevProps.sortType === this.props.sortType) this.isSorted = false;
@@ -162,7 +170,7 @@ class Category extends Component {
     }
 
     render() {
-        if (this._isProductListStateEmpty() || this._isThisAnotherCategoryPage()) {
+        if (this._isProductListStateEmpty() || this._isUserGoToAnotherCategoryPage()) {
             const SpinnerModal = withModal(Spinner, {
                 bg: false,
                 interactionsDisabled: true,

@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom';
-import styles from './cart-modal.module.scss';
+import React, { Component } from "react";
+import { NavLink } from "react-router-dom";
+import styles from "./cart-modal.module.scss";
 
 class CartModal extends Component {
     render() {

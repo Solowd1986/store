@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 export default function withMsg(PropsComponent) {
     return class extends PropsComponent {
         constructor(props) {
-            console.log('outer props', props);
+            console.log("outer props", props);
             super(props);
             this.state = { loaded: false };
         }

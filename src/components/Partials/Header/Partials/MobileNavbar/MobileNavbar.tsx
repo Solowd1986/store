@@ -1,43 +1,48 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
-import styles from './mobile-navbar.module.scss';
-import cn from 'classnames';
+import React, { PureComponent } from "react";
+import { NavLink } from "react-router-dom";
+import styles from "./mobile-navbar.module.scss";
+import cn from "classnames";
 
-class MobileNavbar extends React.Component {
+type MobileNavbarState = {
+    isMobileMenuVisible: boolean
+};
+
+
+class MobileNavbar extends PureComponent<unknown, MobileNavbarState> {
     state = {
         isMobileMenuVisible: false,
     };
 
-    disableScroll = () => (document.body.style.overflow = 'hidden');
-    enableScroll = () => document.body.style.removeProperty('overflow');
+    private disableScroll = () => document.body.style.overflow = "hidden";
+    private enableScroll = () => document.body.style.removeProperty("overflow");
 
-    toggleMobileMenu = (evt) => {
+    private toggleMobileMenu = ():void => {
         !this.state.isMobileMenuVisible ? this.disableScroll() : this.enableScroll();
-        this.setState((state) => ({
+        this.setState((state: MobileNavbarState) => ({
             isMobileMenuVisible: !state.isMobileMenuVisible,
         }));
     };
 
-    handlerClickLink = () => {
+    private handlerClickLink = ():void => {
         this.setState({ isMobileMenuVisible: false });
         this.enableScroll();
     };
 
-    handlerResizePage = (evt) => {
-        if (this.state.isMobileMenuVisible && evt.currentTarget.innerWidth > 1020) {
+    private handlerResizePage = ():void => {
+        if (this.state.isMobileMenuVisible && window.innerWidth > 1020) {
             this.enableScroll();
             this.setState({ isMobileMenuVisible: false });
         }
     };
 
-    componentDidMount() {
-        window.addEventListener('resize', this.handlerResizePage);
+    componentDidMount():void {
+        window.addEventListener("resize", this.handlerResizePage);
     }
 
-    componentWillUnmount() {
+    componentWillUnmount():void {
         this.enableScroll();
-        this.setState((state) => ({ isMobileMenuVisible: false }));
-        window.removeEventListener('resize', this.handlerResizePage);
+        this.setState({ isMobileMenuVisible: false });
+        window.removeEventListener("resize", this.handlerResizePage);
     }
 
     render() {
@@ -45,7 +50,10 @@ class MobileNavbar extends React.Component {
             [styles.mobile_menu__icon__active]: this.state.isMobileMenuVisible,
         });
 
-        const classListMenuWrapper = cn('animate__animated', 'animate__fadeIn', 'animate__fast', styles.header__mobile_menu_wrapper);
+        const classListMenuWrapper = cn(
+            "animate__animated', 'animate__fadeIn', 'animate__fast",
+            styles.header__mobile_menu_wrapper,
+        );
 
         return (
             <>
@@ -55,26 +63,22 @@ class MobileNavbar extends React.Component {
                 <div className={classListMenuWrapper}>
                     <ul className={styles.header__mobile_menu_list}>
                         <li>
-                            <NavLink onClick={this.handlerClickLink} to={'/category/phones'}>
-                                {' '}
+                            <NavLink onClick={this.handlerClickLink} to={"/category/phones"}>
                                 Смартфоны
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink onClick={this.handlerClickLink} to={'/category/accessoires'}>
-                                {' '}
+                            <NavLink onClick={this.handlerClickLink} to={"/category/accessoires"}>
                                 Аксессуары
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink onClick={this.handlerClickLink} to={'/category/gadgets'}>
-                                {' '}
+                            <NavLink onClick={this.handlerClickLink} to={"/category/gadgets"}>
                                 Гаджеты
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink onClick={this.handlerClickLink} to={'/delivery'}>
-                                {' '}
+                            <NavLink onClick={this.handlerClickLink} to={"/delivery"}>
                                 Доставка
                             </NavLink>
                         </li>

@@ -1,17 +1,17 @@
-import React, { Component, createRef } from 'react';
-import styles from './tabs.module.scss';
-import cn from 'classnames';
+import React, { Component, createRef } from "react";
+import styles from "./tabs.module.scss";
+import cn from "classnames";
 
-import Features from '../Features/Features';
-import Specification from '../Specification/Specification';
-import ProductDelivery from '../ProductDelivery/ProductDelivery';
+import Features from "../Features/Features";
+import Specification from "../Specification/Specification";
+import ProductDelivery from "../ProductDelivery/ProductDelivery";
 
 class ProductTabs extends Component {
     constructor(props) {
         super(props);
         this.tabLinkList = createRef();
         this.tabBodyList = createRef();
-        this.animationClassList = ['animate__fadeIn', 'animate__animated', 'animate__fast'];
+        this.animationClassList = ["animate__fadeIn", "animate__animated", "animate__fast"];
     }
 
     componentDidMount() {
@@ -51,38 +51,38 @@ class ProductTabs extends Component {
 
         let phoneSpecsLink = null;
         let phoneSpecs = null;
-        if (alias === 'phones') {
+        if (alias === "phones") {
             phoneSpecsLink = (
-                <span onClick={this.tabHandler} className={tabLinkClassList} data-tab={'spec'}>
+                <span onClick={this.tabHandler} className={tabLinkClassList} data-tab={"spec"}>
                     Характеристики
                 </span>
             );
             phoneSpecs = (
-                <li className={tabBodyClassList} id={'spec'}>
+                <li className={tabBodyClassList} id={"spec"}>
                     <Specification specs={specifications} />
                 </li>
             );
         }
 
         return (
-            <section className={cn('wrapper', styles.info)}>
+            <section className={cn("wrapper", styles.info)}>
                 <nav className={styles.info__nav} ref={this.tabLinkList}>
-                    <span onClick={this.tabHandler} className={tabLinkClassList} data-tab={'desc'}>
+                    <span onClick={this.tabHandler} className={tabLinkClassList} data-tab={"desc"}>
                         Описание
                     </span>
                     {phoneSpecsLink}
-                    <span onClick={this.tabHandler} className={tabLinkClassList} data-tab={'shipping'}>
+                    <span onClick={this.tabHandler} className={tabLinkClassList} data-tab={"shipping"}>
                         Доставка и оплата
                     </span>
                 </nav>
 
-                <div className={'container'}>
+                <div className={"container"}>
                     <ul ref={this.tabBodyList}>
-                        <li className={tabBodyClassList} id={'desc'}>
+                        <li className={tabBodyClassList} id={"desc"}>
                             <Features promo={promo} />
                         </li>
                         {phoneSpecs}
-                        <li className={tabBodyClassList} id={'shipping'}>
+                        <li className={tabBodyClassList} id={"shipping"}>
                             <ProductDelivery />
                         </li>
                     </ul>
