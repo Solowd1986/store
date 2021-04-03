@@ -8,9 +8,11 @@ import NavbarList from "./Partials/NavbarList/NavbarList";
 import Userbar from "./Partials/Userbar/Userbar";
 
 class Header extends PureComponent<unknown , { isPageScrolled: boolean }> {
-    private readonly header: React.RefObject<HTMLElement>;
-    private readonly offset: React.RefObject<HTMLDivElement>;
-    constructor(props: unknown ) {
+    constructor(
+        props: unknown,
+        private readonly header: React.RefObject<HTMLElement>,
+        private readonly offset: React.RefObject<HTMLDivElement>,
+    ) {
         super(props);
         this.header = React.createRef();
         this.offset = React.createRef();
@@ -71,7 +73,6 @@ class Header extends PureComponent<unknown , { isPageScrolled: boolean }> {
         const classList = cn({
             [styles.header_fixed]: this.state.isPageScrolled,
         });
-
 
         if (this.offset.current) {
             this.state.isPageScrolled

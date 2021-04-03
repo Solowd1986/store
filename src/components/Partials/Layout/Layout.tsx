@@ -5,7 +5,7 @@ import Header from "@components/Partials/Header/Header";
 import Footer from "@components/Partials/Footer/Footer";
 import styles from "./layout.module.scss";
 
-const Layout = ({ children }) => (
+const Layout = ({ children }:{ children: React.ReactNode }) => (
     <div className={styles.layout}>
         <UpButton />
         <Header />

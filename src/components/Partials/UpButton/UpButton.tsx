@@ -2,7 +2,11 @@ import React, { PureComponent } from "react";
 import styles from "./up-button.module.scss";
 import cn from "classnames";
 
-class UpButton extends PureComponent<{ isisPageScrolledToBottom: boolean }> {
+type UpButtonState = {
+    isPageScrolledToBottom: boolean
+};
+
+class UpButton extends PureComponent<unknown, UpButtonState> {
     state = {
         isPageScrolledToBottom: false,
     };

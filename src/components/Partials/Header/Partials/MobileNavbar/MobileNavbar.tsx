@@ -7,7 +7,6 @@ type MobileNavbarState = {
     isMobileMenuVisible: boolean
 };
 
-
 class MobileNavbar extends PureComponent<unknown, MobileNavbarState> {
     state = {
         isMobileMenuVisible: false,

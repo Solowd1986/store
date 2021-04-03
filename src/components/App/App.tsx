@@ -8,47 +8,9 @@ import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import getRoutes from "@root/routes/routes";
 import { Provider } from "react-redux";
 import store from "@redux/store";
-import { List, Map } from "immutable";
 
-const state = List([
-    Map({
-        name: "glen",
-    }),
-    Map({
-        name: "stan",
-    }),
-]);
 
-const store2 = state.setIn([0, "name"], "deo");
 
-// console.log(store2.get(0).get("name"));
-// console.log(store2.getIn([0, "name"]));
-
-const arrayblock = ["Bob", "Stan", "Bill"];
-const res = arrayblock.splice(0);
-
-// console.log(res);
-
-// const elem = arrayblock[Math.floor(Math.random() * arrayblock.length)];
-// console.log(elem);
-
-const state3 = Map({
-    users: List([
-        Map({
-            age: 17,
-        }),
-        Map({
-            age: 19,
-        }),
-        Map({
-            age: 27,
-        }),
-    ]),
-});
-
-//const state4 = state3.setIn(["users"], state3.get("users").push(Map({ age: 44 })));
-
-// console.log(state4.getIn(["users", 3, "age"]));
 const isAuth = true;
 
 export default class App extends Component {
