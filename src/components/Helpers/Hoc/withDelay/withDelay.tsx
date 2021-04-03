@@ -3,29 +3,29 @@ import cn from "classnames";
 import Spinner from "@components/Partials/Spinner/Spinner";
 import * as util from "@components/Helpers/Functions/scrollbarHelper";
 
-function withDelay(PropsComponent, ms = 1500) {
-    // eslint-disable-next-line react/display-name
-    return class extends Component {
-        constructor(props) {
+type withDelayState = {
+    isDelayEnded: boolean
+};
+
+function withDelay(PropsComponent: React.ComponentType, ms = 1500):React.ReactNode {
+    return class WithDelay extends Component<unknown, withDelayState> {
+        constructor(props:unknown, private timer: ReturnType<typeof setTimeout> ) {
             super(props);
-            this.timer = null;
             this.state = { isDelayEnded: false };
         }
 
-        componentDidMount() {
+        componentDidMount():void {
             util.addScrollbarOffset();
             this.timer = setTimeout(() => {
-                this.setState((state) => ({
-                    isDelayEnded: true,
-                }));
+                this.setState({ isDelayEnded: true });
             }, ms);
         }
 
-        componentWillUnmount() {
+        componentWillUnmount():void {
             clearTimeout(this.timer);
         }
 
-        render() {
+        render():React.ReactNode {
             if (!this.state.isDelayEnded) {
                 return (
                     <div className={cn("overlay", "overlay__b-bg")}>
