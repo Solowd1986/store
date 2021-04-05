@@ -12,8 +12,6 @@ import cn from "classnames";
 
 type ProductCardProps = {
     item: ProductTypes,
-    specifications: any,
-    color: string,
     category: {
         alias: string
     }
