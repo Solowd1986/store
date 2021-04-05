@@ -12,14 +12,11 @@ import { connect } from "react-redux";
 type OrderButtonProps = {
     cart: unknown,
     product: ProductTypes,
-    productsInCart: ProductsInCart
+    productsInCart: ProductTypes[],
+    onAddToCart: () => void,
+    onDeleteFromCart: () => void,
+    classList: string
 };
-
-//type isProductInCart() => vodi;
-
-interface INter {
-
-}
 
 
 class OrderButton extends PureComponent<OrderButtonProps> {
@@ -27,22 +24,25 @@ class OrderButton extends PureComponent<OrderButtonProps> {
         super(props);
     }
 
-    onClick = (evt: React.MouseEvent<HTMLElement>, product: ProductTypes, callback: (product: ProductTypes) => void) => {
-        if (!(evt.target instanceof HTMLElement)) return;
+    onClick = (evt: React.MouseEvent<HTMLButtonElement>, product: ProductTypes, callback: (product: ProductTypes) => void) => {
+        if (!(evt.target instanceof HTMLButtonElement)) return;
         evt.target.classList.add(styles.disabled);
         evt.target.disabled = true;
         this.delayAddingItem = setTimeout(() => {
+            if (!(evt.target instanceof HTMLButtonElement)) return;
             evt.target.classList.remove(styles.disabled);
             evt.target.disabled = false;
             callback(product);
         }, 1000);
     };
 
-    componentWillUnmount() {
+    componentWillUnmount():void {
         clearTimeout(this.delayAddingItem);
     }
 
-    isProductInCart = (cart, title: string, id: number) => cart.find((item: ProductTypes) => item.title === title && item.id === id);
+    isProductInCart = (productsInCart: ProductTypes[], title: string, id: number) =>
+        productsInCart.find((item: ProductTypes) => item.title === title && item.id === id);
+
 
     render() {
         const {
@@ -57,8 +57,8 @@ class OrderButton extends PureComponent<OrderButtonProps> {
         const innerText = !rest ? "Нет в наличии" : !isProductInCart ? "Добавить в заказ" : "Убрать из заказа";
 
         const clickHandler = !isProductInCart
-            ? (evt) => this.onClick(evt, product, this.props.onAddToCart)
-            : (evt) => this.onClick(evt, product, this.props.onDeleteFromCart);
+            ? (evt:React.MouseEvent<HTMLButtonElement>) => this.onClick(evt, product, this.props.onAddToCart)
+            : (evt:React.MouseEvent<HTMLButtonElement>) => this.onClick(evt, product, this.props.onDeleteFromCart);
 
         const classList = cn("btn", styles.order__btn, {
             [styles.btn_grey_bg]: isProductInCart || rest === 0,
@@ -82,17 +82,6 @@ const mapStateToProps = (state:unknown) => {
         productsInCart: cartSelector.cartItemsSelector(state),
     };
 };
-
-// function mapDispatchToProps(dispatch) {
-//     return {
-//         onAddToCart: (item) => {
-//             dispatch(cart.addItemToCart(item));
-//         },
-//         onDeleteFromCart: (item) => {
-//             dispatch(cart.removeItemFromCart(item));
-//         },
-//     };
-// }
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => bindActionCreators(cartActions, dispatch);
 export default connect(mapStateToProps, mapDispatchToProps)(OrderButton);

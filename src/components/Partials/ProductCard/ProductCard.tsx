@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 
+import { ProductTypes, CategoryTypes } from "@custom-types//types";
 import ProductPrice from "@components/Partials/ProductPrice/ProductPrice";
 import OrderButton from "@components/Partials/OrderButton/OrderButton";
 import PromoProductCard from "./PromoProductCard";
@@ -9,13 +10,15 @@ import * as PropTypes from "prop-types";
 import styles from "./product-card.module.scss";
 import cn from "classnames";
 
-class ProductCard extends Component {
-    static propTypes = {
-        item: PropTypes.object,
-        specifications: PropTypes.object,
-        color: PropTypes.string,
-    };
+type ProductCardProps = {
+    item: ProductTypes,
+    specifications: any,
+    color: string,
+    category: CategoryTypes
+};
 
+
+class ProductCard extends Component<ProductCardProps> {
     render() {
         const {
             category,

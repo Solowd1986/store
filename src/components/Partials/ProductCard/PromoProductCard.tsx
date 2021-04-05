@@ -1,11 +1,21 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import styles from "./product-card.module.scss";
+import { ProductTypes, CartTypes, ProductsInCart } from "@custom-types//types";
+
+type PromoProductCardProps = {
+    item: {
+        alias: string,
+        rest: number,
+        adsType: number
+    }
+};
+
 
 /* eslint-disable react/jsx-key */
-class PromoProductCard extends Component {
+class PromoProductCard extends PureComponent<PromoProductCardProps> {
     render() {
         const { alias, rest, adsType } = this.props.item;
-        let promo = [];
+        let promo: any[] = [];
 
         if (alias === "phones" && rest > 0) {
             switch (adsType) {
