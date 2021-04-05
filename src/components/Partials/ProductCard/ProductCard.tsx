@@ -14,7 +14,9 @@ type ProductCardProps = {
     item: ProductTypes,
     specifications: any,
     color: string,
-    category: CategoryTypes
+    category: {
+        alias: string
+    }
 };
 
 

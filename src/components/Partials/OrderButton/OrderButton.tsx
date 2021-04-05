@@ -9,22 +9,36 @@ import * as cartActions from "@redux/entities/cart/actions";
 import * as cartSelector from "@redux/entities/cart/selectors/cartSelectors";
 import { connect } from "react-redux";
 
-type OrderButtonProps = {
-    cart: unknown,
+// type OrderButtonProps = {
+//     cart: unknown,
+//     product: ProductTypes,
+//     productsInCart: ProductTypes[],
+//     onAddToCart: (product: ProductTypes) => void,
+//     onDeleteFromCart: () => void,
+//     classList: string
+// };
+
+interface OrderButtonPropsInterface {
     product: ProductTypes,
-    productsInCart: ProductTypes[],
-    onAddToCart: () => void,
-    onDeleteFromCart: () => void,
-    classList: string
-};
+    productsInCart?: ProductTypes[],
+    onAddToCart?: () => void,
+    onDeleteFromCart?: () => void,
+    classList?: string,
+}
+
+type onDeleteFromCart = () => void;
+type onAddToCart = () => void;
 
 
-class OrderButton extends PureComponent<OrderButtonProps> {
-    constructor(props: OrderButtonProps, private delayAddingItem: ReturnType<typeof setTimeout> ) {
+class OrderButton extends PureComponent<OrderButtonPropsInterface> {
+    constructor(props: OrderButtonPropsInterface, private delayAddingItem: ReturnType<typeof setTimeout> ) {
         super(props);
     }
 
-    onClick = (evt: React.MouseEvent<HTMLButtonElement>, product: ProductTypes, callback: (product: ProductTypes) => void) => {
+    onClick = (evt: React.MouseEvent<HTMLButtonElement>,
+               product: ProductTypes,
+               callback: (product: ProductTypes) => void = () => {}) => {
+
         if (!(evt.target instanceof HTMLButtonElement)) return;
         evt.target.classList.add(styles.disabled);
         evt.target.disabled = true;
@@ -46,7 +60,7 @@ class OrderButton extends PureComponent<OrderButtonProps> {
 
     render() {
         const {
-            productsInCart,
+            productsInCart = [],
             product,
             product: { title, id, rest },
         } = this.props;
@@ -63,7 +77,7 @@ class OrderButton extends PureComponent<OrderButtonProps> {
         const classList = cn("btn", styles.order__btn, {
             [styles.btn_grey_bg]: isProductInCart || rest === 0,
             [styles.btn_disabled]: !rest,
-            [this.props.classList]: this.props.classList,
+            [this.props.classList as string]: this.props.classList,
         });
 
         return (

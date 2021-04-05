@@ -3,17 +3,21 @@ import cn from "classnames";
 import styles from "./product-price.module.scss";
 
 
-type ProductPrice = {
+
+
+interface ProductPriceInterface {
     product: {
         price: number,
-        discount: number,
+        discount: boolean,
         rest: number
-    },
-    classList: {
+    }
+    classList?: {
         main: string,
         discount: string
     }
-};
+}
+
+
 
 
 // region Описание
@@ -26,7 +30,7 @@ type ProductPrice = {
  * В конце округляем результат преобразования цены до сотен
  */
 // endregion
-const ProductPrice = ({ product: { price, discount, rest }, classList = { main: "", discount: "" } }:ProductPrice):JSX.Element | null => {
+const ProductPrice = ({ product: { price, discount, rest }, classList = { main: "", discount: "" } }:ProductPriceInterface):JSX.Element | null => {
     const formatPrice = (price: number):string => new Intl.NumberFormat().format(price);
 
     const initialPriceClassList = cn(styles.discount, {

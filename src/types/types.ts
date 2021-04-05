@@ -4,7 +4,7 @@ export interface ProductTypes {
     desc: string,
     price: number,
     color: string,
-    descount: number,
+    discount: boolean,
     img_alt: string,
     rest: number,
     ads_type: number,
@@ -18,7 +18,7 @@ export interface CategoryTypes {
     main: {
         alias: string,
         img: { path: string, alt: string },
-        tittle: string
+        title: string
     }
 }
 
