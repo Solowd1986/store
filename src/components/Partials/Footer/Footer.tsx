@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./footer.module.scss";
 
-const Footer = () => (
+const Footer = ():JSX.Element => (
     <div className={styles.footer_bg}>
         <div className="wrapper">
             <footer className={styles.footer}>

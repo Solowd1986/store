@@ -2,6 +2,20 @@ import React from "react";
 import cn from "classnames";
 import styles from "./product-price.module.scss";
 
+
+type ProductPrice = {
+    product: {
+        price: number,
+        discount: number,
+        rest: number
+    },
+    classList: {
+        main: string,
+        discount: string
+    }
+};
+
+
 // region Описание
 /**
  * classList приходит от компонента SingleProduct, формат по-умолчанию ему дан, чтобы не выбрасывало ошибку,
@@ -12,8 +26,8 @@ import styles from "./product-price.module.scss";
  * В конце округляем результат преобразования цены до сотен
  */
 // endregion
-const ProductPrice = ({ product: { price, discount, rest }, classList = { main: "", discount: "" } }) => {
-    const formatPrice = (price) => new Intl.NumberFormat().format(price);
+const ProductPrice = ({ product: { price, discount, rest }, classList = { main: "", discount: "" } }:ProductPrice):JSX.Element | null => {
+    const formatPrice = (price: number):string => new Intl.NumberFormat().format(price);
 
     const initialPriceClassList = cn(styles.discount, {
         [classList.discount]: classList,

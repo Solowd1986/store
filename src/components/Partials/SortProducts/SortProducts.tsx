@@ -1,12 +1,25 @@
 import React, { PureComponent } from "react";
 import styles from "./sort-products.module.scss";
 import cn from "classnames";
-import * as sort from "@redux/entities/sort/actions";
+
+import { AnyAction, bindActionCreators, Dispatch } from "redux";
 import * as sortSelectors from "@redux/entities/sort/selectors/sortSelectors";
+import * as sortActions from "@redux/entities/sort/actions";
+import * as serverActions from "@redux/entities/server/actions";
 import { connect } from "react-redux";
 
-class SortPorducts extends PureComponent {
-    constructor(props) {
+
+type SortProductsState = {
+    showSortPanel: boolean
+};
+type SortProductsProps = {
+    readonly sortType: string,
+    readonly changeSortType: (sortType: string) => void;
+};
+
+
+class SortPorducts extends PureComponent<SortProductsProps, SortProductsState> {
+    constructor(props: SortProductsProps, private readonly list: React.RefObject<HTMLUListElement>) {
         super(props);
         this.list = React.createRef();
         this.state = {
@@ -20,54 +33,45 @@ class SortPorducts extends PureComponent {
      * панели выбор типа сортировки: клик по кнопке -> showSortPanel: true -> перехват клика на всплытие до window
      * -> вызов controlSortPanel, проверка на true продена -> скрытие панели.
      */
-    toggleSortPanel = (evt) => {
+    toggleSortPanel = (evt: React.MouseEvent) => {
         evt.stopPropagation();
-        if (!this.state.showSortPanel) {
+        if (!this.state.showSortPanel && this.list.current) {
             Array.from(this.list.current.children).forEach((item) => item.classList.remove(styles.active));
-            Array.from(this.list.current.children)
-                .find((item) => item.innerText === this.props.sortType)
-                .classList.add(styles.active);
+            const current = Array.from(this.list.current.children).find((item) => (item as HTMLElement).innerText === this.props.sortType);
+            if (current) current.classList.add(styles.active);
         }
-        this.setState((state) => {
+        this.setState((state: SortProductsState) => {
             return {
-                showSortPanel: !this.state.showSortPanel,
+                showSortPanel: !state.showSortPanel,
             };
         });
     };
 
-    changeSortType = (evt) => {
+    changeSortType = (evt: React.MouseEvent<HTMLElement>) => {
         evt.stopPropagation();
+        if (!(evt.target instanceof HTMLElement)) return;
         if (evt.target.nodeName === "LI" && evt.target.innerText !== this.props.sortType) {
             this.props.changeSortType(evt.target.innerText);
-            this.setState((state) => {
-                return {
-                    showSortPanel: false,
-                };
-            });
+            this.setState({ showSortPanel: false });
         }
     };
 
-    closeSortPanelOnClickByWindow = () => {
-        this.setState((state) => {
-            if (state.showSortPanel === true)
-                return {
-                    showSortPanel: false,
-                };
-        });
+    closeSortPanelOnClickByWindow = (): void => {
+        this.setState((state):SortProductsState =>  state.showSortPanel ? ({showSortPanel: false}) : state);
     };
 
-    componentDidMount() {
+    componentDidMount(): void {
         window.addEventListener("click", this.closeSortPanelOnClickByWindow);
     }
 
-    componentWillUnmount() {
+    componentWillUnmount(): void {
         window.removeEventListener("click", this.closeSortPanelOnClickByWindow);
     }
 
-    render() {
+    render(): React.ReactNode {
         const classList = cn(styles.sort_list_panel, "animate__animated animate__fadeInUp animate__faster", {
-            [styles.panel_show]: this.state.showSortPanel === true,
-            [styles.panel_hide]: this.state.showSortPanel === false,
+            [styles.panel_show]: this.state.showSortPanel,
+            [styles.panel_hide]: !this.state.showSortPanel,
         });
         return (
             <>
@@ -76,7 +80,11 @@ class SortPorducts extends PureComponent {
                     <span className={styles.sort_type} onClick={this.toggleSortPanel}>
                         {this.props.sortType}
                         <svg width={"9px"} height={"9px"} className={styles.sort_icon} viewBox="0 0 451.847 451.847">
-                            <path d="M225.923 354.706c-8.098 0-16.195-3.092-22.369-9.263L9.27 151.157c-12.359-12.359-12.359-32.397 0-44.751 12.354-12.354 32.388-12.354 44.748 0l171.905 171.915 171.906-171.909c12.359-12.354 32.391-12.354 44.744 0 12.365 12.354 12.365 32.392 0 44.751L248.292 345.449c-6.177 6.172-14.274 9.257-22.369 9.257z" />
+                            <path d="M225.923 354.706c-8.098 0-16.195-3.092-22.369-9.263L9.27
+                            151.157c-12.359-12.359-12.359-32.397 0-44.751 12.354-12.354 32.388-12.354
+                            44.748 0l171.905 171.915 171.906-171.909c12.359-12.354 32.391-12.354 44.744 0
+                            12.365 12.354 12.365 32.392 0 44.751L248.292 345.449c-6.177 6.172-14.274
+                            9.257-22.369 9.257z"/>
                         </svg>
                     </span>
                     <ul className={classList} onClick={this.changeSortType} ref={this.list}>
@@ -92,18 +100,19 @@ class SortPorducts extends PureComponent {
     }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: unknown) => {
     return {
         sortType: sortSelectors.sortTypeSelector(state),
     };
 };
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        changeSortType: (sortType) => {
-            dispatch(sort.changeSortType(sortType));
-        },
-    };
-};
+// const mapDispatchToProps = (dispatch) => {
+//     return {
+//         changeSortType: (sortType) => {
+//             dispatch(sort.changeSortType(sortType));
+//         },
+//     };
+// };
 
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => bindActionCreators(sortActions, dispatch);
 export default connect(mapStateToProps, mapDispatchToProps)(SortPorducts);

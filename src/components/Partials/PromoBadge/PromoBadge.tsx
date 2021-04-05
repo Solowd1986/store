@@ -3,7 +3,7 @@ import cn from "classnames";
 import styles from "./promo-badge.module.scss";
 
 class PromoBadge extends PureComponent {
-    render() {
+    render():React.ReactNode {
         return (
             <ul className={cn("wrapper", styles.promotion_badge)}>
                 <li className={styles.promotion_badge__item}>

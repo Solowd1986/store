@@ -27,11 +27,11 @@ class UpButton extends PureComponent<unknown, UpButtonState> {
             : this.setState({ isPageScrolledToBottom: false });
     };
 
-    scrollUp = () => {
+    scrollUp = ():void => {
         window.scrollTo({ top: 0, behavior: "smooth" });
     };
 
-    render() {
+    render():React.ReactNode {
         const classList = cn(styles.up, {
             [styles.show]: this.state.isPageScrolledToBottom,
         });

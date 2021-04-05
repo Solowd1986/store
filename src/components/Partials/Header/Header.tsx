@@ -39,7 +39,7 @@ class Header extends PureComponent<unknown , { isPageScrolled: boolean }> {
     private isPageScrolledOverLimit = ():boolean => window.scrollY > this.viewportAndHeaderHeightSummary();
 
 
-    private handleScroll = () => {
+    private handleScroll = ():void => {
         if (this.isPageScrolledOverLimit() && this.state.isPageScrolled) return;
         if (!this.isPageScrolledOverLimit() && !this.state.isPageScrolled) return;
         this.isPageScrolledOverLimit() ? this.setState({ isPageScrolled: true }) : this.setState({ isPageScrolled: false });

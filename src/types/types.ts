@@ -10,7 +10,7 @@ export interface ProductTypes {
     ads_type: number,
     img: { md: string, lg_1: string, lg_2?: string, lg_3?: string },
     promo: Array<{ id: number, title: string, desc: string, img_alt: string, img_path: string }>
-    specifications? : any
+    specifications?: any
 }
 
 export interface CategoryTypes {
@@ -20,6 +20,15 @@ export interface CategoryTypes {
         img: { path: string, alt: string },
         tittle: string
     }
+}
+
+export interface CartTypes {
+    minAmountOfProduct: number,
+    products: ProductTypes[],
+}
+
+export interface ProductsInCart {
+    products: ProductTypes[],
 }
 
 export interface IndexPageTypes {
