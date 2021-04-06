@@ -48,8 +48,6 @@ class OrderItem extends Component {
     };
 
     render() {
-        //console.log(this.props);
-
         const {
             item,
             item: { img_alt: alt, img },
