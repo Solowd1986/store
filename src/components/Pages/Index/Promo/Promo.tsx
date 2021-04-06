@@ -6,8 +6,8 @@ import * as PropTypes from "prop-types";
 import ProductCard from "@components/Partials/ProductCard/ProductCard";
 import { IndexPageTypes, ProductTypes } from "@custom-types/types";
 
-import DataStore from "@components/test/DataStore";
-import { Alert, DataStore2 } from "@components/test/DataStore";
+import DataStore  from "@components/test/DataStore";
+
 
 import Auth from "@components/test/Other/Form/Auth/Auth";
 
@@ -20,7 +20,7 @@ class Promo extends Component<IndexPageTypes> {
         return (
             <section className={cn("container", styles.wrapper)}>
                 <main className={cn("wrapper", styles.content)}>
-                    {/*<DataStore2 />*/}
+                    <DataStore />
 
                     {/*<Auth/>*/}
 
