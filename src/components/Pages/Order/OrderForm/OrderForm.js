@@ -62,17 +62,22 @@ class OrderForm extends Component {
                     error: false,
                     msg: "",
                 },
-                shipping: "moscow",
-                payment: "cash",
+                shipping: {
+                    type: "moscow",
+                    price: 400
+                },
+                payment: {
+                    type: "cash"
+                },
             },
         };
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
         return this.isFormTouched && !this.state.isUserConfirmOrder;
     }
 
-    componentDidUpdate(prevProps, prevState) {
+    componentDidUpdate(prevProps, prevState, snapshot) {
         if (!this.isFormTouched && this.state.isUserConfirmOrder) {
             this.setState({ isUserConfirmOrder: false });
         }
@@ -140,17 +145,19 @@ class OrderForm extends Component {
         }
 
         evt.target.reset();
+        console.dir(userOrderInfo);
         this.setState({ isUserConfirmOrder: true });
     };
 
-    handleChange = ({ target, target: { name: inputName, value: inputValue } }) => {
+    handleChange = ({ target, target: { name: inputName, value: inputValue, id = null } }) => {
         this.isFormTouched = true;
         if (!Object.keys(this.state.fields).includes(inputName)) return;
         if (inputName === "phone") new Inputmask("+7 (999) 999-99-99").mask(target);
-        if (["shipping", "payment"].includes(inputName)) {
+        if (id) {
+            const result = inputName === "shipping" ? { type: id, price: parseInt(inputValue)} : { type: id};
             this.setState(
                 produce(this.state, (draft) => {
-                    draft["fields"][inputName] = inputValue;
+                    draft["fields"][inputName] = result;
                 }),
             );
             return;
@@ -161,8 +168,7 @@ class OrderForm extends Component {
     };
 
     render() {
-        console.log("render");
-
+        //console.log("render");
         let ConfirmModalWindow = null;
         if (this.state.isUserConfirmOrder && this.isFormTouched) {
             ConfirmModalWindow = withDelay(withModal(Confirm));
@@ -184,7 +190,10 @@ class OrderForm extends Component {
                         shipping={this.state.fields.shipping}
                         payment={this.state.fields.payment}
                     />
-                    <OrderSummary isFormValid={this.state.isFormValid} shipping={this.state.fields.shipping} />
+                    <OrderSummary
+                        isFormValid={this.state.isFormValid}
+                        shipping={this.state.fields.shipping.price}
+                    />
                 </form>
             </>
         );
