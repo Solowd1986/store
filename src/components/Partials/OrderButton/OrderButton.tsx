@@ -21,13 +21,10 @@ import { connect } from "react-redux";
 interface OrderButtonPropsInterface {
     product: ProductTypes,
     productsInCart?: ProductTypes[],
-    onAddToCart?: () => void,
-    onDeleteFromCart?: () => void,
+    addItemToCart?: () => void,
+    removeItemFromCart?: () => void,
     classList?: string,
 }
-
-type onDeleteFromCart = () => void;
-type onAddToCart = () => void;
 
 
 class OrderButton extends PureComponent<OrderButtonPropsInterface> {
@@ -38,7 +35,6 @@ class OrderButton extends PureComponent<OrderButtonPropsInterface> {
     onClick = (evt: React.MouseEvent<HTMLButtonElement>,
                product: ProductTypes,
                callback: (product: ProductTypes) => void = () => {}) => {
-
         if (!(evt.target instanceof HTMLButtonElement)) return;
         evt.target.classList.add(styles.disabled);
         evt.target.disabled = true;
@@ -59,6 +55,7 @@ class OrderButton extends PureComponent<OrderButtonPropsInterface> {
 
 
     render() {
+        //console.log(this.props);
         const {
             productsInCart = [],
             product,
@@ -71,8 +68,8 @@ class OrderButton extends PureComponent<OrderButtonPropsInterface> {
         const innerText = !rest ? "Нет в наличии" : !isProductInCart ? "Добавить в заказ" : "Убрать из заказа";
 
         const clickHandler = !isProductInCart
-            ? (evt:React.MouseEvent<HTMLButtonElement>) => this.onClick(evt, product, this.props.onAddToCart)
-            : (evt:React.MouseEvent<HTMLButtonElement>) => this.onClick(evt, product, this.props.onDeleteFromCart);
+            ? (evt:React.MouseEvent<HTMLButtonElement>) => this.onClick(evt, product, this.props.addItemToCart)
+            : (evt:React.MouseEvent<HTMLButtonElement>) => this.onClick(evt, product, this.props.removeItemFromCart);
 
         const classList = cn("btn", styles.order__btn, {
             [styles.btn_grey_bg]: isProductInCart || rest === 0,

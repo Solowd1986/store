@@ -41,6 +41,8 @@ class OrderForm extends Component {
         this.state = {
             isUserConfirmOrder: false,
             isFormValid: true,
+            // ПОМЕСТИ СТЕЙТ В РЕДАКС ЧТОбЫ хРАНИТЬ ДАНЫЕ ПРИ ПЕРЕЗАГРУЗКЕ СТРАНИЦЫ А ПОСЛЕ УСПЕШНОЙ ОТПРАВКИ ОБНУЛЯ ЭТО
+            // сброс кнопкой очистить поля формы
             fields: {
                 name: {
                     error: false,
@@ -139,13 +141,17 @@ class OrderForm extends Component {
         };
 
         for (const [key, value] of form.entries()) {
-            this.props.listOfProducts.some((item) => item.title === key)
-                ? userOrderInfo.userOrder.push(this.props.listOfProducts.find((item) => item.title === key))
-                : (userOrderInfo.userInfo[key] = value);
+            const product = this.props.listOfProducts.find((item) => item.title === key);
+            if (product) userOrderInfo.userOrder.push(product);
+            if (key === "shipping") {
+                userOrderInfo.userInfo["shippingType"] = this.state.fields.shipping.type;
+                userOrderInfo.userInfo["shippingPrice"] = this.state.fields.shipping.price;
+            } else {
+                userOrderInfo.userInfo[key] = value;
+            }
         }
-
         evt.target.reset();
-        console.dir(userOrderInfo);
+        //console.dir(userOrderInfo);
         this.setState({ isUserConfirmOrder: true });
     };
 
