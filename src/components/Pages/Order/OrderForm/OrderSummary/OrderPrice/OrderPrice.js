@@ -2,6 +2,8 @@ import React from "react";
 import styles from "./order_price.module.scss";
 
 const OrderPrice = ({ listOfProducts, shipping: price }) => {
+
+
     const calctotalPrice = () =>
         listOfProducts.reduce((total, item) => {
             if (item.discount) {
@@ -13,12 +15,11 @@ const OrderPrice = ({ listOfProducts, shipping: price }) => {
             return total;
         }, 0);
 
-    const shippingPrice = price === "moscow" ? 400 : price === "pickup" ? 0 : 450;
-    const deliveryPrice = calctotalPrice() > 100000 || !shippingPrice ? "бесплатно" : `${shippingPrice} р.`;
+    const deliveryPrice = calctotalPrice() > 100000 || !price ? "бесплатно" : `${price} р.`;
     const totalPrice =
         calctotalPrice() > 100000
             ? `${new Intl.NumberFormat().format(calctotalPrice())} р.`
-            : `${new Intl.NumberFormat().format(calctotalPrice() + parseInt(shippingPrice))} р.`;
+            : `${new Intl.NumberFormat().format(calctotalPrice() + parseInt(price))} р.`;
     return (
         <>
             <div className={styles.fieldset}>
