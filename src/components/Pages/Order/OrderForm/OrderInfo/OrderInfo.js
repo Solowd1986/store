@@ -1,17 +1,12 @@
 import React, { Component } from "react";
 import styles from "./order-info.module.scss";
-import * as PropTypes from "prop-types";
 
 import basketEpayment from "./img/basket-epayment.png";
 import basketShipping from "./img/basket-shipping.png";
 
 class OrderInfo extends Component {
-    static propTypes = {
-        shipping: PropTypes.string,
-        payment: PropTypes.string,
-    };
     render() {
-        const { handleChange, fields, shipping, payment } = this.props;
+        const { handleChange, fields, shipping: { type: shippingType }, payment: { type: paymentType } } = this.props;
         return (
             <section className={styles.info}>
                 {/*Delivery*/}
@@ -19,12 +14,12 @@ class OrderInfo extends Component {
                     <h2 className={styles.order_title}>1. Доставка</h2>
                     <div className={styles.cards_wrapper}>
                         <input
-                            checked={shipping === "moscow"}
-                            onChange={handleChange}
                             id="moscow"
+                            checked={shippingType === "moscow"}
+                            onChange={handleChange}
                             type="radio"
                             name="shipping"
-                            value={"moscow"}
+                            value="400"
                             data-delivery={true}
                         />
                         <label htmlFor="moscow" className={styles.card}>
@@ -37,11 +32,11 @@ class OrderInfo extends Component {
 
                         <input
                             id="pickup"
-                            checked={shipping === "pickup"}
+                            checked={shippingType === "pickup"}
                             onChange={handleChange}
                             type="radio"
                             name="shipping"
-                            value={"pickup"}
+                            value="0"
                             data-delivery={true}
                         />
                         <label htmlFor="pickup" className={styles.card}>
@@ -56,11 +51,11 @@ class OrderInfo extends Component {
 
                         <input
                             id="russia"
-                            checked={shipping === "russia"}
+                            checked={shippingType === "russia"}
                             onChange={handleChange}
                             type="radio"
                             name="shipping"
-                            value={"russia"}
+                            value="450"
                             data-delivery={true}
                         />
                         <label htmlFor="russia" className={styles.card}>
@@ -135,7 +130,6 @@ class OrderInfo extends Component {
                                 className={styles.form__input}
                                 onChange={handleChange}
                                 name="comment"
-                                id=""
                                 cols="30"
                                 rows="10"
                                 placeholder="Комментарий"
@@ -151,7 +145,7 @@ class OrderInfo extends Component {
                     <div className={styles.cards_wrapper}>
                         <input
                             id="cash"
-                            checked={payment === "cash"}
+                            checked={paymentType === "cash"}
                             onChange={handleChange}
                             type="radio"
                             name="payment"
@@ -168,7 +162,7 @@ class OrderInfo extends Component {
 
                         <input
                             id="emoney"
-                            checked={payment === "emoney"}
+                            checked={paymentType === "emoney"}
                             onChange={handleChange}
                             type="radio"
                             name="payment"
@@ -188,7 +182,7 @@ class OrderInfo extends Component {
 
                         <input
                             id="card"
-                            checked={payment === "card"}
+                            checked={paymentType === "card"}
                             onChange={handleChange}
                             type="radio"
                             name="payment"
