@@ -1,11 +1,11 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 
 import { ProductTypes, CategoryTypes } from "@custom-types//types";
 import ProductPrice from "@components/Partials/ProductPrice/ProductPrice";
 import OrderButton from "@components/Partials/OrderButton/OrderButton";
 import PromoProductCard from "./PromoProductCard";
 import { NavLink } from "react-router-dom";
-import * as PropTypes from "prop-types";
+
 
 import styles from "./product-card.module.scss";
 import cn from "classnames";
@@ -17,44 +17,28 @@ type ProductCardProps = {
     }
 };
 
-
-class ProductCard extends Component<ProductCardProps> {
+class ProductCard extends PureComponent<ProductCardProps> {
     render() {
-        const {
-            category,
-            item,
-            item: { rest },
-        } = this.props;
-        const tagClassList = cn(styles.tag, {
-            [styles.not_in_stock]: !rest,
-        });
-
-        const productColor = item.specifications ? (
-            <span className={styles.color}>{`"${item.specifications.color}"`}</span>
-        ) : null;
+        const { category: { alias }, item, item: { id, title, rest, specifications } } = this.props;
 
         return (
-            <li key={item.id} className={styles.item}>
-                <span className={tagClassList}>В наличии</span>
+            <li className={styles.item}>
+                <span className={cn(styles.tag, { [styles.not_in_stock]: !rest })}>В наличии</span>
 
-                <NavLink to={`/product/${category.alias}/${item.id}`}>
-                    <img className={styles.img} src={item.img.md} alt={item["img_alt"]} />
+                <NavLink to={`/product/${alias}/${id}`}>
+                    <img className={styles.img} src={item.img.md} alt={item["img_alt"]}/>
                 </NavLink>
 
                 <div className={styles.title}>
-                    <span>{item.title}</span>
-                    {productColor}
+                    <span>{title}</span>
+                    {specifications ? <span>"{specifications.color}"</span> : null}
                 </div>
 
-                <PromoProductCard
-                    item={{
-                        alias: category.alias,
-                        rest: item.rest,
-                        adsType: item["ads_type"],
-                    }}
-                />
-                <ProductPrice product={item} />
-                <OrderButton product={item} />
+                <PromoProductCard item={{ alias, rest: item.rest, adsType: item["ads_type"] }}/>
+                <div className={styles.price}>
+                    <ProductPrice product={item}/>
+                </div>
+                <OrderButton product={item}/>
             </li>
         );
     }

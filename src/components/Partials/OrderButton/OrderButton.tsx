@@ -56,11 +56,7 @@ class OrderButton extends PureComponent<OrderButtonPropsInterface> {
 
     render() {
         //console.log(this.props);
-        const {
-            productsInCart = [],
-            product,
-            product: { title, id, rest },
-        } = this.props;
+        const { productsInCart = [], product, product: { title, id, rest } } = this.props;
 
         const isProductInCart = this.isProductInCart(productsInCart, title, id);
 

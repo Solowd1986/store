@@ -2,7 +2,7 @@ import React from "react";
 import cn from "classnames";
 import styles from "./announcements.module.scss";
 
-const Announcements = (props) => (
+const Announcements = () => (
     <section className={cn("wrapper", styles.announcements_item)}>
         <div className="wrapper">
             <h3 className={styles.announcements__title}>Предстоящие мероприятия</h3>

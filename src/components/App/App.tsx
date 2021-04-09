@@ -10,7 +10,6 @@ import { Provider } from "react-redux";
 import store from "@redux/store";
 
 
-
 const isAuth = true;
 
 export default class App extends Component {

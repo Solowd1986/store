@@ -1,9 +1,4 @@
 import React from "react";
-import cn from "classnames";
-import styles from "./product-price.module.scss";
-
-
-
 
 interface ProductPriceInterface {
     product: {
@@ -11,14 +6,7 @@ interface ProductPriceInterface {
         discount: boolean,
         rest: number
     }
-    classList?: {
-        main: string,
-        discount: string
-    }
 }
-
-
-
 
 // region Описание
 /**
@@ -30,27 +18,18 @@ interface ProductPriceInterface {
  * В конце округляем результат преобразования цены до сотен
  */
 // endregion
-const ProductPrice = ({ product: { price, discount, rest }, classList = { main: "", discount: "" } }:ProductPriceInterface):JSX.Element | null => {
+const ProductPrice = ({ product: { price, discount, rest } }:ProductPriceInterface):JSX.Element | null => {
+    if (!rest) return null;
+    const calcDiscount = (price: number):number => Math.round(((price - (price * 10) / 100) / 100) * 100);
     const formatPrice = (price: number):string => new Intl.NumberFormat().format(price);
 
-    const initialPriceClassList = cn(styles.discount, {
-        [classList.discount]: classList,
-    });
-    const finalPriceClassList = cn(styles.price, {
-        [classList.main]: classList,
-    });
-
-    const initialPrice = discount ? <span className={initialPriceClassList}>{formatPrice(price)} р.</span> : null;
-    const finalPrice = discount
-        ? `${formatPrice(Math.round(((price - (price * 10) / 100) / 100) * 100))} р.`
-        : `${formatPrice(price)} р.`;
-
-    if (!rest) return null;
+    const initialPrice = formatPrice(price);
+    const finalPrice = discount ? formatPrice(calcDiscount(price)) : formatPrice(price);
     return (
-        <span className={finalPriceClassList}>
-            {initialPrice}
-            {finalPrice}
-        </span>
+        <>
+        {discount ? <span data-initial="">{initialPrice} р.</span> : null}
+        <span data-final="">{finalPrice} р.</span>
+        </>
     );
 };
 

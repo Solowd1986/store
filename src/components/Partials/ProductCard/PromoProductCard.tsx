@@ -10,7 +10,6 @@ type PromoProductCardProps = {
     }
 };
 
-
 /* eslint-disable react/jsx-key */
 class PromoProductCard extends PureComponent<PromoProductCardProps> {
     render() {

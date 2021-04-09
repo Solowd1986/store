@@ -44,7 +44,6 @@ class Product extends Component {
             main: `${styles.price}`,
             discount: `${styles.discount}`,
         };
-        const productAvailability = "Наличие: " + (product.rest === 0 ? "нет в наличии" : "в наличии");
 
         return (
             <>
@@ -54,12 +53,16 @@ class Product extends Component {
                         <div className={styles.order__info_wrapper}>
                             <h1 className={styles.order__title}>{product.title}</h1>
                             <p className={styles.order__desc}>{product.desc}</p>
-                            <ProductPrice product={product} classList={productPriceClassList} />
+
+                            <div className={styles.price}>
+                                <ProductPrice product={product} />
+                            </div>
+
 
                             <div className={styles.btn_wrapper}>
                                 <OrderButton product={product} classList={styles.btn_order} />
                             </div>
-                            <span>{productAvailability}</span>
+                            <span>{product.rest ? "Наличие: в наличии" : "Наличие: нет наличии"}</span>
                         </div>
                     </div>
                 </section>

@@ -1,27 +1,21 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 
+import { IndexPageTypes, ProductTypes } from "@custom-types/types";
 import styles from "./promo.module.scss";
 import cn from "classnames";
-import * as PropTypes from "prop-types";
+
 import ProductCard from "@components/Partials/ProductCard/ProductCard";
-import { IndexPageTypes, ProductTypes } from "@custom-types/types";
-
-import DataStore  from "@components/test/DataStore";
-
-
+import FormCounter  from "@components/test/Form/FormCounter/FormCounter";
 import Auth from "@components/test/Other/Form/Auth/Auth";
 
-const ob: Array<{ name: string }> = [{ name: "alex" }, { name: "alex" }, { name: "alex" }];
-
-class Promo extends Component<IndexPageTypes> {
+class Promo extends PureComponent<IndexPageTypes> {
     render() {
         //console.dir(this.props);
         const { phones, accessoires, gadgets } = this.props.index;
         return (
             <section className={cn("container", styles.wrapper)}>
                 <main className={cn("wrapper", styles.content)}>
-                    <DataStore />
-
+                    <FormCounter />
                     {/*<Auth/>*/}
 
                     <h2 className={styles.section_title}>Рекомендуем</h2>

@@ -1,19 +1,20 @@
 import React, { Component } from "react";
 import * as PropTypes from "prop-types";
 
-import PromoBadge from "@components/Partials/PromoBadge/PromoBadge";
 import withModal from "@components/Helpers/Hoc/withModal/withModal";
+
 import Spinner from "@components/Partials/Spinner/Spinner";
+import Slider from "./Slider/Slider";
+import Promo from "./Promo/Promo";
+import BrandStory from "./BrandStory/BrandStory";
+import Announcements from "./Announcements/Announcements";
+import About from "./About/About";
+import PromoBadge from "@components/Partials/PromoBadge/PromoBadge";
 
 import { bindActionCreators } from "redux";
 import * as serverActions from "@redux/entities/server/actions";
 import * as serverSelectors from "@redux/entities/server/selectors/serverSelectors";
 import { connect } from "react-redux";
-import About from "./About/About";
-import Announcements from "./Announcements/Announcements";
-import BrandStory from "./BrandStory/BrandStory";
-import Promo from "./Promo/Promo";
-import Slider from "./Slider/Slider";
 
 class MainPage extends Component {
     static propTypes = {

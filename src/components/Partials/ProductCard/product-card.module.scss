@@ -66,10 +66,10 @@
 
   & > span {
     display: inline-block;
+  }
 
-    &.color {
-      font-weight: 400;
-    }
+  & > span + span {
+    font-weight: 400;
   }
 }
 
@@ -159,3 +159,26 @@
     color: #e30611;
   }
 }
+
+
+.price {
+  font-family: "Lora", sans-serif;
+  margin-bottom: 15px;
+}
+
+.price > span[data-initial] {
+  margin-right: 10px;
+  font-size: 15px;
+  color: $grey;
+  text-decoration: line-through;
+}
+
+.price > span[data-final] {
+  margin-top: auto;
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.7;
+  text-align: center;
+}
+

@@ -20,12 +20,7 @@ class ProductTabs extends Component {
         Array.from(this.tabBodyList.current.children).forEach((item) => item.classList.add(...this.animationClassList));
     }
 
-    tabHandler = ({
-        target,
-        target: {
-            dataset: { tab: data },
-        },
-    }) => {
+    tabHandler = ({ target, target: { dataset: { tab: data }, }, }) => {
         const tabLinkList = Array.from(this.tabLinkList.current.children);
         const tabBodyList = Array.from(this.tabBodyList.current.children);
         if (target.classList.contains(styles.link_active)) return;
@@ -34,17 +29,12 @@ class ProductTabs extends Component {
         target.classList.add(styles.link_active);
         tabBodyList.forEach((item) => {
             item.classList.remove(styles.tab_active);
-            if (item.id === data) {
-                item.classList.add(styles.tab_active);
-            }
+            if (item.id === data) item.classList.add(styles.tab_active);
         });
     };
 
     render() {
-        const {
-            category: { alias },
-            product: { promo, specifications = null },
-        } = this.props;
+        const { category: { alias }, product: { promo, specifications = null }, } = this.props;
 
         const tabLinkClassList = cn(styles.info__nav_link);
         const tabBodyClassList = cn(styles.tab);

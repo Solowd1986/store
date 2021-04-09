@@ -48,10 +48,7 @@ class OrderItem extends Component {
     };
 
     render() {
-        const {
-            item,
-            item: { img_alt: alt, img },
-        } = this.props;
+        const { item, item: { img_alt: alt, img } } = this.props;
         const discount = item.discount ? item.price - (item.price * 10) / 100 : item.price;
         const price = new Intl.NumberFormat().format(discount * item.quantity) + " р.";
 

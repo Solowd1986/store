@@ -7,7 +7,7 @@ import Order from "@components/Pages/Order/Order";
 import Error400 from "@components/Pages/Error/Error400/Error400";
 import Error404 from "@components/Pages/Error/Error404/Error404";
 import Error500 from "@components/Pages/Error/Error500/Error500";
-import Profile from "@components/Pages/Profile/Profile";
+
 
 const publicRoutes = [
     { url: "/", component: MainPage, exact: true },
@@ -20,10 +20,10 @@ const publicRoutes = [
     { url: "/500", component: Error500, exact: true },
 ];
 
-const privateRoutes = [{ url: "/profile/:id", component: Profile, exact: true }];
+//const privateRoutes = [{ url: "/profile/:id", component: Profile, exact: true }];
 
 const getRoutes = (isAuth = false) => {
-    if (isAuth) return [...publicRoutes, ...privateRoutes];
+    if (isAuth) return [...publicRoutes];
     return publicRoutes;
 };
 
