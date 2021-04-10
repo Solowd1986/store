@@ -36,7 +36,6 @@ class OrderForm extends Component {
     constructor(props) {
         super(props);
         this.isFormTouched = false;
-        this.form = React.createRef();
         this.validationSchema = setValidateSchema(["name", "phone", "email", "address", "comment"]);
         this.state = {
             isUserConfirmOrder: false,
@@ -92,12 +91,32 @@ class OrderForm extends Component {
         }
     };
 
+    processedUserOrder = (form, initialOrderList) => {
+        const userOrderInfo = {
+            userInfo: {},
+            userOrder: [],
+        };
+
+        for (const [key, value] of form.entries()) {
+            const product = initialOrderList.find((item) => item.title === key);
+            if (product) userOrderInfo.userOrder.push(product);
+            if (key === "shipping") {
+                userOrderInfo.userInfo["shippingType"] = this.state.fields.shipping.type;
+                userOrderInfo.userInfo["shippingPrice"] = this.state.fields.shipping.price;
+            } else {
+                userOrderInfo.userInfo[key] = value;
+            }
+        }
+        return userOrderInfo;
+    };
+
     handleValidation = (inputName, inputValue) => {
         if (!(inputName in this.validationSchema.fields)) return;
+
         yup.reach(this.validationSchema, inputName)
             .validate(inputValue)
             .then((success) => {
-                if (!this.state.fields[inputName].error && !this.state.fields[inputName].msg) return;
+                //if (!this.state.fields[inputName].error) return;
                 this.setState(
                     produce(this.state, (draft) => {
                         draft["fields"][inputName].error = false;
@@ -119,10 +138,12 @@ class OrderForm extends Component {
 
     handleSubmit = (evt) => {
         evt.preventDefault();
+        const { target, target: { elements: formFields } } = evt;
+
         this.isFormTouched = true;
         const fields = {};
 
-        Array.from(this.form.current.elements).forEach((item) => {
+        Array.from(formFields).forEach((item) => {
             if (Object.keys(this.state.fields).includes(item.name)) {
                 fields[item.name] = item.value;
                 this.handleValidation(item.name, item.value);
@@ -134,31 +155,21 @@ class OrderForm extends Component {
             return;
         }
 
-        const form = new FormData(this.form.current);
-        const userOrderInfo = {
-            userInfo: {},
-            userOrder: [],
-        };
-
-        for (const [key, value] of form.entries()) {
-            const product = this.props.listOfProducts.find((item) => item.title === key);
-            if (product) userOrderInfo.userOrder.push(product);
-            if (key === "shipping") {
-                userOrderInfo.userInfo["shippingType"] = this.state.fields.shipping.type;
-                userOrderInfo.userInfo["shippingPrice"] = this.state.fields.shipping.price;
-            } else {
-                userOrderInfo.userInfo[key] = value;
-            }
-        }
-        evt.target.reset();
-        //console.dir(userOrderInfo);
+        const order = this.processedUserOrder(new FormData(target), this.props.listOfProducts);
+        target.reset();
+        //console.dir(order);
         this.setState({ isUserConfirmOrder: true });
+    };
+
+    handleBlur = () => {
+        
     };
 
     handleChange = ({ target, target: { name: inputName, value: inputValue, id = null } }) => {
         this.isFormTouched = true;
-        if (!Object.keys(this.state.fields).includes(inputName)) return;
+        //if (!Object.keys(this.state.fields).includes(inputName)) return;
         if (inputName === "phone") new Inputmask("+7 (999) 999-99-99").mask(target);
+
         if (id) {
             const result = inputName === "shipping" ? { type: id, price: parseInt(inputValue)} : { type: id};
             this.setState(
@@ -168,6 +179,7 @@ class OrderForm extends Component {
             );
             return;
         }
+
         this.handleValidation(inputName, inputValue);
         // каждый ввод тест на ошибки всей формы, если все ок - true в isFormValid, и снятие disabled с кнопки submit
         this.checkFieldsErrors();
@@ -184,12 +196,10 @@ class OrderForm extends Component {
             <>
                 {ConfirmModalWindow ? <ConfirmModalWindow /> : null}
                 <form
-                    ref={this.form}
                     onSubmit={this.handleSubmit}
                     className={styles.form}
                     name="order-form"
-                    method="POST"
-                >
+                    method="POST">
                     <OrderInfo
                         handleChange={this.handleChange}
                         fields={this.state.fields}

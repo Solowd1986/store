@@ -1,0 +1,22 @@
+@import "@scss/utils/utils.scss";
+
+.btn {
+  margin: 10px;
+  padding: 6px 10px;
+  background-color: dodgerblue;
+  color: white;
+  border-radius: 5px;
+
+  &:hover {
+    background-color: blueviolet;
+  }
+
+  &:disabled {
+    background-color: lightgrey;
+    cursor: not-allowed;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}

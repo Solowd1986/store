@@ -1,10 +1,13 @@
 import React from "react";
+import styles from "./input-field.module.scss";
+import cn from "classnames";
 
-const InputField = ({ type = "text", children, name = "input", classList = "" }) => {
-    const id = `${type || "text"}-id-${Math.random().toString(34).slice(2)}`;
+const InputField = ({ classList = "", error: field = { error: false, mag: ""}, ...props }) => {
+    const id = `${props.type || "text"}-id-${Math.random().toString(34).slice(2)}`;
     return (
-        <label htmlFor={id}>
-            <input id={id} type={type} name={name} className={classList}/>
+        <label htmlFor={id} className={cn(styles.label, classList)}>
+            <input id={id} {...props}/>
+            { field.error && <span className={styles.error}>{field.msg}</span>}
         </label>
     );
 };

@@ -2,8 +2,6 @@ import React from "react";
 import styles from "./order_price.module.scss";
 
 const OrderPrice = ({ listOfProducts, shipping: price }) => {
-
-
     const calctotalPrice = () =>
         listOfProducts.reduce((total, item) => {
             if (item.discount) {

@@ -80,7 +80,6 @@ class OrderInfo extends Component {
                                 onChange={handleChange}
                                 name="name"
                                 type="text"
-                                autoComplete="on"
                                 value={"имя"}
                                 placeholder="Имя"
                             />
@@ -93,7 +92,6 @@ class OrderInfo extends Component {
                                 onChange={handleChange}
                                 name="phone"
                                 type="text"
-                                autoComplete="on"
                                 value={"+7 (021) 444-44-44"}
                                 placeholder="Телефон"
                             />
@@ -106,8 +104,7 @@ class OrderInfo extends Component {
                                 onChange={handleChange}
                                 name="email"
                                 type="email"
-                                value={"sam@ya.ru"}
-                                autoComplete="on"
+
                                 placeholder="Email"
                             />
                             {fields.email.error && <span className={styles.field_error}>{fields.email.msg}</span>}
@@ -119,7 +116,6 @@ class OrderInfo extends Component {
                                 onChange={handleChange}
                                 name="address"
                                 type="text"
-                                autoComplete="on"
                                 placeholder="Адрес"
                             />
                             {fields.address.error && <span className={styles.field_error}>{fields.address.msg}</span>}

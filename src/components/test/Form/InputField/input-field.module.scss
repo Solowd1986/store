@@ -1,0 +1,30 @@
+@import "@scss/utils/utils.scss";
+
+.label {
+  margin: 5px 5px 35px 5px;
+  position: relative;
+}
+
+.label > input {
+  padding: 8px 15px 8px 10px;
+  border-radius: 6px;
+  border: 1px solid transparent;
+
+  &:focus {
+    border: 1px solid red;
+  }
+}
+
+.error {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: 6px auto 0;
+  top: 100%;
+  width: 95%;
+  border-radius: 6px;
+  background-color: lightgrey;
+  color: red;
+  text-align: center;
+  padding: 2px 5px;
+}

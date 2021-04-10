@@ -6,6 +6,7 @@ import cn from "classnames";
 
 import ProductCard from "@components/Partials/ProductCard/ProductCard";
 import FormCounter  from "@components/test/Form/FormCounter/FormCounter";
+import Form from "@components/test/Form/Form";
 
 
 class Promo extends PureComponent<IndexPageTypes> {
@@ -17,6 +18,8 @@ class Promo extends PureComponent<IndexPageTypes> {
             <section className={cn("container", styles.wrapper)}>
                 <main className={cn("wrapper", styles.content)}>
                     <FormCounter />
+
+                    <Form/>
 
 
                     <h2 className={styles.section_title}>Рекомендуем</h2>

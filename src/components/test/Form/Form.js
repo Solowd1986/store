@@ -1,16 +1,20 @@
 import React, { Component } from "react";
+import styles from "./form.module.scss";
 
 import setValidateSchema from "@components/Helpers/Validation/validateSchema/validateSchema";
 import produce from "immer";
 import Inputmask from "inputmask";
 import * as yup from "yup";
+import InputText from "@components/test/Other/Form/Input/Input";
+import SubmitButton from "@components/test/Form/SubmitButton/SubmitButton";
+import InputField from "@components/test/Form/InputField/InputField";
 
 class Form extends Component {
     constructor(props) {
         super(props);
         this.isFormTouched = false;
         this.form = React.createRef();
-        this.validationSchema = setValidateSchema(["name", "phone", "email", "address", "comment"]);
+        this.validationSchema = setValidateSchema(["name","email", "address"]);
         this.state = {
             isUserConfirmOrder: false,
             isFormValid: true,
@@ -65,6 +69,18 @@ class Form extends Component {
         }
     };
 
+    checkAllTrackedFields = () => {
+        for (const [key, value] of Object.entries(this.state.fields)) {
+
+            if (key === 'email') return;
+            console.log(key);
+            console.log(value);
+
+        }
+
+
+    };
+
     handleValidation = (inputName, inputValue) => {
         if (!(inputName in this.validationSchema.fields)) return;
         yup.reach(this.validationSchema, inputName)
@@ -90,8 +106,47 @@ class Form extends Component {
             });
     };
 
+
+
+
+    checkFieldError = (inputName, inputValue) => {
+        try {
+            this.validationSchema.validateSyncAt(inputName, { [inputName]: inputValue });
+            return { error: false };
+        } catch (error) {
+            return { error: true, message: error.message };
+        }
+    };
+
+    getAllTrackedFields = (fields) => {
+        const formFieldsToObject = {};
+        const formFields = Array.from(fields).filter(item => Object.keys(this.validationSchema.fields).includes(item.name));
+        formFields.forEach(item => formFieldsToObject[item.name] = item.value);
+        return formFieldsToObject;
+    };
+
+    isFormValid = (fields) => {
+        return this.validationSchema.isValidSync(this.getAllTrackedFields(fields));
+    };
+
+
+
     handleSubmit = (evt) => {
         evt.preventDefault();
+        const { target: form, target: { elements: formFields } } = evt;
+
+
+        //console.log(this.checkFieldError("name", "олег"));
+        //console.log(this.getAllTrackedFields(formFields));
+        console.log(this.isFormValid(formFields));
+
+
+
+        //this.checkAllTrackedFields();
+
+
+        return;
+
         this.isFormTouched = true;
         const fields = {};
 
@@ -107,7 +162,7 @@ class Form extends Component {
             return;
         }
 
-        const form = new FormData(this.form.current);
+        const form1 = new FormData(this.form.current);
         const userOrderInfo = {
             userInfo: {},
             userOrder: [],
@@ -133,7 +188,7 @@ class Form extends Component {
         if (!Object.keys(this.state.fields).includes(inputName)) return;
         if (inputName === "phone") new Inputmask("+7 (999) 999-99-99").mask(target);
         if (id) {
-            const result = inputName === "shipping" ? { type: id, price: parseInt(inputValue)} : { type: id};
+            const result = inputName === "shipping" ? { type: id, price: parseInt(inputValue) } : { type: id };
             this.setState(
                 produce(this.state, (draft) => {
                     draft["fields"][inputName] = result;
@@ -155,14 +210,21 @@ class Form extends Component {
                     onSubmit={this.handleSubmit}
                     name="user-form"
                     method="POST"
-                >
-
+                    className={styles.form}>
+                    <InputField
+                        name={"name"}
+                        value="олег"
+                        error={{ error: true, msg: "too log start" }}
+                        onChange={this.handleChange}
+                    />
+                    <InputField name={"email"}/>
+                    <InputField name={"address"}/>
+                    <SubmitButton/>
                 </form>
             </>
         );
     }
 }
-
 
 
 export default Form;
