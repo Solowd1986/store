@@ -14,18 +14,14 @@ class Form extends Component {
         super(props);
         this.isFormTouched = false;
         this.form = React.createRef();
-        this.validationSchema = setValidateSchema(["name","email", "address"]);
+        this.validationSchema = setValidateSchema(["login","email", "address"]);
         this.state = {
             isUserConfirmOrder: false,
             isFormValid: true,
             // ПОМЕСТИ СТЕЙТ В РЕДАКС ЧТОбЫ ХРАНИТЬ ДАНЫЕ ПРИ ПЕРЕЗАГРУЗКЕ СТРАНИЦЫ А ПОСЛЕ УСПЕШНОЙ ОТПРАВКИ ОБНУЛЯ ЭТО
             // сброс кнопкой очистить поля формы
             fields: {
-                name: {
-                    error: false,
-                    msg: "",
-                },
-                phone: {
+                login: {
                     error: false,
                     msg: "",
                 },
@@ -36,24 +32,14 @@ class Form extends Component {
                 address: {
                     error: false,
                     msg: "",
-                },
-                comment: {
-                    error: false,
-                    msg: "",
-                },
-                shipping: {
-                    type: "moscow",
-                    price: 400
-                },
-                payment: {
-                    type: "cash"
-                },
+                }
             },
         };
     }
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
-        return this.isFormTouched && !this.state.isUserConfirmOrder;
+        //return this.isFormTouched && !this.state.isUserConfirmOrder;
+        return true;
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -109,18 +95,21 @@ class Form extends Component {
 
 
 
+
+
     checkFieldError = (inputName, inputValue) => {
         try {
             this.validationSchema.validateSyncAt(inputName, { [inputName]: inputValue });
-            return { error: false };
+            return { fieldName: inputName, error: false };
         } catch (error) {
-            return { error: true, message: error.message };
+            return { fieldName: inputName, error: true, msg: error.message };
         }
     };
 
     getAllTrackedFields = (fields) => {
         const formFieldsToObject = {};
-        const formFields = Array.from(fields).filter(item => Object.keys(this.validationSchema.fields).includes(item.name));
+        const validationFields = Object.keys(this.validationSchema.fields);
+        const formFields = Array.from(fields).filter(item => validationFields.includes(item.name));
         formFields.forEach(item => formFieldsToObject[item.name] = item.value);
         return formFieldsToObject;
     };
@@ -129,16 +118,82 @@ class Form extends Component {
         return this.validationSchema.isValidSync(this.getAllTrackedFields(fields));
     };
 
+    isFormHasError = (fields) => {
+        for (const [key, value] of Object.entries(this.getAllTrackedFields(fields))) {
+            const field = this.checkFieldError(key, value);
+            if (field.error) return field;
+        }
+        return { error: false };
+    };
+
+
+    handleInputChange = ({ target, target: { name: inputName, value: inputValue, id = null } }) => {
+        if (this.state.fields[inputName].error || !this.state.isFormValid) {
+            const checkedField = this.checkFieldError(inputName, inputValue);
+            if (!checkedField.error) {
+                this.setState(
+                    produce(this.state, (draft) => {
+                        draft["fields"][checkedField.fieldName].error = false;
+                        draft["fields"][checkedField.fieldName].msg = "";
+                        if (this.isFormValid(target.form.elements)) {
+                            draft["isFormValid"] = true;
+                        }
+                    }),
+                );
+            } else {
+                if (this.state.fields[inputName].msg === checkedField.msg) return;
+                this.setState(
+                    produce(this.state, (draft) => {
+                        draft["fields"][checkedField.fieldName].error = true;
+                        draft["fields"][checkedField.fieldName].msg = checkedField.msg;
+                    }),
+                );
+            }
+        }
+    };
+
+
+    handleOnBlur = ({ target, target: { name: inputName, value: inputValue, id = null } }) => {
+        const checkedField = this.checkFieldError(inputName, inputValue);
+        if (checkedField.error) {
+            this.setState(
+                produce(this.state, (draft) => {
+                    draft["fields"][checkedField.fieldName].error = true;
+                    draft["fields"][checkedField.fieldName].msg = checkedField.msg;
+                    if (this.state.isFormValid) {
+                        draft["isFormValid"] = false;
+                    }
+                }),
+            );
+        }
+    };
 
 
     handleSubmit = (evt) => {
         evt.preventDefault();
         const { target: form, target: { elements: formFields } } = evt;
+        const validityField = this.isFormHasError(formFields);
+
+        if (validityField.error) {
+            this.setState(
+                produce(this.state, (draft) => {
+                    draft["fields"][validityField.fieldName].error = true;
+                    draft["fields"][validityField.fieldName].msg = validityField.msg;
+                    draft["isFormValid"] = false;
+                }),
+            );
+            return;
+        }
+
+
+
+
+
 
 
         //console.log(this.checkFieldError("name", "олег"));
         //console.log(this.getAllTrackedFields(formFields));
-        console.log(this.isFormValid(formFields));
+
 
 
 
@@ -212,14 +267,26 @@ class Form extends Component {
                     method="POST"
                     className={styles.form}>
                     <InputField
-                        name={"name"}
-                        value="олег"
-                        error={{ error: true, msg: "too log start" }}
-                        onChange={this.handleChange}
+                        name={"login"}
+                        error={this.state.fields.login}
+                        onChange={this.handleInputChange}
+                        onBlur={this.handleOnBlur}
                     />
-                    <InputField name={"email"}/>
-                    <InputField name={"address"}/>
-                    <SubmitButton/>
+                    <InputField
+                        name={"email"}
+                        error={this.state.fields.email}
+                        defaultValue="trems@yandex.ru"
+                        onChange={this.handleInputChange}
+                        onBlur={this.handleOnBlur}
+                    />
+                    <InputField
+                        name={"address"}
+                        error={this.state.fields.address}
+                        onChange={this.handleInputChange}
+                        onBlur={this.handleOnBlur}
+
+                    />
+                    <SubmitButton disabled={!this.state.isFormValid}/>
                 </form>
             </>
         );
