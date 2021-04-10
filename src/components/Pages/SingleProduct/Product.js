@@ -40,11 +40,6 @@ class Product extends Component {
         if (!this.state.product) return <Spinner />;
         const { main: category, data: product } = this.state.product;
 
-        const productPriceClassList = {
-            main: `${styles.price}`,
-            discount: `${styles.discount}`,
-        };
-
         return (
             <>
                 <section className={cn("container", styles.item_bg)}>
@@ -57,7 +52,6 @@ class Product extends Component {
                             <div className={styles.price}>
                                 <ProductPrice product={product} />
                             </div>
-
 
                             <div className={styles.btn_wrapper}>
                                 <OrderButton product={product} classList={styles.btn_order} />

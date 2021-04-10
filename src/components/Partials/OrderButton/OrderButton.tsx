@@ -9,15 +9,6 @@ import * as cartActions from "@redux/entities/cart/actions";
 import * as cartSelector from "@redux/entities/cart/selectors/cartSelectors";
 import { connect } from "react-redux";
 
-// type OrderButtonProps = {
-//     cart: unknown,
-//     product: ProductTypes,
-//     productsInCart: ProductTypes[],
-//     onAddToCart: (product: ProductTypes) => void,
-//     onDeleteFromCart: () => void,
-//     classList: string
-// };
-
 interface OrderButtonPropsInterface {
     product: ProductTypes,
     productsInCart?: ProductTypes[],

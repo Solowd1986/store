@@ -1,4 +1,6 @@
 import React, { PureComponent } from "react";
+import styles from "./product-card.module.scss";
+import cn from "classnames";
 
 import { ProductTypes, CategoryTypes } from "@custom-types//types";
 import ProductPrice from "@components/Partials/ProductPrice/ProductPrice";
@@ -7,8 +9,6 @@ import PromoProductCard from "./PromoProductCard";
 import { NavLink } from "react-router-dom";
 
 
-import styles from "./product-card.module.scss";
-import cn from "classnames";
 
 type ProductCardProps = {
     item: ProductTypes,

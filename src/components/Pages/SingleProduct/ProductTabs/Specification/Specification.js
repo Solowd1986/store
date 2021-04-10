@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./specification.module.scss";
 
-const Specification = ({ specs }) => (
+const Specification = ({ specifications: specs }) => (
     <>
         <div className={styles.attributes}>
             <h2 className={styles.table_title}>Общие характеристики</h2>

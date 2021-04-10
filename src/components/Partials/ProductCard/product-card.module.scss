@@ -162,21 +162,22 @@
 
 
 .price {
-  font-family: "Lora", sans-serif;
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 600;
   margin-bottom: 15px;
 }
 
-.price > span[data-initial] {
+.price > span[data-initial-price] {
   margin-right: 10px;
   font-size: 15px;
   color: $grey;
   text-decoration: line-through;
 }
 
-.price > span[data-final] {
+.price > span[data-calculated-price] {
   margin-top: auto;
   margin-bottom: 10px;
-  font-size: 18px;
+  font-size: 19px;
   font-weight: 500;
   line-height: 1.7;
   text-align: center;

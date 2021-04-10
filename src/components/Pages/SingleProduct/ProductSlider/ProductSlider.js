@@ -6,37 +6,37 @@ class ProductSlider extends Component {
         super(props);
         this.slideTransitionEnabled = false;
         this.mainImgRef = React.createRef();
-        this.listSmallImgRef = React.createRef();
-        this.slideLeftClassList = ["animate__fadeOutLeft", "animate__animated", "animate__faster"];
-        this.fadeInClassList = ["animate__fadeIn", "animate__animated", "animate__faster"];
+        this.slideThumbnailList = React.createRef();
     }
 
     componentDidMount() {
-        Array.from(this.listSmallImgRef.current.children)
+        Array.from(this.slideThumbnailList.current.children)
             .find((item) => item.src === this.mainImgRef.current.src)
             .classList.add(styles.active);
     }
 
-    toggleSlide = (evt) => {
-        const target = evt.target;
+    slideClickHandler = ({ target }) => {
         const mainImg = this.mainImgRef.current;
+        const slideLeftClassList = ["animate__fadeOutLeft", "animate__animated", "animate__faster"];
+        const slideFadeInClassList = ["animate__fadeIn", "animate__animated", "animate__faster"];
+
         if (mainImg.src === target.src || this.slideTransitionEnabled) return;
         this.slideTransitionEnabled = true;
 
-        Array.from(this.listSmallImgRef.current.children).forEach((item) => item.classList.remove(styles.active));
+        Array.from(this.slideThumbnailList.current.children).forEach((item) => item.classList.remove(styles.active));
         target.classList.add(styles.active);
 
-        mainImg.classList.add(...this.slideLeftClassList);
         mainImg.addEventListener(
             "animationend",
             () => {
                 mainImg.src = target.src;
-                mainImg.classList.remove(...this.slideLeftClassList);
-                mainImg.classList.add(...this.fadeInClassList);
+                mainImg.classList.remove(...slideLeftClassList);
+                mainImg.classList.add(...slideFadeInClassList);
                 this.slideTransitionEnabled = false;
             },
             { once: true },
         );
+        mainImg.classList.add(...slideLeftClassList);
     };
 
     render() {
@@ -52,13 +52,13 @@ class ProductSlider extends Component {
                     alt={alt}
                 />
 
-                <div className={styles.slider} ref={this.listSmallImgRef}>
+                <div className={styles.slider} ref={this.slideThumbnailList}>
                     {list.map((path) => (
                         <img
                             key={path}
                             width="60"
                             height="60"
-                            onClick={this.toggleSlide}
+                            onClick={this.slideClickHandler}
                             className={styles.img}
                             src={path}
                             alt={alt}
