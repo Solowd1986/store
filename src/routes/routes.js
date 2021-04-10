@@ -8,8 +8,7 @@ import Error400 from "@components/Pages/Error/Error400/Error400";
 import Error404 from "@components/Pages/Error/Error404/Error404";
 import Error500 from "@components/Pages/Error/Error500/Error500";
 
-
-const publicRoutes = [
+const routes = [
     { url: "/", component: MainPage, exact: true },
     { url: "/category/:type", component: Category, exact: true },
     { url: "/product/:category/:id", component: Product, exact: true },
@@ -17,14 +16,8 @@ const publicRoutes = [
     { url: "/delivery", component: Delivery, exact: true },
     { url: "/400", component: Error400, exact: true },
     { url: "/404", component: Error404, exact: true },
-    { url: "/500", component: Error500, exact: true },
+    { url: "/500", component: Error500, exact: true }
 ];
 
+export default routes;
 
-
-const getRoutes = (isAuth = false) => {
-    if (isAuth) return [...publicRoutes];
-    return publicRoutes;
-};
-
-export default getRoutes;

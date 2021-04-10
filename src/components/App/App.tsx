@@ -5,12 +5,10 @@ import ErrorBoundary from "@components/Helpers/ErrorBoundary/ErrorBoundary";
 import ScrollToTop from "@components/Helpers/Hoc/withScrollToTop/ScrollToTop";
 
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
-import getRoutes from "@root/routes/routes";
+import router from "@root/routes/routes";
 import { Provider } from "react-redux";
 import store from "@redux/store";
 
-
-const isAuth = true;
 
 export default class App extends Component {
     render(): React.ReactNode {
@@ -22,7 +20,7 @@ export default class App extends Component {
                             <Layout>
                                 <ScrollToTop>
                                     <Switch>
-                                        {getRoutes(isAuth).map((route) => (
+                                        {router.map((route) => (
                                             <Route
                                                 key={route.url}
                                                 path={route.url}
