@@ -20,7 +20,7 @@ const publicRoutes = [
     { url: "/500", component: Error500, exact: true },
 ];
 
-//const privateRoutes = [{ url: "/profile/:id", component: Profile, exact: true }];
+
 
 const getRoutes = (isAuth = false) => {
     if (isAuth) return [...publicRoutes];
