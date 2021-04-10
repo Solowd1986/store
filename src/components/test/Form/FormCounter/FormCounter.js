@@ -25,7 +25,7 @@ export class FormCounter extends PureComponent {
     static defaultProps = {
         returnCurrentAmount: (value) => value,
         maxAmount: 99,
-        initialValue: 12,
+        initialValue: 1,
         classList: ""
     };
 

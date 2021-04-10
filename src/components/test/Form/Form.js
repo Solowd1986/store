@@ -8,6 +8,8 @@ import * as yup from "yup";
 import InputText from "@components/test/Other/Form/Input/Input";
 import SubmitButton from "@components/test/Form/SubmitButton/SubmitButton";
 import InputField from "@components/test/Form/InputField/InputField";
+import InputRadio from "@components/test/Form/InputRadio/InputRadio";
+import InputCheckbox from "@components/test/Form/InputCheckbox/InputCheckbox";
 
 class Form extends Component {
     constructor(props) {
@@ -18,6 +20,9 @@ class Form extends Component {
         this.state = {
             isUserConfirmOrder: false,
             isFormValid: true,
+            shipping: {
+                type: "one"
+            },
             // ПОМЕСТИ СТЕЙТ В РЕДАКС ЧТОбЫ ХРАНИТЬ ДАНЫЕ ПРИ ПЕРЕЗАГРУЗКЕ СТРАНИЦЫ А ПОСЛЕ УСПЕШНОЙ ОТПРАВКИ ОБНУЛЯ ЭТО
             // сброс кнопкой очистить поля формы
             fields: {
@@ -97,7 +102,8 @@ class Form extends Component {
 
 
 
-    checkFieldError = (inputName, inputValue) => {
+
+    checkFieldErrorSync = (inputName, inputValue) => {
         try {
             this.validationSchema.validateSyncAt(inputName, { [inputName]: inputValue });
             return { fieldName: inputName, error: false };
@@ -120,7 +126,7 @@ class Form extends Component {
 
     isFormHasError = (fields) => {
         for (const [key, value] of Object.entries(this.getAllTrackedFields(fields))) {
-            const field = this.checkFieldError(key, value);
+            const field = this.checkFieldErrorSync(key, value);
             if (field.error) return field;
         }
         return { error: false };
@@ -128,8 +134,9 @@ class Form extends Component {
 
 
     handleInputChange = ({ target, target: { name: inputName, value: inputValue, id = null } }) => {
+        if (inputName === "phone") new Inputmask("+7 (999) 999-99-99").mask(target);
         if (this.state.fields[inputName].error || !this.state.isFormValid) {
-            const checkedField = this.checkFieldError(inputName, inputValue);
+            const checkedField = this.checkFieldErrorSync(inputName, inputValue);
             if (!checkedField.error) {
                 this.setState(
                     produce(this.state, (draft) => {
@@ -153,16 +160,23 @@ class Form extends Component {
     };
 
 
+    handleRadioChange = ( { target: { dataset : { type } } }) => {
+        this.setState(
+            produce(this.state, (draft) => {
+                draft["shipping"]["type"] = type;
+            })
+        );
+    };
+
+
     handleOnBlur = ({ target, target: { name: inputName, value: inputValue, id = null } }) => {
-        const checkedField = this.checkFieldError(inputName, inputValue);
+        const checkedField = this.checkFieldErrorSync(inputName, inputValue);
         if (checkedField.error) {
             this.setState(
                 produce(this.state, (draft) => {
                     draft["fields"][checkedField.fieldName].error = true;
                     draft["fields"][checkedField.fieldName].msg = checkedField.msg;
-                    if (this.state.isFormValid) {
-                        draft["isFormValid"] = false;
-                    }
+                    draft["isFormValid"] = false;
                 }),
             );
         }
@@ -191,7 +205,7 @@ class Form extends Component {
 
 
 
-        //console.log(this.checkFieldError("name", "олег"));
+        //console.log(this.checkFieldErrorSync("name", "олег"));
         //console.log(this.getAllTrackedFields(formFields));
 
 
@@ -272,6 +286,7 @@ class Form extends Component {
                         onChange={this.handleInputChange}
                         onBlur={this.handleOnBlur}
                     />
+
                     <InputField
                         name={"email"}
                         error={this.state.fields.email}
@@ -284,8 +299,35 @@ class Form extends Component {
                         error={this.state.fields.address}
                         onChange={this.handleInputChange}
                         onBlur={this.handleOnBlur}
-
                     />
+
+                    <InputRadio name={"block"}/>
+
+                    <InputField
+                        name={"shipping"}
+                        type="radio"
+                        checked={this.state.shipping.type === "one"}
+                        value={1}
+                        data-type="one"
+                        onChange={this.handleRadioChange}
+                    />
+                    <InputField
+                        name={"shipping"}
+                        type="radio"
+                        checked={this.state.shipping.type === "two"}
+                        value={2}
+                        data-type="two"
+                        onChange={this.handleRadioChange}
+                    />
+                    <InputField
+                        name={"shipping"}
+                        type="radio"
+                        checked={this.state.shipping.type === "three"}
+                        value={3}
+                        data-type="three"
+                        onChange={this.handleRadioChange}
+                    />
+
                     <SubmitButton disabled={!this.state.isFormValid}/>
                 </form>
             </>
