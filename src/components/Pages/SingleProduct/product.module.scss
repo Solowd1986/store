@@ -52,9 +52,7 @@
   }
 }
 
-
-
-.price {
+.price, .availability {
   font-family: "Ubuntu", sans-serif;
   font-weight: 600;
   @media (max-width: 870px) {
@@ -78,6 +76,11 @@
   font-size: 28px;
   font-weight: 500;
   color: $black-100;
+}
+
+.availability {
+  font-weight: 400;
+  font-size: 18px;
 }
 
 

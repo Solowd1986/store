@@ -56,7 +56,9 @@ class Product extends Component {
                             <div className={styles.btn_wrapper}>
                                 <OrderButton product={product} classList={styles.btn_order} />
                             </div>
-                            <span>{product.rest ? "Наличие: в наличии" : "Наличие: нет наличии"}</span>
+                            <span className={styles.availability}>
+                                {product.rest ? "Наличие: в наличии" : "Наличие: нет наличии"}
+                            </span>
                         </div>
                     </div>
                 </section>

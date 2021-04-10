@@ -5,10 +5,9 @@ import ErrorBoundary from "@components/Helpers/ErrorBoundary/ErrorBoundary";
 import ScrollToTop from "@components/Helpers/Hoc/withScrollToTop/ScrollToTop";
 
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
-import router from "@root/routes/routes";
 import { Provider } from "react-redux";
 import store from "@redux/store";
-
+import router from "@root/routes/routes";
 
 export default class App extends Component {
     render(): React.ReactNode {

@@ -6,17 +6,18 @@ import cn from "classnames";
 
 import ProductCard from "@components/Partials/ProductCard/ProductCard";
 import FormCounter  from "@components/test/Form/FormCounter/FormCounter";
-import Auth from "@components/test/Other/Form/Auth/Auth";
+
 
 class Promo extends PureComponent<IndexPageTypes> {
     render() {
         //console.dir(this.props);
         const { phones, accessoires, gadgets } = this.props.index;
+
         return (
             <section className={cn("container", styles.wrapper)}>
                 <main className={cn("wrapper", styles.content)}>
                     <FormCounter />
-                    {/*<Auth/>*/}
+
 
                     <h2 className={styles.section_title}>Рекомендуем</h2>
                     <ul className={styles.list}>

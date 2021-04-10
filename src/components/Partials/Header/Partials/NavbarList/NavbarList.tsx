@@ -9,8 +9,7 @@ const NavbarList = () => (
             <NavLink
                 to="/category/phones"
                 className={styles.header__nav_link}
-                activeClassName={styles.link_active_class}
-            >
+                activeClassName={styles.link_active_class} exact>
                 Смартфоны
                 <span className={styles.header__nav_link__arrow} />
             </NavLink>
@@ -81,8 +80,7 @@ const NavbarList = () => (
             <NavLink
                 to="/category/accessoires"
                 className={styles.header__nav_link}
-                activeClassName={styles.link_active_class}
-            >
+                activeClassName={styles.link_active_class} exact>
                 Аксессуары
                 <span className={styles.header__nav_link__arrow} />
             </NavLink>
@@ -159,8 +157,7 @@ const NavbarList = () => (
             <NavLink
                 to="/category/gadgets"
                 className={styles.header__nav_link}
-                activeClassName={styles.link_active_class}
-            >
+                activeClassName={styles.link_active_class} exact>
                 Гаджеты
                 <span className={styles.header__nav_link__arrow} />
             </NavLink>
