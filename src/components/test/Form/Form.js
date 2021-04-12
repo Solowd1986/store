@@ -14,9 +14,8 @@ import InputCheckbox from "@components/test/Form/InputCheckbox/InputCheckbox";
 class Form extends Component {
     constructor(props) {
         super(props);
-        this.isFormTouched = false;
         this.form = React.createRef();
-        this.validationSchema = setValidateSchema(["login","email", "address"]);
+        this.validationSchema = setValidateSchema(["login", "email", "address"]);
         this.state = {
             isUserConfirmOrder: false,
             isFormValid: true,
@@ -42,68 +41,8 @@ class Form extends Component {
         };
     }
 
-    shouldComponentUpdate(nextProps, nextState, nextContext) {
-        //return this.isFormTouched && !this.state.isUserConfirmOrder;
-        return true;
-    }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if (!this.isFormTouched && this.state.isUserConfirmOrder) {
-            this.setState({ isUserConfirmOrder: false });
-        }
-    }
-
-    checkFieldsErrors = () => {
-        const verifyFields = Object.values(this.state.fields).filter((item) => item.error !== undefined);
-        if (!this.state.isFormValid && verifyFields.every((item) => !item.error)) {
-            this.setState({ isFormValid: true });
-        }
-    };
-
-    checkAllTrackedFields = () => {
-        for (const [key, value] of Object.entries(this.state.fields)) {
-
-            if (key === 'email') return;
-            console.log(key);
-            console.log(value);
-
-        }
-
-
-    };
-
-    handleValidation = (inputName, inputValue) => {
-        if (!(inputName in this.validationSchema.fields)) return;
-        yup.reach(this.validationSchema, inputName)
-            .validate(inputValue)
-            .then((success) => {
-                if (!this.state.fields[inputName].error && !this.state.fields[inputName].msg) return;
-                this.setState(
-                    produce(this.state, (draft) => {
-                        draft["fields"][inputName].error = false;
-                        draft["fields"][inputName].msg = "";
-                    }),
-                );
-            })
-            .catch((error) => {
-                if (error.message === this.state.fields[inputName].msg) return;
-                this.setState(
-                    produce(this.state, (draft) => {
-                        draft["fields"][inputName].error = true;
-                        draft["fields"][inputName].msg = error.message;
-                        draft["isFormValid"] = false;
-                    }),
-                );
-            });
-    };
-
-
-
-
-
-
-
-    checkFieldErrorSync = (inputName, inputValue) => {
+    checkSingleFieldErrorSync = (inputName, inputValue) => {
         try {
             this.validationSchema.validateSyncAt(inputName, { [inputName]: inputValue });
             return { fieldName: inputName, error: false };
@@ -120,29 +59,39 @@ class Form extends Component {
         return formFieldsToObject;
     };
 
-    isFormValid = (fields) => {
-        return this.validationSchema.isValidSync(this.getAllTrackedFields(fields));
-    };
 
-    isFormHasError = (fields) => {
-        for (const [key, value] of Object.entries(this.getAllTrackedFields(fields))) {
-            const field = this.checkFieldErrorSync(key, value);
-            if (field.error) return field;
+    validateForm = (fields) => {
+        const errors = [];
+        const allFormFields = this.getAllTrackedFields(fields);
+        for (const [key, value] of Object.entries(allFormFields)) {
+            const field = this.checkSingleFieldErrorSync(key, value);
+            if (field.error) errors.push(field);
         }
-        return { error: false };
+        return {
+            isFormValid: this.validationSchema.isValidSync(allFormFields),
+            errors
+        }
     };
 
 
-    handleInputChange = ({ target, target: { name: inputName, value: inputValue, id = null } }) => {
+    //region Описание
+    /**
+     * Для того чтобы отслеживать на оишбки динамически, проверяем, была ли уже вытсалвена ошибка для поля
+     * или была ли state формы выставлен в false, это будет значить, что были попытки ввода и были ошибки, поэтому
+     * даже поле быз ошибок проверяем в динамике, это нужно также чтобы в динамике разблочить кнопку отправки формы, а
+     * не по blur. так это мненее понято, что для разблока нужно именно уйти из поля.
+     */
+        //endregion
+    handleInputChange = ({ target, target: { name: inputName, value: inputValue } }) => {
         if (inputName === "phone") new Inputmask("+7 (999) 999-99-99").mask(target);
         if (this.state.fields[inputName].error || !this.state.isFormValid) {
-            const checkedField = this.checkFieldErrorSync(inputName, inputValue);
+            const checkedField = this.checkSingleFieldErrorSync(inputName, inputValue);
             if (!checkedField.error) {
                 this.setState(
                     produce(this.state, (draft) => {
                         draft["fields"][checkedField.fieldName].error = false;
                         draft["fields"][checkedField.fieldName].msg = "";
-                        if (this.isFormValid(target.form.elements)) {
+                        if (this.validateForm(target.form.elements).isFormValid) {
                             draft["isFormValid"] = true;
                         }
                     }),
@@ -159,18 +108,8 @@ class Form extends Component {
         }
     };
 
-
-    handleRadioChange = ( { target: { dataset : { type } } }) => {
-        this.setState(
-            produce(this.state, (draft) => {
-                draft["shipping"]["type"] = type;
-            })
-        );
-    };
-
-
     handleOnBlur = ({ target, target: { name: inputName, value: inputValue, id = null } }) => {
-        const checkedField = this.checkFieldErrorSync(inputName, inputValue);
+        const checkedField = this.checkSingleFieldErrorSync(inputName, inputValue);
         if (checkedField.error) {
             this.setState(
                 produce(this.state, (draft) => {
@@ -182,93 +121,35 @@ class Form extends Component {
         }
     };
 
+    handleRadioChange = ({ target: { name: inputName, dataset: { type } } }) => {
+        this.setState(
+            produce(this.state, (draft) => {
+                draft[inputName]["type"] = type;
+            })
+        );
+    };
 
     handleSubmit = (evt) => {
         evt.preventDefault();
         const { target: form, target: { elements: formFields } } = evt;
-        const validityField = this.isFormHasError(formFields);
 
-        if (validityField.error) {
+        if (!this.validateForm(formFields).isFormValid) {
+            const firstFieldWithError = this.validateForm(formFields).errors[0];
             this.setState(
                 produce(this.state, (draft) => {
-                    draft["fields"][validityField.fieldName].error = true;
-                    draft["fields"][validityField.fieldName].msg = validityField.msg;
+                    draft["fields"][firstFieldWithError.fieldName].error = true;
+                    draft["fields"][firstFieldWithError.fieldName].msg = firstFieldWithError.msg;
                     draft["isFormValid"] = false;
                 }),
             );
             return;
         }
 
-
-
-
-
-
-
-        //console.log(this.checkFieldErrorSync("name", "олег"));
-        //console.log(this.getAllTrackedFields(formFields));
-
-
-
-
-        //this.checkAllTrackedFields();
-
-
-        return;
-
-        this.isFormTouched = true;
-        const fields = {};
-
-        Array.from(this.form.current.elements).forEach((item) => {
-            if (Object.keys(this.state.fields).includes(item.name)) {
-                fields[item.name] = item.value;
-                this.handleValidation(item.name, item.value);
-            }
-        });
-
-        if (!this.validationSchema.isValidSync(fields)) {
-            this.setState({ isFormValid: false });
-            return;
-        }
-
-        const form1 = new FormData(this.form.current);
-        const userOrderInfo = {
-            userInfo: {},
-            userOrder: [],
-        };
-
-        for (const [key, value] of form.entries()) {
-            const product = this.props.listOfProducts.find((item) => item.title === key);
-            if (product) userOrderInfo.userOrder.push(product);
-            if (key === "shipping") {
-                userOrderInfo.userInfo["shippingType"] = this.state.fields.shipping.type;
-                userOrderInfo.userInfo["shippingPrice"] = this.state.fields.shipping.price;
-            } else {
-                userOrderInfo.userInfo[key] = value;
-            }
-        }
-        evt.target.reset();
-        //console.dir(userOrderInfo);
-        this.setState({ isUserConfirmOrder: true });
+        const formData = new FormData(form);
+        form.reset();
+        //this.setState({ isUserConfirmOrder: true });
     };
 
-    handleChange = ({ target, target: { name: inputName, value: inputValue, id = null } }) => {
-        this.isFormTouched = true;
-        if (!Object.keys(this.state.fields).includes(inputName)) return;
-        if (inputName === "phone") new Inputmask("+7 (999) 999-99-99").mask(target);
-        if (id) {
-            const result = inputName === "shipping" ? { type: id, price: parseInt(inputValue) } : { type: id };
-            this.setState(
-                produce(this.state, (draft) => {
-                    draft["fields"][inputName] = result;
-                }),
-            );
-            return;
-        }
-        this.handleValidation(inputName, inputValue);
-        // каждый ввод тест на ошибки всей формы, если все ок - true в isFormValid, и снятие disabled с кнопки submit
-        this.checkFieldsErrors();
-    };
 
     render() {
         //console.log("render");
@@ -301,8 +182,6 @@ class Form extends Component {
                         onBlur={this.handleOnBlur}
                     />
 
-                    <InputRadio name={"block"}/>
-
                     <InputField
                         name={"shipping"}
                         type="radio"
@@ -315,16 +194,8 @@ class Form extends Component {
                         name={"shipping"}
                         type="radio"
                         checked={this.state.shipping.type === "two"}
-                        value={2}
+                        value={12}
                         data-type="two"
-                        onChange={this.handleRadioChange}
-                    />
-                    <InputField
-                        name={"shipping"}
-                        type="radio"
-                        checked={this.state.shipping.type === "three"}
-                        value={3}
-                        data-type="three"
                         onChange={this.handleRadioChange}
                     />
 
