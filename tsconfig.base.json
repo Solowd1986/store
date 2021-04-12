@@ -48,8 +48,7 @@
   ],
   "exclude": [
     "node_modules",
-    "build",
-    "src/components/Helpers/Validation/**/*.js"
+    "build"
   ]
 }
 

@@ -10,6 +10,9 @@ import SubmitButton from "@components/test/Form/SubmitButton/SubmitButton";
 import InputField from "@components/test/Form/InputField/InputField";
 import InputRadio from "@components/test/Form/InputRadio/InputRadio";
 import InputCheckbox from "@components/test/Form/InputCheckbox/InputCheckbox";
+import InputFile from "@components/test/Form/InputFile/InputFile";
+import Cookies from "js-cookie";
+
 
 class Form extends Component {
     constructor(props) {
@@ -19,11 +22,10 @@ class Form extends Component {
         this.state = {
             isUserConfirmOrder: false,
             isFormValid: true,
+
             shipping: {
                 type: "one"
             },
-            // ПОМЕСТИ СТЕЙТ В РЕДАКС ЧТОбЫ ХРАНИТЬ ДАНЫЕ ПРИ ПЕРЕЗАГРУЗКЕ СТРАНИЦЫ А ПОСЛЕ УСПЕШНОЙ ОТПРАВКИ ОБНУЛЯ ЭТО
-            // сброс кнопкой очистить поля формы
             fields: {
                 login: {
                     error: false,
@@ -41,6 +43,14 @@ class Form extends Component {
         };
     }
 
+    componentDidMount() {
+        if (Cookies.get("form-data")) {
+            const cookieFormFields = Cookies.getJSON("form-data");
+            const form = Array.from(this.form.current.elements);
+            const fields = form.filter(item => Object.keys(cookieFormFields).includes(item.name));
+            fields.forEach(item => item.value = cookieFormFields[item.name]);
+        }
+    }
 
     checkSingleFieldErrorSync = (inputName, inputValue) => {
         try {
@@ -118,8 +128,33 @@ class Form extends Component {
                     draft["isFormValid"] = false;
                 }),
             );
+        } else {
+            this.saveFormValuesToCookie(inputName, inputValue);
         }
+
     };
+
+    saveFormValuesToCookie = (fieldName, fieldValue) => {
+        const cookieExpires = new Date(new Date().getTime() + 15 * 60 * 1000);
+        const formField = { [fieldName]: fieldValue };
+        const dataForm = Cookies.getJSON("form-data") || null;
+
+        if (!dataForm) {
+            Cookies.set("form-data", formField, { expires: cookieExpires });
+            return;
+        }
+        if (!Object.keys(dataForm).includes(fieldName)) {
+            dataForm[fieldName] = fieldValue;
+            Cookies.set("form-data", dataForm, { expires: cookieExpires });
+            return;
+        }
+        for (const [cookieFieldKey, cookieFieldValue] of Object.entries(dataForm)) {
+            if (cookieFieldKey === fieldName && cookieFieldValue === fieldValue) return;
+            if (cookieFieldKey === fieldName) dataForm[fieldName] = fieldValue;
+        }
+        Cookies.set("form-data", dataForm, { expires: cookieExpires });
+    };
+
 
     handleRadioChange = ({ target: { name: inputName, dataset: { type } } }) => {
         this.setState(
@@ -146,6 +181,7 @@ class Form extends Component {
         }
 
         const formData = new FormData(form);
+        Cookies.remove("form-data");
         form.reset();
         //this.setState({ isUserConfirmOrder: true });
     };
@@ -198,6 +234,8 @@ class Form extends Component {
                         data-type="two"
                         onChange={this.handleRadioChange}
                     />
+
+                    <InputFile name={"asd"}/>
 
                     <SubmitButton disabled={!this.state.isFormValid}/>
                 </form>
