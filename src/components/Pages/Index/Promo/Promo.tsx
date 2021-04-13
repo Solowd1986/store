@@ -5,8 +5,8 @@ import styles from "./promo.module.scss";
 import cn from "classnames";
 
 import ProductCard from "@components/Partials/ProductCard/ProductCard";
-import FormCounter  from "@components/test/Form/FormCounter/FormCounter";
-import Form from "@components/test/Form/Form";
+import FormInputCounter  from "@components/Partials/Form/FormInputCounter/FormInputCounter";
+import Form from "@components/Partials/Form/Form";
 
 
 class Promo extends PureComponent<IndexPageTypes> {
@@ -17,7 +17,7 @@ class Promo extends PureComponent<IndexPageTypes> {
         return (
             <section className={cn("container", styles.wrapper)}>
                 <main className={cn("wrapper", styles.content)}>
-                    <FormCounter />
+                    <FormInputCounter />
 
                     <Form/>
 

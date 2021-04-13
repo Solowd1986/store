@@ -1,6 +1,5 @@
 import React, { PureComponent } from "react";
 
-
 //region Описание
 /**
  * Компонент отвечает лишь за приведение количества выбранного товара к нормализованному виду.
@@ -9,42 +8,44 @@ import React, { PureComponent } from "react";
  * методе апдейтить глобальный стейт заказа, опираясь на title товара и прочие данные, которые тут не нужны.
  */
     //endregion
-export class FormCounter extends PureComponent {
+export class FormInputCounter extends PureComponent {
 
     state = {
         value: null
     };
 
     static getDerivedStateFromProps(props, state) {
-        if (state.value === null ) {
+        if (state.value === null) {
             return /^[0-9]+$/.test(props.initialValue) ? { value: props.initialValue } : { value: 1 }
         }
         return null;
     }
 
     static defaultProps = {
-        returnCurrentAmount: (value) => value,
-        maxAmount: 99,
+        getProcessedAmount: (value) => value,
+        maxValue: 99,
         initialValue: 1,
         classList: ""
     };
 
     amountNormalize = (value, max) => {
-        const amount = isNaN(Math.abs(parseInt(value))) ? 1 : value;
-        const maxAmount = isNaN(Math.abs(parseInt(max))) ? 99 : max;
-        return Math.max(1, Math.min(maxAmount, amount));
+        const currentAmount = isNaN(Math.abs(parseInt(value))) ? 1 : value;
+        const maxValue = isNaN(Math.abs(parseInt(max))) ? 99 : max;
+        return Math.max(1, Math.min(maxValue, currentAmount));
     };
 
-    onChangeAmount = ({ target: { dataset: { action } } }) => {
+    onChangeAmount = (evt) => {
+        evt.preventDefault();
+        const { target: { dataset: { action } } } = evt;
         const currentValue = action === "inc" ? this.state.value + 1 : this.state.value - 1;
-        const value = this.amountNormalize(currentValue, this.props.maxAmount);
-        this.props.returnCurrentAmount(value);
+        const value = this.amountNormalize(currentValue, this.props.maxValue);
+        this.props.getProcessedAmount(value);
         this.setState({ value });
     };
 
     onInputBlur = ({ target: { value: inputValue } }) => {
-        const value = this.amountNormalize(inputValue, this.props.maxAmount);
-        this.props.returnCurrentAmount(value);
+        const value = this.amountNormalize(inputValue, this.props.maxValue);
+        this.props.getProcessedAmount(value);
         this.setState({ value });
     };
 
@@ -57,18 +58,23 @@ export class FormCounter extends PureComponent {
         }
     };
 
+    onKeyPress = (evt) => {
+        if (evt.key === "Enter") evt.preventDefault();
+    };
+
     render() {
         return (
-            <fieldset className={this.props.classList}>
+            <div className={this.props.classList}>
                 <button
                     onClick={this.onChangeAmount}
                     data-action="dec">
-                    -
+                    {this.props.badge ? "-" : null}
                 </button>
                 <label>
                     <input
                         onChange={this.onInputChange}
                         onBlur={this.onInputBlur}
+                        onKeyPress={this.onKeyPress}
                         type="text"
                         value={this.state.value}
                     />
@@ -76,14 +82,11 @@ export class FormCounter extends PureComponent {
                 <button
                     onClick={this.onChangeAmount}
                     data-action="inc">
-                    +
+                    {this.props.badge ? "+" : null}
                 </button>
-                <div>
-                    <h3>{this.state.value}</h3>
-                </div>
-            </fieldset>
+            </div>
         );
     }
 }
 
-export default FormCounter;
+export default FormInputCounter;

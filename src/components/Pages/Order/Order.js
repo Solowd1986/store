@@ -5,7 +5,7 @@ import cn from "classnames";
 import * as cartSelectors from "@redux/entities/cart/selectors/cartSelectors";
 import { connect } from "react-redux";
 import EmptyOrderPage from "./EmptyOrderPage/EmptyOrderPage";
-import OrderForm from "./OrderForm/OrderForm";
+import OrderForm from "./OrderFormNext/OrderForm";
 
 class Order extends Component {
     render() {

@@ -36,8 +36,6 @@ export default (state = initialState, action) => {
         case types.CART_CHANGE_PRODUCT_AMOUNT: {
             const { id, title, quantity } = action.payload;
 
-            if (isNaN(Math.abs(parseInt(quantity)))) return state;
-
             const products = lodashCloning(state.products);
             const product = products.find((item) => item.id === id && item.title === title);
             product.quantity = Math.max(state.minAmountOfProduct, Math.min(product.rest, quantity));

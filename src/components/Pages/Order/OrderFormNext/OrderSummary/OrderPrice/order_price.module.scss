@@ -1,0 +1,39 @@
+@import "@scss/utils/utils.scss";
+
+.fieldset {
+  display: flex;
+  position: relative;
+  justify-content: space-between;
+  padding: 20px 0;
+  border-bottom: 2px solid $white-500;
+
+  &:after {
+    content: "(бесплатная доставка при заказе от 100 000 р.)";
+    position: absolute;
+    top: 40px;
+    left: 0;
+    font-size: 12px;
+    font-style: italic;
+    color: $grey;
+  }
+}
+
+.item {
+  font-size: 16px;
+  font-weight: 400;
+  color: $grey;
+}
+
+.checkout {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+  padding: 20px 0;
+}
+
+.lg {
+  font-size: 30px;
+  font-weight: 400;
+  color: $black-400;
+}

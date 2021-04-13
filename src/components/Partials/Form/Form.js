@@ -6,11 +6,11 @@ import produce from "immer";
 import Inputmask from "inputmask";
 import * as yup from "yup";
 import InputText from "@components/test/Other/Form/Input/Input";
-import SubmitButton from "@components/test/Form/SubmitButton/SubmitButton";
-import InputField from "@components/test/Form/InputField/InputField";
-import InputRadio from "@components/test/Form/InputRadio/InputRadio";
-import InputCheckbox from "@components/test/Form/InputCheckbox/InputCheckbox";
-import InputFile from "@components/test/Form/InputFile/InputFile";
+import SubmitButton from "@components/Partials/Form/SubmitButton/SubmitButton";
+import InputField from "@components/Partials/Form/InputField/InputField";
+import InputRadio from "@components/Partials/Form/InputRadio/InputRadio";
+import InputCheckbox from "@components/Partials/Form/InputCheckbox/InputCheckbox";
+import InputFile from "@components/Partials/Form/InputFile/InputFile";
 import Cookies from "js-cookie";
 
 
