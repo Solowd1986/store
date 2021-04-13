@@ -32,6 +32,14 @@ function withModal(WrappedComponent:React.ComponentType<CloseModalInterface>,
         closeModal = (evt: React.SyntheticEvent<HTMLElement>):void => {
             if (!(evt.target instanceof HTMLElement)) return;
             if (!("modal" in evt.target.dataset) || interactionsDisabled) return;
+
+            Object.keys(this.props).forEach(property => {
+                // @ts-ignore
+                if (typeof this.props[property] === "function") {
+                    // @ts-ignore
+                    this.props[property]();
+                }
+            });
             this.setState({
                 isModalActive: false,
             });
@@ -68,7 +76,7 @@ function withModal(WrappedComponent:React.ComponentType<CloseModalInterface>,
 
             return (
                 <div className={classList} onClick={this.closeModal} data-modal={true}>
-                    <WrappedComponent closeModal={this.closeModalFromChildren} />
+                    <WrappedComponent {...this.props} closeModal={this.closeModalFromChildren} />
                 </div>
             );
         }

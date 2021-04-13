@@ -33,7 +33,7 @@ function withDelay(PropsComponent: React.ComponentType, ms = 1500):React.ReactNo
                     </div>
                 );
             }
-            return <PropsComponent />;
+            return <PropsComponent {...this.props}/>;
         }
     };
 }

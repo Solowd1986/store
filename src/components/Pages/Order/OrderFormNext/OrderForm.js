@@ -81,13 +81,13 @@ class OrderForm extends Component {
             const form = Array.from(this.form.current.elements);
             const fields = form.filter(item => Object.keys(cookieFormFields).includes(item.name));
             fields.forEach(item => item.value = cookieFormFields[item.name]);
-            const formValiditaionStatus = this.validateForm(this.form.current.elements);
-            if (!formValiditaionStatus.isFormValid) {
+            const formValiditaionData = this.validateForm(this.form.current.elements);
+            if (!formValiditaionData.isFormValid) {
                 this.setState(
                     produce(this.state, (draft) => {
                         draft["isFormValid"] = false;
-                        draft["fields"][formValiditaionStatus.errors[0].fieldName].error = true;
-                        draft["fields"][formValiditaionStatus.errors[0].fieldName].msg = formValiditaionStatus.errors[0].msg;
+                        draft["fields"][formValiditaionData.errors[0].fieldName].error = true;
+                        draft["fields"][formValiditaionData.errors[0].fieldName].msg = formValiditaionData.errors[0].msg;
                     }),
                 );
             }
@@ -157,16 +157,16 @@ class OrderForm extends Component {
         if (this.state.fields[inputName].error || !this.state.isFormValid) {
             const checkedField = this.checkSingleFieldErrorSync(inputName, inputValue);
             if (!checkedField.error) {
-                const formValidateStatus = this.validateForm(target.form.elements);
+                const formValiditaionData = this.validateForm(target.form.elements);
                 this.setState(
                     produce(this.state, (draft) => {
                         draft["fields"][checkedField.fieldName].error = false;
                         draft["fields"][checkedField.fieldName].msg = "";
-                        if (formValidateStatus.isFormValid) {
+                        if (formValiditaionData.isFormValid) {
                             draft["isFormValid"] = true;
                         } else {
-                            draft["fields"][formValidateStatus.errors[0].fieldName].error = true;
-                            draft["fields"][formValidateStatus.errors[0].fieldName].msg = formValidateStatus.errors[0].msg;
+                            draft["fields"][formValiditaionData.errors[0].fieldName].error = true;
+                            draft["fields"][formValiditaionData.errors[0].fieldName].msg = formValiditaionData.errors[0].msg;
                         }
                     }),
                 );
@@ -228,11 +228,13 @@ class OrderForm extends Component {
         this.setState({ isUserConfirmOrder: true });
     };
 
+    resetFormConfirmation = () => this.setState({ isUserConfirmOrder: false });
+
     render() {
         const ConfirmModalWindow = withDelay(withModal(Confirm));
         return (
             <>
-                { this.state.isFormValid && this.state.isUserConfirmOrder && <ConfirmModalWindow/>}
+                { this.state.isUserConfirmOrder && <ConfirmModalWindow reset = {this.resetFormConfirmation}/>}
 
                 <form ref={this.form} onSubmit={this.handleSubmit} className={styles.form} name="order-form" method="POST">
                     <OrderInfo

@@ -116,7 +116,7 @@ class OrderInfo extends Component {
                                 onBlur={handleInputBlur}
                                 name="email"
                                 type="email"
-
+                                value={"glow@ya.ru"}
                                 placeholder="Email"
                             />
                             {fields.email.error && <span className={styles.field_error}>{fields.email.msg}</span>}
