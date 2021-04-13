@@ -82,7 +82,15 @@ class OrderForm extends Component {
             const fields = form.filter(item => Object.keys(cookieFormFields).includes(item.name));
             fields.forEach(item => item.value = cookieFormFields[item.name]);
             const formValiditaionStatus = this.validateForm(this.form.current.elements);
-            if (!formValiditaionStatus.isFormValid) this.setState({ isFormValid: false });
+            if (!formValiditaionStatus.isFormValid) {
+                this.setState(
+                    produce(this.state, (draft) => {
+                        draft["isFormValid"] = false;
+                        draft["fields"][formValiditaionStatus.errors[0].fieldName].error = true;
+                        draft["fields"][formValiditaionStatus.errors[0].fieldName].msg = formValiditaionStatus.errors[0].msg;
+                    }),
+                );
+            }
         }
     }
 
@@ -157,7 +165,6 @@ class OrderForm extends Component {
                         if (formValidateStatus.isFormValid) {
                             draft["isFormValid"] = true;
                         } else {
-                            console.dir(formValidateStatus.errors);
                             draft["fields"][formValidateStatus.errors[0].fieldName].error = true;
                             draft["fields"][formValidateStatus.errors[0].fieldName].msg = formValidateStatus.errors[0].msg;
                         }
@@ -199,7 +206,6 @@ class OrderForm extends Component {
         );
     };
 
-
     handleSubmit = (evt) => {
         evt.preventDefault();
         const { target: form, target: { elements: formFields } } = evt;
@@ -219,23 +225,14 @@ class OrderForm extends Component {
         const formData = new FormData(form);
         Cookies.remove("form-data");
         form.reset();
-        //this.setState({ isUserConfirmOrder: true });
+        this.setState({ isUserConfirmOrder: true });
     };
 
     render() {
-        //console.log("render");
-        // let ConfirmModalWindow = null;
-        // if (this.state.isUserConfirmOrder && this.isFormTouched) {
-        //     ConfirmModalWindow = withDelay(withModal(Confirm));
-        //     this.isFormTouched = false;
-        // }
-
-
+        const ConfirmModalWindow = withDelay(withModal(Confirm));
         return (
             <>
-
-
-                {/*{ConfirmModalWindow ? <ConfirmModalWindow /> : null}*/}
+                { this.state.isFormValid && this.state.isUserConfirmOrder && <ConfirmModalWindow/>}
 
                 <form ref={this.form} onSubmit={this.handleSubmit} className={styles.form} name="order-form" method="POST">
                     <OrderInfo
