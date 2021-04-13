@@ -188,56 +188,62 @@ class Form extends Component {
 
 
     render() {
-        //console.log("render");
+        const { classList = "", submitHandler, children} = this.props;
         return (
             <>
                 <form
                     ref={this.form}
-                    onSubmit={this.handleSubmit}
+                    onSubmit={submitHandler}
                     name="user-form"
                     method="POST"
-                    className={styles.form}>
-                    <InputField
-                        name={"login"}
-                        error={this.state.fields.login}
-                        onChange={this.handleInputChange}
-                        onBlur={this.handleOnBlur}
-                    />
+                    className={classList}>
 
-                    <InputField
-                        name={"email"}
-                        error={this.state.fields.email}
-                        defaultValue="trems@yandex.ru"
-                        onChange={this.handleInputChange}
-                        onBlur={this.handleOnBlur}
-                    />
-                    <InputField
-                        name={"address"}
-                        error={this.state.fields.address}
-                        onChange={this.handleInputChange}
-                        onBlur={this.handleOnBlur}
-                    />
+                    {children}
 
-                    <InputField
-                        name={"shipping"}
-                        type="radio"
-                        checked={this.state.shipping.type === "one"}
-                        value={1}
-                        data-type="one"
-                        onChange={this.handleRadioChange}
-                    />
-                    <InputField
-                        name={"shipping"}
-                        type="radio"
-                        checked={this.state.shipping.type === "two"}
-                        value={12}
-                        data-type="two"
-                        onChange={this.handleRadioChange}
-                    />
 
-                    <InputFile name={"asd"}/>
 
-                    <SubmitButton disabled={!this.state.isFormValid}/>
+
+                    {/*<InputField*/}
+                    {/*    name={"login"}*/}
+                    {/*    error={this.state.fields.login}*/}
+                    {/*    onChange={this.handleInputChange}*/}
+                    {/*    onBlur={this.handleOnBlur}*/}
+                    {/*/>*/}
+
+                    {/*<InputField*/}
+                    {/*    name={"email"}*/}
+                    {/*    error={this.state.fields.email}*/}
+                    {/*    defaultValue="trems@yandex.ru"*/}
+                    {/*    onChange={this.handleInputChange}*/}
+                    {/*    onBlur={this.handleOnBlur}*/}
+                    {/*/>*/}
+                    {/*<InputField*/}
+                    {/*    name={"address"}*/}
+                    {/*    error={this.state.fields.address}*/}
+                    {/*    onChange={this.handleInputChange}*/}
+                    {/*    onBlur={this.handleOnBlur}*/}
+                    {/*/>*/}
+
+                    {/*<InputField*/}
+                    {/*    name={"shipping"}*/}
+                    {/*    type="radio"*/}
+                    {/*    checked={this.state.shipping.type === "one"}*/}
+                    {/*    value={1}*/}
+                    {/*    data-type="one"*/}
+                    {/*    onChange={this.handleRadioChange}*/}
+                    {/*/>*/}
+                    {/*<InputField*/}
+                    {/*    name={"shipping"}*/}
+                    {/*    type="radio"*/}
+                    {/*    checked={this.state.shipping.type === "two"}*/}
+                    {/*    value={12}*/}
+                    {/*    data-type="two"*/}
+                    {/*    onChange={this.handleRadioChange}*/}
+                    {/*/>*/}
+
+                    {/*<InputFile name={"asd"}/>*/}
+
+                    {/*<SubmitButton disabled={!this.state.isFormValid}/>*/}
                 </form>
             </>
         );
