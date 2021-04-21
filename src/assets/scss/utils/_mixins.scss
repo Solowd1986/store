@@ -5,12 +5,44 @@
 
 @mixin generate-columns-for-item(
   $item-columns,
-  $columns: 12,
   $offset: 30,
-  $margin-bottom: 20
+  $margin-bottom: 20,
+  $default-columns: 12
 ) {
-  width: calc(100% / #{$columns} * #{$item-columns} - #{$offset}#{px});
+  width: calc(100% / #{$default-columns} * #{$item-columns} - #{$offset}#{px});
   margin-left: $offset/2 + px;
   margin-right: $offset/2 + px;
   margin-bottom: $margin-bottom + px;
+}
+
+
+@mixin generate-columns-with-max-width(
+  $item-columns,
+  $max_width: null,
+  $offset: null,
+  $margin-bottom: null
+) {
+  @if $max_width == null {
+    @if $offset != null and $margin-bottom != null  {
+      @include generate-columns-for-item($item-columns, $offset, $margin-bottom);
+    } @else if $offset != null {
+      @include generate-columns-for-item($item-columns, $offset);
+    } @else if $margin-bottom != null {
+      @include generate-columns-for-item($item-columns, $margin-bottom);
+    } @else {
+      @include generate-columns-for-item($item-columns);
+    }
+  } @else {
+    @media (max-width: #{$max_width}#{px}) {
+      @if $offset != null and $margin-bottom != null  {
+        @include generate-columns-for-item($item-columns, $offset, $margin-bottom);
+      } @else if ($offset != null) {
+        @include generate-columns-for-item($item-columns, $offset);
+      } @else if ($margin-bottom != null) {
+        @include generate-columns-for-item($item-columns, $margin-bottom);
+      } @else {
+        @include generate-columns-for-item($item-columns);
+      }
+    }
+  }
 }

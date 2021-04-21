@@ -22,11 +22,11 @@ module.exports = {
         "react/prop-types": "off",
         "@typescript-eslint/no-empty-function": "off",
         "@typescript-eslint/ban-ts-comment": "off",
+        "@typescript-eslint/no-inferrable-types": "off",
         "@typescript-eslint/explicit-function-return-type": [
             "warn",
             { "allowTypedFunctionExpressions": true }
         ]
-
     },
     settings: {
         react: {

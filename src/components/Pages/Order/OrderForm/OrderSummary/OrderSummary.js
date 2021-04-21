@@ -6,6 +6,7 @@ import OrderItem from "@components/Pages/Order/OrderForm/OrderSummary/OrderItem/
 import * as cartSelectors from "@redux/entities/cart/selectors/cartSelectors";
 import { connect } from "react-redux";
 import styles from "./order-summary.module.scss";
+import SubmitButton from "@components/Partials/Form/SubmitButton/SubmitButton";
 
 class OrderSummary extends Component {
     render() {
@@ -20,9 +21,7 @@ class OrderSummary extends Component {
                     <OrderItem key={item.title} item={item} />
                 ))}
                 <OrderPrice listOfProducts={listOfProducts} shipping={shipping} />
-                <button type="submit" disabled={!isFormValid} className={classList}>
-                    Оформить заказ
-                </button>
+                <SubmitButton value={"Оформить заказ"} classList={classList} disabled={!isFormValid}/>
             </section>
         );
     }

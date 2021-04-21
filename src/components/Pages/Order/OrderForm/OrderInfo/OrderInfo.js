@@ -6,7 +6,20 @@ import basketShipping from "./img/basket-shipping.png";
 
 class OrderInfo extends Component {
     render() {
-        const { handleChange, fields, shipping: { type: shippingType }, payment: { type: paymentType } } = this.props;
+        const {
+            handleInputChange,
+            handleRadioChange,
+            handleInputBlur,
+            fields,
+            fields: {
+                shipping:
+                    { assignment: shippingassignment },
+                payment:
+                    { assignment: paymentassignment }
+            }
+        } = this.props;
+
+
         return (
             <section className={styles.info}>
                 {/*Delivery*/}
@@ -15,12 +28,11 @@ class OrderInfo extends Component {
                     <div className={styles.cards_wrapper}>
                         <input
                             id="moscow"
-                            checked={shippingType === "moscow"}
-                            onChange={handleChange}
+                            data-price="400"
+                            checked={shippingassignment === "moscow"}
+                            onChange={handleRadioChange}
                             type="radio"
                             name="shipping"
-                            value="400"
-                            data-delivery={true}
                         />
                         <label htmlFor="moscow" className={styles.card}>
                             <div className={styles.card__info}>
@@ -32,12 +44,11 @@ class OrderInfo extends Component {
 
                         <input
                             id="pickup"
-                            checked={shippingType === "pickup"}
-                            onChange={handleChange}
+                            data-price="0"
+                            checked={shippingassignment === "pickup"}
+                            onChange={handleRadioChange}
                             type="radio"
                             name="shipping"
-                            value="0"
-                            data-delivery={true}
                         />
                         <label htmlFor="pickup" className={styles.card}>
                             <div className={styles.card__info}>
@@ -51,12 +62,11 @@ class OrderInfo extends Component {
 
                         <input
                             id="russia"
-                            checked={shippingType === "russia"}
-                            onChange={handleChange}
+                            data-price="450"
+                            checked={shippingassignment === "russia"}
+                            onChange={handleRadioChange}
                             type="radio"
                             name="shipping"
-                            value="450"
-                            data-delivery={true}
                         />
                         <label htmlFor="russia" className={styles.card}>
                             <div className={styles.card__info}>
@@ -64,12 +74,11 @@ class OrderInfo extends Component {
                                 <span className={styles.card__pay}>450 р.</span>
                             </div>
                             <div className={styles.card__extra}>
-                                <img src={basketEpayment} alt="shipping" />
+                                <img src={basketEpayment} alt="shipping"/>
                             </div>
                         </label>
                     </div>
                 </div>
-
                 {/*Customer*/}
                 <div className={styles.customer}>
                     <h2 className={styles.order_title}>2. Покупатель</h2>
@@ -77,7 +86,8 @@ class OrderInfo extends Component {
                         <label className={styles.form__label}>
                             <input
                                 className={styles.form__input}
-                                onChange={handleChange}
+                                onChange={handleInputChange}
+                                onBlur={handleInputBlur}
                                 name="name"
                                 type="text"
                                 value={"имя"}
@@ -89,7 +99,8 @@ class OrderInfo extends Component {
                         <label className={styles.form__label}>
                             <input
                                 className={styles.form__input}
-                                onChange={handleChange}
+                                onChange={handleInputChange}
+                                onBlur={handleInputBlur}
                                 name="phone"
                                 type="text"
                                 value={"+7 (021) 444-44-44"}
@@ -101,10 +112,11 @@ class OrderInfo extends Component {
                         <label className={styles.form__label}>
                             <input
                                 className={styles.form__input}
-                                onChange={handleChange}
+                                onChange={handleInputChange}
+                                onBlur={handleInputBlur}
                                 name="email"
                                 type="email"
-
+                                value={"glow@ya.ru"}
                                 placeholder="Email"
                             />
                             {fields.email.error && <span className={styles.field_error}>{fields.email.msg}</span>}
@@ -113,7 +125,8 @@ class OrderInfo extends Component {
                         <label className={`${styles.form__label} ${styles.form__label__full_width}`}>
                             <input
                                 className={styles.form__input}
-                                onChange={handleChange}
+                                onChange={handleInputChange}
+                                onBlur={handleInputBlur}
                                 name="address"
                                 type="text"
                                 placeholder="Адрес"
@@ -124,7 +137,8 @@ class OrderInfo extends Component {
                         <label className={`${styles.form__label} ${styles.form__label__full_width}`}>
                             <textarea
                                 className={styles.form__input}
-                                onChange={handleChange}
+                                onChange={handleInputChange}
+                                onBlur={handleInputBlur}
                                 name="comment"
                                 cols="30"
                                 rows="10"
@@ -141,12 +155,10 @@ class OrderInfo extends Component {
                     <div className={styles.cards_wrapper}>
                         <input
                             id="cash"
-                            checked={paymentType === "cash"}
-                            onChange={handleChange}
+                            checked={paymentassignment === "cash"}
+                            onChange={handleRadioChange}
                             type="radio"
                             name="payment"
-                            value="cash"
-                            data-payment={true}
                         />
                         <label htmlFor={"cash"} className={`${styles.card}`}>
                             <div data-payment={true}>
@@ -158,12 +170,10 @@ class OrderInfo extends Component {
 
                         <input
                             id="emoney"
-                            checked={paymentType === "emoney"}
-                            onChange={handleChange}
+                            checked={paymentassignment === "emoney"}
+                            onChange={handleRadioChange}
                             type="radio"
                             name="payment"
-                            value="emoney"
-                            data-payment={true}
                         />
                         <label htmlFor={"emoney"} className={styles.card}>
                             <div>
@@ -171,19 +181,17 @@ class OrderInfo extends Component {
                                     <span className={styles.card__title}>Электронными деньгами</span>
                                 </p>
                                 <span>
-                                    <img src={basketShipping} alt="epayment" />
+                                    <img src={basketShipping} alt="epayment"/>
                                 </span>
                             </div>
                         </label>
 
                         <input
                             id="card"
-                            checked={paymentType === "card"}
-                            onChange={handleChange}
+                            checked={paymentassignment === "card"}
+                            onChange={handleRadioChange}
                             type="radio"
                             name="payment"
-                            value="card"
-                            data-payment={true}
                         />
                         <label htmlFor={"card"} className={styles.card}>
                             <div>

@@ -7,13 +7,15 @@ import OrderSummary from "./OrderSummary/OrderSummary";
 import Confirm from "@components/Pages/Order/Confirm/Confirm";
 import withDelay from "@components/Helpers/Hoc/withDelay/withDelay";
 import withModal from "@components/Helpers/Hoc/withModal/withModal";
+
+import setValidateSchema from "@components/Pages/Order/OrderForm/validationSchema/validationSchema";
+import Inputmask from "inputmask";
+import produce from "immer";
+import Cookies from "js-cookie";
+
 import * as cartSelectors from "@redux/entities/cart/selectors/cartSelectors";
 import { connect } from "react-redux";
 
-import setValidateSchema from "@components/Helpers/Validation/validateSchema/validateSchema";
-import Inputmask from "inputmask";
-import * as yup from "yup";
-import produce from "immer";
 
 //<editor-fold desc="Описание работы submit формы">
 /**
@@ -35,13 +37,11 @@ import produce from "immer";
 class OrderForm extends Component {
     constructor(props) {
         super(props);
-        this.isFormTouched = false;
+        this.form = React.createRef();
         this.validationSchema = setValidateSchema(["name", "phone", "email", "address", "comment"]);
         this.state = {
             isUserConfirmOrder: false,
             isFormValid: true,
-            // ПОМЕСТИ СТЕЙТ В РЕДАКС ЧТОбЫ ХРАНИТЬ ДАНЫЕ ПРИ ПЕРЕЗАГРУЗКЕ СТРАНИЦЫ А ПОСЛЕ УСПЕШНОЙ ОТПРАВКИ ОБНУЛЯ ЭТО
-            // сброс кнопкой очистить поля формы
             fields: {
                 name: {
                     error: false,
@@ -64,146 +64,189 @@ class OrderForm extends Component {
                     msg: "",
                 },
                 shipping: {
-                    type: "moscow",
+                    assignment: "moscow",
                     price: 400
                 },
                 payment: {
-                    type: "cash"
+                    assignment: "cash"
                 },
             },
         };
     }
 
-    shouldComponentUpdate(nextProps, nextState, nextContext) {
-        return this.isFormTouched && !this.state.isUserConfirmOrder;
-    }
+    componentDidMount() {
+        if (Cookies.get("form-data")) {
+            const cookieFormFields = Cookies.getJSON("form-data");
+            const form = Array.from(this.form.current.elements);
+            const fields = form.filter(item => Object.keys(cookieFormFields).includes(item.name));
+            fields.forEach(item => item.value = cookieFormFields[item.name]);
+            const formValiditaionData = this.validateForm(this.form.current.elements);
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if (!this.isFormTouched && this.state.isUserConfirmOrder) {
-            this.setState({ isUserConfirmOrder: false });
-        }
-    }
-
-    checkFieldsErrors = () => {
-        const verifyFields = Object.values(this.state.fields).filter((item) => item.error !== undefined);
-        if (!this.state.isFormValid && verifyFields.every((item) => !item.error)) {
-            this.setState({ isFormValid: true });
-        }
-    };
-
-    processedUserOrder = (form, initialOrderList) => {
-        const userOrderInfo = {
-            userInfo: {},
-            userOrder: [],
-        };
-
-        for (const [key, value] of form.entries()) {
-            const product = initialOrderList.find((item) => item.title === key);
-            if (product) userOrderInfo.userOrder.push(product);
-            if (key === "shipping") {
-                userOrderInfo.userInfo["shippingType"] = this.state.fields.shipping.type;
-                userOrderInfo.userInfo["shippingPrice"] = this.state.fields.shipping.price;
-            } else {
-                userOrderInfo.userInfo[key] = value;
+            if (!formValiditaionData.isFormValid) {
+                const firstErrorField = formValiditaionData.errors[0];
+                this.setState(
+                    produce(this.state, (draft) => {
+                        draft["isFormValid"] = false;
+                        draft["fields"][firstErrorField.fieldName].error = true;
+                        draft["fields"][firstErrorField.fieldName].msg = firstErrorField.msg;
+                    }),
+                );
             }
         }
-        return userOrderInfo;
+    }
+
+    saveFormValuesToCookie = (fieldName, fieldValue) => {
+        const cookieExpires = new Date(new Date().getTime() + 15 * 60 * 1000);
+        const formField = { [fieldName]: fieldValue };
+        const dataForm = Cookies.getJSON("form-data") || null;
+
+        if (!dataForm) {
+            Cookies.set("form-data", formField, { expires: cookieExpires });
+            return;
+        }
+        if (!Object.keys(dataForm).includes(fieldName)) {
+            dataForm[fieldName] = fieldValue;
+            Cookies.set("form-data", dataForm, { expires: cookieExpires });
+            return;
+        }
+        for (const [cookieFieldKey, cookieFieldValue] of Object.entries(dataForm)) {
+            if (cookieFieldKey === fieldName && cookieFieldValue === fieldValue) return;
+            if (cookieFieldKey === fieldName) dataForm[fieldName] = fieldValue;
+        }
+        Cookies.set("form-data", dataForm, { expires: cookieExpires });
     };
 
-    handleValidation = (inputName, inputValue) => {
-        if (!(inputName in this.validationSchema.fields)) return;
 
-        yup.reach(this.validationSchema, inputName)
-            .validate(inputValue)
-            .then((success) => {
-                //if (!this.state.fields[inputName].error) return;
-                this.setState(
-                    produce(this.state, (draft) => {
-                        draft["fields"][inputName].error = false;
-                        draft["fields"][inputName].msg = "";
-                    }),
-                );
+
+    getAllTrackedFields = (fields) => {
+        const formFieldsToObject = {};
+        const validationFields = Object.keys(this.validationSchema.fields);
+        const formFields = Array.from(fields).filter(item => validationFields.includes(item.name));
+        formFields.forEach(item => formFieldsToObject[item.name] = item.value);
+        return formFieldsToObject;
+    };
+
+    checkSingleFieldErrorSync = (inputName, inputValue) => {
+        try {
+            this.validationSchema.validateSyncAt(inputName, { [inputName]: inputValue });
+            return { fieldName: inputName, error: false };
+        } catch (error) {
+            return { fieldName: inputName, error: true, msg: error.message };
+        }
+    };
+
+    validateForm = (fields) => {
+        const errors = [];
+        const allFormFields = this.getAllTrackedFields(fields);
+        for (const [key, value] of Object.entries(allFormFields)) {
+            const field = this.checkSingleFieldErrorSync(key, value);
+            if (field.error) errors.push(field);
+        }
+        return {
+            isFormValid: this.validationSchema.isValidSync(allFormFields),
+            errors
+        }
+    };
+
+
+    handleRadioChange = ({ target: { id, name: inputName, dataset: { price = null } } }) => {
+        this.setState(
+            produce(this.state, (draft) => {
+                draft["fields"][inputName]["assignment"] = id;
+                if (price) draft["fields"][inputName]["price"] = price;
             })
-            .catch((error) => {
-                if (error.message === this.state.fields[inputName].msg) return;
+        );
+    };
+
+
+    /**
+     * Для того чтобы отслеживать на оишбки динамически, проверяем, была ли уже вытсалвена ошибка для поля
+     * или была ли state формы выставлен в false, это будет значить, что были попытки ввода и были ошибки, поэтому
+     * даже поле быз ошибок проверяем в динамике, это нужно также чтобы в динамике разблочить кнопку отправки формы, а
+     * не по blur. так это мненее понято, что для разблока нужно именно уйти из поля.
+     */
+    handleInputChange = ({ target, target: { name: inputName, value: inputValue } }) => {
+        if (inputName === "phone") new Inputmask("+7 (999) 999-99-99").mask(target);
+        if (this.state.fields[inputName].error || !this.state.isFormValid) {
+            const checkedField = this.checkSingleFieldErrorSync(inputName, inputValue);
+            if (!checkedField.error) {
+                const formValiditaionData = this.validateForm(target.form.elements);
                 this.setState(
                     produce(this.state, (draft) => {
-                        draft["fields"][inputName].error = true;
-                        draft["fields"][inputName].msg = error.message;
-                        draft["isFormValid"] = false;
+                        draft["fields"][checkedField.fieldName].error = false;
+                        draft["fields"][checkedField.fieldName].msg = "";
+                        if (formValiditaionData.isFormValid) {
+                            draft["isFormValid"] = true;
+                        } else {
+                            const nextFieldError = formValiditaionData.errors[0];
+                            draft["fields"][nextFieldError.fieldName].error = true;
+                            draft["fields"][nextFieldError.fieldName].msg = nextFieldError.msg;
+                        }
                     }),
                 );
-            });
+            } else {
+                if (this.state.fields[inputName].msg === checkedField.msg) return;
+                this.setState(
+                    produce(this.state, (draft) => {
+                        draft["fields"][checkedField.fieldName].error = true;
+                        draft["fields"][checkedField.fieldName].msg = checkedField.msg;
+                    }),
+                );
+            }
+        }
     };
+
+    handleInputBlur = ({ target, target: { name: inputName, value: inputValue, id = null } }) => {
+        const checkedField = this.checkSingleFieldErrorSync(inputName, inputValue);
+        if (checkedField.error) {
+            this.setState(
+                produce(this.state, (draft) => {
+                    draft["fields"][checkedField.fieldName].error = true;
+                    draft["fields"][checkedField.fieldName].msg = checkedField.msg;
+                    draft["isFormValid"] = false;
+                }),
+            );
+        } else {
+            this.saveFormValuesToCookie(inputName, inputValue);
+        }
+    };
+
+
 
     handleSubmit = (evt) => {
         evt.preventDefault();
-        const { target, target: { elements: formFields } } = evt;
+        const { target: form, target: { elements: formFields } } = evt;
 
-        this.isFormTouched = true;
-        const fields = {};
-
-        Array.from(formFields).forEach((item) => {
-            if (Object.keys(this.state.fields).includes(item.name)) {
-                fields[item.name] = item.value;
-                this.handleValidation(item.name, item.value);
-            }
-        });
-
-        if (!this.validationSchema.isValidSync(fields)) {
-            this.setState({ isFormValid: false });
-            return;
-        }
-
-        const order = this.processedUserOrder(new FormData(target), this.props.listOfProducts);
-        target.reset();
-        //console.dir(order);
-        this.setState({ isUserConfirmOrder: true });
-    };
-
-    handleBlur = () => {
-
-    };
-
-    handleChange = ({ target, target: { name: inputName, value: inputValue, id = null } }) => {
-        this.isFormTouched = true;
-        //if (!Object.keys(this.state.fields).includes(inputName)) return;
-        if (inputName === "phone") new Inputmask("+7 (999) 999-99-99").mask(target);
-
-        if (id) {
-            const result = inputName === "shipping" ? { type: id, price: parseInt(inputValue)} : { type: id};
+        if (!this.validateForm(formFields).isFormValid) {
+            const firstFieldWithError = this.validateForm(formFields).errors[0];
             this.setState(
                 produce(this.state, (draft) => {
-                    draft["fields"][inputName] = result;
+                    draft["fields"][firstFieldWithError.fieldName].error = true;
+                    draft["fields"][firstFieldWithError.fieldName].msg = firstFieldWithError.msg;
+                    draft["isFormValid"] = false;
                 }),
             );
             return;
         }
 
-        this.handleValidation(inputName, inputValue);
-        // каждый ввод тест на ошибки всей формы, если все ок - true в isFormValid, и снятие disabled с кнопки submit
-        this.checkFieldsErrors();
+        const formData = new FormData(form);
+        Cookies.remove("form-data");
+        form.reset();
+        this.setState({ isUserConfirmOrder: true });
     };
 
+    resetFormConfirmation = () => this.setState({ isUserConfirmOrder: false });
+
     render() {
-        //console.log("render");
-        let ConfirmModalWindow = null;
-        if (this.state.isUserConfirmOrder && this.isFormTouched) {
-            ConfirmModalWindow = withDelay(withModal(Confirm));
-            this.isFormTouched = false;
-        }
+        const ConfirmModalWindow = withDelay(withModal(Confirm));
         return (
             <>
-
-
-                {ConfirmModalWindow ? <ConfirmModalWindow /> : null}
-                <form
-                    onSubmit={this.handleSubmit}
-                    className={styles.form}
-                    name="order-form"
-                    method="POST">
+                {this.state.isUserConfirmOrder && <ConfirmModalWindow reset={this.resetFormConfirmation}/>}
+                <form ref={this.form} onSubmit={this.handleSubmit} className={styles.form} name="order-form" method="POST">
                     <OrderInfo
-                        handleChange={this.handleChange}
+                        handleInputChange={this.handleInputChange}
+                        handleRadioChange={this.handleRadioChange}
+                        handleInputBlur={this.handleInputBlur}
                         fields={this.state.fields}
                         shipping={this.state.fields.shipping}
                         payment={this.state.fields.payment}
@@ -212,6 +255,7 @@ class OrderForm extends Component {
                         isFormValid={this.state.isFormValid}
                         shipping={this.state.fields.shipping.price}
                     />
+
                 </form>
             </>
         );

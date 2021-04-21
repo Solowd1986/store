@@ -2,7 +2,12 @@
 
 .item {
   display: flex;
-  @include generate-columns-for-item(3);
+
+  @include generate-columns-with-max-width(3);
+  @include generate-columns-with-max-width(4, 1030);
+  @include generate-columns-with-max-width(6, 885);
+  @include generate-columns-with-max-width(12, 685);
+
   min-width: 220px;
   flex-direction: column;
   padding: 10px 5px 20px;
@@ -16,18 +21,6 @@
 
   &:hover {
     box-shadow: -3px 4px 14px 3px $grey;
-  }
-
-  @media (max-width: 1030px) {
-    @include generate-columns-for-item(4);
-  }
-
-  @media (max-width: 885px) {
-    @include generate-columns-for-item(6);
-  }
-
-  @media (max-width: 685px) {
-    @include generate-columns-for-item(12);
   }
 }
 

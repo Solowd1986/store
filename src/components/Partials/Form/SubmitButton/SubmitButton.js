@@ -2,12 +2,14 @@ import React from "react";
 import styles from "./submit-button.module.scss";
 import cn from "classnames";
 
-const SubmitButton = ({ value = "Отправить", disabled = false, classList = "", handler }) => (
-    <button
+const SubmitButton = ({ value = "Отправить", disabled = false, classList = "", handler = () => {} }) => (
+    <input
+        type="submit"
         onClick={handler}
-        className={cn(styles.btn, classList)}
-        disabled={disabled}>{value}
-    </button>
+        className={classList}
+        disabled={disabled}
+        value={value}
+    />
 );
 
 export default SubmitButton;
