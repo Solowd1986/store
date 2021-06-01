@@ -1,4 +1,5 @@
 import React, { PureComponent } from "react";
+import {connect} from "react-redux";
 import styles from "./header.module.scss";
 import cn from "classnames";
 
@@ -6,10 +7,12 @@ import MobileNavbar from "./Partials/MobileNavbar/MobileNavbar";
 import Logo from "./Partials/Logo/Logo";
 import NavbarList from "./Partials/NavbarList/NavbarList";
 import Userbar from "./Partials/Userbar/Userbar";
+import * as serverSelectors from "@redux/entities/server/selectors/serverSelectors";
 
-class Header extends PureComponent<unknown , { isPageScrolled: boolean }> {
+//@ts-ignore
+class Header extends PureComponent<any, { isPageScrolled: boolean }> {
     constructor(
-        props: unknown,
+        props: any,
         private readonly header: React.RefObject<HTMLElement>,
         private readonly offset: React.RefObject<HTMLDivElement>,
     ) {
@@ -21,9 +24,24 @@ class Header extends PureComponent<unknown , { isPageScrolled: boolean }> {
         };
     }
 
+    static getDerivedStateFromProps(props:any) {
+        console.log('fetch - ', props.isFetch);
+        if (props.isFetch) {
+
+        }
+        return null
+    }
+
+
+
     private getHeaderCurrentHeight = ():number => {
         const node: HTMLElement | null = this.header.current;
         return node ? node.clientHeight : 0;
+    };
+
+    private getHeaderCurrentwidth = ():number => {
+        const node: HTMLElement | null = this.header.current;
+        return node ? node.clientWidth : 0;
     };
 
     private getOffsetCurrentHeight = ():number => {
@@ -79,10 +97,15 @@ class Header extends PureComponent<unknown , { isPageScrolled: boolean }> {
             [styles.header_fixed]: this.state.isPageScrolled,
         });
 
-        if (this.offset.current) {
-            this.state.isPageScrolled
-                ? this.offset.current.style.minHeight = `${this.getHeaderCurrentHeight()}px`
-                : null;
+        if (this.offset.current && this.header.current) {
+            if (this.state.isPageScrolled) {
+                this.offset.current.style.minHeight = `${this.getHeaderCurrentHeight()}px`;
+                this.header.current.style.maxWidth = `${this.getHeaderCurrentwidth()}px`
+            }
+
+            // this.state.isPageScrolled
+            //     ? this.offset.current.style.minHeight = `${this.getHeaderCurrentHeight()}px`
+            //     : null;
         }
 
         return (
@@ -104,4 +127,6 @@ class Header extends PureComponent<unknown , { isPageScrolled: boolean }> {
     }
 }
 
+
+//const mapStateToProps = (state:any) => ({dataFetch: state.server.fetchingDataStart});
 export default Header;
