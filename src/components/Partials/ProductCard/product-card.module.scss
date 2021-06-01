@@ -3,10 +3,10 @@
 .item {
   display: flex;
 
-  @include generate-columns-with-max-width(3);
-  @include generate-columns-with-max-width(4, 1030);
-  @include generate-columns-with-max-width(6, 885);
-  @include generate-columns-with-max-width(12, 685);
+  @include generate-columns-with-max-width($columns: 3);
+  @include generate-columns-with-max-width($columns: 4, $max-width: 1030);
+  @include generate-columns-with-max-width($columns: 6, $max-width: 885);
+  @include generate-columns-with-max-width($columns: 12, $max-width: 685);
 
   min-width: 220px;
   flex-direction: column;

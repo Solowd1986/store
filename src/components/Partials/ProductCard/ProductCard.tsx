@@ -26,7 +26,7 @@ class ProductCard extends PureComponent<ProductCardProps> {
                 <span className={cn(styles.tag, { [styles.not_in_stock]: !rest })}>В наличии</span>
 
                 <NavLink to={`/product/${alias}/${id}`}>
-                    <img className={styles.img} src={item.img.md} alt={item["img_alt"]}/>
+                    <img className={styles.img} width={310} height={310} src={item.img.md} alt={item["img_alt"]}/>
                 </NavLink>
 
                 <div className={styles.title}>

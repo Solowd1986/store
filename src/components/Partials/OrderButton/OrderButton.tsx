@@ -26,6 +26,10 @@ class OrderButton extends PureComponent<OrderButtonPropsInterface> {
     onClick = (evt: React.MouseEvent<HTMLButtonElement>,
                product: ProductTypes,
                callback: (product: ProductTypes) => void = () => {}) => {
+
+        //@ts-ignore
+        this.props.CartAsync("glow");
+
         if (!(evt.target instanceof HTMLButtonElement)) return;
         evt.target.classList.add(styles.disabled);
         evt.target.disabled = true;
@@ -82,4 +86,5 @@ const mapStateToProps = (state:unknown) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => bindActionCreators(cartActions, dispatch);
+
 export default connect(mapStateToProps, mapDispatchToProps)(OrderButton);

@@ -6,6 +6,11 @@ import React, { PureComponent } from "react";
  * Эти данные он при onBlur сохраняет в своей state и возращает через отданный родителем метод.
  * Родитель, например компонент всей строки товара в корзине, уже исходя из этих данных может в своем
  * методе апдейтить глобальный стейт заказа, опираясь на title товара и прочие данные, которые тут не нужны.
+ *
+ * getDerivedStateFromProps - в данном блоке мы получаем исходные данные о количестве товара, на их основе формируется
+ * начальынй state. Просто передать props как value нельзя, так как нужно менять по onChange value в широких пределах,
+ * а props этого сделать не позволят, props уже про корректное значение товара. Полученные данные проверяются на число
+ * и на превышение максимума, то есть, превышает ли запрошенное количество товара максимально доступное для заказа.
  */
     //endregion
 export class FormInputCounter extends PureComponent {
@@ -16,7 +21,9 @@ export class FormInputCounter extends PureComponent {
 
     static getDerivedStateFromProps(props, state) {
         if (state.value === null) {
-            return /^[0-9]+$/.test(props.initialValue) ? { value: props.initialValue } : { value: 1 }
+            return /^[0-9]+$/.test(props.initialValue)
+                ? { value: Math.min(props.initialValue, props.maxValue) }
+                : { value: 1 }
         }
         return null;
     }
@@ -68,7 +75,6 @@ export class FormInputCounter extends PureComponent {
                 <button
                     onClick={this.onChangeAmount}
                     data-action="dec">
-                    {this.props.badge ? "-" : null}
                 </button>
                 <label>
                     <input
@@ -82,7 +88,6 @@ export class FormInputCounter extends PureComponent {
                 <button
                     onClick={this.onChangeAmount}
                     data-action="inc">
-                    {this.props.badge ? "+" : null}
                 </button>
             </div>
         );

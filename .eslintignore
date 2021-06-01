@@ -1,5 +1,8 @@
-src/*
+#src/*
 src/components/*
 src/redux/*
 src/components/Helpers/Validation/*
-src/components/test/*
+src/ts/nin.js
+
+
+#src/ts/test.tsx

@@ -1,6 +1,6 @@
 import lodashCloning from "@components/Helpers/Lodash/lodashCloning";
-import produce from "immer";
 import * as types from "./constants/cart";
+import produce from "immer";
 
 const initialState = {
     minAmountOfProduct: 1,
@@ -32,6 +32,12 @@ export default (state = initialState, action) => {
                 draft.products = products;
             });
         }
+
+        case "END": {
+            console.log('END');
+            return state;
+        }
+
 
         case types.CART_CHANGE_PRODUCT_AMOUNT: {
             const { id, title, quantity } = action.payload;

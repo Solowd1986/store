@@ -1,32 +1,30 @@
-import React, { PureComponent } from "react";
+import React, { Component, PureComponent } from "react";
 
 import { IndexPageTypes, ProductTypes } from "@custom-types/types";
 import styles from "./promo.module.scss";
 import cn from "classnames";
 
 import ProductCard from "@components/Partials/ProductCard/ProductCard";
-import FormInputCounter  from "@components/Partials/Form/FormInputCounter/FormInputCounter";
 
 
-import test from "@root/ts/test";
+
+
+
+
+import { test1 } from "@root/ts/test";
 import nin from "@root/ts/nin";
 nin();
 
+test1();
 
 
 class Promo extends PureComponent<IndexPageTypes> {
     render() {
         //console.dir(this.props);
-
-
-
         const { phones, accessoires, gadgets } = this.props.index;
-
         return (
             <section className={cn("container", styles.wrapper)}>
                 <main className={cn("wrapper", styles.content)}>
-                    <FormInputCounter />
-
 
                     <h2 className={styles.section_title}>Рекомендуем</h2>
                     <ul className={styles.list}>

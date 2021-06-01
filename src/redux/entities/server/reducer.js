@@ -33,6 +33,7 @@ export default (state = initialState, action) => {
             };
         }
 
+
         case types.SERVER_FETCH_LAZY_PAGE_DATA: {
             return {
                 ...state,
@@ -48,6 +49,15 @@ export default (state = initialState, action) => {
                 lastIndex: 0,
             };
         }
+
+        case types.SERVER_CLEAR_SINGLE_PRODUCT__PAGE_REDUX_DATA: {
+            return {
+                ...state,
+                product: null,
+            };
+        }
+
+
         default:
             return state;
     }

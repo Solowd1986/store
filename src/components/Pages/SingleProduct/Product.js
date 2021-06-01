@@ -36,6 +36,7 @@ class Product extends Component {
         this.props.fetchPageData(this.props);
     }
 
+
     render() {
         if (!this.state.product) return <Spinner />;
         const { main: category, data: product } = this.state.product;

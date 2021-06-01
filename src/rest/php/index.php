@@ -10,6 +10,12 @@ use php\db\RequestHandler as Request;
 
 //  /src/rest/php/index.php/api/category/phones
 
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    print json_encode($_POST);
+}
+
+
 if ($_SERVER["REQUEST_METHOD"] === "GET") {
     preg_match("/api\/(?P<path>[\w\d\/]+)$/", trim(filter_var($_SERVER["REQUEST_URI"], FILTER_SANITIZE_URL)), $uri);
     try {

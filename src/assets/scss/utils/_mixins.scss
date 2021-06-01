@@ -17,31 +17,31 @@
 
 
 @mixin generate-columns-with-max-width(
-  $item-columns,
-  $max_width: null,
+  $columns,
+  $max-width: null,
   $offset: null,
   $margin-bottom: null
 ) {
-  @if $max_width == null {
+  @if $max-width == null {
     @if $offset != null and $margin-bottom != null  {
-      @include generate-columns-for-item($item-columns, $offset, $margin-bottom);
+      @include generate-columns-for-item($columns, $offset, $margin-bottom);
     } @else if $offset != null {
-      @include generate-columns-for-item($item-columns, $offset);
+      @include generate-columns-for-item($columns, $offset);
     } @else if $margin-bottom != null {
-      @include generate-columns-for-item($item-columns, $margin-bottom);
+      @include generate-columns-for-item($columns, $margin-bottom);
     } @else {
-      @include generate-columns-for-item($item-columns);
+      @include generate-columns-for-item($columns);
     }
   } @else {
-    @media (max-width: #{$max_width}#{px}) {
+    @media (max-width: #{$max-width}#{px}) {
       @if $offset != null and $margin-bottom != null  {
-        @include generate-columns-for-item($item-columns, $offset, $margin-bottom);
+        @include generate-columns-for-item($columns, $offset, $margin-bottom);
       } @else if ($offset != null) {
-        @include generate-columns-for-item($item-columns, $offset);
+        @include generate-columns-for-item($columns, $offset);
       } @else if ($margin-bottom != null) {
-        @include generate-columns-for-item($item-columns, $margin-bottom);
+        @include generate-columns-for-item($columns, $margin-bottom);
       } @else {
-        @include generate-columns-for-item($item-columns);
+        @include generate-columns-for-item($columns);
       }
     }
   }

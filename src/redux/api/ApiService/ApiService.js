@@ -5,7 +5,7 @@ class ApiService {
         this._axios = axios;
         this._retryCount = 0;
         this._lastRequestURI = null;
-        this._decodeRecord = (recordName) => JSON.parse(decodeURIComponent(localStorage.getItem(recordName)));
+        this._decodeRecord = recordName => JSON.parse(decodeURIComponent(localStorage.getItem(recordName)));
 
         this.api = this._axios.create({
             baseURL: "/api/",
@@ -34,12 +34,12 @@ class ApiService {
         return Promise.reject(error);
     };
 
-    _handleSuccessResponse = (response) => response;
+    _handleSuccessResponse = response => response;
 
     get = (uri) => this.api.get(uri);
 
-    getToken = async () => {
-        return await this.api.get("token");
-    };
+    getToken = async () => await this.api.get("token");
+
 }
+
 export default new ApiService();

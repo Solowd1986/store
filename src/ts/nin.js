@@ -3,6 +3,19 @@ export default function () {
     const str ="AAAABBBCCDAABBB";
     const art = [2,5,2,23,6,23,56,1,8];
 
+    const res1 = {
+        set: {
+            block: 12
+        }
+    };
+    //console.log(res1.set?.user);
+
+
+    const str2 = "Hello bname";
+
+
+    const str_test = "rolled";
+    //console.log(str_test.split("").reverse().join(""));
 
 
 

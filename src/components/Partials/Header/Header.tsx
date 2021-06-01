@@ -36,13 +36,18 @@ class Header extends PureComponent<unknown , { isPageScrolled: boolean }> {
         return node ? window.innerHeight + this.getHeaderCurrentHeight() : 0;
     };
 
-    private isPageScrolledOverLimit = ():boolean => window.scrollY > this.viewportAndHeaderHeightSummary();
+    //private isPageScrolledOverLimit = ():boolean => window.scrollY > this.viewportAndHeaderHeightSummary();
+    private isPageScrolledOverLimit = ():boolean => window.scrollY > 1;
 
 
     private handleScroll = ():void => {
-        if (this.isPageScrolledOverLimit() && this.state.isPageScrolled) return;
-        if (!this.isPageScrolledOverLimit() && !this.state.isPageScrolled) return;
-        this.isPageScrolledOverLimit() ? this.setState({ isPageScrolled: true }) : this.setState({ isPageScrolled: false });
+        if (this.state.isPageScrolled) return;
+        this.setState({ isPageScrolled: true });
+
+        //if (this.isPageScrolledOverLimit() && this.state.isPageScrolled) return;
+        //if (!this.isPageScrolledOverLimit() && !this.state.isPageScrolled) return;
+
+        //this.isPageScrolledOverLimit() ? this.setState({ isPageScrolled: true }) : this.setState({ isPageScrolled: false });
     };
 
     componentDidMount():void {
@@ -77,7 +82,7 @@ class Header extends PureComponent<unknown , { isPageScrolled: boolean }> {
         if (this.offset.current) {
             this.state.isPageScrolled
                 ? this.offset.current.style.minHeight = `${this.getHeaderCurrentHeight()}px`
-                : this.offset.current.style.removeProperty("min-height");
+                : null;
         }
 
         return (

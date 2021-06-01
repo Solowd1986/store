@@ -8,7 +8,7 @@
 .brand_story__item {
   display: flex;
   position: relative;
-  @include generate-columns-for-item(4, 12, 0, 0);
+  @include generate-columns-for-item(4, 0, 0);
   min-width: 320px;
   text-align: center;
 

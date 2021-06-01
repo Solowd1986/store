@@ -14,7 +14,7 @@ const preloadedState = {
 };
 
 const enhancedStore = composeEnhancers(applyMiddleware(...activeMiddlewareList));
-const store = preloadedState
+const store = Object.keys(preloadedState).length
     ? createStore(reducer, preloadedState, enhancedStore)
     : createStore(reducer, enhancedStore);
 

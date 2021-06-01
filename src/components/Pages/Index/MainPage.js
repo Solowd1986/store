@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, PureComponent } from "react";
 import * as PropTypes from "prop-types";
 
 import withModal from "@components/Helpers/Hoc/withModal/withModal";
@@ -16,6 +16,52 @@ import * as serverActions from "@redux/entities/server/actions";
 import * as serverSelectors from "@redux/entities/server/selectors/serverSelectors";
 import { connect } from "react-redux";
 
+
+
+
+class Hect extends Component {
+    componentDidMount() {
+        console.log('hect mound');
+
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        console.log('hect upd');
+
+    }
+
+    rer = () => {
+        this.forceUpdate();
+    };
+    render() {
+        console.log('render');
+        if (!this.names) return null;
+        return (
+            <div>
+               Hello Hect
+
+            </div>
+        )
+    }
+}
+
+class Sender extends Component{
+    render() {
+        return (
+            <div style={{ backgroundColor: "grey"}}>
+                <Hect/>
+            </div>
+        )
+    }
+}
+
+
+import HookOne from "@components/test/Hoocs/Hoocs";
+
+
+
+
+
 class MainPage extends Component {
     static propTypes = {
         index: PropTypes.object,
@@ -32,6 +78,7 @@ class MainPage extends Component {
         return (
             <>
                 <Slider slides={this.props.index.slider} />
+                <Sender />
                 <Promo index={this.props.index} />
                 <BrandStory />
                 <Announcements />
@@ -48,5 +95,5 @@ function mapStateToProps(state) {
     };
 }
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({ fetchPageData: serverActions.fetchPageData }, dispatch);
+const mapDispatchToProps = (dispatch) => bindActionCreators(serverActions, dispatch);
 export default connect(mapStateToProps, mapDispatchToProps)(MainPage);

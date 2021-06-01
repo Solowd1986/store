@@ -9,7 +9,7 @@ export const fetchPageData = (params) => async (dispatch, getState, api) => {
     const uri = isThatIndexPage ? "index" : `${route.match(/\/([a-z]*)\/:/)[1]}/${Object.values(data).join("/")}`;
     const pageType = !Object.keys(data).length ? "index" : route.match(/\/([a-z]*)\/:/)[1];
     dispatch({ type: types.SERVER_START_FETCH_DATA });
-
+    
     try {
         const response = await api.get(uri);
         dispatch({
@@ -25,10 +25,6 @@ export const fetchPageData = (params) => async (dispatch, getState, api) => {
                 history.push("/400");
                 break;
             }
-            case 404: {
-                history.push("/404");
-                break;
-            }
             case 500: {
                 history.push("/500");
                 break;
@@ -37,6 +33,7 @@ export const fetchPageData = (params) => async (dispatch, getState, api) => {
         }
     }
 };
+
 
 export const fetchLazyCategoryProducts = (category, index, history) => async (dispatch, getState, api) => {
     dispatch({ type: types.SERVER_START_FETCH_DATA });
@@ -59,10 +56,6 @@ export const fetchLazyCategoryProducts = (category, index, history) => async (di
                 history.push("/400");
                 break;
             }
-            case 404: {
-                history.push("/404");
-                break;
-            }
             case 500: {
                 history.push("/500");
                 break;
@@ -74,4 +67,8 @@ export const fetchLazyCategoryProducts = (category, index, history) => async (di
 
 export const clearCategoryPageReduxData = () => ({
     type: types.SERVER_CLEAR_CATEGORY_PAGE_REDUX_DATA,
+});
+
+export const clearSingleProductReduxData = () => ({
+    type: types.SERVER_CLEAR_SINGLE_PRODUCT__PAGE_REDUX_DATA,
 });

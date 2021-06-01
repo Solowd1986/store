@@ -5,7 +5,6 @@ import cn from "classnames";
 import { AnyAction, bindActionCreators, Dispatch } from "redux";
 import * as sortSelectors from "@redux/entities/sort/selectors/sortSelectors";
 import * as sortActions from "@redux/entities/sort/actions";
-import * as serverActions from "@redux/entities/server/actions";
 import { connect } from "react-redux";
 
 
@@ -36,8 +35,9 @@ class SortPorducts extends PureComponent<SortProductsProps, SortProductsState> {
     toggleSortPanel = (evt: React.MouseEvent) => {
         evt.stopPropagation();
         if (!this.state.showSortPanel && this.list.current) {
-            Array.from(this.list.current.children).forEach((item) => item.classList.remove(styles.active));
-            const current = Array.from(this.list.current.children).find((item) => (item as HTMLElement).innerText === this.props.sortType);
+            const listItems = Array.from(this.list.current.children);
+            listItems.forEach((item) => item.classList.remove(styles.active));
+            const current = listItems.find((item) => (item as HTMLElement).innerText === this.props.sortType);
             if (current) current.classList.add(styles.active);
         }
         this.setState((state: SortProductsState) => {
@@ -57,7 +57,7 @@ class SortPorducts extends PureComponent<SortProductsProps, SortProductsState> {
     };
 
     closeSortPanelOnClickByWindow = (): void => {
-        this.setState((state):SortProductsState =>  state.showSortPanel ? ({showSortPanel: false}) : state);
+        this.setState((state): SortProductsState => state.showSortPanel ? ({ showSortPanel: false }) : state);
     };
 
     componentDidMount(): void {
@@ -105,14 +105,6 @@ const mapStateToProps = (state: unknown) => {
         sortType: sortSelectors.sortTypeSelector(state),
     };
 };
-
-// const mapDispatchToProps = (dispatch) => {
-//     return {
-//         changeSortType: (sortType) => {
-//             dispatch(sort.changeSortType(sortType));
-//         },
-//     };
-// };
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => bindActionCreators(sortActions, dispatch);
 export default connect(mapStateToProps, mapDispatchToProps)(SortPorducts);

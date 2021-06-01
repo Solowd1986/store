@@ -1,23 +1,66 @@
-export default function ():void {
-    const load = "glow";
+
+export function test1():void {
+    //const load = "glow";
+
+
+    //const tst: { login: string, nmae?: string } = { login: "bob" };
+    //console.log(tst.login);
 
 
 
-    // let trainFares: [number, number?] = [3.75, 8.25];
-    //
-    // let d = [1, 'a'];
-    //
-    // d.map(_ => {
-    //     if (typeof _ === 'number') {
-    //         return _ * 3
-    //     }
-    //     return _.toUpperCase()
-    // });
-    //
-    //
-    //
-    // const a: {b: number} = {
-    //     b: 12
-    // }
+
+
+    //const user: { readonly login?: string } = { login: "bob"};
+
+    //const trainFares: [number, number?] = [3.75, 8.25];
+
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
