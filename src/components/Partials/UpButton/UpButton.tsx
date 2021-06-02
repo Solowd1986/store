@@ -29,25 +29,25 @@ class UpButton extends PureComponent<any, UpButtonState> {
 
         //console.log(document.documentElement.clientWidth);
 
-        if (this.upBtn.current) {
-            //console.log(this.percent);
-
-            //this.upBtn.current.style.left = `${window.innerWidth * this.percent.offset / 100}px`;
-            //@ts-ignore
-            //this.upBtn.current.style.bottom = 0;
-            const clc = window.innerWidth * this.percent.width / 100;
-            if (clc <= 55 && clc > 30) {
-               // this.upBtn.current.style.width = `${window.innerWidth * this.percent.width / 100}px`;
-              //  this.upBtn.current.style.height = `${window.innerWidth * this.percent.height / 100}px`;
-            }
-            //this.upBtn.current.style.height = `${window.innerWidth * this.percent.height / 100}px`;
-
-            //console.log(res);
-
-            //@ts-ignore
-            //this.upBtn.current.style.left = `${res}px`;
-
-        }
+        // if (this.upBtn.current) {
+        //     //console.log(this.percent);
+        //
+        //     //this.upBtn.current.style.left = `${window.innerWidth * this.percent.offset / 100}px`;
+        //     //@ts-ignore
+        //     //this.upBtn.current.style.bottom = 0;
+        //     const clc = window.innerWidth * this.percent.width / 100;
+        //     if (clc <= 55 && clc > 30) {
+        //        // this.upBtn.current.style.width = `${window.innerWidth * this.percent.width / 100}px`;
+        //       //  this.upBtn.current.style.height = `${window.innerWidth * this.percent.height / 100}px`;
+        //     }
+        //     //this.upBtn.current.style.height = `${window.innerWidth * this.percent.height / 100}px`;
+        //
+        //     //console.log(res);
+        //
+        //     //@ts-ignore
+        //     //this.upBtn.current.style.left = `${res}px`;
+        //
+        // }
 
 
 

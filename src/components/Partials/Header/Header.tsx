@@ -46,7 +46,7 @@ class Header extends PureComponent<any, { isPageScrolled: boolean }> {
     handlerResizePage = () => {
         //console.log('resizsed');
         if (this.header.current && this.header.current.style.maxWidth) {
-            this.header.current.style.maxWidth = `${window.innerWidth * this.percent / 100}px`;
+            this.header.current.style.maxWidth = `${Math.ceil(window.innerWidth * this.percent / 100) - 1}px`;
         }
     };
 
@@ -64,7 +64,6 @@ class Header extends PureComponent<any, { isPageScrolled: boolean }> {
         const classList = cn({
             [styles.header_fixed]: this.state.isPageScrolled,
         });
-
 
         if (this.offset.current && this.header.current && this.state.isPageScrolled) {
             this.offset.current.style.minHeight = `${this.getHeaderCurrentHeight()}px`;
