@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 import styles from "./header.module.scss";
 import cn from "classnames";
 
@@ -24,102 +24,65 @@ class Header extends PureComponent<any, { isPageScrolled: boolean }> {
         };
     }
 
-    static getDerivedStateFromProps(props:any) {
-        console.log('fetch - ', props.isFetch);
-        if (props.isFetch) {
-
-        }
-        return null
-    }
-
-
-
-    private getHeaderCurrentHeight = ():number => {
+    private getHeaderCurrentHeight = (): number => {
         const node: HTMLElement | null = this.header.current;
         return node ? node.clientHeight : 0;
     };
 
-    private getHeaderCurrentwidth = ():number => {
+    private getHeaderCurrentwidth = (): number => {
         const node: HTMLElement | null = this.header.current;
         return node ? node.clientWidth : 0;
     };
 
-    private getOffsetCurrentHeight = ():number => {
-        const node: HTMLElement | null = this.offset.current;
-        return node ? node.clientHeight : 0;
-    };
 
-    private viewportAndHeaderHeightSummary = ():number => {
-        const node: HTMLElement | null = this.header.current;
-        return node ? window.innerHeight + this.getHeaderCurrentHeight() : 0;
-    };
-
-    //private isPageScrolledOverLimit = ():boolean => window.scrollY > this.viewportAndHeaderHeightSummary();
-    private isPageScrolledOverLimit = ():boolean => window.scrollY > 1;
-
-
-    private handleScroll = ():void => {
+    private handleScroll = (): void => {
         if (this.state.isPageScrolled) return;
         this.setState({ isPageScrolled: true });
-
-        //if (this.isPageScrolledOverLimit() && this.state.isPageScrolled) return;
-        //if (!this.isPageScrolledOverLimit() && !this.state.isPageScrolled) return;
-
-        //this.isPageScrolledOverLimit() ? this.setState({ isPageScrolled: true }) : this.setState({ isPageScrolled: false });
     };
 
-    componentDidMount():void {
+    handlerResizePage = () => {
+        if (this.header.current && this.header.current.style.maxWidth) {
+            //console.log(parseInt(this.header.current.style.maxWidth));
+            //console.log(window.innerWidth);
+
+            if (parseInt(this.header.current.style.maxWidth) < window.innerWidth) {
+                //console.log('yes');
+                //console.dir(this.header.current);
+                this.header.current.style.removeProperty("max-width");
+            }
+        }
+    };
+
+
+    componentDidMount(): void {
         window.addEventListener("scroll", this.handleScroll);
+        window.addEventListener("resize", this.handlerResizePage);
     }
 
-    componentWillUnmount():void {
+    componentWillUnmount(): void {
         window.removeEventListener("scroll", this.handleScroll);
+        window.removeEventListener("resize", this.handlerResizePage);
     }
 
-    //region Механизм фиксации header
-    /**
-     * Если выполняется условие по прокрутке, то header становиться fixed, смена позиционирования header на fixed
-     * вызывает исчезновение его из потока, вся страница смещается вверх, ее высота уменьшается, условие появление
-     * фиксированного header перестает выполняться, его высота опять считается для страницы, и условие по прокрутке опять
-     * выполняется. Так возникает зацикливание.
-     * Решение:
-     * 1. Вставляется пустой div - this.offset
-     * 2. Если this.offset существует (то есть уже был первичный рендер), то проверяем:
-     *    страница проскролена дальше выбранной точки?
-     * 3. Если да, то header выше получает класс header_fixed, а this.offset получает высоту header-а
-     * 4. Если же статус isPageScrolled сменился на false, то есть пользователь прокрутил вверх - убираем высоту для offset
-     * 5. Таким образом высота страницы одна, фиксирован header или нет, значит нет поводов для коллизий
-     */
-    //endregion фиксации
     render() {
-        //console.dir(this.header);
         const classList = cn({
             [styles.header_fixed]: this.state.isPageScrolled,
         });
 
-        if (this.offset.current && this.header.current) {
-            if (this.state.isPageScrolled) {
-                this.offset.current.style.minHeight = `${this.getHeaderCurrentHeight()}px`;
-                this.header.current.style.maxWidth = `${this.getHeaderCurrentwidth()}px`
-            }
-
-            // this.state.isPageScrolled
-            //     ? this.offset.current.style.minHeight = `${this.getHeaderCurrentHeight()}px`
-            //     : null;
+        if (this.offset.current && this.header.current && this.state.isPageScrolled) {
+            this.offset.current.style.minHeight = `${this.getHeaderCurrentHeight()}px`;
+            //this.header.current.style.maxWidth = `${this.getHeaderCurrentwidth()}px`;
         }
 
         return (
             <>
-                <div ref={this.offset} />
+                <div ref={this.offset}/>
                 <header className={classList} ref={this.header}>
-                    <a className={`${styles.portfolio_controls} ${styles.portfolio_controls__right}`} href="#">
-                        перейти на GitHub проекта
-                    </a>
                     <nav className={cn("wrapper", styles.common)}>
-                        <MobileNavbar />
-                        <Logo />
-                        <NavbarList />
-                        <Userbar />
+                        <MobileNavbar/>
+                        <Logo/>
+                        <NavbarList/>
+                        <Userbar/>
                     </nav>
                 </header>
             </>
@@ -127,6 +90,4 @@ class Header extends PureComponent<any, { isPageScrolled: boolean }> {
     }
 }
 
-
-//const mapStateToProps = (state:any) => ({dataFetch: state.server.fetchingDataStart});
 export default Header;

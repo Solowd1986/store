@@ -2,46 +2,38 @@ import React, { PureComponent } from "react";
 import { NavLink } from "react-router-dom";
 import styles from "./mobile-navbar.module.scss";
 import cn from "classnames";
+import { addScrollbarOffset, removeScrollbarOffset } from "@components/Helpers/Functions/scrollbarHelper";
 
-type MobileNavbarState = {
-    isMobileMenuVisible: boolean
-};
-
-class MobileNavbar extends PureComponent<unknown, MobileNavbarState> {
+class MobileNavbar extends PureComponent<unknown, { isMobileMenuVisible: boolean }> {
     state = {
         isMobileMenuVisible: false,
     };
 
-    private disableScroll = () => document.body.style.overflow = "hidden";
-    private enableScroll = () => document.body.style.removeProperty("overflow");
+    closeMobileMenu = () => {
+        removeScrollbarOffset();
+        this.setState({ isMobileMenuVisible: false });
+    };
 
     private toggleMobileMenu = ():void => {
-        !this.state.isMobileMenuVisible ? this.disableScroll() : this.enableScroll();
-        this.setState((state: MobileNavbarState) => ({
+        !this.state.isMobileMenuVisible ? addScrollbarOffset() : removeScrollbarOffset();
+        this.setState((state: { isMobileMenuVisible: boolean }) => ({
             isMobileMenuVisible: !state.isMobileMenuVisible,
         }));
     };
 
-    private handlerClickLink = ():void => {
-        this.setState({ isMobileMenuVisible: false });
-        this.enableScroll();
-    };
+    private navItemClickHandler = ():void => this.closeMobileMenu();
 
-    private handlerResizePage = ():void => {
-        if (this.state.isMobileMenuVisible && window.innerWidth > 1020) {
-            this.enableScroll();
-            this.setState({ isMobileMenuVisible: false });
-        }
+    private resizePageHandler = ():void => {
+        if (this.state.isMobileMenuVisible && window.innerWidth > 1020) this.closeMobileMenu();
     };
 
     componentDidMount():void {
-        window.addEventListener("resize", this.handlerResizePage);
+        window.addEventListener("resize", this.resizePageHandler);
     }
 
     componentWillUnmount():void {
-        this.enableScroll();
-        this.setState({ isMobileMenuVisible: false });
-        window.removeEventListener("resize", this.handlerResizePage);
+        this.closeMobileMenu();
+        window.removeEventListener("resize", this.resizePageHandler);
     }
 
     render() {
@@ -62,22 +54,22 @@ class MobileNavbar extends PureComponent<unknown, MobileNavbarState> {
                 <div className={classListMenuWrapper}>
                     <ul className={styles.header__mobile_menu_list}>
                         <li>
-                            <NavLink onClick={this.handlerClickLink} to={"/category/phones"}>
+                            <NavLink onClick={this.navItemClickHandler} to={"/category/phones"}>
                                 Смартфоны
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink onClick={this.handlerClickLink} to={"/category/accessoires"}>
+                            <NavLink onClick={this.navItemClickHandler} to={"/category/accessoires"}>
                                 Аксессуары
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink onClick={this.handlerClickLink} to={"/category/gadgets"}>
+                            <NavLink onClick={this.navItemClickHandler} to={"/category/gadgets"}>
                                 Гаджеты
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink onClick={this.handlerClickLink} to={"/delivery"}>
+                            <NavLink onClick={this.navItemClickHandler} to={"/delivery"}>
                                 Доставка
                             </NavLink>
                         </li>

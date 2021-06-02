@@ -33,7 +33,7 @@ const Userbar = ({ amountOfProductsInCart }: { amountOfProductsInCart: number })
                 <span>+7&nbsp;(800)&nbsp;88-8888</span>
             </a>
 
-            <NavLink to="/order" className={`${styles.header__cart}`}>
+            <NavLink to="/order" className={styles.header__cart}>
                 <svg width={35} height={35} viewBox="0 0 26 26">
                     <path
                         d="M22.684 7.136a.75.75 0 00-.75-.703h-3.97V5.26C17.965 2.91 15.738
@@ -46,6 +46,11 @@ const Userbar = ({ amountOfProductsInCart }: { amountOfProductsInCart: number })
                 </svg>
                 {userOrderCounter}
             </NavLink>
+            <div className={styles.git_link_wrapper}>
+                <a className={styles.portfolio_controls} href="#">
+                    перейти на GitHub проекта
+                </a>
+            </div>
         </div>
     );
 };

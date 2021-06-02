@@ -5,18 +5,13 @@ import UpButton from "@components/Partials/UpButton/UpButton";
 import Header from "@components/Partials/Header/Header";
 import Footer from "@components/Partials/Footer/Footer";
 import styles from "./layout.module.scss";
-import { connect } from "react-redux";
 
 
 // @ts-ignore
-const Layout = ({ children , dataFetch}:{ children: React.ReactNode, dataFetch:boolean }) => {
-
-    console.log(dataFetch);
-
-    return (
+const Layout = ({ children }:{ children: React.ReactNode }) => (
     <div className={styles.layout}>
         <UpButton />
-        <Header isFetch={dataFetch}/>
+        <Header />
         <ScrollToTop>
             <main className={styles.main}>
                 {children}
@@ -24,9 +19,7 @@ const Layout = ({ children , dataFetch}:{ children: React.ReactNode, dataFetch:b
         </ScrollToTop>
         <Footer />
     </div>
-)};
+);
 
-const mapStateToProps = (state:any) => ({dataFetch: state.server.fetchingDataStart});
-export default connect(mapStateToProps)(Layout);
 
-//export default Layout;
+export default Layout;

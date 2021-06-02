@@ -1,5 +1,28 @@
 @import "@scss/utils/utils.scss";
 
+.git_link_wrapper {
+  position: relative;
+  white-space: nowrap
+}
+
+.portfolio_controls {
+  position: absolute;
+  z-index: 1;
+  font-size: 14px;
+  color: $grey-100;
+  text-transform: uppercase;
+  top: -22px;
+  left: 30px;
+
+  &:hover {
+    color: darken($grey-100, 30%);
+  }
+
+  @media (max-width: 1605px) {
+    display: none;
+  }
+}
+
 .header__order_wrapper {
   display: flex;
   min-width: 265px;

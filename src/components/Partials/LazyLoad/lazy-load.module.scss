@@ -18,6 +18,9 @@
   position: relative;
   flex-direction: column;
   padding-bottom: 25px;
+  @media (max-width: 1135px) {
+    overflow: hidden;
+  }
 }
 
 .data_block {

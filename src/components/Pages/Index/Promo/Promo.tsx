@@ -9,8 +9,6 @@ import ProductCard from "@components/Partials/ProductCard/ProductCard";
 
 
 
-
-
 import { test1 } from "@root/ts/test";
 import nin from "@root/ts/nin";
 nin();
