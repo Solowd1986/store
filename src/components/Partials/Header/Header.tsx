@@ -13,12 +13,14 @@ import * as serverSelectors from "@redux/entities/server/selectors/serverSelecto
 class Header extends PureComponent<any, { isPageScrolled: boolean }> {
     constructor(
         props: any,
+        private percent: any,
         private readonly header: React.RefObject<HTMLElement>,
         private readonly offset: React.RefObject<HTMLDivElement>,
     ) {
         super(props);
         this.header = React.createRef();
         this.offset = React.createRef();
+
         this.state = {
             isPageScrolled: false,
         };
@@ -40,19 +42,13 @@ class Header extends PureComponent<any, { isPageScrolled: boolean }> {
         this.setState({ isPageScrolled: true });
     };
 
-    handlerResizePage = () => {
-        if (this.header.current && this.header.current.style.maxWidth) {
-            //console.log(parseInt(this.header.current.style.maxWidth));
-            //console.log(window.innerWidth);
 
-            if (parseInt(this.header.current.style.maxWidth) < window.innerWidth) {
-                //console.log('yes');
-                //console.dir(this.header.current);
-                this.header.current.style.removeProperty("max-width");
-            }
+    handlerResizePage = () => {
+        //console.log('resizsed');
+        if (this.header.current && this.header.current.style.maxWidth) {
+            this.header.current.style.maxWidth = `${window.innerWidth * this.percent / 100}px`;
         }
     };
-
 
     componentDidMount(): void {
         window.addEventListener("scroll", this.handleScroll);
@@ -69,15 +65,17 @@ class Header extends PureComponent<any, { isPageScrolled: boolean }> {
             [styles.header_fixed]: this.state.isPageScrolled,
         });
 
+
         if (this.offset.current && this.header.current && this.state.isPageScrolled) {
             this.offset.current.style.minHeight = `${this.getHeaderCurrentHeight()}px`;
-            //this.header.current.style.maxWidth = `${this.getHeaderCurrentwidth()}px`;
+            this.header.current.style.maxWidth = `${this.getHeaderCurrentwidth()}px`;
+            this.percent =  parseInt(this.header.current.style.maxWidth) / window.innerWidth * 100;
         }
 
         return (
             <>
                 <div ref={this.offset}/>
-                <header className={classList} ref={this.header}>
+                <header className={cn(classList)} ref={this.header}>
                     <nav className={cn("wrapper", styles.common)}>
                         <MobileNavbar/>
                         <Logo/>

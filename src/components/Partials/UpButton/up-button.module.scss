@@ -1,11 +1,16 @@
 @import "@scss/utils/utils.scss";
 
+
+.wrp {
+  position: relative;
+}
+
 .up {
-  display: block;
+  display: inline-block;
   position: fixed;
   width: 55px;
   height: 55px;
-  right: 0;
+  right: 5px;
   bottom: 0;
   z-index: 999;
   padding: 2px 2px 0 2px;
@@ -15,10 +20,6 @@
   background-size: contain;
   opacity: 0;
   transition: opacity 0.3s linear;
-
-  @media (max-width: 1028px) {
-    right: 0px;
-  }
 
   &:hover {
     opacity: 0.95;

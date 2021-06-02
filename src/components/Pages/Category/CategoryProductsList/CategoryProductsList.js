@@ -22,6 +22,8 @@ class CategoryProductsList extends PureComponent {
                 <div className={cn("wrapper", styles.filters_wrapper)}>
                     <SortPorducts />
                 </div>
+
+                <div className="container">
                 <div className={cn("wrapper", styles.list_wrapper)}>
                     <LazyLoad categoryName={category.alias}>
                         <ul className={styles.list}>
@@ -30,6 +32,7 @@ class CategoryProductsList extends PureComponent {
                             ))}
                         </ul>
                     </LazyLoad>
+                </div>
                 </div>
             </div>
         );

@@ -23,6 +23,21 @@ export const removeScrollbarOffset = ():void => {
     document.body.style.removeProperty('padding-right');
 };
 
+
+
+
+
+export const setInitialPercent = (rawValue: string | number) => {
+    const value = parseInt(rawValue.toString());
+    return value / window.innerWidth * 100;
+};
+
+
+export const setDinamicPercent = (value:number):number => window.innerWidth * value / 100;
+
+
+
+
 export const scrollToTop = ():void => {
     $('html, body').animate({ scrollTop: 0 }, 'slow');
 };

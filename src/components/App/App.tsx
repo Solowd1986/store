@@ -7,6 +7,7 @@ import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "@redux/store";
 import router from "@root/routes/routes";
+import ScrollToTop from "@components/Helpers/Hoc/withScrollToTop/ScrollToTop";
 
 export default class App extends Component {
     render(): React.ReactNode {
@@ -16,6 +17,7 @@ export default class App extends Component {
                     <BrowserRouter>
                         <ErrorBoundary>
                             <Layout>
+                                <ScrollToTop>
                                 <Switch>
                                     {router.map((route) => (
                                         <Route
@@ -27,6 +29,7 @@ export default class App extends Component {
                                     ))}
                                     <Redirect to="/404"/>
                                 </Switch>
+                                </ScrollToTop>
                             </Layout>
                         </ErrorBoundary>
                     </BrowserRouter>
