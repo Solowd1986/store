@@ -32,7 +32,6 @@ export const setInitialPercent = (rawValue: string | number) => {
     return value / window.innerWidth * 100;
 };
 
-
 export const setDinamicPercent = (value:number):number => window.innerWidth * value / 100;
 
 
