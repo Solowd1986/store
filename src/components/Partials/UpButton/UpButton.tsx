@@ -1,31 +1,47 @@
 import React, { PureComponent } from "react";
 import styles from "./up-button.module.scss";
 import cn from "classnames";
-import { setInitialPercent, setDinamicPercent } from "@components/Helpers/Functions/scrollbarHelper";
 
-type UpButtonState = {
-    isPageScrolledToBottom: boolean
-};
-
-
-class UpButton extends PureComponent<any, UpButtonState> {
+class UpButton extends PureComponent<any, { isPageScrolledToBottom: boolean }> {
     constructor(
         props: any,
+        private timer: any,
         private readonly upBtn: React.RefObject<HTMLDivElement>,
     ) {
         super(props);
         this.upBtn = React.createRef();
+        this.timer = null;
         this.state = {
             isPageScrolledToBottom: false,
         }
     }
 
+    fixUpBtnWhenResize = () => {
+        clearTimeout(this.timer);
+        if (this.upBtn.current) this.upBtn.current.style.display = "none";
+        this.timer = setTimeout(() => {
+            if (this.upBtn.current) {
+                this.upBtn.current.style.removeProperty("display");
+                const rightOffset = getComputedStyle(this.upBtn.current).getPropertyValue("right");
+                const leftOffset =  this.upBtn.current.offsetWidth + parseInt(rightOffset);
+                const offset = document.documentElement.clientWidth - leftOffset;
+                this.upBtn.current.style.left = `${offset}px`;
+            }
+        }, 1000);
+    };
+
     componentDidMount(): void {
+        if (this.upBtn.current) {
+            this.upBtn.current.style.left = getComputedStyle(this.upBtn.current).getPropertyValue("left");
+        }
         window.addEventListener("scroll", this.handleScroll);
+        window.addEventListener("resize", this.fixUpBtnWhenResize);
     }
 
     componentWillUnmount(): void {
         window.removeEventListener("scroll", this.handleScroll);
+        window.removeEventListener("resize", this.fixUpBtnWhenResize);
+        clearTimeout(this.timer);
     }
 
     handleScroll = (): void => {

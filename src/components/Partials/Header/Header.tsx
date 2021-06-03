@@ -49,7 +49,7 @@ class Header extends PureComponent<any, { isPageScrolled: boolean }> {
 
     handlerResizePage = () => {
         //console.log('resizsed');
-        if (this.header.current && this.header.current.style.maxWidth) {
+        if (this.header.current) {
             // temp
             this.header.current.style.maxWidth = this.calcOffset();
 
