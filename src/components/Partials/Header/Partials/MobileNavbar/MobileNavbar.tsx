@@ -18,7 +18,7 @@ class MobileNavbar extends PureComponent<any, { isMobileMenuVisible: boolean }> 
 
     private toggleMobileMenu = ():void => {
         if (!this.state.isMobileMenuVisible) {
-            this.props.calcMobileHeaderMaxWidth();
+            //this.props.calcMobileHeaderMaxWidth();
         }
         !this.state.isMobileMenuVisible ? addScrollbarOffset() : removeScrollbarOffset();
         this.setState((state: { isMobileMenuVisible: boolean }) => ({

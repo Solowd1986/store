@@ -1,5 +1,4 @@
 import React, { PureComponent } from "react";
-import { connect } from "react-redux";
 import styles from "./header.module.scss";
 import cn from "classnames";
 
@@ -17,11 +16,11 @@ class Header extends PureComponent<any, { isPageScrolled: boolean }> {
         private percent: any,
         private readonly scrollbarWidth: any,
         private readonly header: React.RefObject<HTMLElement>,
-        private readonly offset: React.RefObject<HTMLDivElement>,
+        private readonly headerPlaceholderElem: React.RefObject<HTMLDivElement>,
     ) {
         super(props);
         this.header = React.createRef();
-        this.offset = React.createRef();
+        this.headerPlaceholderElem = React.createRef();
         this.percent = null;
         this.scrollbarWidth = null;
 
@@ -76,9 +75,7 @@ class Header extends PureComponent<any, { isPageScrolled: boolean }> {
     componentDidMount(): void {
         if (this.header.current) {
             this.header.current.style.maxWidth = `${this.getHeaderCurrentwidth()}px`;
-            //this.percent =  parseInt(this.header.current.style.maxWidth) / window.innerWidth * 100;
         }
-
         window.addEventListener("scroll", this.handleScroll);
         window.addEventListener("resize", this.handlerResizePage);
     }
@@ -88,25 +85,18 @@ class Header extends PureComponent<any, { isPageScrolled: boolean }> {
         window.removeEventListener("resize", this.handlerResizePage);
     }
 
-
-    getScrollOffset = () => window.innerWidth - calcScrollBarWidth();
-
-
     render() {
         const classList = cn({
             [styles.header_fixed]: this.state.isPageScrolled,
         });
 
-
-        if (this.offset.current && this.header.current && this.state.isPageScrolled) {
-            this.offset.current.style.minHeight = `${this.getHeaderCurrentHeight()}px`;
-            //temp
-            //this.header.current.style.maxWidth = this.calcOffset();
+        if (this.headerPlaceholderElem.current && this.header.current && this.state.isPageScrolled) {
+            this.headerPlaceholderElem.current.style.minHeight = `${this.getHeaderCurrentHeight()}px`;
         }
 
         return (
             <>
-                <div ref={this.offset}/>
+                <div ref={this.headerPlaceholderElem}/>
                 <header className={cn(classList)} ref={this.header}>
                     <nav className={cn("wrapper", styles.common)}>
                         <MobileNavbar calcMobileHeaderMaxWidth={this.calcMobileHeaderMaxWidth}/>

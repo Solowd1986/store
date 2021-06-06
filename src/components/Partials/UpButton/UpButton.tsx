@@ -4,35 +4,35 @@ import cn from "classnames";
 
 class UpButton extends PureComponent<any, { isPageScrolledToBottom: boolean }> {
     constructor(
-        props: any,
-        private timer: any,
-        private readonly upBtn: React.RefObject<HTMLDivElement>,
+        props: unknown,
+        private resizeInactivityTimer: any,
+        private readonly upBtnElem: React.RefObject<HTMLDivElement>,
     ) {
         super(props);
-        this.upBtn = React.createRef();
-        this.timer = null;
+        this.upBtnElem = React.createRef();
+        this.resizeInactivityTimer = null;
         this.state = {
             isPageScrolledToBottom: false,
         }
     }
 
     fixUpBtnWhenResize = () => {
-        clearTimeout(this.timer);
-        if (this.upBtn.current) this.upBtn.current.style.display = "none";
-        this.timer = setTimeout(() => {
-            if (this.upBtn.current) {
-                this.upBtn.current.style.removeProperty("display");
-                const rightOffset = getComputedStyle(this.upBtn.current).getPropertyValue("right");
-                const leftOffset =  this.upBtn.current.offsetWidth + parseInt(rightOffset);
+        clearTimeout(this.resizeInactivityTimer);
+        if (this.upBtnElem.current) this.upBtnElem.current.style.display = "none";
+        this.resizeInactivityTimer = setTimeout(() => {
+            if (this.upBtnElem.current) {
+                this.upBtnElem.current.style.removeProperty("display");
+                const rightOffset = getComputedStyle(this.upBtnElem.current).getPropertyValue("right");
+                const leftOffset =  this.upBtnElem.current.offsetWidth + parseInt(rightOffset);
                 const offset = document.documentElement.clientWidth - leftOffset;
-                this.upBtn.current.style.left = `${offset}px`;
+                this.upBtnElem.current.style.left = `${offset}px`;
             }
         }, 1000);
     };
 
     componentDidMount(): void {
-        if (this.upBtn.current) {
-            this.upBtn.current.style.left = getComputedStyle(this.upBtn.current).getPropertyValue("left");
+        if (this.upBtnElem.current) {
+            this.upBtnElem.current.style.left = getComputedStyle(this.upBtnElem.current).getPropertyValue("left");
         }
         window.addEventListener("scroll", this.handleScroll);
         window.addEventListener("resize", this.fixUpBtnWhenResize);
@@ -41,13 +41,11 @@ class UpButton extends PureComponent<any, { isPageScrolledToBottom: boolean }> {
     componentWillUnmount(): void {
         window.removeEventListener("scroll", this.handleScroll);
         window.removeEventListener("resize", this.fixUpBtnWhenResize);
-        clearTimeout(this.timer);
+        clearTimeout(this.resizeInactivityTimer);
     }
 
     handleScroll = (): void => {
-        const offset = window.scrollY;
-        const viewport = document.documentElement.clientHeight;
-        offset > viewport
+        window.scrollY > document.documentElement.clientHeight
             ? this.setState({ isPageScrolledToBottom: true })
             : this.setState({ isPageScrolledToBottom: false });
     };
@@ -56,12 +54,11 @@ class UpButton extends PureComponent<any, { isPageScrolledToBottom: boolean }> {
         window.scrollTo({ top: 0, behavior: "smooth" });
     };
 
-
     render():React.ReactNode {
         const classList = cn(styles.up, {
             [styles.show]: this.state.isPageScrolledToBottom,
         });
-        return <div ref={this.upBtn} onClick={this.scrollUp} className={classList} />;
+        return <div ref={this.upBtnElem} onClick={this.scrollUp} className={classList} />;
     }
 }
 
