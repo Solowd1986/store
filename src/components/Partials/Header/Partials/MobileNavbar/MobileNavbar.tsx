@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import { NavLink } from "react-router-dom";
 import styles from "./mobile-navbar.module.scss";
 import cn from "classnames";
-import { addScrollbarOffset, removeScrollbarOffset, calcScrollBarWidth } from "@components/Helpers/Functions/scrollbarHelper";
+import { addScrollbarOffset, removeScrollbarOffset } from "@components/Helpers/Functions/scrollbarHelper";
 
 class MobileNavbar extends PureComponent<any, { isMobileMenuVisible: boolean }> {
     state = {
@@ -14,12 +14,7 @@ class MobileNavbar extends PureComponent<any, { isMobileMenuVisible: boolean }> 
         this.setState({ isMobileMenuVisible: false });
     };
 
-
-
     private toggleMobileMenu = ():void => {
-        if (!this.state.isMobileMenuVisible) {
-            //this.props.calcMobileHeaderMaxWidth();
-        }
         !this.state.isMobileMenuVisible ? addScrollbarOffset() : removeScrollbarOffset();
         this.setState((state: { isMobileMenuVisible: boolean }) => ({
             isMobileMenuVisible: !state.isMobileMenuVisible,
