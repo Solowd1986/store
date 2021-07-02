@@ -4,9 +4,9 @@ import loggerExample from "@redux/middlware/loggerExample";
 import composeEnhancers from "./middlware/composeEnhancers";
 import reducer from "./entities/rootReducer";
 import reduxLogger from "./middlware/reduxLogger";
-import ApiService from "./api/ApiService/ApiService";
+import {axiosInstance as api} from "./api/ApiService/ApiService";
 
-const activeMiddlewareList = [loggerExample, reduxThunk.withExtraArgument(ApiService)];
+const activeMiddlewareList = [loggerExample, reduxThunk.withExtraArgument(api.customAxiosInstance)];
 
 const preloadedState = {
     ...JSON.parse(decodeURIComponent(localStorage.getItem("cart"))),

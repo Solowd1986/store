@@ -7,12 +7,10 @@ import cn from "classnames";
 import ProductCard from "@components/Partials/ProductCard/ProductCard";
 
 
-
-
 import { test1 } from "@root/ts/test";
 import nin from "@root/ts/nin";
-nin();
 
+nin();
 test1();
 
 
@@ -23,6 +21,10 @@ class Promo extends PureComponent<IndexPageTypes> {
         return (
             <section className={cn("container", styles.wrapper)}>
                 <main className={cn("wrapper", styles.content)}>
+
+                    <div id="glow">
+
+                    </div>
 
                     <h2 className={styles.section_title}>Рекомендуем</h2>
                     <ul className={styles.list}>

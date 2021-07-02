@@ -19,48 +19,47 @@ import { connect } from "react-redux";
 
 
 
-class Hect extends Component {
-    componentDidMount() {
-        console.log('hect mound');
 
-    }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        console.log('hect upd');
+import {HookOne} from "@components/test/Hoocs/Hoocs";
 
-    }
 
-    rer = () => {
-        this.forceUpdate();
-    };
+const ThemeContext = React.createContext('light');
+
+class Toolbar extends React.Component{
     render() {
-        console.log('render');
-        if (!this.names) return null;
+        return (
+
+                <Toolbar2 />
+
+        );
+    }
+}
+
+class Toolbar2 extends React.Component{
+    static contextType = ThemeContext;
+    render() {
         return (
             <div>
-               Hello Hect
-
+               {this.context}
             </div>
         )
     }
 }
 
-class Sender extends Component{
+
+class Lock extends React.Component {
     render() {
         return (
-            <div style={{ backgroundColor: "grey"}}>
-                <Hect/>
-            </div>
-        )
+            <ThemeContext.Provider value={"ThemeContext"}>
+                <Toolbar />
+            </ThemeContext.Provider>
+        );
     }
 }
 
 
-import HookOne from "@components/test/Hoocs/Hoocs";
-
-
-
-
+export const MyContext = React.createContext(null);
 
 class MainPage extends Component {
     static propTypes = {
@@ -78,7 +77,12 @@ class MainPage extends Component {
         return (
             <>
                 <Slider slides={this.props.index.slider} />
-                <Sender />
+                <Lock/>
+
+                <MyContext.Provider value={"blow"}>
+                    <HookOne/>
+                </MyContext.Provider>
+
                 <Promo index={this.props.index} />
                 <BrandStory />
                 <Announcements />

@@ -7,7 +7,7 @@ class ApiService {
         this._lastRequestURI = null;
         this._decodeRecord = recordName => JSON.parse(decodeURIComponent(localStorage.getItem(recordName)));
 
-        this.api = this._axios.create({
+        this.customAxiosInstance = this._axios.create({
             baseURL: "/api/",
             timeout: 5000,
             withCredentials: true,
@@ -16,8 +16,8 @@ class ApiService {
             },
         });
 
-        this.api.interceptors.response.use(this._handleSuccessResponse, this._handleFailResponse);
-        this.api.interceptors.request.use(this._handleSuccessRequest);
+        this.customAxiosInstance.interceptors.response.use(this._handleSuccessResponse, this._handleFailResponse);
+        this.customAxiosInstance.interceptors.request.use(this._handleSuccessRequest);
     }
 
     _handleSuccessRequest = (request) => {
@@ -28,7 +28,7 @@ class ApiService {
     _handleFailResponse = async (error) => {
         if (error.code === "ECONNABORTED" && this._retryCount < 3) {
             ++this._retryCount;
-            await this.api.get(this._lastRequestURI);
+            await this.customAxiosInstance.get(this._lastRequestURI);
         }
         this._retryCount = 0;
         return Promise.reject(error);
@@ -36,10 +36,21 @@ class ApiService {
 
     _handleSuccessResponse = response => response;
 
-    get = (uri) => this.api.get(uri);
 
-    getToken = async () => await this.api.get("token");
+    getAxiosApi = () => this._axios;
+
+    getCancelSource = () => {
+        const CancelToken = this._axios.CancelToken.source();
+        return {
+            token: CancelToken.token,
+            cancel: CancelToken.cancel
+        }
+    };
+
+    getToken = async () => await this.customAxiosInstance.get("token");
 
 }
 
-export default new ApiService();
+export const axiosInstance = new ApiService();
+
+

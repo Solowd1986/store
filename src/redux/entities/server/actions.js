@@ -9,7 +9,7 @@ export const fetchPageData = (params) => async (dispatch, getState, api) => {
     const uri = isThatIndexPage ? "index" : `${route.match(/\/([a-z]*)\/:/)[1]}/${Object.values(data).join("/")}`;
     const pageType = !Object.keys(data).length ? "index" : route.match(/\/([a-z]*)\/:/)[1];
     dispatch({ type: types.SERVER_START_FETCH_DATA });
-    
+
     try {
         const response = await api.get(uri);
         dispatch({

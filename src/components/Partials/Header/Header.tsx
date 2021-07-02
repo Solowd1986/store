@@ -1,12 +1,12 @@
 import React, { PureComponent } from "react";
 import styles from "./header.module.scss";
 import cn from "classnames";
+import { calcScrollBarWidth } from "@components/Helpers/Functions/scrollbarHelper";
 
 import MobileNavbar from "./Partials/MobileNavbar/MobileNavbar";
 import Logo from "./Partials/Logo/Logo";
 import NavbarList from "./Partials/NavbarList/NavbarList";
 import Userbar from "./Partials/Userbar/Userbar";
-import { calcScrollBarWidth } from "@components/Helpers/Functions/scrollbarHelper";
 
 class Header extends PureComponent<any, { isPageScrolled: boolean }> {
     constructor(
@@ -24,12 +24,12 @@ class Header extends PureComponent<any, { isPageScrolled: boolean }> {
         };
     }
 
-    private getHeaderCurrentHeight = (): number|null => {
+    private getHeaderCurrentHeight = (): number | null => {
         const node: HTMLElement | null = this.header.current;
         return node ? node.clientHeight : null;
     };
 
-    private getHeaderCurrentwidth = (): number|null => {
+    private getHeaderCurrentwidth = (): number | null => {
         const node: HTMLElement | null = this.header.current;
         return node ? node.clientWidth : null;
     };
@@ -39,7 +39,7 @@ class Header extends PureComponent<any, { isPageScrolled: boolean }> {
         this.setState({ isPageScrolled: true });
     };
 
-    handlerResizePage = () => {
+    handlerResizePage = (): void => {
         if (this.header.current) {
             this.header.current.style.maxWidth = `${window.innerWidth - calcScrollBarWidth()}px`;
         }
@@ -72,7 +72,7 @@ class Header extends PureComponent<any, { isPageScrolled: boolean }> {
                 <div ref={this.headerPlaceholderElem}/>
                 <header className={cn(classList)} ref={this.header}>
                     <nav className={cn("wrapper", styles.common)}>
-                        <MobileNavbar />
+                        <MobileNavbar/>
                         <Logo/>
                         <NavbarList/>
                         <Userbar/>
