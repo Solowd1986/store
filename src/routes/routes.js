@@ -9,7 +9,6 @@ import Error404 from "@components/Pages/Error/Error404/Error404";
 import Error500 from "@components/Pages/Error/Error500/Error500";
 
 
-
 const routes = [
     { url: "/", component: MainPage, exact: true },
     { url: "/category/:type", component: Category, exact: true },

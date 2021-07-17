@@ -10,6 +10,8 @@ export const fetchPageData = (params) => async (dispatch, getState, api) => {
     const pageType = !Object.keys(data).length ? "index" : route.match(/\/([a-z]*)\/:/)[1];
     dispatch({ type: types.SERVER_START_FETCH_DATA });
 
+    // Тут перехват через try работает, только если interceptor FailRequest от axios сочтет это ошибкой.
+    // Иначе это будет просто текстовый ответ от сервера, типа разметки страницы с ошибкой и это все уйдет в response.data
     try {
         const response = await api.get(uri);
         dispatch({

@@ -247,7 +247,7 @@ class OrderForm extends Component {
     };
 
     /**
-     * Отправная тчока для проверки формы. До попытки отправки нет динамических проверок, можно вводить что угодно.
+     * Отправная точка для проверки формы. До попытки отправки нет динамических проверок, можно вводить что угодно.
      * Первая попытка отправки выявляет все ошибки и показывает их, до исправления - кнопка отправки формы блокируется.
      * Для начала динамической проверки полей формы, флаг isFormTouched ставится в true
      *
@@ -280,6 +280,7 @@ class OrderForm extends Component {
         if (evt) evt.preventDefault();
         Cookies.remove("form-data");
         this.form.current.reset();
+
         const fields = { ...this.state.fields };
         Object.keys(fields).forEach(item => {
             if (Object.keys(this.getAllTrackedFields()).includes(item))
@@ -315,7 +316,7 @@ class OrderForm extends Component {
                         isFormValid={this.state.isFormValid}
                         shipping={this.state.fields.shipping.price}
                     />
-                    <button onClick={this.resetOrderForm}>Clear</button>
+                    {/*<button className={styles.reset_form} onClick={this.resetOrderForm}>Очистить форму</button>*/}
                 </form>
             </>
         );

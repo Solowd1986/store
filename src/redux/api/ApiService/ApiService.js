@@ -34,7 +34,16 @@ class ApiService {
         return Promise.reject(error);
     };
 
-    _handleSuccessResponse = response => response;
+
+    _handleSuccessResponse = response => {
+        //console.dir(response);
+        // if (this._hasJsonStructure(response.data)) {
+        //     return response
+        // }
+        // return Promise.reject("error");
+
+        return response;
+    };
 
 
     getAxiosApi = () => this._axios;

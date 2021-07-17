@@ -8,21 +8,6 @@ export default function () {
             block: 12
         }
     };
-    //console.log(res1.set?.user);
-
-
-    const str2 = "Hello bname";
-
-
-    const str_test = "rolled";
-    //console.log(str_test.split("").reverse().join(""));
-
-
-
-
-
-    //const str ="21321312";
-    //const str = 435456456;
 
 
     const res = str.toString().split("");

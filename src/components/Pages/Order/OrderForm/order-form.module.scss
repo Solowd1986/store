@@ -1,6 +1,7 @@
 @import "@scss/utils/utils.scss";
 
 .form {
+  position: relative;
   display: flex;
   @media (max-width: 1120px) {
     flex-direction: column;
@@ -8,19 +9,10 @@
   }
 }
 
-.formik {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 10px;
 
-  & > * {
-    margin: 10px;
-    padding: 10px;
-  }
-
-  & > div {
-    border: 2px solid red;
-  }
+.reset_form {
+  position: absolute;
+  right: 0;
+  bottom: 0;
 }
+

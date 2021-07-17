@@ -22,3 +22,189 @@
   flex-wrap: wrap;
   @include wrapper-negative-margins();
 }
+
+
+
+
+
+
+
+
+// test effect remove if want
+
+
+.transition-enter {
+  animation: hideout 1s ease-in forwards;
+
+}
+
+
+
+
+:global(.my-node-enter) {
+  opacity: 0;
+  transform: translateY(-100px);
+}
+
+:global(.my-node-enter-active) {
+  opacity: 1;
+  transform: translateY(0);
+  transition: .5s ease-in;
+}
+
+:global(.my-node-exit-done) {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+:global(.my-node-exit-active) {
+  opacity: 0;
+  transform: translateY(-100px);
+  transition: .5s ease-in;
+}
+
+
+
+
+
+:global(.my-node2-enter) {
+  opacity: 0;
+}
+
+
+:global(.my-node2-enter-active) {
+  opacity: 1;
+  transition: 1s ease-in;
+}
+
+:global(.my-node2-exit-done) {
+  opacity: 1;
+}
+
+
+:global(.my-node2-exit-active) {
+  opacity: 0;
+  transition: 1s ease-in;
+}
+
+
+
+
+
+//.tst-enter {
+//  opacity: 0;
+//  transform: translateY(-100px);
+//}
+//
+//.tst-enter-active {
+//  opacity: 1;
+//  transform: translateY(0);
+//  transition: .5s ease-in;
+//}
+//
+//.tst-exit-done {
+//  opacity: 1;
+//  transform: translateY(0);
+//}
+//
+//.tst-exit-active {
+//  opacity: 0;
+//  transform: translateY(-100px);
+//  transition: .5s ease-in;
+//}
+//
+//
+//.tst {
+//  font-size: 12px;
+//}
+
+
+
+:global(.test_1) {
+  font-size: 245px;
+}
+
+
+:global(.test_1.entered) {
+  animation: hideout 1s ease-in forwards;
+}
+
+
+.test_1.exiting  {
+  animation: hideout 1s ease-in alternate-reverse;
+}
+
+.test_1.exited  {
+  display: none;
+}
+
+
+@keyframes hideout {
+  0% {
+    opacity: 0;
+    transform: translateY(-100px);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translateY(30px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes up {
+  0% {
+    transform: translateY(-10px);
+  }
+
+  50% {
+    transform: translateY(-50px);
+  }
+
+  100% {
+    transform: translateY(-100px);
+  }
+}
+
+
+
+
+
+
+.modalEff {
+  display: none;
+
+  height: 400px;
+  background-color: red;
+  width: 100%;
+  max-width: 40%;
+  margin: 0 auto;
+}
+
+
+.modalEff + div  {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.modalEff + div > button  {
+  padding: 10px;
+  border: 2px solid red;
+  border-radius: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -4,6 +4,8 @@
 //header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
 //die();
 
+
+
 require_once "./php/functions/functions.php";
 require_once "./php/db/RequestHandler.php";
 use php\db\RequestHandler as Request;
@@ -15,6 +17,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     print json_encode($_POST);
 }
 
+//var_dump_pre(Request::getOneItem(4, "accessoires"));
+
+//die();
 
 if ($_SERVER["REQUEST_METHOD"] === "GET") {
     preg_match("/api\/(?P<path>[\w\d\/]+)$/", trim(filter_var($_SERVER["REQUEST_URI"], FILTER_SANITIZE_URL)), $uri);
@@ -42,17 +47,13 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
             throw new Error("Page with this parametres not exist");
         }
     } catch (\Error $e) {
-        //print "Error with your request" . $e->getMessage();
-        print http_response_code(404);
-        //print json_encode(["error" => true, "server error" => $e . " URI Catch Error API"]);
-        //print "В ваш запрос беззастенчиво вкралась ошибка.";
+        /**
+         * Чтобы ошибки перехватывались, отправляй то, что поймет axios как failRequest, а это - http_response_code с чем-то на 40*
+         */
+        print http_response_code(400);
     }
-//    catch (\Exception $e) {
-//        //print "Error with your request" . $e->getMessage();
-//        print json_encode(["error" => true, "server exception" => $e . " URI Catch Error API"]);
-//        //print "В ваш запрос беззастенчиво вкралась ошибка.";
-//    }
-
-
+    catch (\Exception $e) {
+        print http_response_code(400);
+    }
 }
 

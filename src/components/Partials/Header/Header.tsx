@@ -10,7 +10,7 @@ import Userbar from "./Partials/Userbar/Userbar";
 
 class Header extends PureComponent<any, { isPageScrolled: boolean }> {
     constructor(
-        props: any,
+        props: unknown,
         private readonly scrollbarWidth: any,
         private readonly header: React.RefObject<HTMLElement>,
         private readonly headerPlaceholderElem: React.RefObject<HTMLDivElement>,

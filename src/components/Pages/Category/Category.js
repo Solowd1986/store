@@ -51,10 +51,27 @@ class Category extends Component {
         };
     }
 
+
     // use private
     _isProductListStateEmpty = () => !this.state.categoryProductsList;
-    _getCurrentCategoryAlias = () => this.state.categoryProductsList && this.state.categoryProductsList.main.alias;
-    _isUserGoToAnotherCategoryPage = () => this._getCurrentCategoryAlias() !== this.props.match.params.type;
+
+    //_getCurrentCategoryAlias = () => this.state.categoryProductsList && this.state.categoryProductsList.main &&  this.state.categoryProductsList.main.alias;
+
+
+    _getCurrentCategoryAlias = () => {
+        if (!this._isProductListStateEmpty()) {
+            return this.state.categoryProductsList.main.alias;
+        }
+        return false;
+    };
+
+    _isUserGoToAnotherCategoryPage = () => {
+        if (!this._isProductListStateEmpty()) {
+            return this._getCurrentCategoryAlias() !== this.props.match.params.type
+        }
+        return false;
+    };
+
     _clearComponentState = () => this.setState((state) => ({ categoryProductsList: null, lastIndex: 0 }));
 
     _sortProductsList = () => {
@@ -124,6 +141,8 @@ class Category extends Component {
      */
     //</editor-fold>
     componentDidUpdate(prevProps, prevState, snapshot) {
+
+
         if (this._isProductListStateEmpty() && this.props.category) {
             this.setState((state) => ({ categoryProductsList: this.props.category }));
         }
@@ -134,6 +153,8 @@ class Category extends Component {
             this.props.fetchPageData(this.props);
         }
         if (!this._isProductListStateEmpty() && this.state.lastIndex !== this.props.lastIndex) {
+            console.log('3');
+
             this.setState(
                 produce(this.state, (draft) => {
                     draft["lastIndex"] = this.props.lastIndex;
@@ -170,6 +191,10 @@ class Category extends Component {
     }
 
     render() {
+
+        //console.log('redner');
+        //console.log(this._getCurrentCategoryAlias());
+
         if (this._isProductListStateEmpty() || this._isUserGoToAnotherCategoryPage()) {
             const SpinnerModal = withModal(Spinner, {
                 bg: false,

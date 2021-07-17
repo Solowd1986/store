@@ -34,9 +34,12 @@ class RequestHandler extends DbConnect
             $products_query = "SELECT * FROM {$category_products_table} LIMIT {$offset},{$limit}";
         }
 
+
+
         $pdo = Connect::exec()->prepare($products_query);
         $pdo->execute();
         $list_of_products = $pdo->fetchAll();
+
 
         // После получения списка продуктов выбранной категории, нужно добавить к каждому продукту
         // поля img/promo, а для телефонов - поле specifications, поэтому нам нужно получить для каждого продукта
@@ -177,7 +180,9 @@ class RequestHandler extends DbConnect
             foreach ($v as $k2 => $v2) {
                 if (!in_array($k2, ["id", "phone_id"])) {
                     if ($k2 === "img_path") {
-                        $promo[$k2] = "/static/media/" . $category . "/" . $v2;
+                        if ($v2) {
+                            $promo[$k2] = "/static/media/" . $category . "/" . $v2;
+                        }
                     } else {
                         $promo[$k2] = $v2;
                     }

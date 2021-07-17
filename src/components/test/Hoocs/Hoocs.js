@@ -78,7 +78,7 @@ export const HookOne = () => {
             setUserData(gettedData.data.phones.main.alias);
         });
         return () => {
-            console.log('clear');
+            //console.log('clear');
             //alert("asd")
             //setUserData(null);
         };
