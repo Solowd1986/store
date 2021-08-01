@@ -127,11 +127,11 @@ input[type="radio"]:checked + label {
   }
 
   @media (max-width: 1032px) {
-    @include generate-columns-for-item(8, 12, 0, 0);
+    @include generate-columns-for-item(8, 12, 0);
   }
 
   @media (max-width: 560px) {
-    @include generate-columns-for-item(10, 12, 0, 0);
+    @include generate-columns-for-item(10, 12, 0);
   }
 }
 

@@ -39,8 +39,8 @@ class Product extends Component {
 
     render() {
         if (!this.state.product) return <Spinner />;
-        console.log(this.state.product);
-        
+        //console.log(this.state.product);
+
         const { main: category, data: product } = this.state.product;
 
         return (

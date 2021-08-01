@@ -18,7 +18,16 @@ class UpButton extends PureComponent<any, { isPageScrolledToBottom: boolean }> {
 
     fixUpBtnWhenResize = () => {
         clearTimeout(this.resizeInactivityTimer);
+        // скрываем, чтобы не было видно смещений элемента на пересчете отступа
         if (this.upBtnElem.current) this.upBtnElem.current.style.display = "none";
+        /**
+         * удаляем display свойство, оно все равно не проявит элемент без isPageScrolledToBottom. Оно использутся когда
+         * isPageScrolledToBottom уже в true
+         * считаем отступ справа и прибавляем ширину самого элемента. Отнимаем от ширины страницы - получаем отступ слева
+         * задаем его через секукнду после того, как закончилось resize событие
+         * Таким образом кнопка прокрутки всегда фиксирована и не смещается из-за пропажи скролла, причем это работает и на
+         * resize страницы
+         */
         this.resizeInactivityTimer = setTimeout(() => {
             if (this.upBtnElem.current) {
                 this.upBtnElem.current.style.removeProperty("display");

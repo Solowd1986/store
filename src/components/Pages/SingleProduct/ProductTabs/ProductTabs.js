@@ -36,8 +36,8 @@ class ProductTabs extends Component {
     render() {
         const { category: { alias }, product: { promo, specifications = null } } = this.props;
 
-        console.log(promo);
-        
+        //console.log(promo);
+
         return (
             <section className={cn("wrapper", styles.info)}>
                 <nav className={styles.info__nav} ref={this.tabLinkList}>

@@ -74,7 +74,7 @@
   transition: 0.3s linear;
 
   @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-    @include generate-columns-for-item(4, 12, 0, 0);
+    @include generate-columns-for-item(4, 12, 0);
   }
 
   &:hover {
