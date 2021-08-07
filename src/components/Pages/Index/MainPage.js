@@ -48,6 +48,7 @@ const ModalEffectHook = () => {
 
     });
 
+
     return (
         <>
             <div className={cn(styles["md-modal"], styles["md-effect-1"], {

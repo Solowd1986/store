@@ -1,13 +1,13 @@
-import React, { Component } from "react";
+import React, { Component, Suspense } from "react";
 
 import Layout from "@components/Partials/Layout/Layout";
 import ErrorBoundary from "@components/Helpers/ErrorBoundary/ErrorBoundary";
+import ScrollToTop from "@components/Helpers/Hoc/withScrollToTop/ScrollToTop";
 
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "@redux/store";
-import router from "@root/routes/routes";
-import ScrollToTop from "@components/Helpers/Hoc/withScrollToTop/ScrollToTop";
+import routes from "@root/components/App/routes/routes";
 
 export default class App extends Component {
     render(): React.ReactNode {
@@ -16,21 +16,23 @@ export default class App extends Component {
                 <Provider store={store}>
                     <BrowserRouter>
                         <ErrorBoundary>
+                            <Suspense fallback={<div>Loading...</div>}>
                             <Layout>
                                 <ScrollToTop>
-                                <Switch>
-                                    {router.map((route) => (
-                                        <Route
-                                            key={route.url}
-                                            path={route.url}
-                                            component={route.component}
-                                            exact={route.exact}
-                                        />
-                                    ))}
-                                    <Redirect to="/404"/>
-                                </Switch>
+                                    <Switch>
+                                        {routes.map((route) => (
+                                            <Route
+                                                key={route.url}
+                                                path={route.url}
+                                                component={route.component}
+                                                exact={route.exact}
+                                            />
+                                        ))}
+                                        <Redirect to="/404"/>
+                                    </Switch>
                                 </ScrollToTop>
                             </Layout>
+                            </Suspense>
                         </ErrorBoundary>
                     </BrowserRouter>
                 </Provider>

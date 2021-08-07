@@ -1,4 +1,5 @@
 
+
 html {
   display: flex;
   min-height: 100%;
@@ -16,7 +17,6 @@ body {
   overflow-y: scroll;
   font-family: "Open Sans", "Arial", sans-serif;
   font-size: 16px;
-  -webkit-font-smoothing: antialiased;
 
   /* стилизация скролла с постоянной видимостью, но меньших размеров*/
   -moz-osx-font-smoothing: grayscale;

@@ -10,9 +10,12 @@ class ErrorBoundary extends Component<{ children: React.ReactNode }, { hasError:
         return { hasError: true };
     }
 
-    componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
-        console.log(`Catch Bound Error. ${error} \nLog:`);
-        console.log(errorInfo.componentStack);
+    componentDidCatch(error: Error, errorInfo: ErrorInfo): void|null {
+        if (process.env.NODE_ENV === "development") {
+            console.log(`Catch error with ErrorBoundary Component. ${error} \nLog:`);
+            console.log(errorInfo.componentStack);
+        } else
+            return null;
     }
 
     resetErrorState = (): void => this.setState({ hasError: false });

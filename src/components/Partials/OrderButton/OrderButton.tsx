@@ -3,7 +3,7 @@ import styles from "./order-button.module.scss";
 import cn from "classnames";
 import cartIcon from "./img/cart";
 
-import { ProductTypes, CartTypes, ProductsInCart } from "@custom-types//types";
+import { ProductTypes, CartTypes, ProductsInCart } from "@root/ts/types//types";
 import { AnyAction, bindActionCreators, Dispatch } from "redux";
 import * as cartActions from "@redux/entities/cart/actions";
 import * as cartSelector from "@redux/entities/cart/selectors/cartSelectors";

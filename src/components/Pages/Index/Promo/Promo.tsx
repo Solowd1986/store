@@ -1,6 +1,6 @@
 import React, { Component, PureComponent } from "react";
 
-import { IndexPageTypes, ProductTypes } from "@custom-types/types";
+import { IndexPageTypes, ProductTypes } from "@root/ts/types/types";
 import styles from "./promo.module.scss";
 import cn from "classnames";
 

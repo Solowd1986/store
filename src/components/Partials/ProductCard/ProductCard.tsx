@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import styles from "./product-card.module.scss";
 import cn from "classnames";
 
-import { ProductTypes, CategoryTypes } from "@custom-types//types";
+import { ProductTypes, CategoryTypes } from "@root/ts/types//types";
 import ProductPrice from "@components/Partials/ProductPrice/ProductPrice";
 import OrderButton from "@components/Partials/OrderButton/OrderButton";
 import PromoProductCard from "./PromoProductCard";

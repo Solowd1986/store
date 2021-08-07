@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 import styles from "./product-card.module.scss";
-import { ProductTypes, CartTypes, ProductsInCart } from "@custom-types//types";
+import { ProductTypes, CartTypes, ProductsInCart } from "@root/ts/types//types";
 
 type PromoProductCardProps = {
     item: {
