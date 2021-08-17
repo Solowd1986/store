@@ -2,7 +2,7 @@
 @import url(http://fonts.googleapis.com/css?family=Lato:300,400,700);
 
 @font-face {
-	font-family: 'codropsicons';
+	font-family: 'CodropsIcons';
 	src:url('../fonts/codropsicons/codropsicons.eot');
 	src:url('../fonts/codropsicons/codropsicons.eot?#iefix') format('embedded-opentype'),
 		url('../fonts/codropsicons/codropsicons.woff') format('woff'),
@@ -144,7 +144,7 @@ button {
 	padding: 0.6em 1.2em;
 	background: #c0392b;
 	color: #fff;
-	font-family: 'Lato', Calibri, Arial, sans-serif;
+	font-family: 'CodropsIcons', Calibri, Arial, sans-serif;
 	font-size: 1em;
 	letter-spacing: 1px;
 	text-transform: uppercase;

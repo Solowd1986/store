@@ -23,6 +23,7 @@ import { HookOne } from "@components/test/Hoocs/Hoocs";
 
 import styles from "./Promo/promo.module.scss";
 
+import {ModalEffect} from "@components/test/Hoocs/ModalEffect/ModalEffect";
 
 
 
@@ -38,14 +39,14 @@ const TestHook = () => {
     )
 };
 
+
+
 const ModalEffectHook = () => {
     const [modal, toggleModal] = useState(false);
-
 
     const clasList = cn(styles.modalEff, {
         [styles.modal_styles]: modal,
         [styles["md-content"]]: modal,
-
     });
 
 
@@ -68,15 +69,14 @@ const ModalEffectHook = () => {
                 </div>
             </div>
 
-
             <div style={{textAlign: "center"}}>
                 <button onClick={() => toggleModal(!modal)} className={`md-trigger" data-modal="modal-1 ${styles.btn_mod}`}>Fade in &amp; Scale</button>
             </div>
-
         </>
-
     )
 };
+
+
 
 
 class MainPage extends Component {
@@ -97,7 +97,8 @@ class MainPage extends Component {
             <>
                 <Slider slides={this.props.index.slider}/>
 
-                <ModalEffectHook/>
+                <ModalEffect/>
+                {/*<ModalEffectHook/>*/}
                 <TestHook/>
 
                 <Promo index={this.props.index}/>
