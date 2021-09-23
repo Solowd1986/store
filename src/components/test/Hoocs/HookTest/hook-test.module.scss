@@ -1,0 +1,29 @@
+@import "@scss/utils/utils.scss";
+
+.wrapper {
+  min-height: 300px;
+  border: 2px solid black;
+  margin: 20px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.cnt {
+  text-align: center;
+  background-color: lightcyan;
+  min-height: 120px;
+  border: 1px solid red;
+}
+
+.btn_wrp {
+  margin-top: auto;
+  text-align: center;
+}
+
+.btn {
+  padding: 10px;
+  display: inline-block;
+  border: 1px solid red;
+}

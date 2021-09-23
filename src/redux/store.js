@@ -19,7 +19,7 @@ const store = Object.keys(preloadedState).length
     : createStore(reducer, enhancedStore);
 
 store.subscribe(() => {
-    if (store.getState().cart.products.length) {
+    if (store.getState().cart && store.getState().cart.products.length) {
         localStorage.setItem("cart", encodeURIComponent(JSON.stringify({ cart: store.getState().cart })));
     }
     if (localStorage.getItem("cart") && !store.getState().cart.products.length) {

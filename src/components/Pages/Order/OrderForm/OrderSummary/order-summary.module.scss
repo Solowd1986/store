@@ -1,9 +1,11 @@
 @import "@scss/utils/utils.scss";
 
 .summary {
+  display: flex;
   width: 45%;
   min-width: 210px;
   min-height: 150px;
+  flex-direction: column;
   align-self: start;
   flex-grow: 1;
   margin-right: 10px;
@@ -69,3 +71,28 @@
 .not_allowed {
   cursor: not-allowed;
 }
+
+
+.reset-form {
+  padding: 4px;
+  background-color: transparent;
+  border-radius: 3px;
+  color: $grey-300;
+  align-self: end;
+  margin-top: 5px;
+  font-weight: 700;
+  font-size: 12px;
+
+  &:hover {
+    color: lighten($grey-300, 15%);
+  }
+}
+
+
+
+
+
+
+
+
+

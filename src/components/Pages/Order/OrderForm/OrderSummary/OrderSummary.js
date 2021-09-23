@@ -10,7 +10,7 @@ import SubmitButton from "@components/Partials/Form/SubmitButton/SubmitButton";
 
 class OrderSummary extends Component {
     render() {
-        const { listOfProducts, shipping, isFormValid } = this.props;
+        const { listOfProducts, shipping, isFormValid, resetOrderForm } = this.props;
         const classList = cn(styles.order_btn, {
             [styles.not_allowed]: !isFormValid,
         });
@@ -22,6 +22,7 @@ class OrderSummary extends Component {
                 ))}
                 <OrderPrice listOfProducts={listOfProducts} shipping={shipping} />
                 <SubmitButton value={"Оформить заказ"} classList={classList} disabled={!isFormValid}/>
+                <button className={styles["reset-form"]} onClick={resetOrderForm}>Очистить форму</button>
             </section>
         );
     }

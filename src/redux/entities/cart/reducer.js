@@ -34,7 +34,7 @@ export default (state = initialState, action) => {
         }
 
         case "END": {
-            console.log('END');
+            //console.log('END');
             return state;
         }
 

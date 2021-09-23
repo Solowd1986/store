@@ -19,62 +19,45 @@ import * as serverSelectors from "@redux/entities/server/selectors/serverSelecto
 import { connect } from "react-redux";
 
 
-import { HookOne } from "@components/test/Hoocs/Hoocs";
-
-import styles from "./Promo/promo.module.scss";
-
-import {ModalEffect} from "@components/test/Hoocs/ModalEffect/ModalEffect";
 
 
+import { HookTest } from "@components/test/Hoocs/HookTest/HookTest.js";
 
-const TestHook = () => {
-    return (
-        <div>
-            <div className={styles.wrp}> </div>
-            <div style={{textAlign: "center"}}>
-                <button className={styles.btn_1}>start</button>
+class CompOne extends Component{
+    constructor(props) {
+        super(props);
+        console.log('comp one cons');
+    }
 
+
+    render() {
+        console.log('render');
+
+        return (
+            <div>
+                <button onClick={() => this.forceUpdate()}>Rerender</button>
+                <CompTwo/>
             </div>
-        </div>
-    )
-};
+        )
+    }
+}
 
+class CompTwo extends Component{
+    constructor(props) {
+        super(props);
+        console.log('comp two cons');
+    }
 
+    render() {
+        console.log('render 2');
 
-const ModalEffectHook = () => {
-    const [modal, toggleModal] = useState(false);
-
-    const clasList = cn(styles.modalEff, {
-        [styles.modal_styles]: modal,
-        [styles["md-content"]]: modal,
-    });
-
-
-    return (
-        <>
-            <div className={cn(styles["md-modal"], styles["md-effect-1"], {
-                [styles["md-show"]]: modal
-            })} id="modal-1">
-                <div className={styles["md-content"]}>
-                    <h3>Modal Dialog</h3>
-                    <div>
-                        <p>This is a modal window. You can do the following things with it:</p>
-                        <ul>
-                            <li><strong>Read:</strong> modal windows will probably tell you something important so don't forget to read what they say.</li>
-                            <li><strong>Look:</strong> a modal window enjoys a certain kind of attention; just look at it and appreciate its presence.</li>
-                            <li><strong>Close:</strong> click on the button below to close the modal.</li>
-                        </ul>
-                        <button onClick={() => toggleModal(false)} className="md-close">Close me!</button>
-                    </div>
-                </div>
+        return (
+            <div>
+                <span>two</span>
             </div>
-
-            <div style={{textAlign: "center"}}>
-                <button onClick={() => toggleModal(!modal)} className={`md-trigger" data-modal="modal-1 ${styles.btn_mod}`}>Fade in &amp; Scale</button>
-            </div>
-        </>
-    )
-};
+        )
+    }
+}
 
 
 
@@ -89,6 +72,15 @@ class MainPage extends Component {
         this.props.fetchPageData(this.props);
     }
 
+
+    sells = (multipler) => (number) => {
+        return Math.pow(number, multipler);
+    };
+
+
+    celss = this.sells(2);
+
+
     render() {
         const SpinnerModal = withModal(Spinner, { bg: false, interactionsDisabled: true });
         if (!this.props.index) return <SpinnerModal/>;
@@ -96,10 +88,13 @@ class MainPage extends Component {
         return (
             <>
                 <Slider slides={this.props.index.slider}/>
+                {this.celss(3)}
 
-                <ModalEffect/>
-                {/*<ModalEffectHook/>*/}
-                <TestHook/>
+                <CompOne />
+
+
+
+                <HookTest/>
 
                 <Promo index={this.props.index}/>
                 <BrandStory/>
