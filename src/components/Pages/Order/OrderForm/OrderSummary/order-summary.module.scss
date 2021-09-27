@@ -54,6 +54,10 @@
   vertical-align: middle;
   background-color: $red;
 
+  &:hover {
+    background-color: darken($red, 8%);
+  }
+  // если :disabled ниже :hover (по весу), то и при наведении не будет применен цвет :hover, так и то и то - псевдоклассы
   &:disabled {
     background-color: rgba(99, 110, 117, 0.4);
   }

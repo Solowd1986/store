@@ -38,7 +38,7 @@ class Product extends Component {
 
 
     render() {
-        if (!this.state.product) return <Spinner />;
+        if (!this.state.product) return <Spinner/>;
         //console.log(this.state.product);
 
         const { main: category, data: product } = this.state.product;
@@ -47,17 +47,17 @@ class Product extends Component {
             <>
                 <section className={cn("container", styles.item_bg)}>
                     <div className={cn("wrapper", styles.order)}>
-                        <ProductSlider list={product.slider} alt={product.img_alt} />
+                        <ProductSlider list={product.slider} alt={product.img_alt}/>
                         <div className={styles.order__info_wrapper}>
                             <h1 className={styles.order__title}>{product.title}</h1>
                             <p className={styles.order__desc}>{product.desc}</p>
 
                             <div className={styles.price}>
-                                <ProductPrice product={product} />
+                                <ProductPrice product={product}/>
                             </div>
 
                             <div className={styles.btn_wrapper}>
-                                <OrderButton product={product} classList={styles.btn_order} />
+                                <OrderButton product={product} classList={styles.btn_order}/>
                             </div>
                             <span className={styles.availability}>
                                 {product.rest ? "Наличие: в наличии" : "Наличие: нет наличии"}
@@ -65,8 +65,8 @@ class Product extends Component {
                         </div>
                     </div>
                 </section>
-                <ProductTabs category={category} product={product} />
-                <PromoBadge />
+                <ProductTabs category={category} product={product}/>
+                <PromoBadge/>
             </>
         );
     }

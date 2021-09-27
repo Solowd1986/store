@@ -74,6 +74,9 @@ class MainPage extends Component {
 
 
     sells = (multipler) => (number) => {
+        const SERVER_URL = process.env.REACT_APP_SERVER_URL;
+        console.log(process.env);
+
         return Math.pow(number, multipler);
     };
 
@@ -89,6 +92,7 @@ class MainPage extends Component {
             <>
                 <Slider slides={this.props.index.slider}/>
                 {this.celss(3)}
+                {process.env.REACT_APP_SERVER_URL}
 
                 <CompOne />
 

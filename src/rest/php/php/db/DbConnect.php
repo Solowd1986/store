@@ -7,7 +7,7 @@ class DbConnect
     private static $host = "localhost";
     private static $db = "oneplus";
     private static $user = "root";
-    private static $psw = "root";
+    private static $psw = "1234";
     private static $charset = "utf8";
 
     private static $pdo;

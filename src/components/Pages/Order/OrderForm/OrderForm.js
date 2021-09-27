@@ -197,7 +197,7 @@ class OrderForm extends Component {
      * Если же ошибка в текущем поле (где идет ввод) все же есть, то проверяем, не выставлена ли она уже ранее.
      * Если да - то ничего не меняем, ведь ошибка уже показна и перерисовывать ничего не нужно. Иначе - указываем новую ошибку.
      */
-    handleInputChange = ({ target: { name: inputName, value: inputValue } }) => {
+    handleInputChange = ({ target, target: { name: inputName, value: inputValue } }) => {
         if (inputName === "phone") new Inputmask("+7 (999) 999-99-99").mask(target);
         if (this.state.isFormTouched) {
             const checkedField = this.checkSingleFieldErrorSync(inputName, inputValue);

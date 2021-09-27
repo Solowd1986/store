@@ -15,6 +15,9 @@
     font-size: 12px;
     font-style: italic;
     color: $grey;
+    @media (max-width: 346px) {
+      font-size: 10px;
+    }
   }
 }
 
