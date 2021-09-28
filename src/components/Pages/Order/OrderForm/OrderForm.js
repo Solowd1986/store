@@ -16,7 +16,6 @@ import Cookies from "js-cookie";
 import * as cartSelectors from "@redux/entities/cart/selectors/cartSelectors";
 import { connect } from "react-redux";
 
-
 class OrderForm extends Component {
     constructor(props) {
         super(props);
@@ -301,13 +300,30 @@ class OrderForm extends Component {
         );
     };
 
+    // Если нажата клавиша Enter, то вызываем клик по кнопке отправки формы и убираем фокус с поля. Это нужно для того,
+    // чтобы помешать куче отправок при зажатии клавиши.
+    handleKeyPress = (evt) => {
+        if (evt.keyCode === 13) {
+            Array.from(evt.target.form.elements).find(item => {
+                if (item.attributes.type && item.attributes.type.value === "submit") {
+                    item.click();
+                    evt.target.blur();
+                }
+            });
+        }
+    };
+
 
     render() {
         const ConfirmModalWindow = withDelay(withModal(Confirm));
         return (
             <>
                 {this.state.isUserConfirmOrder && <ConfirmModalWindow reset={this.resetOrderForm}/>}
-                <form ref={this.form} onSubmit={this.handleSubmit} className={styles.form} name="order-form" method="POST">
+                <form ref={this.form}
+                      onSubmit={this.handleSubmit}
+                      onKeyDown={this.handleKeyPress}
+                      className={styles.form}
+                      name="order-form" method="POST">
                     <OrderInfo
                         handleInputChange={this.handleInputChange}
                         handleRadioChange={this.handleRadioChange}

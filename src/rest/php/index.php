@@ -13,14 +13,13 @@ use php\db\RequestHandler as Request;
 //  /src/rest/php/index.php/api/category/phones
 
 
+
+
+
+// перехват отправки данных формы
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     print json_encode($_POST);
 }
-
-//var_dump_pre(Request::getOneItem(4, "accessoires"));
-
-//die();
-
 
 if ($_SERVER["REQUEST_METHOD"] === "GET") {
     preg_match("/api\/(?P<path>[\w\d\/]+)$/", trim(filter_var($_SERVER["REQUEST_URI"], FILTER_SANITIZE_URL)), $uri);
@@ -49,7 +48,8 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
         }
     } catch (\Error $e) {
         /**
-         * Чтобы ошибки перехватывались, отправляй то, что поймет axios как failRequest, а это - http_response_code с чем-то на 40*
+         * Чтобы ошибки перехватывались, отправляй то, что поймет axios как failRequest,
+         * а это - http_response_code с чем-то на 40*
          */
         print http_response_code(400);
     }
