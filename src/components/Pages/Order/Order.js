@@ -25,10 +25,5 @@ class Order extends Component {
     }
 }
 
-function mapStateToProps(state) {
-    return {
-        amountOfProductsInCart: cartSelectors.cartAmountOfProductsInCartSelector(state),
-    };
-}
-
+const mapStateToProps = (state) => ({amountOfProductsInCart: cartSelectors.cartAmountOfGoodsSelector(state)});
 export default connect(mapStateToProps)(Order);

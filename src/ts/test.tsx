@@ -5,9 +5,9 @@ export function test1():void {
 
 
 
-    interface F {
-        name: string
-    }
+    // interface F {
+    //     name: string
+    // }
 
     // function f1<T, F>(name: T) :F{
     //     return name + "ds";

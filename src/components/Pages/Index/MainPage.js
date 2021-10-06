@@ -1,9 +1,6 @@
 import React, { Component, PureComponent, createRef, useRef, useState } from "react";
 import cn from "classnames";
-
 import * as PropTypes from "prop-types";
-
-import withModal from "@components/Helpers/Hoc/withModal/withModal";
 
 import Spinner from "@components/Partials/Spinner/Spinner";
 import Slider from "./Slider/Slider";
@@ -12,6 +9,8 @@ import BrandStory from "./BrandStory/BrandStory";
 import Announcements from "./Announcements/Announcements";
 import About from "./About/About";
 import PromoBadge from "@components/Partials/PromoBadge/PromoBadge";
+import withModal from "@components/Helpers/Hoc/withModal/withModal";
+
 
 import { bindActionCreators } from "redux";
 import * as serverActions from "@redux/entities/server/actions";
@@ -19,19 +18,40 @@ import * as serverSelectors from "@redux/entities/server/selectors/serverSelecto
 import { connect } from "react-redux";
 
 
-
-
 import { HookTest } from "@components/test/Hoocs/HookTest/HookTest.js";
+
+
+
+
+// const FooObject = {
+//     basicFoo: function () {
+//         console.log(this);
+//     },
+//     arrowFoo: () => {
+//         console.log(this);
+//     },
+//     innerFoo: () => {
+//         const innerFooCode = () => console.log(this);
+//         innerFooCode();
+//     }
+// };
+//
+// FooObject.basicFoo();
+// FooObject.arrowFoo();
+// FooObject.innerFoo();
+
+
+
 
 class CompOne extends Component{
     constructor(props) {
         super(props);
-        console.log('comp one cons');
+        //console.log('comp one cons');
     }
 
 
     render() {
-        console.log('render');
+        //console.log('render');
 
         return (
             <div>
@@ -45,11 +65,11 @@ class CompOne extends Component{
 class CompTwo extends Component{
     constructor(props) {
         super(props);
-        console.log('comp two cons');
+        //console.log('comp two cons');
     }
 
     render() {
-        console.log('render 2');
+        //console.log('render 2');
 
         return (
             <div>
@@ -73,16 +93,6 @@ class MainPage extends Component {
     }
 
 
-    sells = (multipler) => (number) => {
-        const SERVER_URL = process.env.REACT_APP_SERVER_URL;
-        console.log(process.env);
-
-        return Math.pow(number, multipler);
-    };
-
-
-    celss = this.sells(2);
-
 
     render() {
         const SpinnerModal = withModal(Spinner, { bg: false, interactionsDisabled: true });
@@ -91,11 +101,8 @@ class MainPage extends Component {
         return (
             <>
                 <Slider slides={this.props.index.slider}/>
-                {this.celss(3)}
-                {process.env.REACT_APP_SERVER_URL}
 
                 <CompOne />
-
 
 
                 <HookTest/>
@@ -110,11 +117,7 @@ class MainPage extends Component {
     }
 }
 
-function mapStateToProps(state) {
-    return {
-        index: serverSelectors.serverIndexSelector(state),
-    };
-}
 
+const mapStateToProps = (state) => ({ index: serverSelectors.serverIndexSelector(state) });
 const mapDispatchToProps = (dispatch) => bindActionCreators(serverActions, dispatch);
 export default connect(mapStateToProps, mapDispatchToProps)(MainPage);

@@ -24,12 +24,4 @@ export const changeAmountOfProduct = (id, title, quantity) => ({
 });
 
 
-export const CartAsync = (params) => {
-    return dispatch => {
-        //console.log(params);
 
-        setTimeout(() => {
-            dispatch({type: "END"})
-        } , 3000)
-    }
-};

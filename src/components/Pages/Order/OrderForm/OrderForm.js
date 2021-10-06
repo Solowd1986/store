@@ -15,6 +15,7 @@ import Cookies from "js-cookie";
 
 import * as cartSelectors from "@redux/entities/cart/selectors/cartSelectors";
 import { connect } from "react-redux";
+import * as serverSelectors from "@redux/entities/server/selectors/serverSelectors";
 
 class OrderForm extends Component {
     constructor(props) {
@@ -343,10 +344,5 @@ class OrderForm extends Component {
     }
 }
 
-function mapStateToProps(state) {
-    return {
-        listOfProducts: cartSelectors.cartItemsSelector(state),
-    };
-}
-
+const mapStateToProps = (state) => ({ listOfProducts: cartSelectors.cartItemsSelector(state) });
 export default connect(mapStateToProps)(OrderForm);

@@ -33,11 +33,6 @@ export default (state = initialState, action) => {
             });
         }
 
-        case "END": {
-            //console.log('END');
-            return state;
-        }
-
 
         case types.CART_CHANGE_PRODUCT_AMOUNT: {
             const { id, title, quantity } = action.payload;

@@ -27,8 +27,6 @@ class OrderButton extends PureComponent<OrderButtonPropsInterface> {
                product: ProductTypes,
                callback: (product: ProductTypes) => void = () => {}) => {
 
-        //@ts-ignore
-        this.props.CartAsync("glow");
 
         if (!(evt.target instanceof HTMLButtonElement)) return;
         evt.target.classList.add(styles.disabled);
@@ -79,12 +77,6 @@ class OrderButton extends PureComponent<OrderButtonPropsInterface> {
 }
 
 
-const mapStateToProps = (state:unknown) => {
-    return {
-        productsInCart: cartSelector.cartItemsSelector(state),
-    };
-};
-
+const mapStateToProps = (state:unknown) => ({ productsInCart: cartSelector.cartItemsSelector(state) });
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => bindActionCreators(cartActions, dispatch);
-
 export default connect(mapStateToProps, mapDispatchToProps)(OrderButton);

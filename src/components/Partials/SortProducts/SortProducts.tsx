@@ -100,11 +100,6 @@ class SortPorducts extends PureComponent<SortProductsProps, SortProductsState> {
     }
 }
 
-const mapStateToProps = (state: unknown) => {
-    return {
-        sortType: sortSelectors.sortTypeSelector(state),
-    };
-};
-
+const mapStateToProps = (state: unknown) => ({ sortType: sortSelectors.sortTypeSelector(state) });
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => bindActionCreators(sortActions, dispatch);
 export default connect(mapStateToProps, mapDispatchToProps)(SortPorducts);

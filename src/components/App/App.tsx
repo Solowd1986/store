@@ -1,4 +1,4 @@
-import React, { Component, Suspense } from "react";
+import React, { Component } from "react";
 
 import Layout from "@components/Partials/Layout/Layout";
 import ErrorBoundary from "@components/Helpers/ErrorBoundary/ErrorBoundary";
@@ -16,7 +16,6 @@ export default class App extends Component {
                 <Provider store={store}>
                     <BrowserRouter>
                         <ErrorBoundary>
-                            <Suspense fallback={<div>Loading...</div>}>
                             <Layout>
                                 <ScrollToTop>
                                     <Switch>
@@ -32,7 +31,6 @@ export default class App extends Component {
                                     </Switch>
                                 </ScrollToTop>
                             </Layout>
-                            </Suspense>
                         </ErrorBoundary>
                     </BrowserRouter>
                 </Provider>

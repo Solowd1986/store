@@ -56,10 +56,5 @@ const Userbar = ({ amountOfProductsInCart }: { amountOfProductsInCart: number })
     );
 };
 
-function mapStateToProps(state: any) {
-    return {
-        amountOfProductsInCart: cartSelectors.cartAmountOfProductsInCartSelector(state),
-    };
-}
-
+const mapStateToProps = (state: unknown) => ({ amountOfProductsInCart: cartSelectors.cartAmountOfGoodsSelector(state) });
 export default connect(mapStateToProps)(Userbar);

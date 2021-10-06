@@ -72,11 +72,6 @@ class Product extends Component {
     }
 }
 
-function mapStateToProps(state) {
-    return {
-        product: serverSelectors.serverProductSelector(state),
-    };
-}
-
+const mapStateToProps = (state) => ({ product: serverSelectors.serverProductSelector(state) });
 const mapDispatchToProps = (dispatch) => bindActionCreators({ fetchPageData: serverActions.fetchPageData }, dispatch);
 export default connect(mapStateToProps, mapDispatchToProps)(Product);

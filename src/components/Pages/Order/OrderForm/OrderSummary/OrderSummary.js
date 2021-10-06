@@ -28,10 +28,6 @@ class OrderSummary extends Component {
     }
 }
 
-function mapStateToProps(state) {
-    return {
-        listOfProducts: cartSelectors.cartItemsSelector(state),
-    };
-}
 
+const mapStateToProps = (state) => ({ listOfProducts: cartSelectors.cartItemsSelector(state) });
 export default connect(mapStateToProps)(OrderSummary);
