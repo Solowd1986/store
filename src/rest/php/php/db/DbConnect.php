@@ -38,7 +38,5 @@ class DbConnect
         return self::$pdo;
     }
 
-    private function __clone()
-    {
-    }
+    private function __clone(){}
 }

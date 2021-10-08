@@ -6,6 +6,8 @@ const initialState = {
     product: null,
     lazy: null,
 
+    history: null,
+
     lastIndex: 0,
     fetchingDataStart: false,
 };
@@ -57,6 +59,12 @@ export default (state = initialState, action) => {
             };
         }
 
+        case types.CREATE_HISTORY_INSTANCE: {
+            if (!state.history) {
+                return { ...state, history: action.payload };
+            }
+            return state;
+        }
 
         default:
             return state;

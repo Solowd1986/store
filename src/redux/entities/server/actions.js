@@ -1,17 +1,23 @@
 import * as types from "./constants/server";
 
-export const fetchPageData = (params) => async (dispatch, getState, api) => {
-    const {
-        match: { path: route, params: data },
-        history,
-    } = params;
-    const isThatIndexPage = !Object.keys(data).length;
-    const uri = isThatIndexPage ? "index" : `${route.match(/\/([a-z]*)\/:/)[1]}/${Object.values(data).join("/")}`;
-    const pageType = !Object.keys(data).length ? "index" : route.match(/\/([a-z]*)\/:/)[1];
+
+/**
+ * Данный метод работает за счет Redux Thunk - первый вызов его в компоненте, отдающим методу params позволяет через
+ * замыкание иметь эти params в дальнейшем. В результате возвращается новая функция вида async (dispatch, getState, api) {}
+ * Эта функция уходит в обработку Redux и middlaware, а Thunk содержит в себе проверку на передачу функции.
+ * Именно ее он и вызывает.
+ */
+export const fetchPageData = ({ match: { path: route = "/", params } }) => async (dispatch, getState, api) => {
+    const { history } = getState().server;
+    const isThatIndexPage = !Object.keys(params).length;
+    const uri = isThatIndexPage ? "index" : `${route.match(/\/([a-z]*)\/:/)[1]}/${Object.values(params).join("/")}`;
+    const pageType = !Object.keys(params).length ? "index" : route.match(/\/([a-z]*)\/:/)[1];
+
     dispatch({ type: types.SERVER_START_FETCH_DATA });
 
     // Тут перехват через try работает, только если interceptor FailRequest от axios сочтет это ошибкой.
     // Иначе это будет просто текстовый ответ от сервера, типа разметки страницы с ошибкой и это все уйдет в response.data
+    // и ошибкой считаться не будет
     try {
         const response = await api.get(uri);
         dispatch({
@@ -39,6 +45,7 @@ export const fetchPageData = (params) => async (dispatch, getState, api) => {
 
 export const fetchLazyCategoryProducts = (category, index, history) => async (dispatch, getState, api) => {
     dispatch({ type: types.SERVER_START_FETCH_DATA });
+    const { history } = getState().server;
 
     try {
         const response = await api.get(`lazy/${category}/${index}`);
@@ -67,6 +74,7 @@ export const fetchLazyCategoryProducts = (category, index, history) => async (di
     }
 };
 
+
 export const clearCategoryPageReduxData = () => ({
     type: types.SERVER_CLEAR_CATEGORY_PAGE_REDUX_DATA,
 });
@@ -74,3 +82,23 @@ export const clearCategoryPageReduxData = () => ({
 export const clearSingleProductReduxData = () => ({
     type: types.SERVER_CLEAR_SINGLE_PRODUCT__PAGE_REDUX_DATA,
 });
+
+
+export const createHistoryInstance = (history) => ({
+    type: types.CREATE_HISTORY_INSTANCE,
+    payload: history
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+

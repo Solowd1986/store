@@ -89,6 +89,8 @@ class MainPage extends Component {
     };
 
     componentDidMount() {
+        //console.log(this.props);
+
         this.props.fetchPageData(this.props);
     }
 
@@ -97,17 +99,18 @@ class MainPage extends Component {
     render() {
         const SpinnerModal = withModal(Spinner, { bg: false, interactionsDisabled: true });
         if (!this.props.index) return <SpinnerModal/>;
+        const { index, index: { slider }} = this.props;
 
         return (
             <>
-                <Slider slides={this.props.index.slider}/>
+                <Slider slides={slider}/>
 
                 <CompOne />
 
 
                 <HookTest/>
 
-                <Promo index={this.props.index}/>
+                <Promo index={index}/>
                 <BrandStory/>
                 <Announcements/>
                 <About/>

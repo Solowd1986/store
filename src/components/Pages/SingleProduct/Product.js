@@ -21,9 +21,12 @@ class Product extends Component {
 
     //region Описание
     /**
-     * Выставляем state для product когда приходят данные от сервера, до этого показываем спиннер
-     * Можно перейти полностью на props, но тогда нужно описать оистку redux-store при unmount компонента, иначе
-     * будут демонстрироваться старые данные до прихода новых.
+     * Изначально state пуст и на странице показывается спиннер. При размещении компонента осуществляется звпрос к серверу.
+     * Как только данные приходят - проверяем, пуст ли state для product, и если да - вписываем данные.
+     * Когда компонент размонтируется - запускаем очистку поля product в state Redux. В целом можно не использовать очистку,
+     * так как мы базируемся на state, а оно сбрасывается при размонтировании компонента, а потом ждет прихода данных по новому товару.
+     * Таким образом то, что в product (в Redux) все еще лежит старое значение, проблемой не является.
+     * Но для единообразия я решил все же так прописать.
      */
     //endregion
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -36,11 +39,13 @@ class Product extends Component {
         this.props.fetchPageData(this.props);
     }
 
+    componentWillUnmount() {
+        this.props.clearSingleProductReduxData();
+    }
+
 
     render() {
         if (!this.state.product) return <Spinner/>;
-        //console.log(this.state.product);
-
         const { main: category, data: product } = this.state.product;
 
         return (
@@ -73,5 +78,5 @@ class Product extends Component {
 }
 
 const mapStateToProps = (state) => ({ product: serverSelectors.serverProductSelector(state) });
-const mapDispatchToProps = (dispatch) => bindActionCreators({ fetchPageData: serverActions.fetchPageData }, dispatch);
+const mapDispatchToProps = (dispatch) => bindActionCreators(serverActions, dispatch);
 export default connect(mapStateToProps, mapDispatchToProps)(Product);

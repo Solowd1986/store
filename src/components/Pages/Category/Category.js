@@ -55,7 +55,8 @@ class Category extends Component {
     // use private
     _isProductListStateEmpty = () => !this.state.categoryProductsList;
 
-    //_getCurrentCategoryAlias = () => this.state.categoryProductsList && this.state.categoryProductsList.main &&  this.state.categoryProductsList.main.alias;
+    //_getCurrentCategoryAlias = () => this.state.categoryProductsList && this.state.categoryProductsList.main
+    // &&  this.state.categoryProductsList.main.alias;
 
 
     _getCurrentCategoryAlias = () => {
@@ -141,8 +142,6 @@ class Category extends Component {
      */
     //</editor-fold>
     componentDidUpdate(prevProps, prevState, snapshot) {
-
-
         if (this._isProductListStateEmpty() && this.props.category) {
             this.setState((state) => ({ categoryProductsList: this.props.category }));
         }
