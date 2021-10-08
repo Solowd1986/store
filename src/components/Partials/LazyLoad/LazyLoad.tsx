@@ -20,15 +20,14 @@ type LazyLoadProps = RouteComponentProps<PathParamsType> & {
     categoryName: string,
     lastIndex: number,
     history: History,
-    fetchLazyCategoryProducts: (categoryName: string, lastIndex: number, history: History ) => void;
+    fetchLazyCategoryProducts: (categoryName: string, lastIndex: number ) => void;
 };
 
 
 class LazyLoad extends PureComponent<LazyLoadProps> {
-
     fetchLazyCategory = () => {
-        const { categoryName, lastIndex, history} = this.props;
-        this.props.fetchLazyCategoryProducts(categoryName, lastIndex, history);
+        const { categoryName, lastIndex } = this.props;
+        this.props.fetchLazyCategoryProducts(categoryName, lastIndex);
     };
 
     render():React.ReactNode {

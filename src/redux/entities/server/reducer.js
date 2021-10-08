@@ -3,11 +3,17 @@ import * as types from "./constants/server";
 const initialState = {
     index: null,
     category: null,
+
+    categoryInfo: {
+        lazy: null,
+        lastIndex: 0,
+        currentRoute: null,
+        previousRoute: null,
+    },
+
     product: null,
     lazy: null,
-
     history: null,
-
     lastIndex: 0,
     fetchingDataStart: false,
 };

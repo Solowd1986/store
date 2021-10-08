@@ -88,18 +88,17 @@ class MainPage extends Component {
         slider: PropTypes.array,
     };
 
-    componentDidMount() {
-        //console.log(this.props);
 
+
+    componentDidMount() {
         this.props.fetchPageData(this.props);
     }
 
 
-
     render() {
         const SpinnerModal = withModal(Spinner, { bg: false, interactionsDisabled: true });
-        if (!this.props.index) return <SpinnerModal/>;
-        const { index, index: { slider }} = this.props;
+        if (!this.props.main.index) return <SpinnerModal/>;
+        const { index, index: { slider }} = this.props.main;
 
         return (
             <>
@@ -121,6 +120,6 @@ class MainPage extends Component {
 }
 
 
-const mapStateToProps = (state) => ({ index: serverSelectors.serverIndexSelector(state) });
+const mapStateToProps = (state) => ({ main: serverSelectors.serverIndexSelector(state) });
 const mapDispatchToProps = (dispatch) => bindActionCreators(serverActions, dispatch);
 export default connect(mapStateToProps, mapDispatchToProps)(MainPage);

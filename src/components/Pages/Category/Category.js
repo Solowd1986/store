@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import * as PropTypes from "prop-types";
 
 import CategoryProductsList from "./CategoryProductsList/CategoryProductsList";
@@ -34,9 +34,10 @@ import produce from "immer";
  * Приходитм опять сюда: алиас стейста равен пропсам пути (пута) - проверка пройдена, отрисовываем категоирю
  */
 //</editor-fold>
-class Category extends Component {
+class Category extends PureComponent {
     static propTypes = {
         clearCategoryPageReduxData: PropTypes.func,
+        fetchPageData: PropTypes.func,
         sortType: PropTypes.string,
         discardSortType: PropTypes.func,
         lastIndex: PropTypes.number,
@@ -45,6 +46,9 @@ class Category extends Component {
     constructor(props) {
         super(props);
         this.isSorted = false;
+        this.currentRoute = this.props.match.url;
+        this.previousRoute = null;
+
         this.state = {
             categoryProductsList: null,
             lastIndex: 0,
@@ -52,36 +56,24 @@ class Category extends Component {
     }
 
 
-    // use private
-    _isProductListStateEmpty = () => !this.state.categoryProductsList;
-
-    //_getCurrentCategoryAlias = () => this.state.categoryProductsList && this.state.categoryProductsList.main
-    // &&  this.state.categoryProductsList.main.alias;
-
-
-    _getCurrentCategoryAlias = () => {
-        if (!this._isProductListStateEmpty()) {
-            return this.state.categoryProductsList.main.alias;
+    setCategoryRoutes = () => {
+        if (this.currentRoute !== this.props.match.url) {
+            this.previousRoute = this.currentRoute;
+            this.currentRoute = this.props.match.url;
         }
-        return false;
     };
+    isUserChangeCategory = () => this.currentRoute !== this.props.match.url;
 
-    _isUserGoToAnotherCategoryPage = () => {
-        if (!this._isProductListStateEmpty()) {
-            return this._getCurrentCategoryAlias() !== this.props.match.params.type
-        }
-        return false;
-    };
 
-    _clearComponentState = () => this.setState((state) => ({ categoryProductsList: null, lastIndex: 0 }));
 
-    _sortProductsList = () => {
+
+
+
+    isProductListStateEmpty = () => !this.state.categoryProductsList;
+    clearComponentState = () => this.setState((state) => ({ categoryProductsList: null, lastIndex: 0 }));
+    sortProductsList = () => {
         let stateProductsCopy = createDeepCopyOfObject(this.state.categoryProductsList.data);
         switch (this.props.sortType) {
-            case "по популярности": {
-                stateProductsCopy = arrayShuffle(stateProductsCopy);
-                break;
-            }
             case "по возрастанию цены": {
                 stateProductsCopy.sort((a, b) => a.price - b.price);
                 break;
@@ -90,16 +82,9 @@ class Category extends Component {
                 stateProductsCopy.sort((a, b) => b.price - a.price);
                 break;
             }
-            case "по новинкам": {
-                stateProductsCopy = arrayShuffle(stateProductsCopy);
-                break;
-            }
-            case "по скидкам": {
-                stateProductsCopy = arrayShuffle(stateProductsCopy);
-                break;
-            }
             default: {
-                return;
+                stateProductsCopy = arrayShuffle(stateProductsCopy);
+                break;
             }
         }
         this.setState(
@@ -108,6 +93,30 @@ class Category extends Component {
             }),
         );
     };
+
+
+
+
+    getCurrentCategoryAlias = () => {
+        if (!this.isProductListStateEmpty()) {
+            return this.state.categoryProductsList.main.alias;
+        }
+        return false;
+    };
+
+    isUserGoToAnotherCategoryPage = () => {
+        //console.log(this.props);
+
+
+        if (!this.isProductListStateEmpty()) {
+            return this.getCurrentCategoryAlias() !== this.props.match.params.type
+        }
+        return false;
+    };
+
+
+
+
 
     //<editor-fold desc="Вариации смены state">
     /**
@@ -142,18 +151,28 @@ class Category extends Component {
      */
     //</editor-fold>
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this._isProductListStateEmpty() && this.props.category) {
+        //console.log("state", this.state);
+        console.log('change cat', !!this.isUserChangeCategory());
+        //if (!this.isUserChangeCategory()) return;
+        this.setCategoryRoutes();
+
+
+        if (this.isProductListStateEmpty() && this.props.category) {
             this.setState((state) => ({ categoryProductsList: this.props.category }));
         }
-        if (this._isUserGoToAnotherCategoryPage() && !this._isProductListStateEmpty()) {
-            this._clearComponentState();
+
+
+
+        if (this.isUserGoToAnotherCategoryPage() && !this.isProductListStateEmpty()) {
+            this.clearComponentState();
             this.props.clearCategoryPageReduxData();
             this.props.discardSortType();
             this.props.fetchPageData(this.props);
         }
-        if (!this._isProductListStateEmpty() && this.state.lastIndex !== this.props.lastIndex) {
-            console.log('3');
 
+
+
+        if (!this.isProductListStateEmpty() && this.state.lastIndex !== this.props.lastIndex) {
             this.setState(
                 produce(this.state, (draft) => {
                     draft["lastIndex"] = this.props.lastIndex;
@@ -165,14 +184,20 @@ class Category extends Component {
                 }),
             );
         }
-        if (prevProps.sortType !== this.props.sortType && !this._isUserGoToAnotherCategoryPage()) {
-            this._sortProductsList();
+
+        if (prevProps.sortType !== this.props.sortType && !this.isProductListStateEmpty()) {
+            //console.log(prevProps.sortType);
+          //  console.log(this.props.sortType);
+         //   console.log(!!this.isUserGoToAnotherCategoryPage());
+       //     console.log('srt');
+
+            this.sortProductsList();
             this.isSorted = true;
         }
 
         if (
             (this.props.lastIndex > 0 || this.props.lastIndex === -1) &&
-            !this._isUserGoToAnotherCategoryPage() &&
+            !this.isUserGoToAnotherCategoryPage() &&
             !this.isSorted &&
             this.state.lastIndex === this.props.lastIndex
         ) {
@@ -181,8 +206,12 @@ class Category extends Component {
         if (prevProps.sortType === this.props.sortType) this.isSorted = false;
     }
 
+
     componentDidMount() {
+        //this.currentRoute = this.props.match.url;
         this.props.fetchPageData(this.props);
+        //console.log('f1');
+
     }
 
     componentWillUnmount() {
@@ -190,20 +219,20 @@ class Category extends Component {
     }
 
     render() {
+       // console.log('render');
+       // console.log(this.props);
+        //console.log('sorted', this.isSorted);
+     //   console.log('route', this.currentRoute);
+      //  console.log('prev route', this.previousRoute);
 
-        //console.log('redner');
-        //console.log(this._getCurrentCategoryAlias());
 
-        if (this._isProductListStateEmpty() || this._isUserGoToAnotherCategoryPage()) {
-            const SpinnerModal = withModal(Spinner, {
-                bg: false,
-                interactionsDisabled: true,
-            });
+
+        if (this.isProductListStateEmpty() || this.isUserGoToAnotherCategoryPage()) {
+            const SpinnerModal = withModal(Spinner, { bg: false, interactionsDisabled: true, });
             return <SpinnerModal />;
-        } else {
-            const { main: category, data: products } = this.state.categoryProductsList;
-            return <CategoryProductsList category={category} products={products} />;
         }
+        const { main: category, data: products } = this.state.categoryProductsList;
+        return <CategoryProductsList category={category} products={products} />;
     }
 }
 
