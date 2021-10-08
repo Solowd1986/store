@@ -163,13 +163,13 @@ class Category extends PureComponent {
 
 
 
+
         if (this.isUserGoToAnotherCategoryPage() && !this.isProductListStateEmpty()) {
             this.clearComponentState();
             this.props.clearCategoryPageReduxData();
             this.props.discardSortType();
             this.props.fetchPageData(this.props);
         }
-
 
 
         if (!this.isProductListStateEmpty() && this.state.lastIndex !== this.props.lastIndex) {
@@ -203,6 +203,7 @@ class Category extends PureComponent {
         ) {
             utils.scrollToBottom();
         }
+
         if (prevProps.sortType === this.props.sortType) this.isSorted = false;
     }
 
@@ -211,7 +212,6 @@ class Category extends PureComponent {
         //this.currentRoute = this.props.match.url;
         this.props.fetchPageData(this.props);
         //console.log('f1');
-
     }
 
     componentWillUnmount() {
