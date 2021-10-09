@@ -11,6 +11,8 @@ import * as lazySelectors from "@redux/entities/lazy/selectors/lazySelectors";
 import { connect } from "react-redux";
 import { AnyAction, bindActionCreators, Dispatch } from "redux";
 
+import * as utils from "@components/Helpers/Functions/scrollbarHelper";
+
 type PathParamsType = {
     param: string,
 }
@@ -29,6 +31,7 @@ class LazyLoad extends PureComponent<LazyLoadProps> {
         const { categoryName, lastIndex } = this.props;
         this.props.fetchLazyCategoryProducts(categoryName, lastIndex);
     };
+
 
     render():React.ReactNode {
         const classList = cn(styles.more, {
