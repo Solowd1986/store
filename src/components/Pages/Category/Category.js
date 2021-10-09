@@ -68,9 +68,10 @@ class Category extends PureComponent {
     isRouteChanged = () => !this.isStateEmpty() ? this.state.products.main.alias !== this.props.match.params.type : false;
     isLazyLoadRecived = () => !this.isStateEmpty() && (this.state.lastIndex !== this.props.lastIndex) && this.props.lazy;
 
-
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (this.isStateEmpty() && this.props.category) this.setState((state) => ({ products: this.props.category }));
+
+        if (!this.isStateEmpty() && prevProps.sortType !== this.props.sortType) this.sortProductsList();
 
         if (this.isRouteChanged()) {
             this.setState((state) => ({ products: null, lastIndex: 0 }));
@@ -90,12 +91,7 @@ class Category extends PureComponent {
                 }),
             );
         }
-
-        if (prevProps.sortType !== this.props.sortType && !this.isStateEmpty()) {
-            this.sortProductsList();
-        }
     }
-
 
     componentDidMount() {
         this.props.fetchPageData(this.props);
@@ -107,6 +103,7 @@ class Category extends PureComponent {
 
     render() {
         //console.log('render');
+        //console.log(this.props);
         if (this.isStateEmpty()) {
             const SpinnerModal = withModal(Spinner, { bg: false, interactionsDisabled: true, });
             return <SpinnerModal />;
