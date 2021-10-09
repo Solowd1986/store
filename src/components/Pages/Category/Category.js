@@ -10,6 +10,9 @@ import { bindActionCreators } from "redux";
 import * as serverActions from "@redux/entities/server/actions";
 import * as sortActions from "@redux/entities/sort/actions";
 import * as serverSelectors from "@redux/entities/server/selectors/serverSelectors";
+
+import * as lazyActions from "@redux/entities/lazy/actions";
+import * as lazySelectors from "@redux/entities/lazy/selectors/lazySelectors";
 import * as sortSelectors from "@redux/entities/sort/selectors/sortSelectors";
 import { connect } from "react-redux";
 
@@ -37,6 +40,7 @@ import produce from "immer";
 class Category extends PureComponent {
     static propTypes = {
         clearCategoryPageReduxData: PropTypes.func,
+        clearLazyReduxData: PropTypes.func,
         fetchPageData: PropTypes.func,
         sortType: PropTypes.string,
         discardSortType: PropTypes.func,
@@ -66,10 +70,7 @@ class Category extends PureComponent {
 
 
 
-
-
-
-    isProductListStateEmpty = () => !this.state.categoryProductsList;
+    isStateEmpty = () => !this.state.categoryProductsList;
     clearComponentState = () => this.setState((state) => ({ categoryProductsList: null, lastIndex: 0 }));
     sortProductsList = () => {
         let stateProductsCopy = createDeepCopyOfObject(this.state.categoryProductsList.data);
@@ -98,7 +99,7 @@ class Category extends PureComponent {
 
 
     getCurrentCategoryAlias = () => {
-        if (!this.isProductListStateEmpty()) {
+        if (!this.isStateEmpty()) {
             return this.state.categoryProductsList.main.alias;
         }
         return false;
@@ -108,7 +109,7 @@ class Category extends PureComponent {
         //console.log(this.props);
 
 
-        if (!this.isProductListStateEmpty()) {
+        if (!this.isStateEmpty()) {
             return this.getCurrentCategoryAlias() !== this.props.match.params.type
         }
         return false;
@@ -152,27 +153,28 @@ class Category extends PureComponent {
     //</editor-fold>
     componentDidUpdate(prevProps, prevState, snapshot) {
         //console.log("state", this.state);
-        console.log('change cat', !!this.isUserChangeCategory());
+        //console.log('change cat', !!this.isUserChangeCategory());
         //if (!this.isUserChangeCategory()) return;
         this.setCategoryRoutes();
 
 
-        if (this.isProductListStateEmpty() && this.props.category) {
+        if (this.isStateEmpty() && this.props.category) {
             this.setState((state) => ({ categoryProductsList: this.props.category }));
         }
 
 
 
 
-        if (this.isUserGoToAnotherCategoryPage() && !this.isProductListStateEmpty()) {
+        if (this.isUserGoToAnotherCategoryPage() && !this.isStateEmpty()) {
             this.clearComponentState();
             this.props.clearCategoryPageReduxData();
+            this.props.clearLazyReduxData();
             this.props.discardSortType();
             this.props.fetchPageData(this.props);
         }
 
 
-        if (!this.isProductListStateEmpty() && this.state.lastIndex !== this.props.lastIndex) {
+        if (!this.isStateEmpty() && this.state.lastIndex !== this.props.lastIndex) {
             this.setState(
                 produce(this.state, (draft) => {
                     draft["lastIndex"] = this.props.lastIndex;
@@ -185,24 +187,13 @@ class Category extends PureComponent {
             );
         }
 
-        if (prevProps.sortType !== this.props.sortType && !this.isProductListStateEmpty()) {
-            //console.log(prevProps.sortType);
-          //  console.log(this.props.sortType);
-         //   console.log(!!this.isUserGoToAnotherCategoryPage());
-       //     console.log('srt');
 
+        if (prevProps.sortType !== this.props.sortType && !this.isStateEmpty()) {
             this.sortProductsList();
             this.isSorted = true;
         }
 
-        if (
-            (this.props.lastIndex > 0 || this.props.lastIndex === -1) &&
-            !this.isUserGoToAnotherCategoryPage() &&
-            !this.isSorted &&
-            this.state.lastIndex === this.props.lastIndex
-        ) {
-            utils.scrollToBottom();
-        }
+
 
         if (prevProps.sortType === this.props.sortType) this.isSorted = false;
     }
@@ -219,15 +210,15 @@ class Category extends PureComponent {
     }
 
     render() {
-       // console.log('render');
-       // console.log(this.props);
+        console.log('render');
+       //console.log(this.props);
         //console.log('sorted', this.isSorted);
      //   console.log('route', this.currentRoute);
       //  console.log('prev route', this.previousRoute);
 
 
 
-        if (this.isProductListStateEmpty() || this.isUserGoToAnotherCategoryPage()) {
+        if (this.isStateEmpty()) {
             const SpinnerModal = withModal(Spinner, { bg: false, interactionsDisabled: true, });
             return <SpinnerModal />;
         }
@@ -239,11 +230,11 @@ class Category extends PureComponent {
 const mapStateToProps = (state) => {
     return {
         category: serverSelectors.serverCategorySelector(state),
-        lazy: serverSelectors.serverLazySelector(state),
-        lastIndex: serverSelectors.serverLastIndexSelector(state),
+        lazy: lazySelectors.getRecivedData(state),
+        lastIndex: lazySelectors.getLastIndexSelector(state),
         sortType: sortSelectors.sortTypeSelector(state),
     };
 };
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({ ...serverActions, ...sortActions }, dispatch);
+const mapDispatchToProps = (dispatch) => bindActionCreators({ ...serverActions, ...sortActions, ...lazyActions }, dispatch);
 export default connect(mapStateToProps, mapDispatchToProps)(Category);

@@ -1,20 +1,11 @@
 import * as types from "./constants/server";
 
+
 const initialState = {
     index: null,
     category: null,
-
-    categoryInfo: {
-        lazy: null,
-        lastIndex: 0,
-        currentRoute: null,
-        previousRoute: null,
-    },
-
     product: null,
-    lazy: null,
     history: null,
-    lastIndex: 0,
     fetchingDataStart: false,
 };
 
@@ -41,20 +32,10 @@ export default (state = initialState, action) => {
             };
         }
 
-
-        case types.SERVER_FETCH_LAZY_PAGE_DATA: {
-            return {
-                ...state,
-                lastIndex: action.payload.lastIndex,
-                lazy: action.payload.load,
-            };
-        }
-
         case types.SERVER_CLEAR_CATEGORY_PAGE_REDUX_DATA: {
             return {
                 ...state,
                 category: null,
-                lastIndex: 0,
             };
         }
 

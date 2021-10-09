@@ -1,6 +1,5 @@
 import * as types from "./constants/server";
 
-
 /**
  * Данный метод работает за счет Redux Thunk - первый вызов его в компоненте, отдающим методу params позволяет через
  * замыкание иметь эти params в дальнейшем. В результате возвращается новая функция вида async (dispatch, getState, api) {}
@@ -36,37 +35,6 @@ export const fetchPageData = ({ match: { path: route = "/", params } }) => async
             }
             case 500: {
                 history ? history.push("/500") : window.location.href = "/500";
-                break;
-            }
-            default:
-        }
-    }
-};
-
-
-export const fetchLazyCategoryProducts = (category, index) => async (dispatch, getState, api) => {
-    dispatch({ type: types.SERVER_START_FETCH_DATA });
-    try {
-        const response = await api.get(`lazy/${category}/${index}`);
-        dispatch({
-            type: types.SERVER_FETCH_LAZY_PAGE_DATA,
-            payload: {
-                lastIndex: response.data.lastIndex,
-                load: response.data.load,
-            },
-        });
-        dispatch({ type: types.SERVER_END_FETCH_DATA });
-    } catch (error) {
-        dispatch({ type: types.SERVER_END_FETCH_DATA });
-        const { history } = getState().server;
-        const status = error.response ? error.response.status : error.code === "ECONNABORTED" ? 500 : 400;
-        switch (status) {
-            case 400: {
-                history.push("/400");
-                break;
-            }
-            case 500: {
-                history.push("/500");
                 break;
             }
             default:

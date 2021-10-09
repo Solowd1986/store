@@ -6,8 +6,8 @@ import { withRouter } from "react-router";
 import { History } from 'history';
 import {RouteComponentProps} from "react-router";
 
-import * as serverActions from "@redux/entities/server/actions";
-import * as serverSelectors from "@redux/entities/server/selectors/serverSelectors";
+import * as lazyActions from "@redux/entities/lazy/actions";
+import * as lazySelectors from "@redux/entities/lazy/selectors/lazySelectors";
 import { connect } from "react-redux";
 import { AnyAction, bindActionCreators, Dispatch } from "redux";
 
@@ -71,10 +71,10 @@ class LazyLoad extends PureComponent<LazyLoadProps> {
 
 function mapStateToProps(state: unknown) {
     return {
-        lastIndex: serverSelectors.serverLastIndexSelector(state),
-        fetchStart: serverSelectors.serverfetchingDataStartSelector(state),
+        lastIndex: lazySelectors.getLastIndexSelector(state),
+        fetchStart: lazySelectors.fetchingLazyDataStatus(state),
     };
 }
 
-const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => bindActionCreators(serverActions, dispatch);
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => bindActionCreators(lazyActions, dispatch);
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(LazyLoad));

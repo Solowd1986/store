@@ -104,8 +104,6 @@ class MainPage extends Component {
             <>
                 <Slider slides={slider}/>
 
-                <CompOne />
-
 
                 <HookTest/>
 
