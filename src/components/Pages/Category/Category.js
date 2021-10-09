@@ -68,6 +68,23 @@ class Category extends PureComponent {
     isRouteChanged = () => !this.isStateEmpty() ? this.state.products.main.alias !== this.props.match.params.type : false;
     isLazyLoadRecived = () => !this.isStateEmpty() && (this.state.lastIndex !== this.props.lastIndex) && this.props.lazy;
 
+    //region Описание
+    /**
+     * componentDidUpdate отслеживает 4 ситуации:
+     * 1. State компонента пуст (то есть это первый вход в блок категорий). Тогда просто при получении props - вписываем данные.
+     * 2. Смена типа сортировки. По умолчанию тип сортировки приходит из Redux (иницилизирующее значение) Если state не пуст,
+     *    и тип сортировки пришедший в props отличается - то меняем порядок элементов в текущем state. Проверка на пустоту state нужна,
+     *    так как при переходе между категориями тип сортировки сбрасывает на стандартный). Это ведет к вызове метода сортировки, но
+     *    также при переходе между категориями сбрасывается state, а значит, нет данных для сортировки. Потому и нужна проверка.
+     * 3. Смена route-пути. Это происходит лишь в рамках уже загруженного компонента, а значит, state должен быть не пуст. В этом
+     *    случае проверяем alias текущей категории и поле match из props, если они разные - были переходы в рамках компонента.
+     * 4. Получены доп. данные lazyLoad. Опять же, доп. данные могут быть получены только для уже загруженного компонента. Также
+     *    проверяем, не пуст ли блок lazy из Redux и главное: разницу индексов. Изначально индексы равны: 0 тут в state и
+     *    0 в Redux store. Но когда данные получены, индекс в Redux store меняется и прихоидт в виде props. Как результат - мы
+     *    дополняем state данными, и устанавливаем новый index для state. Теперь в условие не попадем, пока не придет новый
+     *    индекс.
+     */
+    //endregion
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (this.isStateEmpty() && this.props.category) this.setState((state) => ({ products: this.props.category }));
 
@@ -80,6 +97,7 @@ class Category extends PureComponent {
         }
 
         if (this.isLazyLoadRecived()) {
+
             this.setState(
                 produce(this.state, (draft) => {
                     draft["lastIndex"] = this.props.lastIndex;
