@@ -10,8 +10,9 @@ import ProductTabs from "./ProductTabs/ProductTabs";
 import Spinner from "@components/Partials/Spinner/Spinner";
 
 import { bindActionCreators } from "redux";
-import * as serverActions from "@redux/entities/server/actions";
-import * as serverSelectors from "@redux/entities/server/selectors/serverSelectors";
+
+import * as productActions from "@redux/entities/product/actions";
+
 import { connect } from "react-redux";
 
 class Product extends Component {
@@ -36,11 +37,11 @@ class Product extends Component {
     }
 
     componentDidMount() {
-        this.props.fetchPageData(this.props);
+        this.props.fetchProductPageData(this.props);
     }
 
     componentWillUnmount() {
-        this.props.clearSingleProductReduxData();
+        this.props.clearProductReduxState();
     }
 
 
@@ -77,6 +78,6 @@ class Product extends Component {
     }
 }
 
-const mapStateToProps = (state) => ({ product: serverSelectors.serverProductSelector(state) });
-const mapDispatchToProps = (dispatch) => bindActionCreators(serverActions, dispatch);
+const mapStateToProps = (state) => ({ product: state.product.productRecivedData });
+const mapDispatchToProps = (dispatch) => bindActionCreators(productActions, dispatch);
 export default connect(mapStateToProps, mapDispatchToProps)(Product);

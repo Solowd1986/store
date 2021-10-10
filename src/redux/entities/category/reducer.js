@@ -14,6 +14,7 @@ const initialState = {
         recived: false,
         code: null,
     }
+
 };
 
 export default (state = initialState, action) => {
@@ -89,8 +90,6 @@ export default (state = initialState, action) => {
 
 
         case types.CATEGORY_CLEAR_REDUX_STATE: {
-            console.log('clear');
-
             return {
                 ...state,
                 categoryRecivedData: null,

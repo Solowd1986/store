@@ -2,42 +2,42 @@ import axios from "axios";
 
 class ApiService {
     constructor() {
-        this._axios = axios;
-        this._retryCount = 0;
-        this._lastRequestURI = null;
-        this._decodeRecord = recordName => JSON.parse(decodeURIComponent(localStorage.getItem(recordName)));
+        this.axios = axios;
+        this.retryCount = 0;
+        this.lastRequestURI = null;
+        this.decodeRecord = recordName => JSON.parse(decodeURIComponent(localStorage.getItem(recordName)));
 
-        this.customAxiosInstance = this._axios.create({
+        this.customAxiosInstance = this.axios.create({
             baseURL: "/api/",
             timeout: 5000,
             withCredentials: true,
             headers: {
-                Authorization: `Bearer ${localStorage.getItem("auth") && this._decodeRecord("auth").auth.token}`,
+                Authorization: `Bearer ${localStorage.getItem("auth") && this.decodeRecord("auth").auth.token}`,
             },
         });
 
-        this.customAxiosInstance.interceptors.response.use(this._handleSuccessResponse, this._handleFailResponse);
-        this.customAxiosInstance.interceptors.request.use(this._handleSuccessRequest);
+        this.customAxiosInstance.interceptors.response.use(this.handleSuccessResponse, this.handleFailResponse);
+        this.customAxiosInstance.interceptors.request.use(this.handleSuccessRequest);
     }
 
-    _handleSuccessRequest = (request) => {
-        this._lastRequestURI = request.url;
+    handleSuccessRequest = (request) => {
+        this.lastRequestURI = request.url;
         return request;
     };
 
-    _handleFailResponse = async (error) => {
-        if (error.code === "ECONNABORTED" && this._retryCount < 3) {
-            ++this._retryCount;
-            await this.customAxiosInstance.get(this._lastRequestURI);
+    handleFailResponse = async (error) => {
+        if (error.code === "ECONNABORTED" && this.retryCount < 3) {
+            ++this.retryCount;
+            await this.customAxiosInstance.get(this.lastRequestURI);
         }
-        this._retryCount = 0;
+        this.retryCount = 0;
         return Promise.reject(error);
     };
 
 
-    _handleSuccessResponse = response => {
+    handleSuccessResponse = response => {
         //console.dir(response);
-        // if (this._hasJsonStructure(response.data)) {
+        // if (this.hasJsonStructure(response.data)) {
         //     return response
         // }
         // return Promise.reject("error");
@@ -46,10 +46,10 @@ class ApiService {
     };
 
 
-    getAxiosApi = () => this._axios;
+    getAxiosApi = () => this.axios;
 
     getCancelSource = () => {
-        const CancelToken = this._axios.CancelToken.source();
+        const CancelToken = this.axios.CancelToken.source();
         return {
             token: CancelToken.token,
             cancel: CancelToken.cancel

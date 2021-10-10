@@ -18,7 +18,7 @@ use php\db\RequestHandler as Request;
 
 // перехват отправки данных формы
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    print json_encode($_POST);
+    //print json_encode($_POST);
 }
 
 if ($_SERVER["REQUEST_METHOD"] === "GET") {

@@ -5,6 +5,8 @@ import sort from "./sort/reducer";
 import auth from "./auth/reducer";
 import lazy from "./lazy/reducer";
 import category from "./category/reducer";
+import index from "./index/reducer";
+import product from "./product/reducer";
 
 // экспортируем результат работы функции combineReducers
 export default combineReducers({
@@ -13,5 +15,7 @@ export default combineReducers({
     sort,
     auth,
     lazy,
-    category
+    category,
+    index,
+    product
 });

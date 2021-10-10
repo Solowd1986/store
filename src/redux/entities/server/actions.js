@@ -7,14 +7,14 @@ import * as types from "./constants/server";
  * Именно ее он и вызывает.
  */
 export const fetchPageData = ({ match: { path: route = "/", params } }) => async (dispatch, getState, api) => {
-    console.log('route', route);
-    console.log('params', params);
+    //console.log('route', route);
+   // console.log('params', params);
 
     const isThatIndexPage = !Object.keys(params).length;
-    console.log(isThatIndexPage);
+    //console.log(isThatIndexPage);
 
     const uri = isThatIndexPage ? "index" : `${route.match(/\/([a-z]*)\/:/)[1]}/${Object.values(params).join("/")}`;
-    console.log('uri', uri);
+    //console.log('uri', uri);
 
     const pageType = !Object.keys(params).length ? "index" : route.match(/\/([a-z]*)\/:/)[1];
     dispatch({ type: types.SERVER_START_FETCH_DATA });

@@ -1,4 +1,5 @@
 import React, { PureComponent } from "react";
+import {Redirect} from "react-router-dom";
 import * as PropTypes from "prop-types";
 
 import CategoryProductsList from "./CategoryProductsList/CategoryProductsList";
@@ -6,21 +7,13 @@ import Spinner from "@components/Partials/Spinner/Spinner";
 import withModal from "@components/Helpers/Hoc/withModal/withModal";
 
 import { bindActionCreators } from "redux";
-import * as serverActions from "@redux/entities/server/actions";
-import * as sortActions from "@redux/entities/sort/actions";
-import * as lazyActions from "@redux/entities/lazy/actions";
-
 import * as categoryActions from "@redux/entities/category/actions";
 import * as categorySelectors from "@redux/entities/category/selectors/categorySelectors";
-
-
-import * as serverSelectors from "@redux/entities/server/selectors/serverSelectors";
-import * as lazySelectors from "@redux/entities/lazy/selectors/lazySelectors";
-import * as sortSelectors from "@redux/entities/sort/selectors/sortSelectors";
 import { connect } from "react-redux";
 
 import arrayShuffle from "@components/Helpers/Functions/arrayShuffle";
 import produce from "immer";
+
 
 
 class Category extends PureComponent {
@@ -29,7 +22,6 @@ class Category extends PureComponent {
         fetchCategoryPageData: PropTypes.func,
         clearCategoryReduxState: PropTypes.func,
         clearLazyReduxData: PropTypes.func,
-        fetchPageData: PropTypes.func,
         sortType: PropTypes.string,
         discardSortType: PropTypes.func,
         lastIndex: PropTypes.number,
@@ -123,7 +115,6 @@ class Category extends PureComponent {
 
     componentDidMount() {
         this.props.fetchCategoryPageData(this.props);
-        //this.props.fetchPageData(this.props);
     }
 
     componentWillUnmount() {
@@ -131,8 +122,7 @@ class Category extends PureComponent {
     }
 
     render() {
-        //console.log('render');
-        //console.log(this.props);
+        if (this.props.category.error.recived) return <Redirect to={this.props.category.error.code}/>;
         if (this.isStateEmpty()) {
             const SpinnerModal = withModal(Spinner, { bg: false, interactionsDisabled: true, });
             return <SpinnerModal />;
@@ -142,19 +132,6 @@ class Category extends PureComponent {
     }
 }
 
-
-
-
-// const mapStateToProps = (state) => {
-//     return {
-//         category: state.server.category,
-//         lazy: state.lazy.lazyRecivedData,
-//         lastIndex: state.lazy.lastIndex,
-//         sortType: state.sort.sortType
-//     };
-// };
-
 const mapStateToProps = (state) => categorySelectors.getCategoryData(state);
-
-const mapDispatchToProps = (dispatch) => bindActionCreators({ ...serverActions, ...sortActions, ...lazyActions, ...categoryActions }, dispatch);
+const mapDispatchToProps = (dispatch) => bindActionCreators(categoryActions, dispatch);
 export default connect(mapStateToProps, mapDispatchToProps)(Category);
