@@ -5,6 +5,9 @@ import cn from "classnames";
 import { AnyAction, bindActionCreators, Dispatch } from "redux";
 import * as sortSelectors from "@redux/entities/sort/selectors/sortSelectors";
 import * as sortActions from "@redux/entities/sort/actions";
+
+import * as categoryActions from "@redux/entities/category/actions";
+
 import { connect } from "react-redux";
 
 
@@ -100,6 +103,7 @@ class SortPorducts extends PureComponent<SortProductsProps, SortProductsState> {
     }
 }
 
-const mapStateToProps = (state: unknown) => ({ sortType: sortSelectors.sortTypeSelector(state) });
-const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => bindActionCreators(sortActions, dispatch);
+// @ts-ignore
+const mapStateToProps = (state: unknown) => ({ sortType: state.category.sortType });
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => bindActionCreators(categoryActions, dispatch);
 export default connect(mapStateToProps, mapDispatchToProps)(SortPorducts);

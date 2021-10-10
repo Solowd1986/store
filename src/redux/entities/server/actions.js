@@ -7,8 +7,15 @@ import * as types from "./constants/server";
  * Именно ее он и вызывает.
  */
 export const fetchPageData = ({ match: { path: route = "/", params } }) => async (dispatch, getState, api) => {
+    console.log('route', route);
+    console.log('params', params);
+
     const isThatIndexPage = !Object.keys(params).length;
+    console.log(isThatIndexPage);
+
     const uri = isThatIndexPage ? "index" : `${route.match(/\/([a-z]*)\/:/)[1]}/${Object.values(params).join("/")}`;
+    console.log('uri', uri);
+
     const pageType = !Object.keys(params).length ? "index" : route.match(/\/([a-z]*)\/:/)[1];
     dispatch({ type: types.SERVER_START_FETCH_DATA });
 
@@ -28,17 +35,7 @@ export const fetchPageData = ({ match: { path: route = "/", params } }) => async
         const { history } = getState().server;
         dispatch({ type: types.SERVER_END_FETCH_DATA });
         const status = error.response ? error.response.status : error.code === "ECONNABORTED" ? 500 : 400;
-        switch (status) {
-            case 400: {
-                history ? history.push("/400") : window.location.href = "/400";
-                break;
-            }
-            case 500: {
-                history ? history.push("/500") : window.location.href = "/500";
-                break;
-            }
-            default:
-        }
+        status === 400 ? history.push("/400") : status === 500 ? history.push("/500") : history.push("/404");
     }
 };
 

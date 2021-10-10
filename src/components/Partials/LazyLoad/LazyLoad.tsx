@@ -8,18 +8,31 @@ import {RouteComponentProps} from "react-router";
 
 import * as lazyActions from "@redux/entities/lazy/actions";
 import * as lazySelectors from "@redux/entities/lazy/selectors/lazySelectors";
+
+import * as utils from "@components/Helpers/Functions/scrollbarHelper";
+
+
+import * as categoryActions from "@redux/entities/category/actions";
+import * as categorySelectors from "@redux/entities/category/selectors/categorySelectors";
+
+
 import { connect } from "react-redux";
 import { AnyAction, bindActionCreators, Dispatch } from "redux";
 
-import * as utils from "@components/Helpers/Functions/scrollbarHelper";
+
+
 
 type PathParamsType = {
     param: string,
 }
 
 type LazyLoadProps = RouteComponentProps<PathParamsType> & {
-    fetchStart: boolean,
+    fetchingLazyDataStart: boolean,
+    hasLazyDataBeenAdded: boolean,
     categoryName: string,
+
+    discardLazyDataStatus: unknown,
+
     lastIndex: number,
     history: History,
     fetchLazyCategoryProducts: (categoryName: string, lastIndex: number ) => void;
@@ -32,10 +45,19 @@ class LazyLoad extends PureComponent<LazyLoadProps> {
         this.props.fetchLazyCategoryProducts(categoryName, lastIndex);
     };
 
+    componentDidUpdate(): void {
+        if (this.props.hasLazyDataBeenAdded) {
+            utils.scrollToBottom();
+            // @ts-ignore
+            this.props.discardLazyDataStatus();
+        }
+
+        console.log(this.props);
+    }
 
     render():React.ReactNode {
         const classList = cn(styles.more, {
-            [styles.active]: this.props.fetchStart,
+            [styles.active]: this.props.fetchingLazyDataStart,
             [styles.hide]: this.props.lastIndex === -1,
         });
 
@@ -72,12 +94,15 @@ class LazyLoad extends PureComponent<LazyLoadProps> {
     }
 }
 
-function mapStateToProps(state: unknown) {
-    return {
-        lastIndex: lazySelectors.getLastIndexSelector(state),
-        fetchStart: lazySelectors.fetchingLazyDataStatus(state),
-    };
-}
+//
+// function mapStateToProps(state: unknown) {
+//     return {
+//         lastIndex: lazySelectors.getLastIndexSelector(state),
+//         fetchStart: lazySelectors.fetchingLazyDataStatus(state),
+//     };
+// }
 
-const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => bindActionCreators(lazyActions, dispatch);
+
+const mapStateToProps = (state: unknown) => categorySelectors.getLazyParams(state);
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => bindActionCreators(categoryActions, dispatch);
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(LazyLoad));

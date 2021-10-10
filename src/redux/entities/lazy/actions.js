@@ -16,17 +16,7 @@ export const fetchLazyCategoryProducts = (category, index) => async (dispatch, g
         dispatch({ type: types.LAZY_END_FETCH_DATA });
         const { history } = getState().server;
         const status = error.response ? error.response.status : error.code === "ECONNABORTED" ? 500 : 400;
-        switch (status) {
-            case 400: {
-                history.push("/400");
-                break;
-            }
-            case 500: {
-                history.push("/500");
-                break;
-            }
-            default:
-        }
+        status === 400 ? history.push("/400") : status === 500 ? history.push("/500") : history.push("/404");
     }
 };
 
