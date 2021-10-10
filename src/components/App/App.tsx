@@ -20,7 +20,6 @@ export default class App extends Component {
                         <ErrorBoundary>
                             <Layout>
                                 <ScrollToTop/>
-                                <HistoryInstance/>
                                 <Switch>
                                     {routes.map((route) => (
                                         <Route

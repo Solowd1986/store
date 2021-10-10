@@ -3,8 +3,7 @@ import styles from "./sort-products.module.scss";
 import cn from "classnames";
 
 import { AnyAction, bindActionCreators, Dispatch } from "redux";
-import * as sortSelectors from "@redux/entities/sort/selectors/sortSelectors";
-import * as sortActions from "@redux/entities/sort/actions";
+
 
 import * as categoryActions from "@redux/entities/category/actions";
 

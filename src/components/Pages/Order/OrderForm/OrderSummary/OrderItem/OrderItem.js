@@ -4,7 +4,6 @@ import cn from "classnames";
 import * as PropTypes from "prop-types";
 
 import * as cartActions from "@redux/entities/cart/actions";
-import * as serverActions from "@redux/entities/server/actions";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import FormInputCounter from "@components/Partials/Form/FormInputCounter/FormInputCounter";

@@ -13,15 +13,17 @@ import withModal from "@components/Helpers/Hoc/withModal/withModal";
 
 
 import { bindActionCreators } from "redux";
-import * as serverActions from "@redux/entities/server/actions";
-import * as serverSelectors from "@redux/entities/server/selectors/serverSelectors";
+
 
 import * as indexActions from "@redux/entities/index/actions";
+import * as indexSelectors from "@redux/entities/index/selectors/indexSelectors";
+
 
 import { connect } from "react-redux";
 
 
 import { HookTest } from "@components/test/Hoocs/HookTest/HookTest.js";
+import { Redirect } from "react-router-dom";
 
 
 
@@ -99,6 +101,7 @@ class MainPage extends Component {
 
 
     render() {
+        if (this.props.error.recived) return <Redirect to={this.props.error.code}/>;
         const SpinnerModal = withModal(Spinner, { bg: false, interactionsDisabled: true });
         if (!this.props.index) return <SpinnerModal/>;
         const { index, index: { slider }} = this.props;
@@ -121,6 +124,6 @@ class MainPage extends Component {
 }
 
 
-const mapStateToProps = (state) => ({ index: state.index.indexRecivedData});
+const mapStateToProps = (state) => indexSelectors.getIndexData(state);
 const mapDispatchToProps = (dispatch) => bindActionCreators(indexActions, dispatch);
 export default connect(mapStateToProps, mapDispatchToProps)(MainPage);

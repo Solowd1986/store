@@ -12,8 +12,10 @@ import Spinner from "@components/Partials/Spinner/Spinner";
 import { bindActionCreators } from "redux";
 
 import * as productActions from "@redux/entities/product/actions";
+import * as productSelectors from "@redux/entities/product/selectors/productSelectors";
 
 import { connect } from "react-redux";
+import { Redirect } from "react-router";
 
 class Product extends Component {
     state = {
@@ -46,6 +48,7 @@ class Product extends Component {
 
 
     render() {
+        if (this.props.error.recived) return <Redirect to={this.props.error.code}/>;
         if (!this.state.product) return <Spinner/>;
         const { main: category, data: product } = this.state.product;
 
@@ -78,6 +81,6 @@ class Product extends Component {
     }
 }
 
-const mapStateToProps = (state) => ({ product: state.product.productRecivedData });
+const mapStateToProps = (state) => productSelectors.getProductData(state);
 const mapDispatchToProps = (dispatch) => bindActionCreators(productActions, dispatch);
 export default connect(mapStateToProps, mapDispatchToProps)(Product);

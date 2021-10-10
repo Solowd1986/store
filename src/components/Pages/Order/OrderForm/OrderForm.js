@@ -15,7 +15,7 @@ import Cookies from "js-cookie";
 
 import * as cartSelectors from "@redux/entities/cart/selectors/cartSelectors";
 import { connect } from "react-redux";
-import * as serverSelectors from "@redux/entities/server/selectors/serverSelectors";
+
 
 class OrderForm extends Component {
     constructor(props) {
