@@ -1,5 +1,4 @@
-import React, { Component, PureComponent, createRef, useRef, useState } from "react";
-import cn from "classnames";
+import React, { Component } from "react";
 import * as PropTypes from "prop-types";
 
 import Spinner from "@components/Partials/Spinner/Spinner";
@@ -9,6 +8,8 @@ import BrandStory from "./BrandStory/BrandStory";
 import Announcements from "./Announcements/Announcements";
 import About from "./About/About";
 import PromoBadge from "@components/Partials/PromoBadge/PromoBadge";
+
+
 import withModal from "@components/Helpers/Hoc/withModal/withModal";
 
 
@@ -25,25 +26,6 @@ import { connect } from "react-redux";
 import { HookTest } from "@components/test/Hoocs/HookTest/HookTest.js";
 import { Redirect } from "react-router-dom";
 
-
-
-
-// const FooObject = {
-//     basicFoo: function () {
-//         console.log(this);
-//     },
-//     arrowFoo: () => {
-//         console.log(this);
-//     },
-//     innerFoo: () => {
-//         const innerFooCode = () => console.log(this);
-//         innerFooCode();
-//     }
-// };
-//
-// FooObject.basicFoo();
-// FooObject.arrowFoo();
-// FooObject.innerFoo();
 
 
 
@@ -94,7 +76,6 @@ class MainPage extends Component {
     };
 
 
-
     componentDidMount() {
         this.props.fetchIndexPageData(this.props);
     }
@@ -123,7 +104,5 @@ class MainPage extends Component {
     }
 }
 
-
 const mapStateToProps = (state) => indexSelectors.getIndexData(state);
-const mapDispatchToProps = (dispatch) => bindActionCreators(indexActions, dispatch);
-export default connect(mapStateToProps, mapDispatchToProps)(MainPage);
+export default connect(mapStateToProps, indexActions)(MainPage);

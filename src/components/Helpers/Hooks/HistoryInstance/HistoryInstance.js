@@ -1,6 +1,5 @@
 import { useDispatch, useStore } from 'react-redux'
 import { useHistory } from "react-router-dom";
-import { createHistoryInstance } from "@redux/entities/server/actions";
 
 /**
  * При попытке использования useEffect столкнулся с тем, что history не успевает записатсья в state до того,
@@ -17,7 +16,7 @@ export default function HistoryInstance() {
         dispatch(createHistoryInstance(history));
     }
 
-    return null;
+    return [];
 }
 
 

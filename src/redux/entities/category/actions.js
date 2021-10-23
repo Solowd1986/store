@@ -24,10 +24,6 @@ export const fetchCategoryPageData = ({ match: { path, params } }) => async (dis
             payload: { data: response.data },
         });
     } catch (error) {
-
-        const { history } = getState().server;
-        //status === 400 ? history.push("/400") : status === 500 ? history.push("/500") : history.push("/404");
-
         const status = error.response ? error.response.status : error.code === "ECONNABORTED" ? 500 : 400;
         dispatch({
             type: types.CATEGORY_ERROR_FETCH_DATA,

@@ -6,15 +6,12 @@ import CategoryProductsList from "./CategoryProductsList/CategoryProductsList";
 import Spinner from "@components/Partials/Spinner/Spinner";
 import withModal from "@components/Helpers/Hoc/withModal/withModal";
 
-import { bindActionCreators } from "redux";
 import * as categoryActions from "@redux/entities/category/actions";
 import * as categorySelectors from "@redux/entities/category/selectors/categorySelectors";
 import { connect } from "react-redux";
 
 import arrayShuffle from "@components/Helpers/Functions/arrayShuffle";
 import produce from "immer";
-
-
 
 class Category extends PureComponent {
     static propTypes = {
@@ -27,18 +24,15 @@ class Category extends PureComponent {
         lastIndex: PropTypes.number,
     };
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            products: null,
-            lastIndex: 0,
-        };
-    }
+    state = {
+        products: null,
+        lastIndex: 0,
+    };
 
     isStateEmpty = () => !this.state.products;
     sortProducts = () => {
         let productsList = [...this.state.products.data];
-        switch (this.props.category.sortType) {
+        switch (this.props.sortType) {
             case "по возрастанию цены": {
                 productsList.sort((a, b) => a.price - b.price);
                 break;
@@ -63,7 +57,7 @@ class Category extends PureComponent {
         this.props.clearCategoryReduxState();
     };
     isRouteChanged = () => !this.isStateEmpty() ? this.state.products.main.alias !== this.props.match.params.type : false;
-    isLazyLoadRecived = () => !this.isStateEmpty() && (this.state.lastIndex !== this.props.category.lastIndex) && this.props.category.lazy;
+    isLazyLoadRecived = () => !this.isStateEmpty() && (this.state.lastIndex !== this.props.lastIndex) && this.props.lazy;
 
     //region Описание
     /**
@@ -91,8 +85,8 @@ class Category extends PureComponent {
      */
     //endregion
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.isStateEmpty() && this.props.category.data) this.setState((state) => ({ products: this.props.category.data }));
-        if (!this.isStateEmpty() && prevProps.category.sortType !== this.props.category.sortType) this.sortProducts();
+        if (this.isStateEmpty() && this.props.data) this.setState((state) => ({ products: this.props.data }));
+        if (!this.isStateEmpty() && prevProps.sortType !== this.props.sortType) this.sortProducts();
 
         if (this.isRouteChanged()) {
             this.clearState();
@@ -102,11 +96,11 @@ class Category extends PureComponent {
         if (this.isLazyLoadRecived()) {
             this.setState(
                 produce(this.state, (draft) => {
-                    draft["lastIndex"] = this.props.category.lastIndex;
+                    draft["lastIndex"] = this.props.lastIndex;
                     draft["products"]["main"] = this.state.products.main;
                     draft["products"]["data"] = [
                         ...this.state.products.data,
-                        ...this.props.category.lazy,
+                        ...this.props.lazy,
                     ];
                 }),
             );
@@ -122,7 +116,7 @@ class Category extends PureComponent {
     }
 
     render() {
-        if (this.props.category.error.recived) return <Redirect to={this.props.category.error.code}/>;
+        if (this.props.error.recived) return <Redirect to={this.props.error.code}/>;
         if (this.isStateEmpty()) {
             const SpinnerModal = withModal(Spinner, { bg: false, interactionsDisabled: true, });
             return <SpinnerModal />;
@@ -133,5 +127,4 @@ class Category extends PureComponent {
 }
 
 const mapStateToProps = (state) => categorySelectors.getCategoryData(state);
-const mapDispatchToProps = (dispatch) => bindActionCreators(categoryActions, dispatch);
-export default connect(mapStateToProps, mapDispatchToProps)(Category);
+export default connect(mapStateToProps, categoryActions)(Category);

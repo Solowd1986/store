@@ -82,5 +82,4 @@ class Product extends Component {
 }
 
 const mapStateToProps = (state) => productSelectors.getProductData(state);
-const mapDispatchToProps = (dispatch) => bindActionCreators(productActions, dispatch);
-export default connect(mapStateToProps, mapDispatchToProps)(Product);
+export default connect(mapStateToProps, productActions)(Product);

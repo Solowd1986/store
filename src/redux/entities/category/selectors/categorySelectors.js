@@ -1,12 +1,12 @@
 export const getCategoryData = (state) => {
     return {
-        category: {
+
             data: state.category.categoryRecivedData,
             lazy: state.category.lazyRecivedData,
             lastIndex: state.category.lastIndex,
             sortType: state.category.sortType,
             error: state.category.error
-        }
+
     }
 };
 

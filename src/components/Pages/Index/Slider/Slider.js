@@ -1,11 +1,7 @@
 import React, { PureComponent } from "react";
-import { NavLink } from "react-router-dom";
-
-import $ from "jquery";
 import styles from "./slider.module.scss";
-import "slick-carousel/slick/slick.min";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+
+import { NavLink } from "react-router-dom";
 
 class Slider extends PureComponent {
     // Инициализация слайдера после отрисовки компонента. Была ошибка "cant't call add", это из-за

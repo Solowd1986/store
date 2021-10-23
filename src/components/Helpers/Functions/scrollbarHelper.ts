@@ -1,4 +1,3 @@
-import $ from 'jquery';
 
 export const calcScrollBarWidth = ():number => {
     // Получаем ширину окна, это аналог width: 100vw (то есть ширина 100% + ширина scrollbar)
@@ -24,11 +23,11 @@ export const removeScrollbarOffset = ():void => {
 };
 
 export const scrollToTop = ():void => {
-    $('html, body').animate({ scrollTop: 0 }, 'slow');
+    $('html, body').animate({ scrollTop: 0 }, 'slow'); // jQuery uses from CDN
 };
 
 export const scrollToBottom = ():void => {
-    $('html, body').animate({ scrollTop: $(document).height() }, 'slow');
+    $('html, body').animate({ scrollTop: $(document).height() }, 'slow'); // jQuery uses from CDN
 };
 
 

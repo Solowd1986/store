@@ -18,6 +18,7 @@ const store = Object.keys(preloadedState).length
     ? createStore(reducer, preloadedState, enhancedStore)
     : createStore(reducer, enhancedStore);
 
+
 store.subscribe(() => {
     if (store.getState().cart && store.getState().cart.products.length) {
         localStorage.setItem("cart", encodeURIComponent(JSON.stringify({ cart: store.getState().cart })));

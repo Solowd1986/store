@@ -316,6 +316,7 @@ class OrderForm extends Component {
 
 
     render() {
+
         const ConfirmModalWindow = withDelay(withModal(Confirm));
         return (
             <>

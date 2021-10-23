@@ -41,12 +41,9 @@ class LazyLoad extends PureComponent<LazyLoadProps> {
 
 
     componentDidUpdate(): void {
-        //console.log('upd');
 
         if (this.props.hasLazyDataBeenAdded) {
             utils.scrollToBottom();
-            //console.log('disc');
-
             // @ts-ignore
             this.props.discardLazyDataStatus();
         }
@@ -59,9 +56,6 @@ class LazyLoad extends PureComponent<LazyLoadProps> {
             [styles.active]: this.props.fetchingLazyDataStart,
             [styles.hide]: this.props.lastIndex === -1,
         });
-
-        //console.log('render');
-
         return (
             <div className={styles.data_wrapper}>
                 {this.props.children}
