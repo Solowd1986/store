@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import styles from "./modal-wrapper.module.scss";
 import cn from "classnames";
 import * as util from "@components/Helpers/Functions/scrollbarHelper";
+import { PropsModal } from "@components/Helpers/Hooks/ModalWrapper/types/ModalWrapperTypes";
 
 const ModalWrapper = (Component: any) => {
-    return (props:unknown) => {
+    return (props:PropsModal) => {
         const [isModalShow, showModalStatus] = useState(true);
 
         const closeModal = (evt: React.SyntheticEvent<HTMLElement>) => {
@@ -20,9 +20,16 @@ const ModalWrapper = (Component: any) => {
             return () => util.removeScrollbarOffset();
         },[isModalShow]);
 
+        const options = {
+            classList: cn("overlay", {
+                "overlay__b-bg": props.bg,
+            }),
+            interactions: props.interactions ? closeModal : () => {}
+        };
+
         if (!isModalShow) return null;
         return (
-            <div className={cn("overlay", "overlay__b-bg")} onClick={closeModal} data-modal={true}>
+            <div className={options.classList} onClick={options.interactions} data-modal={true}>
                 <Component {...props} close={closeModalFromChildren} />
             </div>
         );

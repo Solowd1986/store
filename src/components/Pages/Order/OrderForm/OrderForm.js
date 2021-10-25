@@ -4,10 +4,6 @@ import styles from "./order-form.module.scss";
 import OrderInfo from "./OrderInfo/OrderInfo";
 import OrderSummary from "./OrderSummary/OrderSummary";
 
-import Confirm from "@components/Pages/Order/Confirm/Confirm";
-import withDelay from "@components/Helpers/Hoc/withDelay/withDelay";
-import withModal from "@components/Helpers/Hoc/withModal/withModal";
-
 import setValidateSchema from "@components/Pages/Order/OrderForm/validationSchema/validationSchema";
 import Inputmask from "inputmask";
 import produce from "immer";
@@ -15,7 +11,9 @@ import Cookies from "js-cookie";
 
 import * as cartSelectors from "@redux/entities/cart/selectors/cartSelectors";
 import { connect } from "react-redux";
+
 import ModalWrapper from "@components/Helpers/Hooks/ModalWrapper/ModalWrapper";
+import Confirm from "@components/Pages/Order/Confirm/Confirm";
 
 
 class OrderForm extends Component {
@@ -317,13 +315,10 @@ class OrderForm extends Component {
 
 
     render() {
-
-        const ConfirmModalWindow = withDelay(withModal(Confirm));
-
-        const ConFirmMod = ModalWrapper(Confirm);
+        const ConfirmModalDialog = ModalWrapper(Confirm);
         return (
             <>
-                {this.state.isUserConfirmOrder && <ConFirmMod reset={this.resetOrderForm}/>}
+                {this.state.isUserConfirmOrder && <ConfirmModalDialog reset={this.resetOrderForm}/>}
                 <form ref={this.form}
                       onSubmit={this.handleSubmit}
                       onKeyDown={this.handleKeyPress}

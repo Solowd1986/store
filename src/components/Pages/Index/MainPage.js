@@ -98,7 +98,7 @@ class MainPage extends Component {
                 <Slider slides={slider}/>
 
 
-                <Wrapped color={"red"} />
+                <Wrapped bg interactions/>
                 <AppHook/>
 
                 <Promo index={index}/>
