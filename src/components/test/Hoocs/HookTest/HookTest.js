@@ -1,10 +1,36 @@
-import React, { useState, useContext, useMemo, useEffect, useRef } from "react";
+import React, { useState, createContext, useContext, useMemo, useEffect, useRef } from "react";
 import styles from "./hook-test.module.scss"
 import img from "../../../Helpers/SVG Loaders/circles.svg";
 
+import colorsSet from "./color";
+
+const ColorContext = createContext(null);
+
+
+export const AppHook = () => {
+
+    const [colors, changeColors ] = useState(colorsSet);
+
+    return (
+        <ColorContext.Provider value={{ colors, changeColors }}>
+            <HookTest />
+        </ColorContext.Provider>
+    )
+};
+
+
+
 export const HookTest = () => {
     const [, reRender] = useState();
+    const { colors, changeColors } = useContext(ColorContext);
     const [spinnerState, toggleSpinner] = useState(false);
+
+
+    useEffect(() => {
+        changeColors( colors => ({ ...colors, ttt: "bloww"}));
+    }, []);
+    //console.log(colors);
+
 
 
     return (
@@ -12,6 +38,7 @@ export const HookTest = () => {
             <div className={styles.cnt}>
                 Content
             </div>
+
             <div>
                 {spinnerState
                 &&

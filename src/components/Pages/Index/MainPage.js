@@ -23,7 +23,11 @@ import * as indexSelectors from "@redux/entities/index/selectors/indexSelectors"
 import { connect } from "react-redux";
 
 
-import { HookTest } from "@components/test/Hoocs/HookTest/HookTest.js";
+//import { HookTest } from "@components/test/Hoocs/HookTest/HookTest.js";
+import { AppHook } from "@components/test/Hoocs/HookTest/HookTest.js";
+import ModalWrapper from "@components/Helpers/Hooks/ModalWrapper/ModalWrapper";
+import Confirm from "@components/Pages/Order/Confirm/Confirm";
+
 import { Redirect } from "react-router-dom";
 
 
@@ -81,7 +85,9 @@ class MainPage extends Component {
     }
 
 
+
     render() {
+        const Wrapped = ModalWrapper(Confirm);
         if (this.props.error.recived) return <Redirect to={this.props.error.code}/>;
         const SpinnerModal = withModal(Spinner, { bg: false, interactionsDisabled: true });
         if (!this.props.index) return <SpinnerModal/>;
@@ -92,7 +98,8 @@ class MainPage extends Component {
                 <Slider slides={slider}/>
 
 
-                <HookTest/>
+                <Wrapped color={"red"} />
+                <AppHook/>
 
                 <Promo index={index}/>
                 <BrandStory/>

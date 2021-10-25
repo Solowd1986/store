@@ -15,6 +15,7 @@ import Cookies from "js-cookie";
 
 import * as cartSelectors from "@redux/entities/cart/selectors/cartSelectors";
 import { connect } from "react-redux";
+import ModalWrapper from "@components/Helpers/Hooks/ModalWrapper/ModalWrapper";
 
 
 class OrderForm extends Component {
@@ -318,9 +319,11 @@ class OrderForm extends Component {
     render() {
 
         const ConfirmModalWindow = withDelay(withModal(Confirm));
+
+        const ConFirmMod = ModalWrapper(Confirm);
         return (
             <>
-                {this.state.isUserConfirmOrder && <ConfirmModalWindow reset={this.resetOrderForm}/>}
+                {this.state.isUserConfirmOrder && <ConFirmMod reset={this.resetOrderForm}/>}
                 <form ref={this.form}
                       onSubmit={this.handleSubmit}
                       onKeyDown={this.handleKeyPress}

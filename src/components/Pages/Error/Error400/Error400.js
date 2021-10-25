@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import styles from "./error-400.module.scss";
 import cn from "classnames";
-import { withRouter } from "react-router";
+
+import { withRouter } from "react-router-dom";
 import img from "./img/error-400.png";
 
 class Error400 extends Component {
