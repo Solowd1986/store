@@ -10,16 +10,8 @@ import About from "./About/About";
 import PromoBadge from "@components/Partials/PromoBadge/PromoBadge";
 
 
-import withModal from "@components/Helpers/Hoc/withModal/withModal";
-
-
-import { bindActionCreators } from "redux";
-
-
 import * as indexActions from "@redux/entities/index/actions";
 import * as indexSelectors from "@redux/entities/index/selectors/indexSelectors";
-
-
 import { connect } from "react-redux";
 
 
@@ -89,8 +81,11 @@ class MainPage extends Component {
     render() {
         const Wrapped = ModalWrapper(Confirm);
         if (this.props.error.recived) return <Redirect to={this.props.error.code}/>;
-        const SpinnerModal = withModal(Spinner, { bg: false, interactionsDisabled: true });
-        if (!this.props.index) return <SpinnerModal/>;
+
+        if (!this.props.index) {
+            const SpinnerModal = ModalWrapper(Spinner);
+            return <SpinnerModal/>
+        }
         const { index, index: { slider }} = this.props;
 
         return (

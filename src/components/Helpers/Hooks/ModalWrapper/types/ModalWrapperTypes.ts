@@ -3,3 +3,6 @@ export interface PropsModal {
     interactions: boolean
 }
 
+export interface InnerComponentProps {
+    close: () => void
+}

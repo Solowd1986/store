@@ -4,7 +4,6 @@ import * as PropTypes from "prop-types";
 
 import CategoryProductsList from "./CategoryProductsList/CategoryProductsList";
 import Spinner from "@components/Partials/Spinner/Spinner";
-import withModal from "@components/Helpers/Hoc/withModal/withModal";
 import ModalWrapper from "@components/Helpers/Hooks/ModalWrapper/ModalWrapper";
 
 import * as categoryActions from "@redux/entities/category/actions";
@@ -119,9 +118,8 @@ class Category extends PureComponent {
     render() {
         if (this.props.error.recived) return <Redirect to={this.props.error.code}/>;
         if (this.isStateEmpty()) {
-            const SpinnerModal = withModal(Spinner, { bg: false, interactionsDisabled: true, });
-            const SpinnerTwo = ModalWrapper(Spinner);
-            return <SpinnerTwo />;
+            const SpinnerModal = ModalWrapper(Spinner);
+            return <SpinnerModal />;
         }
         const { main: category, data: products } = this.state.products;
         return <CategoryProductsList category={category} products={products} />;
