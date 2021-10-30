@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useEffect, useState } from "react";
 import * as PropTypes from "prop-types";
 
 import Spinner from "@components/Partials/Spinner/Spinner";
@@ -16,7 +16,7 @@ import { connect } from "react-redux";
 
 
 //import { HookTest } from "@components/test/Hoocs/HookTest/HookTest.js";
-import { AppHook } from "@components/test/Hoocs/HookTest/HookTest.js";
+import { AppHook } from "@components/test/Hook/HookTest/HookTest.js";
 import ModalWrapper from "@components/Helpers/Hooks/ModalWrapper/ModalWrapper";
 import Confirm from "@components/Pages/Order/Confirm/Confirm";
 
@@ -25,44 +25,8 @@ import { Redirect } from "react-router-dom";
 
 
 
-
-class CompOne extends Component{
-    constructor(props) {
-        super(props);
-        //console.log('comp one cons');
-    }
-
-
-    render() {
-        //console.log('render');
-
-        return (
-            <div>
-                <button onClick={() => this.forceUpdate()}>Rerender</button>
-                <CompTwo/>
-            </div>
-        )
-    }
-}
-
-class CompTwo extends Component{
-    constructor(props) {
-        super(props);
-        //console.log('comp two cons');
-    }
-
-    render() {
-        //console.log('render 2');
-
-        return (
-            <div>
-                <span>two</span>
-            </div>
-        )
-    }
-}
-
-
+//import {test1} from "../../../ts/test";
+//test1();
 
 
 class MainPage extends Component {
@@ -93,7 +57,8 @@ class MainPage extends Component {
                 <Slider slides={slider}/>
 
 
-                <Wrapped bg interactions/>
+
+                {/*<Wrapped bg interactions/>*/}
                 <AppHook/>
 
                 <Promo index={index}/>

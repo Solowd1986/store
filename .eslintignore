@@ -4,4 +4,4 @@ src/redux/*
 src/components/Helpers/Validation/*
 src/ts/nin.js
 
-#src/ts/test.tsx
+src/ts/test.tsx

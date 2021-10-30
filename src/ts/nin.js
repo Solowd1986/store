@@ -1,4 +1,7 @@
 export default function () {
+
+
+
     const load = "asd";
     const str ="AAAABBBCCDAABBB";
     const art = [2,5,2,23,6,23,56,1,8];

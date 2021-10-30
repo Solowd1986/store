@@ -318,7 +318,7 @@ class OrderForm extends Component {
         const ConfirmModalDialog = ModalWrapper(Confirm);
         return (
             <>
-                {this.state.isUserConfirmOrder && <ConfirmModalDialog reset={this.resetOrderForm}/>}
+                {this.state.isUserConfirmOrder && <ConfirmModalDialog bg={true} interactions={true} reset={this.resetOrderForm}/>}
                 <form ref={this.form}
                       onSubmit={this.handleSubmit}
                       onKeyDown={this.handleKeyPress}

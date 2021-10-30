@@ -27,8 +27,11 @@ export const HookTest = () => {
 
 
     useEffect(() => {
-        changeColors( colors => ({ ...colors, ttt: "bloww"}));
-    }, []);
+        console.log('show');
+        return () => {
+            console.log('unm');
+        }
+    });
     //console.log(colors);
 
 
@@ -47,6 +50,7 @@ export const HookTest = () => {
             </div>
             <p className={styles.btn_wrp}>
                 <button className={styles.btn} onClick={() => toggleSpinner((state) => !state)}>Click me</button>
+                <button className={styles.btn} onClick={reRender}>Click rerender</button>
             </p>
         </div>
     )

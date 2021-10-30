@@ -17,6 +17,12 @@ import { InnerComponentProps } from "@components/Helpers/Hooks/ModalWrapper/type
  * 7. Также можно передать иные атрибуты, они сформируются в обьект rest и уже уйдут напрямую в оборачиваемый компонент
  * 8. Также в оборачиваемый компонент уйдет метод для скрытия оверлея, а значит и вложенного компонента, этот метод можно
  *    подвесить на интерактивный элемент, типа крестика.
+ *
+ * 9. При вызове компонента-обертки ей могут быть переданы методы. Например, при заказе - это очитка state заказа.
+ *    Это должно вызываться как при клике на оверлее, так и при клике на крестике. Компонету с крестиком мы передаем
+ *    как местный метод закрытия модального окна closeModalFromChildren так и все методы переданные обертке выше. Они
+ *    все вызовутся при закрытии окна. Данный компонент тоже должен при закритии вызывать все методы которые ему переданы,
+ *    кроме того, чтобы сбрамывать свой state.
  */
     //</editor-fold>
 const ModalWrapper = (Component: React.FunctionComponent<InnerComponentProps>) => {
@@ -24,10 +30,16 @@ const ModalWrapper = (Component: React.FunctionComponent<InnerComponentProps>) =
         const [isModalShow, showModalStatus] = useState(true);
 
         const closeModal = (evt: React.SyntheticEvent<HTMLElement>) => {
+
             if (!(evt.target instanceof HTMLElement)) return;
             if (!("modal" in evt.target.dataset)) return;
+
+            Object.keys(props).forEach(property => {
+                if (typeof props[property] === "function") props[property]();
+            });
             showModalStatus(false);
         };
+
 
         const closeModalFromChildren = () => showModalStatus(false);
 
