@@ -1,4 +1,4 @@
-import React, { useState, createContext, useContext, useMemo, useEffect, useRef } from "react";
+import React, { useState, createContext, useContext, forwardRef, useMemo, useEffect, useRef } from "react";
 import styles from "./hook-test.module.scss"
 import img from "../../../Helpers/SVG Loaders/circles.svg";
 
@@ -19,19 +19,26 @@ export const AppHook = () => {
 };
 
 
+import Input from "../ExportStage/HookExport";
+
 
 export const HookTest = () => {
     const [, reRender] = useState();
     const { colors, changeColors } = useContext(ColorContext);
+    const [ count, setCt ] = useState(0);
+
     const [spinnerState, toggleSpinner] = useState(false);
 
 
+    const inputRef = useRef(null);
+
     useEffect(() => {
-        console.log('show');
+        //console.log('show');
+
         return () => {
-            console.log('unm');
+            //console.log('unm');
         }
-    });
+    }, []);
     //console.log(colors);
 
 
@@ -40,7 +47,9 @@ export const HookTest = () => {
         <div className={styles.wrapper}>
             <div className={styles.cnt}>
                 Content
+                <Input ref={inputRef} data={'Glow'}/>
             </div>
+            { count }
 
             <div>
                 {spinnerState
@@ -49,8 +58,9 @@ export const HookTest = () => {
                 }
             </div>
             <p className={styles.btn_wrp}>
-                <button className={styles.btn} onClick={() => toggleSpinner((state) => !state)}>Click me</button>
+                <button className={styles.btn} onClick={ () => toggleSpinner((state) => !state) }>Click me</button>
                 <button className={styles.btn} onClick={reRender}>Click rerender</button>
+                <button className={styles.btn} onClick={ () => setCt((prev) => prev + 1) }>Click change</button>
             </p>
         </div>
     )

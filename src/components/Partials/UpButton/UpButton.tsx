@@ -1,25 +1,23 @@
-import React, { PureComponent } from "react";
+import React, { PureComponent, useEffect, useRef, useState } from "react";
 import styles from "./up-button.module.scss";
 import cn from "classnames";
 
-class UpButton extends PureComponent<any, { isPageScrolledToBottom: boolean }> {
-    constructor(
-        props: unknown,
-        private resizeInactivityTimer: any,
-        private readonly upBtnElem: React.RefObject<HTMLDivElement>,
-    ) {
-        super(props);
-        this.upBtnElem = React.createRef();
-        this.resizeInactivityTimer = null;
-        this.state = {
-            isPageScrolledToBottom: false,
-        }
-    }
+import * as utils from "@components/Helpers/Functions/scrollbarHelper";
 
-    fixUpBtnWhenResize = () => {
-        clearTimeout(this.resizeInactivityTimer);
+
+type upBtnElemType = {
+    current: any
+};
+
+const UpButton = () => {
+    const [isPageScrolledToBottom, changePageScrolledStatus] = useState(false);
+    const upBtnElem:upBtnElemType = useRef();
+    let resizeInactivityTimer:any = useRef();
+
+    const fixUpBtnWhenResize = () => {
+        clearTimeout(resizeInactivityTimer.current);
         // скрываем, чтобы не было видно смещений элемента на пересчете отступа
-        if (this.upBtnElem.current) this.upBtnElem.current.style.display = "none";
+        if (upBtnElem.current) upBtnElem.current.style.display = "none";
         /**
          * удаляем display свойство, оно все равно не проявит элемент без isPageScrolledToBottom. Оно использутся когда
          * isPageScrolledToBottom уже в true
@@ -28,47 +26,44 @@ class UpButton extends PureComponent<any, { isPageScrolledToBottom: boolean }> {
          * Таким образом кнопка прокрутки всегда фиксирована и не смещается из-за пропажи скролла, причем это работает и на
          * resize страницы
          */
-        this.resizeInactivityTimer = setTimeout(() => {
-            if (this.upBtnElem.current) {
-                this.upBtnElem.current.style.removeProperty("display");
-                const rightOffset = getComputedStyle(this.upBtnElem.current).getPropertyValue("right");
-                const leftOffset =  this.upBtnElem.current.offsetWidth + parseInt(rightOffset);
+        resizeInactivityTimer.current = setTimeout(() => {
+            if (upBtnElem.current) {
+                upBtnElem.current.style.removeProperty("display");
+                const rightOffset = getComputedStyle(upBtnElem.current).getPropertyValue("right");
+                const leftOffset =  upBtnElem.current.offsetWidth + parseInt(rightOffset);
                 const offset = document.documentElement.clientWidth - leftOffset;
-                this.upBtnElem.current.style.left = `${offset}px`;
+                upBtnElem.current.style.left = `${offset}px`;
             }
         }, 1000);
     };
 
-    componentDidMount(): void {
-        if (this.upBtnElem.current) {
-            this.upBtnElem.current.style.left = getComputedStyle(this.upBtnElem.current).getPropertyValue("left");
+    const handleScroll = (): void => {
+        window.scrollY > document.documentElement.clientHeight ? changePageScrolledStatus(true) : changePageScrolledStatus(false);
+    };
+
+    useEffect(() => {
+        if (upBtnElem.current) {
+            upBtnElem.current.style.left = getComputedStyle(upBtnElem.current).getPropertyValue("left");
         }
-        window.addEventListener("scroll", this.handleScroll);
-        window.addEventListener("resize", this.fixUpBtnWhenResize);
-    }
+        window.addEventListener("scroll", handleScroll);
+        window.addEventListener("resize", fixUpBtnWhenResize);
 
-    componentWillUnmount(): void {
-        window.removeEventListener("scroll", this.handleScroll);
-        window.removeEventListener("resize", this.fixUpBtnWhenResize);
-        clearTimeout(this.resizeInactivityTimer);
-    }
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+            window.removeEventListener("resize", fixUpBtnWhenResize);
+            clearTimeout(resizeInactivityTimer.current);
+        }
+    }, []);
 
-    handleScroll = (): void => {
-        window.scrollY > document.documentElement.clientHeight
-            ? this.setState({ isPageScrolledToBottom: true })
-            : this.setState({ isPageScrolledToBottom: false });
+    const scrollToTop = () => {
+        if (isPageScrolledToBottom) utils.scrollToTop()
     };
 
-    scrollUp = ():void => {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-    };
+    const classList = cn(styles.up, {
+        [styles.show]: isPageScrolledToBottom,
+    });
 
-    render():React.ReactNode {
-        const classList = cn(styles.up, {
-            [styles.show]: this.state.isPageScrolledToBottom,
-        });
-        return <div ref={this.upBtnElem} onClick={this.scrollUp} className={classList} />;
-    }
-}
+    return <div ref={upBtnElem} onClick={scrollToTop} className={classList} />;
+};
 
 export default UpButton;

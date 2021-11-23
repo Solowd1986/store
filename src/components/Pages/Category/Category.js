@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import {Redirect} from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import * as PropTypes from "prop-types";
 
 import CategoryProductsList from "./CategoryProductsList/CategoryProductsList";
@@ -12,6 +12,13 @@ import { connect } from "react-redux";
 
 import arrayShuffle from "@components/Helpers/Functions/arrayShuffle";
 import produce from "immer";
+
+
+const CategoryFoo = () => {
+
+
+};
+
 
 class Category extends PureComponent {
     static propTypes = {
@@ -119,10 +126,10 @@ class Category extends PureComponent {
         if (this.props.error.recived) return <Redirect to={this.props.error.code}/>;
         if (this.isStateEmpty()) {
             const SpinnerModal = ModalWrapper(Spinner);
-            return <SpinnerModal />;
+            return <SpinnerModal/>;
         }
         const { main: category, data: products } = this.state.products;
-        return <CategoryProductsList category={category} products={products} />;
+        return <CategoryProductsList category={category} products={products}/>;
     }
 }
 

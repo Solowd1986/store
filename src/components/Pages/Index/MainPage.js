@@ -25,8 +25,6 @@ import { Redirect } from "react-router-dom";
 
 
 
-//import {test1} from "../../../ts/test";
-//test1();
 
 
 class MainPage extends Component {

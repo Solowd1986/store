@@ -1,20 +1,13 @@
 import React, { PureComponent } from "react";
 import styles from "./sort-products.module.scss";
 import cn from "classnames";
+import {SortProductsProps, SortProductsState } from "./types/SortProducts";
 
 import { AnyAction, bindActionCreators, Dispatch } from "redux";
 import * as categoryActions from "@redux/entities/category/actions";
-
 import { connect } from "react-redux";
 
 
-type SortProductsState = {
-    showSortPanel: boolean
-};
-type SortProductsProps = {
-    readonly sortType: string,
-    readonly changeSortType: (sortType: string) => void;
-};
 
 
 class SortPorducts extends PureComponent<SortProductsProps, SortProductsState> {

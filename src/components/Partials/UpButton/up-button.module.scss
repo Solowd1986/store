@@ -15,13 +15,14 @@
   background-size: contain;
   opacity: 0;
   transition: opacity 0.3s linear;
-
-  &:hover {
-    opacity: 0.95;
-    cursor: pointer;
-  }
 }
+
 
 .show {
   opacity: 0.8;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.95;
+  }
 }
