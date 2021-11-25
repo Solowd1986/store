@@ -57,9 +57,12 @@
   width: 9px;
   height: 9px;
   margin-left: 4px;
-  -webkit-transition: all 0.3s;
-  transition: all 0.3s;
 }
+
+.icon_rotate {
+  transform: rotate(180deg);
+}
+
 
 .sort_list_panel {
   position: absolute;

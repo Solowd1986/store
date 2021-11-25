@@ -33,7 +33,7 @@ export const AppHook = () => {
 
     useAsyncEffect(async () => {
         try {
-            console.log(userId);
+           // console.log(userId);
 
             //const data = await axios.get(`http://hn.algolia.com/api/v1/items/${userId}`);
         }
@@ -42,7 +42,7 @@ export const AppHook = () => {
         }
     },
         () => {
-            console.log('unc', userId);
+           // console.log('unc', userId);
         },
 
         [userId]);

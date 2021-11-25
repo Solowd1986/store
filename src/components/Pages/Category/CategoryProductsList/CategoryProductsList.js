@@ -2,6 +2,7 @@ import React, { PureComponent } from "react";
 import cn from "classnames";
 
 import SortPorducts from "@components/Partials/SortProducts/SortProducts";
+
 import LazyLoad from "@components/Partials/LazyLoad/LazyLoad";
 import ProductCard from "@components/Partials/ProductCard/ProductCard";
 import styles from "./category-products-list.module.scss";

@@ -26,12 +26,12 @@ import { Redirect } from "react-router-dom";
 
 
 function Counter() {
-    console.log('exec Counter');
+   // console.log('exec Counter');
     const [count, setCount] = useState(0);
     const prevCount = usePrevious(count);
-    console.log('prev', prevCount);
+    //console.log('prev', prevCount);
 
-    console.log('end line of two');
+   // console.log('end line of two');
     return (
         <>
             <h1>Now: {count}, before: {prevCount}</h1>;
@@ -41,11 +41,11 @@ function Counter() {
 }
 
 function usePrevious(value) {
-    console.log('exec usePrevious');
+  //  console.log('exec usePrevious');
 
     const ref = useRef();
     useEffect(() => {
-        console.log('start effect');
+        //console.log('start effect');
         ref.current = value;
     });
     return ref.current;
