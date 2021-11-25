@@ -6,8 +6,8 @@ import * as PropTypes from "prop-types";
 import * as cartActions from "@redux/entities/cart/actions";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import FormInputCounter from "@components/Partials/Form/FormInputCounter/FormInputCounter";
-import CancelButton from "@components/Partials/Form/CancelButton/CancelButton";
+import FormInputCounter from "@components/Pages/Order/OrderForm/FormComponents/FormInputCounter/FormInputCounter";
+import CancelButton from "@components/Pages/Order/OrderForm/FormComponents/CancelButton/CancelButton";
 
 class OrderItem extends Component {
     static propTypes = {

@@ -6,7 +6,7 @@ import OrderItem from "@components/Pages/Order/OrderForm/OrderSummary/OrderItem/
 import * as cartSelectors from "@redux/entities/cart/selectors/cartSelectors";
 import { connect } from "react-redux";
 import styles from "./order-summary.module.scss";
-import SubmitButton from "@components/Partials/Form/SubmitButton/SubmitButton";
+import SubmitButton from "@components/Pages/Order/OrderForm/FormComponents/SubmitButton/SubmitButton";
 
 class OrderSummary extends Component {
     render() {

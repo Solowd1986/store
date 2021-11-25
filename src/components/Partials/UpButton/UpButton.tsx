@@ -1,18 +1,13 @@
 import React, { PureComponent, useEffect, useRef, useState } from "react";
 import styles from "./up-button.module.scss";
 import cn from "classnames";
-
+import { upBtnElemType, upBtnElemTimerType } from "./types/UpButton";
 import * as utils from "@components/Helpers/Functions/scrollbarHelper";
-
-
-type upBtnElemType = {
-    current: any
-};
 
 const UpButton = () => {
     const [isPageScrolledToBottom, changePageScrolledStatus] = useState(false);
     const upBtnElem:upBtnElemType = useRef();
-    let resizeInactivityTimer:any = useRef();
+    let resizeInactivityTimer:upBtnElemTimerType = useRef();
 
     const fixUpBtnWhenResize = () => {
         clearTimeout(resizeInactivityTimer.current);

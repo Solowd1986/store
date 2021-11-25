@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from "react";
+import React, { Component, useEffect, useState, useRef } from "react";
 import * as PropTypes from "prop-types";
 
 import Spinner from "@components/Partials/Spinner/Spinner";
@@ -16,12 +16,40 @@ import { connect } from "react-redux";
 
 
 //import { HookTest } from "@components/test/Hoocs/HookTest/HookTest.js";
-import { AppHook } from "@components/test/Hook/HookTest/HookTest.js";
+import { AppHook } from "@components/T_Not Project Files/Hook/HookTest/HookTest.js";
 import ModalWrapper from "@components/Helpers/Hooks/ModalWrapper/ModalWrapper";
 import Confirm from "@components/Pages/Order/Confirm/Confirm";
 
 import { Redirect } from "react-router-dom";
 
+
+
+
+function Counter() {
+    console.log('exec Counter');
+    const [count, setCount] = useState(0);
+    const prevCount = usePrevious(count);
+    console.log('prev', prevCount);
+
+    console.log('end line of two');
+    return (
+        <>
+            <h1>Now: {count}, before: {prevCount}</h1>;
+            <button onClick={() => setCount(count + 1)}>Change</button>
+        </>
+    )
+}
+
+function usePrevious(value) {
+    console.log('exec usePrevious');
+
+    const ref = useRef();
+    useEffect(() => {
+        console.log('start effect');
+        ref.current = value;
+    });
+    return ref.current;
+}
 
 
 
@@ -58,6 +86,7 @@ class MainPage extends Component {
 
                 {/*<Wrapped bg interactions/>*/}
                 <AppHook/>
+                <Counter/>
 
                 <Promo index={index}/>
                 <BrandStory/>

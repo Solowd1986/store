@@ -1,6 +1,6 @@
 export interface SortProductsProps {
     readonly sortType: string,
-    readonly changeSortType: (sortType: string) => void;
+    readonly changeSortTypeCallback: (sortType: string) => void;
 }
 
 export interface SortProductsState {
