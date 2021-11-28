@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState, useRef } from "react";
+import React, { Component, useEffect, useMemo, useState, useRef } from "react";
 import * as PropTypes from "prop-types";
 
 import Spinner from "@components/Partials/Spinner/Spinner";
@@ -8,7 +8,6 @@ import BrandStory from "./BrandStory/BrandStory";
 import Announcements from "./Announcements/Announcements";
 import About from "./About/About";
 import PromoBadge from "@components/Partials/PromoBadge/PromoBadge";
-
 
 import * as indexActions from "@redux/entities/index/actions";
 import * as indexSelectors from "@redux/entities/index/selectors/indexSelectors";
@@ -21,6 +20,40 @@ import ModalWrapper from "@components/Helpers/Hooks/ModalWrapper/ModalWrapper";
 import Confirm from "@components/Pages/Order/Confirm/Confirm";
 
 import { Redirect } from "react-router-dom";
+
+
+function useBlob(count1) {
+    //console.log('props for Blob', props);
+    //const [user, changeUser] = useState(0);
+    useEffect(() => {
+        console.log('inner effect');
+    }, [count1]);
+    console.log('inner hook render');
+    return null;
+}
+
+
+
+function LogButtonClicks() {
+    const [count, setCount] = useState(0);
+    const [count1, setCount1] = useState(0);
+
+    const calls = () => {
+        const user = useBlob(count1);
+    };
+
+    //console.log('LogButtonClicks rendered!');
+
+    return <div style={{ textAlign: "center"}}>
+        <p>
+            {count}
+            {count1}
+        </p>
+        <button onClick={() => setCount(count + 1)}>Click me</button>
+        <button onClick={() => setCount1(count1 + 1)}>Click me 2</button>
+        <button onClick={() => calls()}>Click me 2</button>
+    </div>
+}
 
 
 
@@ -87,6 +120,7 @@ class MainPage extends Component {
                 {/*<Wrapped bg interactions/>*/}
                 <AppHook/>
                 <Counter/>
+                <LogButtonClicks/>
 
                 <Promo index={index}/>
                 <BrandStory/>

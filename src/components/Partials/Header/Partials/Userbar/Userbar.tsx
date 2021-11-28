@@ -57,4 +57,4 @@ const Userbar = ({ amountOfProductsInCart }: { amountOfProductsInCart: number })
 };
 
 const mapStateToProps = (state: unknown) => ({ amountOfProductsInCart: cartSelectors.cartAmountOfGoodsSelector(state) });
-export default connect(mapStateToProps)(Userbar);
+export default connect(mapStateToProps)(React.memo(Userbar));

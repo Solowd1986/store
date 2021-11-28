@@ -37,4 +37,4 @@ const PromoBadge = ():JSX.Element => (
     </ul>
 );
 
-export default PromoBadge;
+export default React.memo(PromoBadge);

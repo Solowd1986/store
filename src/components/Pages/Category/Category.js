@@ -20,6 +20,8 @@ const CategoryFoo = () => {
 };
 
 
+
+
 class Category extends PureComponent {
     static propTypes = {
         clearCategoryPageReduxData: PropTypes.func,
