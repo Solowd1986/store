@@ -1,4 +1,4 @@
-import React, { PureComponent, useEffect, useState } from "react";
+import React, { PureComponent, useEffect, useState, useRef } from "react";
 import { Redirect } from "react-router-dom";
 import * as PropTypes from "prop-types";
 
@@ -17,17 +17,28 @@ import produce from "immer";
 import { CategoryProps } from "@components/Pages/Category/types/Category";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 
-interface InterfaceState {
-    products: null,
-    lastIndex: 0
+interface IState {
+    products: any,
+    lastIndex: number
 }
+
+
+function usePrevious(value:any) {
+    const ref = useRef();
+    useEffect(() => {
+        ref.current = value;
+    });
+    return ref.current;
+}
+
 
 
 const Category = (props: RouteComponentProps & CategoryProps) => {
 
-    const [state, setState] = useState({ products: null, lastIndex: 0 });
-
     const {sortType, clearCategoryReduxState, match, lastIndex, fetchCategoryPageData, error, data, lazy } = props;
+    const [state, setState] = useState({ products: null, lastIndex: 0 });
+    const prevProps:any = usePrevious(props);
+
 
     const isStateEmpty = () => !state.products;
     const clearState = () => {
@@ -57,7 +68,7 @@ const Category = (props: RouteComponentProps & CategoryProps) => {
             }
         }
         setState(
-            produce(state, (draft) => {
+            produce<IState>(state, (draft) => {
                 draft["products"].data = productsList;
             }),
         );
@@ -67,8 +78,7 @@ const Category = (props: RouteComponentProps & CategoryProps) => {
     useEffect(() => {
 
         if (isStateEmpty() && data) setState((state) => ({ products: data, lastIndex: state.lastIndex }));
-
-        if (!isStateEmpty() && prevProps.sortType !== this.props.sortType) sortProducts();
+        if (!isStateEmpty() && prevProps.sortType !== sortType) sortProducts();
 
 
         if (isRouteChanged()) {
@@ -78,7 +88,7 @@ const Category = (props: RouteComponentProps & CategoryProps) => {
 
         if (isLazyLoadRecived()) {
             setState(
-                produce(state, (draft) => {
+                produce<IState>(state, (draft) => {
                     draft["lastIndex"] = lastIndex;
                     draft["products"]["main"] = state.products.main;
                     draft["products"]["data"] = [
@@ -89,7 +99,7 @@ const Category = (props: RouteComponentProps & CategoryProps) => {
             );
         }
 
-    }, [sortType]);
+    }, [props]);
 
 
 
@@ -107,6 +117,8 @@ const Category = (props: RouteComponentProps & CategoryProps) => {
 
     const { main: category, data: products } = state.products;
     return <CategoryProductsList category={category} products={products}/>;
+
+
 
 };
 
@@ -168,9 +180,11 @@ const Category = (props: RouteComponentProps & CategoryProps) => {
 //      * 2. Смена типа сортировки. По умолчанию тип сортировки приходит из Redux (иницилизирующее значение) Если state не пуст,
 //      *    и тип сортировки пришедший в props отличается - то меняем порядок элементов в текущем state. Проверка на пустоту state нужна,
 //      *    так как при переходе между категориями тип сортировки сбрасывает на стандартный). Это ведет к вызове метода сортировки, но
-//      *    также при переходе между категориями сбрасывается state, а значит, нет данных для сортировки. Потому и нужна проверка.
-//      * 3. Смена route-пути. Это происходит лишь в рамках уже загруженного компонента, а значит, state должен быть не пуст. В этом
-//      *    случае проверяем alias текущей категории и поле match из props, если они разные - были переходы в рамках компонента.
+//      *    также при переходе между категориями сбрасывается state, а значит, воообще нет данных для сортировки. Потому и нужна проверка.
+
+//      * 3. Смена route-пути между разными категориями. Это происходит лишь в рамках уже загруженного компонента Category,
+//           а значит, state должен быть не пуст.
+//           В этом случае проверяем alias текущей категории и поле match из props, если они разные - были переходы в рамках компонента.
 //      *    Может возникнуть вопрос: отчего не использовать для определения сортировки метод isRouteChanged? Проблема в том, что
 //      *    в рамках очики данных, метод безвреден: вернет false если state пуст, вернет false пути не поменялись и вернет true, толкьо
 //      *    если state не пуст и пути поменялись. Но если в сортирвоки вписать что-то типа: (prevSort !== nexSort && !isRouteChanged),

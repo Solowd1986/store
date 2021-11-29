@@ -8,7 +8,7 @@ import styles from "./category-products-list.module.scss";
 
 
 
-const CategoryProductsList = ({ category, products }) => {
+const CategoryProductsList = ({ category, products }: {category: any, products: any}) => {
 
     return (
         <div className={styles.category_wrapper}>
@@ -28,7 +28,7 @@ const CategoryProductsList = ({ category, products }) => {
                 <div className={cn("wrapper", styles.list_wrapper)}>
                     <LazyLoad categoryName={category.alias}>
                         <ul className={styles.list}>
-                            {products.map((item) => (
+                            {products.map((item:any) => (
                                 <ProductCard key={item.title + item.id} item={item} category={category} />
                             ))}
                         </ul>
