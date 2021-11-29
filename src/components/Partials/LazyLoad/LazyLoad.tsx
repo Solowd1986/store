@@ -10,10 +10,10 @@ import { AnyAction, bindActionCreators, Dispatch } from "redux";
 import * as utils from "@components/Helpers/Functions/scrollbarHelper";
 import { connect } from "react-redux";
 
-import {RouteComponentProps} from "react-router";
-import {LazyLoadProps} from "@components/Partials/LazyLoad/types/LazyLoad";
+import { RouteComponentProps } from "react-router";
+import { LazyLoadProps } from "@components/Partials/LazyLoad/types/LazyLoad";
 
-const LazyLoad = (props:RouteComponentProps & LazyLoadProps) => {
+const LazyLoad = (props: RouteComponentProps & LazyLoadProps) => {
     const fetchLazyCategory = () => {
         const { categoryName, lastIndex } = props;
         props.fetchLazyCategoryProducts(categoryName, lastIndex);
@@ -54,7 +54,7 @@ const LazyLoad = (props:RouteComponentProps & LazyLoadProps) => {
                             12.2-14.7s-7.2-12.9-14.7-12.2l-88.9 8c-7.4.7-12.9 7.2-12.2 14.7l8
                             88.9c.6 7 6.5 12.3 13.4 12.3.4 0 .8 0 1.2-.1 7.4-.7 12.9-7.2
                             12.2-14.7l-4.8-54.1c36.3 29.4 80.8 46.5 128.3 48.9 3.8.2 7.6.3 11.3.3
-                            55.1 0 107.5-20.2 148.7-57.4 60.4-54.7 86-137.8 66.8-217.1z" />
+                            55.1 0 107.5-20.2 148.7-57.4 60.4-54.7 86-137.8 66.8-217.1z"/>
                     </g>
                 </svg>
                 <span>Показать больше товаров</span>

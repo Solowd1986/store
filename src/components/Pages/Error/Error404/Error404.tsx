@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import cn from "classnames";
 import styles from "./error-404.module.scss";
 
-const Error404 = (props) => (
+const Error404 = () => (
     <div className={cn("overlay", "overlay__w-bg")}>
         <div className={styles.content}>
             <svg
