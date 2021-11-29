@@ -1,13 +1,12 @@
 import React, { PureComponent, useEffect, useRef, useState } from "react";
 import styles from "./up-button.module.scss";
 import cn from "classnames";
-import { upBtnElemType, upBtnElemTimerType } from "./types/UpButton";
 import * as utils from "@components/Helpers/Functions/scrollbarHelper";
 
 const UpButton = () => {
     const [isPageScrolledToBottom, changePageScrolledStatus] = useState(false);
-    const upBtnElem:upBtnElemType = useRef();
-    let resizeInactivityTimer:upBtnElemTimerType = useRef();
+    const upBtnElem = useRef<HTMLDivElement>(null);
+    let resizeInactivityTimer = useRef(0);
 
     const fixUpBtnWhenResize = () => {
         clearTimeout(resizeInactivityTimer.current);
@@ -21,7 +20,7 @@ const UpButton = () => {
          * Таким образом кнопка прокрутки всегда фиксирована и не смещается из-за пропажи скролла, причем это работает и на
          * resize страницы
          */
-        resizeInactivityTimer.current = setTimeout(() => {
+        resizeInactivityTimer.current = window.setTimeout(() => {
             if (upBtnElem.current) {
                 upBtnElem.current.style.removeProperty("display");
                 const rightOffset = getComputedStyle(upBtnElem.current).getPropertyValue("right");
@@ -46,7 +45,7 @@ const UpButton = () => {
         return () => {
             window.removeEventListener("scroll", handleScroll);
             window.removeEventListener("resize", fixUpBtnWhenResize);
-            clearTimeout(resizeInactivityTimer.current);
+            window.clearTimeout(resizeInactivityTimer.current);
         }
     }, []);
 

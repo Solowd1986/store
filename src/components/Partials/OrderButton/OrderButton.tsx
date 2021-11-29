@@ -1,82 +1,71 @@
-import React, { PureComponent } from "react";
+import React, { PureComponent, useEffect, useRef } from "react";
 import styles from "./order-button.module.scss";
 import cn from "classnames";
 import cartIcon from "./img/cart";
 
-import { ProductTypes, CartTypes, ProductsInCart } from "@root/ts/types//types";
+import { IOrderButtonProps, buttonClickHandler, isProductInCart } from "@components/Partials/OrderButton/types/OrderButton";
+import {ProductTypes} from "@root/ts/types/types";
+
 import { AnyAction, bindActionCreators, Dispatch } from "redux";
 import * as cartActions from "@redux/entities/cart/actions";
 import * as cartSelector from "@redux/entities/cart/selectors/cartSelectors";
 import { connect } from "react-redux";
 
-interface OrderButtonPropsInterface {
-    product: ProductTypes,
-    productsInCart?: ProductTypes[],
-    addItemToCart?: () => void,
-    removeItemFromCart?: () => void,
-    classList?: string,
-}
+
+const OrderButton = (props: IOrderButtonProps) => {
+    const { productsInCart = [], product, product: { title, id, rest } } = props;
+    const delayAddingItem = useRef(0);
 
 
-class OrderButton extends PureComponent<OrderButtonPropsInterface> {
-    constructor(props: OrderButtonPropsInterface, private delayAddingItem: ReturnType<typeof setTimeout> ) {
-        super(props);
-    }
-
-    onClick = (evt: React.MouseEvent<HTMLButtonElement>,
-               product: ProductTypes,
-               callback: (product: ProductTypes) => void = () => {}) => {
-
-
+    const buttonClickHandler:buttonClickHandler = (evt, product, callback) => {
         if (!(evt.target instanceof HTMLButtonElement)) return;
         evt.target.classList.add(styles.disabled);
         evt.target.disabled = true;
-        this.delayAddingItem = setTimeout(() => {
+
+        delayAddingItem.current = window.setTimeout(() => {
             if (!(evt.target instanceof HTMLButtonElement)) return;
             evt.target.classList.remove(styles.disabled);
             evt.target.disabled = false;
-            callback(product);
+            if (callback) callback(product);
         }, 1000);
     };
 
-    componentWillUnmount():void {
-        clearTimeout(this.delayAddingItem);
-    }
 
-    isProductInCart = (productsInCart: ProductTypes[], title: string, id: number) =>
+    useEffect(() => {
+        return () => {
+            window.clearTimeout(delayAddingItem.current);
+        };
+    }, []);
+
+    const isProductInCart:isProductInCart = (productsInCart, title, id) =>
         productsInCart.find((item: ProductTypes) => item.title === title && item.id === id);
 
+    const isProductInCartStatus = isProductInCart(productsInCart, title, id);
 
-    render() {
-        //console.log(this.props);
-        const { productsInCart = [], product, product: { title, id, rest } } = this.props;
+    const spinnerIcon = <span className={styles.loader}/>; //Спиннер появится при состоянии :disabled у кнопки
+    const innerText = !rest ? "Нет в наличии" : !isProductInCartStatus ? "Добавить в заказ" : "Убрать из заказа";
 
-        const isProductInCart = this.isProductInCart(productsInCart, title, id);
-
-        const spinnerIcon = <span className={styles.loader} />; //Спиннер появится при состоянии :disabled у кнопки
-        const innerText = !rest ? "Нет в наличии" : !isProductInCart ? "Добавить в заказ" : "Убрать из заказа";
-
-        const clickHandler = !isProductInCart
-            ? (evt:React.MouseEvent<HTMLButtonElement>) => this.onClick(evt, product, this.props.addItemToCart)
-            : (evt:React.MouseEvent<HTMLButtonElement>) => this.onClick(evt, product, this.props.removeItemFromCart);
-
-        const classList = cn("btn", styles.order__btn, {
-            [styles.btn_grey_bg]: isProductInCart || rest === 0,
-            [styles.btn_disabled]: !rest,
-            [this.props.classList as string]: this.props.classList,
-        });
-
-        return (
-            <button className={classList} onClick={clickHandler} disabled={!rest}>
-                {cartIcon}
-                {spinnerIcon}
-                {innerText}
-            </button>
-        );
-    }
-}
+    const clickHandler = !isProductInCartStatus
+        ? (evt: React.MouseEvent<HTMLButtonElement>) => buttonClickHandler(evt, product, props.addItemToCart)
+        : (evt: React.MouseEvent<HTMLButtonElement>) => buttonClickHandler(evt, product, props.removeItemFromCart);
 
 
-const mapStateToProps = (state:unknown) => ({ productsInCart: cartSelector.cartItemsSelector(state) });
+    const classList = cn("btn", styles.order__btn, {
+        [styles.btn_grey_bg]: isProductInCartStatus || rest === 0,
+        [styles.btn_disabled]: !rest,
+        [props.classList as string]: props.classList,
+    });
+
+    return (
+        <button className={classList} onClick={clickHandler} disabled={!rest}>
+            {cartIcon}
+            {spinnerIcon}
+            {innerText}
+        </button>
+    );
+};
+
+
+const mapStateToProps = (state: unknown) => ({ productsInCart: cartSelector.cartItemsSelector(state) });
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => bindActionCreators(cartActions, dispatch);
 export default connect(mapStateToProps, mapDispatchToProps)(OrderButton);

@@ -1,73 +1,48 @@
-import React, { PureComponent } from "react";
+import React, { PureComponent, useEffect } from "react";
 import styles from "./lazy-load.module.scss";
 import cn from "classnames";
 
 import { withRouter } from "react-router";
-import { History } from 'history';
-import {RouteComponentProps} from "react-router";
-
 import * as categoryActions from "@redux/entities/category/actions";
 import * as categorySelectors from "@redux/entities/category/selectors/categorySelectors";
 
-
-import { connect } from "react-redux";
 import { AnyAction, bindActionCreators, Dispatch } from "redux";
 import * as utils from "@components/Helpers/Functions/scrollbarHelper";
+import { connect } from "react-redux";
 
+import {RouteComponentProps} from "react-router";
+import {LazyLoadProps} from "@components/Partials/LazyLoad/types/LazyLoad";
 
-
-type PathParamsType = {
-    param: string,
-}
-
-type LazyLoadProps = RouteComponentProps<PathParamsType> & {
-    fetchingLazyDataStart: boolean,
-    hasLazyDataBeenAdded: boolean,
-    categoryName: string,
-
-    discardLazyDataStatus: unknown,
-
-    lastIndex: number,
-    history: History,
-    fetchLazyCategoryProducts: (categoryName: string, lastIndex: number ) => void;
-};
-
-
-class LazyLoad extends PureComponent<LazyLoadProps> {
-    fetchLazyCategory = () => {
-        const { categoryName, lastIndex } = this.props;
-        this.props.fetchLazyCategoryProducts(categoryName, lastIndex);
+const LazyLoad = (props:RouteComponentProps & LazyLoadProps) => {
+    const fetchLazyCategory = () => {
+        const { categoryName, lastIndex } = props;
+        props.fetchLazyCategoryProducts(categoryName, lastIndex);
     };
 
-
-    componentDidUpdate(): void {
-
-        if (this.props.hasLazyDataBeenAdded) {
+    useEffect(() => {
+        if (props.hasLazyDataBeenAdded) {
             utils.scrollToBottom();
-            // @ts-ignore
-            this.props.discardLazyDataStatus();
+            props.discardLazyDataStatus();
         }
+    }, [props.hasLazyDataBeenAdded]);
 
-        //console.log(this.props);
-    }
+    const classList = cn(styles.more, {
+        [styles.active]: props.fetchingLazyDataStart,
+        [styles.hide]: props.lastIndex === -1,
+    });
 
-    render():React.ReactNode {
-        const classList = cn(styles.more, {
-            [styles.active]: this.props.fetchingLazyDataStart,
-            [styles.hide]: this.props.lastIndex === -1,
-        });
-        return (
-            <div className={styles.data_wrapper}>
-                {this.props.children}
-                <button onClick={this.fetchLazyCategory} className={classList}>
-                    <svg
-                        className={styles.loader}
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 489.711 489.711"
-                        width={28}
-                        height={28}>
-                        <g fill="#c51abb">
-                            <path d="M112.156 97.111c72.3-65.4 180.5-66.4 253.8-6.7l-58.1
+    return (
+        <div className={styles.data_wrapper}>
+            {props.children}
+            <button onClick={fetchLazyCategory} className={classList}>
+                <svg
+                    className={styles.loader}
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 489.711 489.711"
+                    width={28}
+                    height={28}>
+                    <g fill="#c51abb">
+                        <path d="M112.156 97.111c72.3-65.4 180.5-66.4 253.8-6.7l-58.1
                             2.2c-7.5.3-13.3 6.5-13 14 .3 7.3 6.3 13 13.5 13h.5l89.2-3.3c7.3-.3
                             13-6.2 13-13.5v-1-.6l-3.3-88.2c-.3-7.5-6.6-13.3-14-13-7.5.3-13.3
                             6.5-13 14l2.1 55.3c-36.3-29.7-81-46.9-128.8-49.3-59.2-3-116.1
@@ -80,14 +55,15 @@ class LazyLoad extends PureComponent<LazyLoadProps> {
                             88.9c.6 7 6.5 12.3 13.4 12.3.4 0 .8 0 1.2-.1 7.4-.7 12.9-7.2
                             12.2-14.7l-4.8-54.1c36.3 29.4 80.8 46.5 128.3 48.9 3.8.2 7.6.3 11.3.3
                             55.1 0 107.5-20.2 148.7-57.4 60.4-54.7 86-137.8 66.8-217.1z" />
-                        </g>
-                    </svg>
-                    <span>Показать больше товаров</span>
-                </button>
-            </div>
-        );
-    }
-}
+                    </g>
+                </svg>
+                <span>Показать больше товаров</span>
+            </button>
+        </div>
+    );
+
+
+};
 
 const mapStateToProps = (state: unknown) => categorySelectors.getLazyParams(state);
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => bindActionCreators(categoryActions, dispatch);
