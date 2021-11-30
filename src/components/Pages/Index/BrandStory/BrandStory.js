@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./brandstory.module.scss";
 
-const BrandStory = (props) => (
+const BrandStory = () => (
     <section className={styles.brand_story}>
         <div className={`${styles.brand_story__item} ${styles.milestone_item}`}>
             <div className={styles.brand_story__info}>

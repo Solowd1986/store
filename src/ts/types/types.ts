@@ -39,3 +39,8 @@ export interface IndexPageTypes {
     }
 }
 
+export interface Error {
+    recived: boolean,
+    code: number
+}
+

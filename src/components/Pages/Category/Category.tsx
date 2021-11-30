@@ -1,6 +1,11 @@
-import React, { PureComponent, useEffect, useState, useRef } from "react";
+import React, {  useEffect, useState, useRef } from "react";
 import { Redirect } from "react-router-dom";
-import * as PropTypes from "prop-types";
+
+import { CategoryProps, ICategoryState } from "@components/Pages/Category/types/Category";
+import { usePreviousProps } from "@components/Helpers/Hooks/PreviousProps/PreviousProps";
+
+import arrayShuffle from "@components/Helpers/Functions/arrayShuffle";
+import produce from "immer";
 
 import CategoryProductsList from "./CategoryProductsList/CategoryProductsList";
 import Spinner from "@components/Partials/Spinner/Spinner";
@@ -10,35 +15,38 @@ import * as categoryActions from "@redux/entities/category/actions";
 import * as categorySelectors from "@redux/entities/category/selectors/categorySelectors";
 import { connect } from "react-redux";
 
-import arrayShuffle from "@components/Helpers/Functions/arrayShuffle";
-import produce from "immer";
+import { RouteComponentProps } from 'react-router-dom';
+import { ProductTypes } from "@root/ts/types/types";
+
+/**
+ * data - содержит два поля: main и data. Первое - это общие данные по категории, второе - массив товаров
+ * lastIndex - индекс последнего элемента, добаленного через lazyload
+ * sortType - тип сортировки
+ * lazy - данные lazyload, подгружаемые дополнительно
+ * match - поле от Роутера, в нем приходит путь по которому был переход, например, новая категория телефоны/гаджеты/etc
+ * error - ошибка, при получении выполняется редирект на страницу ошибки
+ * clearCategoryReduxState - метод для очистки redux state
+ * fetchCategoryPageData - метод для запроса данных на сервер
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ */
 
 
-import { CategoryProps } from "@components/Pages/Category/types/Category";
-import { RouteComponentProps, withRouter } from "react-router-dom";
-
-interface IState {
-    products: any,
-    lastIndex: number
-}
+const Category = (props: CategoryProps) => {
+    console.log(props);
 
 
-function usePrevious(value:any) {
-    const ref = useRef();
-    useEffect(() => {
-        ref.current = value;
-    });
-    return ref.current;
-}
-
-
-
-const Category = (props: RouteComponentProps & CategoryProps) => {
-
-    const {sortType, clearCategoryReduxState, match, lastIndex, fetchCategoryPageData, error, data, lazy } = props;
-    const [state, setState] = useState({ products: null, lastIndex: 0 });
-    const prevProps:any = usePrevious(props);
-
+    const { data, lastIndex, sortType, lazy, match, error, clearCategoryReduxState, fetchCategoryPageData } = props;
+    const [state, setState] = useState<ICategoryState>({ products: null, lastIndex: 0 });
+    const prevProps: any = usePreviousProps(props);
+    console.log(state);
 
     const isStateEmpty = () => !state.products;
     const clearState = () => {
@@ -68,17 +76,15 @@ const Category = (props: RouteComponentProps & CategoryProps) => {
             }
         }
         setState(
-            produce<IState>(state, (draft) => {
+            produce<ICategoryState>(state, (draft) => {
                 draft["products"].data = productsList;
             }),
         );
     };
 
-
     useEffect(() => {
-
         if (isStateEmpty() && data) setState((state) => ({ products: data, lastIndex: state.lastIndex }));
-        if (!isStateEmpty() && prevProps.sortType !== sortType) sortProducts();
+        if (!isStateEmpty() && prevProps && prevProps.sortType !== sortType) sortProducts();
 
 
         if (isRouteChanged()) {
@@ -88,7 +94,7 @@ const Category = (props: RouteComponentProps & CategoryProps) => {
 
         if (isLazyLoadRecived()) {
             setState(
-                produce<IState>(state, (draft) => {
+                produce<ICategoryState>(state, (draft) => {
                     draft["lastIndex"] = lastIndex;
                     draft["products"]["main"] = state.products.main;
                     draft["products"]["data"] = [
@@ -102,8 +108,7 @@ const Category = (props: RouteComponentProps & CategoryProps) => {
     }, [props]);
 
 
-
-    useEffect(() =>{
+    useEffect(() => {
         fetchCategoryPageData(props);
         return () => clearState() // очистка state и redux-store при каждом размонтировании компонента
     }, []);
@@ -117,9 +122,6 @@ const Category = (props: RouteComponentProps & CategoryProps) => {
 
     const { main: category, data: products } = state.products;
     return <CategoryProductsList category={category} products={products}/>;
-
-
-
 };
 
 
@@ -242,5 +244,5 @@ const Category = (props: RouteComponentProps & CategoryProps) => {
 //     }
 // }
 
-const mapStateToProps = (state:unknown) => categorySelectors.getCategoryData(state);
+const mapStateToProps = (state: unknown) => categorySelectors.getCategoryData(state);
 export default connect(mapStateToProps, categoryActions)(Category);
