@@ -39,4 +39,4 @@ const About = () => (
     </div>
 );
 
-export default About;
+export default React.memo(About);

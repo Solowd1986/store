@@ -64,4 +64,4 @@ const BrandStory = () => (
     </section>
 );
 
-export default BrandStory;
+export default React.memo(BrandStory);
