@@ -40,13 +40,9 @@ import { ProductTypes } from "@root/ts/types/types";
 
 
 const Category = (props: CategoryProps) => {
-    console.log(props);
-
-
     const { data, lastIndex, sortType, lazy, match, error, clearCategoryReduxState, fetchCategoryPageData } = props;
     const [state, setState] = useState<ICategoryState>({ products: null, lastIndex: 0 });
     const prevProps: any = usePreviousProps(props);
-    console.log(state);
 
     const isStateEmpty = () => !state.products;
     const clearState = () => {

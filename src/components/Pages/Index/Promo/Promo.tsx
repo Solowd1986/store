@@ -2,20 +2,9 @@ import React, { Component, PureComponent } from "react";
 import { IndexPageTypes, ProductTypes } from "@root/ts/types/types";
 import styles from "./promo.module.scss";
 import cn from "classnames";
-
 import ProductCard from "@components/Partials/ProductCard/ProductCard";
 
-
-interface IPromo {
-    index: {
-        phones: any,
-        accessoires: any,
-        gadgets: any
-    }
-}
-
-
-const Promo = ({ index: { phones, accessoires, gadgets } }:IPromo) => {
+const Promo = ({ index: { phones, accessoires, gadgets } }:IndexPageTypes) => {
     return (
         <section className={cn("container", styles.wrapper)}>
             <main className={cn("wrapper", styles.content)}>

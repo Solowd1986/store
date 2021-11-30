@@ -1,3 +1,5 @@
+import { ISlide, ISlides } from "@components/Pages/Index/Slider/types/Slider";
+
 export interface ProductTypes {
     id: number,
     title: string,
@@ -35,7 +37,7 @@ export interface IndexPageTypes {
     readonly index: {
         phones: CategoryTypes
         gadgets: CategoryTypes,
-        accessoires: CategoryTypes
+        accessoires: CategoryTypes,
     }
 }
 
@@ -43,4 +45,16 @@ export interface Error {
     recived: boolean,
     code: number
 }
+
+export interface IMainPage {
+    index: {
+        phones: CategoryTypes
+        gadgets: CategoryTypes,
+        accessoires: CategoryTypes,
+        slider: ISlide[]
+    },
+    error: Error,
+    fetchIndexPageData: () => void
+}
+
 
