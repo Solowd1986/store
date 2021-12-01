@@ -11,4 +11,4 @@ const EmptyOrderPage = () => (
     </div>
 );
 
-export default EmptyOrderPage;
+export default React.memo(EmptyOrderPage);

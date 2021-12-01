@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./cancel-button.module.scss";
 import cn from "classnames";
 
-const CancelButton = ({ children, handler, classList = "" }) => (
+const CancelButton = ({ children, handler, classList = "" }:any) => (
     <span onClick={handler} className={cn(styles.btn, classList)}>{children || <span>&times;</span>}</span>
 );
 

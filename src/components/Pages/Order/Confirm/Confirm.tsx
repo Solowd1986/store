@@ -3,7 +3,7 @@ import cn from "classnames";
 import styles from "./confirm.module.scss";
 import img from "./img/thanks_sir.png";
 
-const Confirm = (props) => {
+const Confirm = (props:any) => {
     const onClose = () => {
         Object.keys(props).forEach(property => {
             if (typeof props[property] === "function") props[property]();
@@ -18,9 +18,6 @@ const Confirm = (props) => {
             <p>Наш менеджер свяжется с вами в ближайшее время</p>
         </div>
     )
-
 };
-
-
 
 export default Confirm;

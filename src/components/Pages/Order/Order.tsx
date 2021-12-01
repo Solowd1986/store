@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import EmptyOrderPage from "./EmptyOrderPage/EmptyOrderPage";
 import OrderForm from "./OrderForm/OrderForm";
 
-const Order = (props) => {
+const Order = (props:any) => {
     if (!props.amountOfProductsInCart) return <EmptyOrderPage />;
     return (
         <div className={cn("container", styles.container_checkout_bg)}>
@@ -23,5 +23,5 @@ const Order = (props) => {
     );
 };
 
-const mapStateToProps = (state) => ({amountOfProductsInCart: cartSelectors.cartAmountOfGoodsSelector(state)});
+const mapStateToProps = (state:unknown) => ({amountOfProductsInCart: cartSelectors.cartAmountOfGoodsSelector(state)});
 export default connect(mapStateToProps)(Order);

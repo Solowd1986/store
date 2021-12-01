@@ -1,9 +1,9 @@
 import React from "react";
 import styles from "./order_price.module.scss";
 
-const OrderPrice = ({ listOfProducts, shipping: price }) => {
+const OrderPrice = ({ listOfProducts, shipping: price }:any) => {
     const calctotalPrice = () =>
-        listOfProducts.reduce((total, item) => {
+        listOfProducts.reduce((total:any, item:any) => {
             if (item.discount) {
                 const discount = item.price - (item.price * 10) / 100;
                 total += discount * item.quantity;
