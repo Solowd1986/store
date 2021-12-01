@@ -71,6 +71,7 @@
   "proxy": "http://react.test/src/rest/php/index.php",
   "devDependencies": {
     "@types/classnames": "2.2.11",
+    "@types/inputmask": "^5.0.1",
     "@types/jest": "26.0.22",
     "@types/jquery": "3.5.5",
     "@types/js-cookie": "2.2.6",

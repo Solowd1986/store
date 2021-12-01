@@ -16,6 +16,43 @@ import ModalWrapper from "@components/Helpers/Hooks/ModalWrapper/ModalWrapper";
 import Confirm from "@components/Pages/Order/Confirm/Confirm";
 
 
+interface OrderState {
+    isUserConfirmOrder: boolean,
+    isFormTouched: boolean,
+    isFormValid: boolean,
+
+    fields: {
+        name: {
+            error: boolean,
+            msg: string,
+        },
+        phone: {
+            error: boolean,
+            msg: string,
+        },
+        email: {
+            error: boolean,
+            msg: string,
+        },
+        address: {
+            error: boolean,
+            msg: string,
+        },
+        comment: {
+            error: boolean,
+            msg: string,
+        },
+        shipping: {
+            assignment: string,
+            price: number
+        },
+        payment: {
+            assignment: string
+        },
+    },
+}
+
+
 const initalState = {
     isUserConfirmOrder: false,
     isFormTouched: false,
@@ -56,20 +93,21 @@ const validationSchema = setValidateSchema(["name", "phone", "email", "address",
 
 
 
-const OrderForm1 = () => {
+const OrderForm = () => {
 
-    const [state, setState] = useState(initalState);
+    const [state, setState] = useState<OrderState>(initalState);
     const form = useRef<HTMLFormElement>(null);
 
 
     useEffect(() => {
+        if (!form.current) return;
         if (Cookies.get("form-data")) {
             const cookieFormFields = Cookies.getJSON("form-data");
-            const form = Array.from(form.current.elements);
-            const fields = form.filter((item:any) => Object.keys(cookieFormFields).includes(item.name));
+            const formAray = Array.from(form.current.elements);
+            const fields = formAray.filter((item:any) => Object.keys(cookieFormFields).includes(item.name));
             fields.forEach((item:any) => item.value = cookieFormFields[item.name]);
             const formValiditaionData = validateForm();
-            
+
             if (!formValiditaionData.isFormValid) {
                 showAllFormErrors();
             }
@@ -317,10 +355,10 @@ const OrderForm1 = () => {
         }
     };
 
-    
+
     const ConfirmModalDialog = useMemo(() => ModalWrapper(Confirm), []);
 
-    
+
     return (
         <>
             {state.isUserConfirmOrder && <ConfirmModalDialog bg={true} interactions={true} reset={resetOrderForm}/>}
