@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useRef, useState } from "react";
+import React, { Component, useEffect, useMemo, useRef, useState } from "react";
 import styles from "./order-form.module.scss";
 
 import OrderInfo from "./OrderInfo/OrderInfo";
@@ -66,10 +66,10 @@ const OrderForm1 = () => {
         if (Cookies.get("form-data")) {
             const cookieFormFields = Cookies.getJSON("form-data");
             const form = Array.from(form.current.elements);
-            const fields = form.filter(item => Object.keys(cookieFormFields).includes(item.name));
-            fields.forEach(item => item.value = cookieFormFields[item.name]);
-            const formValiditaionData = validateForm(form.current.elements);
-
+            const fields = form.filter((item:any) => Object.keys(cookieFormFields).includes(item.name));
+            fields.forEach((item:any) => item.value = cookieFormFields[item.name]);
+            const formValiditaionData = validateForm();
+            
             if (!formValiditaionData.isFormValid) {
                 showAllFormErrors();
             }
@@ -85,7 +85,7 @@ const OrderForm1 = () => {
      * такое значение тоже, значит ничего не изменилось - выходим. Иначе, если поле есть - вписываем данные, проверка не нужна,
      * так как выше мы выходим при совпадении значений.
      */
-    const saveFormValuesToCookie = (fieldName, fieldValue) => {
+    const saveFormValuesToCookie = (fieldName: string, fieldValue:string) => {
         const cookieExpires = new Date(new Date().getTime() + 15 * 60 * 1000);
         const formField = { [fieldName]: fieldValue };
         const dataForm = Cookies.getJSON("form-data") || null;
@@ -114,10 +114,11 @@ const OrderForm1 = () => {
      * Далее в ицкле заполняем обьект набором "название поля формы - его значение" и возвращаем.
      */
     const getAllTrackedFields = () => {
+        if (!form.current) return;
         const formFieldsToObject = {};
         const validationFields = Object.keys(validationSchema.fields);
-        const formFields = Array.from(form.current.elements).filter(item => validationFields.includes(item.name));
-        formFields.forEach(item => formFieldsToObject[item.name] = item.value);
+        const formFields = Array.from(form.current.elements).filter((item:any) => validationFields.includes(item.name));
+        formFields.forEach((item:any) => formFieldsToObject[item.name] = item.value);
         return formFieldsToObject;
     };
 
@@ -126,7 +127,7 @@ const OrderForm1 = () => {
      * если все ок, возвращаем обьект формата state - то есть обьект с именем поля и false-ошибкой. Иначе - вернем
      * обьект с именем поля, true-ошибкой и текстом этой оишбки. Помни, что validateSyncAt требует обертки из try/catch
      */
-    const checkSingleFieldErrorSync = (inputName, inputValue) => {
+    const checkSingleFieldErrorSync = (inputName:string, inputValue:unknown) => {
         try {
             validationSchema.validateSyncAt(inputName, { [inputName]: inputValue });
             return { fieldName: inputName, error: false };
@@ -144,7 +145,7 @@ const OrderForm1 = () => {
      */
     const validateForm = () => {
         const errors = [];
-        const allFormFields = getAllTrackedFields();
+        const allFormFields:any = getAllTrackedFields();
         for (const [key, value] of Object.entries(allFormFields)) {
             const field = checkSingleFieldErrorSync(key, value);
             if (field.error) errors.push(field);
@@ -161,7 +162,7 @@ const OrderForm1 = () => {
      * Текстовое значение, типа moscow или cash берется из id атрибуты формы. Также у типа доставки есть поле цена - проверяем и
      * заполняем его, если есть.
      */
-    const handleRadioChange = ({ target: { id, name: inputName, dataset: { price = null } } }) => {
+    const handleRadioChange = ({ target: { id, name: inputName, dataset: { price = null } } }:any) => {
         setState(
             produce(state, (draft) => {
                 draft["fields"][inputName]["assignment"] = id;
@@ -260,7 +261,7 @@ const OrderForm1 = () => {
      * Тут не используется полный сброс формы resetOrderForm, так как там isUserConfirmOrder сбрасывается в false, а тут нужно
      * true для показа картинки.
      */
-    const handleSubmit = (evt) => {
+    const handleSubmit = (evt:any) => {
         evt.preventDefault();
 
         if (!validateForm().isFormValid) {
@@ -278,14 +279,17 @@ const OrderForm1 = () => {
      * Метод сброса подтверждения отправки формы, передаем его в модалку, которая выводится после подтверждения. Тогда
      * клик по ней вызове сброс поля isUserConfirmOrder в текущем state и при любой перерисовке не появится неуместное
      * окно подттверждения. Также форма опять обозначится как нетронутоая пользователем.
+     * Событие нужно, чтобы отменить поведение кнопки, которая будучи помещена в форму, провоцирует ее отправку при клике.
+     * И у нас есть такая кнопка очистки формы в OrderSummary.
+     * Но события может не быть, например, если мы передали метод куда-то, где он вызывается не при клике, проверка для этого
      */
-    const resetOrderForm = (evt) => {
+    const resetOrderForm = (evt:any) => {
         if (evt) evt.preventDefault();
         Cookies.remove("form-data");
-        form.current.reset();
+        form.current?.reset();
 
         const fields = { ...state.fields };
-        Object.keys(fields).forEach(item => {
+        Object.keys(fields).forEach((item:any) => {
             if (Object.keys(getAllTrackedFields()).includes(item))
                 fields[item] = { error: false, msg: "" };
         });
@@ -302,9 +306,9 @@ const OrderForm1 = () => {
 
     // Если нажата клавиша Enter, то вызываем клик по кнопке отправки формы и убираем фокус с поля. Это нужно для того,
     // чтобы помешать куче отправок при зажатии клавиши.
-    const handleKeyPress = (evt) => {
+    const handleKeyPress = (evt:any) => {
         if (evt.keyCode === 13) {
-            Array.from(evt.target.form.elements).find(item => {
+            Array.from(evt.target.form.elements).find((item:any) => {
                 if (item.attributes.type && item.attributes.type.value === "submit") {
                     item.click();
                     evt.target.blur();
@@ -313,8 +317,10 @@ const OrderForm1 = () => {
         }
     };
 
-    const ConfirmModalDialog = ModalWrapper(Confirm);
+    
+    const ConfirmModalDialog = useMemo(() => ModalWrapper(Confirm), []);
 
+    
     return (
         <>
             {state.isUserConfirmOrder && <ConfirmModalDialog bg={true} interactions={true} reset={resetOrderForm}/>}

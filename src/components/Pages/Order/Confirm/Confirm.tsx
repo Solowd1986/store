@@ -4,9 +4,9 @@ import styles from "./confirm.module.scss";
 import img from "./img/thanks_sir.png";
 
 const Confirm = (props:any) => {
-    const onClose = () => {
+    const onClose = (evt:any) => {
         Object.keys(props).forEach(property => {
-            if (typeof props[property] === "function") props[property]();
+            if (typeof props[property] === "function") props[property](evt);
         });
     };
 
