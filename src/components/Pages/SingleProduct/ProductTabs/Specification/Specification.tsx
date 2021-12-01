@@ -1,7 +1,9 @@
 import React from "react";
 import styles from "./specification.module.scss";
 
-const Specification = ({ specifications: specs }) => (
+
+
+const Specification = ({ specifications }:any) => (
     <>
         <div className={styles.attributes}>
             <h2 className={styles.table_title}>Общие характеристики</h2>
@@ -9,35 +11,35 @@ const Specification = ({ specifications: specs }) => (
                 <tbody>
                     <tr>
                         <td>Тип</td>
-                        <td>{specs.type}</td>
+                        <td>{specifications.type}</td>
                     </tr>
                     <tr>
                         <td>Цвет</td>
-                        <td>{specs.color}</td>
+                        <td>{specifications.color}</td>
                     </tr>
                     <tr>
                         <td>Тип корпуса</td>
-                        <td>{specs.casetype}</td>
+                        <td>{specifications.casetype}</td>
                     </tr>
                     <tr>
                         <td>Материал корпуса</td>
-                        <td>{specs.casematerial}</td>
+                        <td>{specifications.casematerial}</td>
                     </tr>
                     <tr>
                         <td>Тип SIM-карты</td>
-                        <td>{specs.simtype}</td>
+                        <td>{specifications.simtype}</td>
                     </tr>
                     <tr>
                         <td>Количество SIM-карт</td>
-                        <td>{specs.simcount}</td>
+                        <td>{specifications.simcount}</td>
                     </tr>
                     <tr>
                         <td>Вес</td>
-                        <td>{specs.weight}</td>
+                        <td>{specifications.weight}</td>
                     </tr>
                     <tr>
                         <td>Размеры</td>
-                        <td>{specs.size}</td>
+                        <td>{specifications.size}</td>
                     </tr>
                 </tbody>
             </table>
@@ -47,19 +49,19 @@ const Specification = ({ specifications: specs }) => (
                 <tbody>
                     <tr>
                         <td>Тип экрана</td>
-                        <td>{specs.screentype}</td>
+                        <td>{specifications.screentype}</td>
                     </tr>
                     <tr>
                         <td>Диагональ</td>
-                        <td>{specs.screensize}</td>
+                        <td>{specifications.screensize}</td>
                     </tr>
                     <tr>
                         <td>Размер изображения</td>
-                        <td>{specs.screenresolution}</td>
+                        <td>{specifications.screenresolution}</td>
                     </tr>
                     <tr>
                         <td>Автоматический поворот экрана</td>
-                        <td>{specs.screenrotate}</td>
+                        <td>{specifications.screenrotate}</td>
                     </tr>
                 </tbody>
             </table>
@@ -69,31 +71,31 @@ const Specification = ({ specifications: specs }) => (
                 <tbody>
                     <tr>
                         <td>Тыловая фотокамера</td>
-                        <td>{specs.maincamera}</td>
+                        <td>{specifications.maincamera}</td>
                     </tr>
                     <tr>
                         <td>Фотовспышка</td>
-                        <td>{specs.flashtype}</td>
+                        <td>{specifications.flashtype}</td>
                     </tr>
                     <tr>
                         <td>Функции тыловой фотокамеры</td>
-                        <td>{specs.maincamerafunction}</td>
+                        <td>{specifications.maincamerafunction}</td>
                     </tr>
                     <tr>
                         <td>Диафрагма тыловой фотокамеры</td>
-                        <td>{specs.casetype}</td>
+                        <td>{specifications.casetype}</td>
                     </tr>
                     <tr>
                         <td>Запись видео</td>
-                        <td>{specs.recordingvideo}</td>
+                        <td>{specifications.recordingvideo}</td>
                     </tr>
                     <tr>
                         <td>Макс. частота кадров видео</td>
-                        <td>{specs.maximumframerate}</td>
+                        <td>{specifications.maximumframerate}</td>
                     </tr>
                     <tr>
                         <td>Аудио</td>
-                        <td>{specs.audiosupport}</td>
+                        <td>{specifications.audiosupport}</td>
                     </tr>
                 </tbody>
             </table>
@@ -103,19 +105,19 @@ const Specification = ({ specifications: specs }) => (
                 <tbody>
                     <tr>
                         <td>Стандарт</td>
-                        <td>{specs.connectionstandart}</td>
+                        <td>{specifications.connectionstandart}</td>
                     </tr>
                     <tr>
                         <td>Поддержка диапазонов LTE</td>
-                        <td>{specs.lte}</td>
+                        <td>{specifications.lte}</td>
                     </tr>
                     <tr>
                         <td>Интерфейсы</td>
-                        <td>{specs.interfaces}</td>
+                        <td>{specifications.interfaces}</td>
                     </tr>
                     <tr>
                         <td>Спутниковая навигация</td>
-                        <td>{specs.satellite}</td>
+                        <td>{specifications.satellite}</td>
                     </tr>
                 </tbody>
             </table>
@@ -125,23 +127,23 @@ const Specification = ({ specifications: specs }) => (
                 <tbody>
                     <tr>
                         <td>Процессор</td>
-                        <td>{specs.cpu}</td>
+                        <td>{specifications.cpu}</td>
                     </tr>
                     <tr>
                         <td>Количество ядер процессора</td>
-                        <td>{specs.cpucoresamount}</td>
+                        <td>{specifications.cpucoresamount}</td>
                     </tr>
                     <tr>
                         <td>Видеопроцессор</td>
-                        <td>{specs.videocpu}</td>
+                        <td>{specifications.videocpu}</td>
                     </tr>
                     <tr>
                         <td>Объем встроенной памяти</td>
-                        <td>{specs.memory}</td>
+                        <td>{specifications.memory}</td>
                     </tr>
                     <tr>
                         <td>Объем оперативной памяти</td>
-                        <td>{specs.ram}</td>
+                        <td>{specifications.ram}</td>
                     </tr>
                 </tbody>
             </table>
@@ -151,15 +153,15 @@ const Specification = ({ specifications: specs }) => (
                 <tbody>
                     <tr>
                         <td>Емкость аккумулятора</td>
-                        <td>{specs.acc}</td>
+                        <td>{specifications.acc}</td>
                     </tr>
                     <tr>
                         <td>Тип аккумулятора</td>
-                        <td>{specs.acctype}</td>
+                        <td>{specifications.acctype}</td>
                     </tr>
                     <tr>
                         <td>Тип разъема для зарядки</td>
-                        <td>{specs.connectortype}</td>
+                        <td>{specifications.connectortype}</td>
                     </tr>
                 </tbody>
             </table>
@@ -169,11 +171,11 @@ const Specification = ({ specifications: specs }) => (
                 <tbody>
                     <tr>
                         <td>Комплектация</td>
-                        <td>{specs.supplies}</td>
+                        <td>{specifications.supplies}</td>
                     </tr>
                     <tr>
                         <td>Дата анонсирования</td>
-                        <td>{specs.announcedate}</td>
+                        <td>{specifications.announcedate}</td>
                     </tr>
                 </tbody>
             </table>
@@ -181,4 +183,4 @@ const Specification = ({ specifications: specs }) => (
     </>
 );
 
-export default Specification;
+export default React.memo(Specification);

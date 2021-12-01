@@ -1,9 +1,11 @@
 import React from "react";
 import styles from "./features.module.scss";
 
-const Features = ({ promo }) => (
+
+
+const Features = ({ promo }:any) => (
     <>
-        {promo.map((item) => (
+        {promo.map((item:any) => (
             <div key={item.title} className={styles.wrapper}>
                 <h2 className={styles.title}>{item.title}</h2>
                 <p className={styles.desc}>{item.desc}</p>

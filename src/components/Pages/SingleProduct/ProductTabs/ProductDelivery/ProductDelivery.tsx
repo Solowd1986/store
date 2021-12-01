@@ -33,4 +33,4 @@ const ProductDelivery = () => (
     </>
 );
 
-export default ProductDelivery;
+export default React.memo(ProductDelivery);

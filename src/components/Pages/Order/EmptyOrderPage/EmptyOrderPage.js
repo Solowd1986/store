@@ -2,7 +2,7 @@ import React from "react";
 import cn from "classnames";
 import styles from "./empty-order-page.module.scss";
 
-const EmptyOrderPage = (props) => (
+const EmptyOrderPage = () => (
     <div className={cn("wrapper")}>
         <div className={cn(styles.empty_order)}>
             <h1>Корзина покупок</h1>
