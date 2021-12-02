@@ -93,6 +93,49 @@ const validationSchema = setValidateSchema(["name", "phone", "email", "address",
 
 
 
+
+
+type formFieldsToObjectType = {
+    [key: string]: any
+}
+type FieldsTypes = {
+    fields: {
+        name: {
+            error: false,
+            msg: "",
+        },
+        phone: {
+            error: false,
+            msg: "",
+        },
+        email: {
+            error: false,
+            msg: "",
+        },
+        address: {
+            error: false,
+            msg: "",
+        },
+        comment: {
+            error: false,
+            msg: "",
+        },
+        shipping: {
+            assignment: "moscow",
+            price: 400
+        },
+        payment: {
+            assignment: "cash"
+        },
+    }
+
+
+};
+
+
+type Fields = formFieldsToObjectType & FieldsTypes;
+
+
 const OrderForm = () => {
 
     const [state, setState] = useState<OrderState>(initalState);
@@ -152,8 +195,8 @@ const OrderForm = () => {
      * Далее в ицкле заполняем обьект набором "название поля формы - его значение" и возвращаем.
      */
     const getAllTrackedFields = () => {
-        if (!form.current) return;
-        const formFieldsToObject = {};
+        if (!form.current) return null;
+        const formFieldsToObject:formFieldsToObjectType = {};
         const validationFields = Object.keys(validationSchema.fields);
         const formFields = Array.from(form.current.elements).filter((item:any) => validationFields.includes(item.name));
         formFields.forEach((item:any) => formFieldsToObject[item.name] = item.value);
@@ -200,9 +243,9 @@ const OrderForm = () => {
      * Текстовое значение, типа moscow или cash берется из id атрибуты формы. Также у типа доставки есть поле цена - проверяем и
      * заполняем его, если есть.
      */
-    const handleRadioChange = ({ target: { id, name: inputName, dataset: { price = null } } }:any) => {
+    const handleRadioChange = ({ target: { id, name: inputName, dataset: { price = null} } }:any) => {
         setState(
-            produce(state, (draft) => {
+            produce(state, (draft:any) => {
                 draft["fields"][inputName]["assignment"] = id;
                 if (price) draft["fields"][inputName]["price"] = price;
             })
@@ -242,16 +285,18 @@ const OrderForm = () => {
             if (!checkedField.error) {
                 const formValiditaionData = validateForm();
                 setState(
-                    produce(state, (draft) => {
+                    produce(state, (draft:any) => {
                         draft["fields"][checkedField.fieldName].error = false;
                         draft["fields"][checkedField.fieldName].msg = "";
                         formValiditaionData.isFormValid ? draft["isFormValid"] = true : draft["isFormValid"] = false;
                     }),
                 );
             } else {
-                if (state.fields[inputName].msg === checkedField.msg) return;
+                // проблема в обращении к высиялемому ключу, по хорошему это нужно описывать иначе
+                const fields:formFieldsToObjectType = {...state.fields};
+                if (fields[inputName].msg === checkedField.msg) return;
                 setState(
-                    produce(state, (draft) => {
+                    produce(state, (draft:any) => {
                         draft["isFormValid"] = false;
                         draft["fields"][checkedField.fieldName].error = true;
                         draft["fields"][checkedField.fieldName].msg = checkedField.msg;
@@ -271,7 +316,7 @@ const OrderForm = () => {
      */
     const showAllFormErrors = () => {
         if (!validateForm().isFormValid) {
-            const fields = { ...state.fields };
+            const fields:any = { ...state.fields };
             validateForm().errors.forEach((item:any) => {
                 if (Object.keys(fields).includes(item.fieldName)) {
                     fields[item.fieldName] = { error: true, msg: item.msg };
@@ -326,9 +371,11 @@ const OrderForm = () => {
         Cookies.remove("form-data");
         form.current?.reset();
 
-        const fields = { ...state.fields };
+        const fields:any = { ...state.fields };
         Object.keys(fields).forEach((item:any) => {
-            if (Object.keys(getAllTrackedFields()).includes(item))
+            const allTrackedFields = getAllTrackedFields();
+            if (!allTrackedFields) return;
+            if (Object.keys(allTrackedFields).includes(item))
                 fields[item] = { error: false, msg: "" };
         });
 
@@ -344,7 +391,7 @@ const OrderForm = () => {
 
     // Если нажата клавиша Enter, то вызываем клик по кнопке отправки формы и убираем фокус с поля. Это нужно для того,
     // чтобы помешать куче отправок при зажатии клавиши.
-    const handleKeyPress = (evt:any) => {
+    const handleKeyPress = (evt: any) => {
         if (evt.keyCode === 13) {
             Array.from(evt.target.form.elements).find((item:any) => {
                 if (item.attributes.type && item.attributes.type.value === "submit") {
@@ -355,9 +402,7 @@ const OrderForm = () => {
         }
     };
 
-
     const ConfirmModalDialog = useMemo(() => ModalWrapper(Confirm), []);
-
 
     return (
         <>
