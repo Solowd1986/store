@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { IMainPage } from "@root/ts/types/types";
 
 import Spinner from "@components/Partials/Spinner/Spinner";
 import Slider from "./Slider/Slider";
@@ -13,7 +14,7 @@ import { Redirect } from "react-router-dom";
 import * as indexActions from "@redux/entities/index/actions";
 import * as indexSelectors from "@redux/entities/index/selectors/indexSelectors";
 import { connect } from "react-redux";
-import { IMainPage } from "@root/ts/types/types";
+
 
 const MainPage = ({ index, error, fetchIndexPageData }: IMainPage) => {
 
