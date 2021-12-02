@@ -16,10 +16,6 @@ import ModalWrapper from "@components/Helpers/Hooks/ModalWrapper/ModalWrapper";
 import Confirm from "@components/Pages/Order/Confirm/Confirm";
 
 
-
-
-
-
 interface IOrderState {
     isUserConfirmOrder: boolean,
     isFormTouched: boolean,
@@ -34,7 +30,6 @@ interface IOrderState {
         }
     },
 }
-
 
 
 const initalState = {
@@ -73,10 +68,6 @@ const initalState = {
 };
 
 const validationSchema = setValidateSchema(["name", "phone", "email", "address", "comment"]);
-
-
-
-
 
 
 type formFieldsToObjectType = {
@@ -126,8 +117,6 @@ type FieldsTypes = {
 };
 
 
-
-
 type FieldProps = {
     [key: string]: {
         msg?: string,
@@ -138,32 +127,44 @@ type FieldProps = {
 };
 
 
-
-
-
 type Fields = formFieldsToObjectType & FieldsTypes;
 
 
-
-
+/**
+ * Обработчик ошибок формы заказа инициализируется с указанными значениями - кажде поле без ошибок и без сообщения
+ *
+ * isUserConfirmOrder: - подтвердил ли пользователь заказ. Срабатывает когда нет ошибок и форму отправили.
+ * isFormTouched - воздействовал ли пользователь на форму, относится к текстовым полям.
+ * isFormValid - валидна ли форма. Форма получает статус true при инициализации, потом сбрасывается при ошибках.
+ * Если все поля валидны - опять true.
+ *
+ *
+ *
+ *
+ *
+ *
+ */
 
 const OrderForm = () => {
-
     const [state, setState] = useState<IOrderState>(initalState);
     const form = useRef<HTMLFormElement>(null);
 
 
+    /**
+     * При монтировании формы забираем данные из кук, если они есть. Это позволяет не терять данные заполненной формы
+     * при случайно закрытой странице. Обходим массив полей из кук, ищем в форме одноименные поля и вписываем им
+     * значения, которые были сохранены в куке. Также учитываем, что форма могла быть закрыта с ошибками, поэтому
+     * сразу проверяем всю форму на ошибки и есои форма не валидна, то вызываем метод showAllFormErrors. По сути
+     * значение не запишется, если оно невалидное, но это так, на всякий случай.
+     */
     useEffect(() => {
         if (!form.current) return;
         if (Cookies.get("form-data")) {
             const cookieFormFields = Cookies.getJSON("form-data");
             const formAray: any[] = Array.from(form.current.elements);
-            //console.log(formAray);
-
-            //const fields2 = formAray.filter((item) => console.log(typeof item));
 
             const fields = formAray.filter((item) => Object.keys(cookieFormFields).includes(item.name));
-            fields.forEach((item:any) => item.value = cookieFormFields[item.name]);
+            fields.forEach((item: any) => item.value = cookieFormFields[item.name]);
             const formValiditaionData = validateForm();
 
             if (!formValiditaionData.isFormValid) {
@@ -174,14 +175,22 @@ const OrderForm = () => {
 
 
     /**
-     * Метод для сохранения значения поля в куку на 15 минут, если значение валидное. Если данные уже есть, то есть
-     * это не первое поле, то дополняем обьект с полями, иначе создаем новый. Вторая проверка применяется, если такого поля
-     * еще не вводили, тут создаем его и заполняем значение, после выходим из метода. Третий вариант, если поле уже было,
-     * но значение новое, тут мы обходим обьект в цикле, получая имя поля и его значение, если такое имя поля есть и
-     * такое значение тоже, значит ничего не изменилось - выходим. Иначе, если поле есть - вписываем данные, проверка не нужна,
-     * так как выше мы выходим при совпадении значений.
+     * Метод для сохранения значения поля в куку на 15 минут, если значение валидное.
+     * Создаем смещение даты в 15 минут, создаем обьект с полем и значением, которое было передано на вход методу.
+     * Забираем данные из куки, если они уже есть, то есть куку ставили ранее. Или просто берем null
+     *
+     * Варианты:
+     *
+     * 1. Куку не ставили. Тогда ставим куку form-data, передаем обьект с полем/значением + 15 минут длительность. Выходим.
+     *
+     * 2. Если мы тут, то куку уже ставили. Если в обьекте, который уже есть, переданного в метод поля нет, то дописываем его
+     * в уже существующий обьект. Ставим куку form-data, передаем обьект с полем/значением + 15 минут длительность. Выходим.
+     *
+     * 3. Дальше ситуация, где переданное в метод имя поля уже есть в обьекте куки, и нужно понять, что с ним делать.
+     * Если значение в куки под переданным именем равно тому, что передано в метод, то делать ничего не нужно - выходим.
+     * Если значение новое, то записываем в обьект новое значение и сохраняем куку, опять задавая 15 минут жизни.
      */
-    const saveFormValuesToCookie = (fieldName: string, fieldValue:string) => {
+    const saveFormValuesToCookie = (fieldName: string, fieldValue: string) => {
         const cookieExpires = new Date(new Date().getTime() + 15 * 60 * 1000);
         const formField = { [fieldName]: fieldValue };
         const dataForm = Cookies.getJSON("form-data") || null;
@@ -195,10 +204,9 @@ const OrderForm = () => {
             Cookies.set("form-data", dataForm, { expires: cookieExpires });
             return;
         }
-        for (const [cookieFieldKey, cookieFieldValue] of Object.entries(dataForm)) {
-            if (cookieFieldKey === fieldName && cookieFieldValue === fieldValue) return;
-            if (cookieFieldKey === fieldName) dataForm[fieldName] = fieldValue;
-        }
+
+        if (dataForm[fieldName] === fieldValue) return;
+        dataForm[fieldName] = fieldValue;
         Cookies.set("form-data", dataForm, { expires: cookieExpires });
     };
 
@@ -211,10 +219,10 @@ const OrderForm = () => {
      */
     const getAllTrackedFields = () => {
         if (!form.current) return null;
-        const formFieldsToObject:formFieldsToObjectType = {};
+        const formFieldsToObject: formFieldsToObjectType = {};
         const validationFields = Object.keys(validationSchema.fields);
-        const formFields = Array.from(form.current.elements).filter((item:any) => validationFields.includes(item.name));
-        formFields.forEach((item:any) => formFieldsToObject[item.name] = item.value);
+        const formFields = Array.from(form.current.elements).filter((item: any) => validationFields.includes(item.name));
+        formFields.forEach((item: any) => formFieldsToObject[item.name] = item.value);
         return formFieldsToObject;
     };
 
@@ -223,7 +231,7 @@ const OrderForm = () => {
      * если все ок, возвращаем обьект формата state - то есть обьект с именем поля и false-ошибкой. Иначе - вернем
      * обьект с именем поля, true-ошибкой и текстом этой оишбки. Помни, что validateSyncAt требует обертки из try/catch
      */
-    const checkSingleFieldErrorSync = (inputName:string, inputValue:unknown) => {
+    const checkSingleFieldErrorSync = (inputName: string, inputValue: unknown) => {
         try {
             validationSchema.validateSyncAt(inputName, { [inputName]: inputValue });
             return { fieldName: inputName, error: false };
@@ -241,7 +249,7 @@ const OrderForm = () => {
      */
     const validateForm = () => {
         const errors = [];
-        const allFormFields:any = getAllTrackedFields();
+        const allFormFields: any = getAllTrackedFields();
         for (const [key, value] of Object.entries(allFormFields)) {
             const field = checkSingleFieldErrorSync(key, value);
             if (field.error) errors.push(field);
@@ -258,7 +266,7 @@ const OrderForm = () => {
      * Текстовое значение, типа moscow или cash берется из id атрибуты формы. Также у типа доставки есть поле цена - проверяем и
      * заполняем его, если есть.
      */
-    const handleRadioChange = ({ target: { id, name: inputName, dataset: { price = null} } }:any) => {
+    const handleRadioChange = ({ target: { id, name: inputName, dataset: { price = null } } }: any) => {
         setState(
             produce(state, (draft) => {
                 draft["fields"][inputName]["assignment"] = id;
@@ -272,7 +280,7 @@ const OrderForm = () => {
      * Данный блок используется только для сохранения значения поля в куке, чтобы не вводить верное значение
      * по новой при перезагрузке страницы.
      */
-    const handleInputBlur = ({ target: { name: inputName, value: inputValue } }:any) => {
+    const handleInputBlur = ({ target: { name: inputName, value: inputValue } }: any) => {
         const checkedField = checkSingleFieldErrorSync(inputName, inputValue);
         if (!checkedField.error) saveFormValuesToCookie(inputName, inputValue);
     };
@@ -293,7 +301,7 @@ const OrderForm = () => {
      * Если же ошибка в текущем поле (где идет ввод) все же есть, то проверяем, не выставлена ли она уже ранее.
      * Если да - то ничего не меняем, ведь ошибка уже показна и перерисовывать ничего не нужно. Иначе - указываем новую ошибку.
      */
-    const handleInputChange = ({ target, target: { name: inputName, value: inputValue } }:any) => {
+    const handleInputChange = ({ target, target: { name: inputName, value: inputValue } }: any) => {
         if (inputName === "phone") new Inputmask("+7 (999) 999-99-99").mask(target);
         if (state.isFormTouched) {
             const checkedField = checkSingleFieldErrorSync(inputName, inputValue);
@@ -331,8 +339,8 @@ const OrderForm = () => {
      */
     const showAllFormErrors = () => {
         if (!validateForm().isFormValid) {
-            const fields:any = { ...state.fields };
-            validateForm().errors.forEach((item:any) => {
+            const fields: any = { ...state.fields };
+            validateForm().errors.forEach((item: any) => {
                 if (Object.keys(fields).includes(item.fieldName)) {
                     fields[item.fieldName] = { error: true, msg: item.msg };
                 }
@@ -359,7 +367,7 @@ const OrderForm = () => {
      * Тут не используется полный сброс формы resetOrderForm, так как там isUserConfirmOrder сбрасывается в false, а тут нужно
      * true для показа картинки.
      */
-    const handleSubmit = (evt:any) => {
+    const handleSubmit = (evt: any) => {
         evt.preventDefault();
 
         if (!validateForm().isFormValid) {
@@ -381,13 +389,13 @@ const OrderForm = () => {
      * И у нас есть такая кнопка очистки формы в OrderSummary.
      * Но события может не быть, например, если мы передали метод куда-то, где он вызывается не при клике, проверка для этого
      */
-    const resetOrderForm = (evt:any) => {
+    const resetOrderForm = (evt: any) => {
         if (evt) evt.preventDefault();
         Cookies.remove("form-data");
         form.current?.reset();
 
-        const fields:any = { ...state.fields };
-        Object.keys(fields).forEach((item:any) => {
+        const fields: any = { ...state.fields };
+        Object.keys(fields).forEach((item: any) => {
             const allTrackedFields = getAllTrackedFields();
             if (!allTrackedFields) return;
             if (Object.keys(allTrackedFields).includes(item))
@@ -408,7 +416,7 @@ const OrderForm = () => {
     // чтобы помешать куче отправок при зажатии клавиши.
     const handleKeyPress = (evt: any) => {
         if (evt.keyCode === 13) {
-            Array.from(evt.target.form.elements).find((item:any) => {
+            Array.from(evt.target.form.elements).find((item: any) => {
                 if (item.attributes.type && item.attributes.type.value === "submit") {
                     item.click();
                     evt.target.blur();
@@ -445,5 +453,5 @@ const OrderForm = () => {
     );
 };
 
-const mapStateToProps = (state:unknown) => ({ listOfProducts: cartSelectors.cartItemsSelector(state) });
+const mapStateToProps = (state: unknown) => ({ listOfProducts: cartSelectors.cartItemsSelector(state) });
 export default connect(mapStateToProps)(OrderForm);
