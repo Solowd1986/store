@@ -86,9 +86,6 @@ const initalState = {
 const validationSchema = setValidateSchema(["name", "phone", "email", "address", "comment"]);
 
 
-
-
-
 /**
  * Обработчик ошибок формы заказа инициализируется с указанными значениями - кажде поле без ошибок и без сообщения
  *
@@ -127,14 +124,9 @@ const OrderForm = () => {
         if (!form.current) return;
         if (Cookies.get("form-data")) {
             const cookieFormFields = Cookies.getJSON("form-data");
-            const formAray = Array.from(form.current.elements);
-            formAray.filter((item) => {
-                const element = item as HTMLInputElement;
-                return Object.keys(cookieFormFields).includes(element.name);
-            }).forEach((item) => {
-                const element = item as HTMLInputElement;
-                element.value = cookieFormFields[element.name]
-            });
+            Array.from(form.current.elements)
+                .filter((item) => Object.keys(cookieFormFields).includes((item as HTMLInputElement).name))
+                .forEach((item) => (item as HTMLInputElement).value = cookieFormFields[(item as HTMLInputElement).name]);
         }
     }, []);
 
@@ -177,7 +169,6 @@ const OrderForm = () => {
     };
 
 
-
     /**
      * Метод для получения всех валидируемых полей формы и их значений в удобной форме обьекта. Возвращает обьект.
      *
@@ -198,17 +189,13 @@ const OrderForm = () => {
      */
     const getAllTrackedFields = () => {
         if (!form.current) return null;
-        const formFieldsToObject: {[key: string]: string} = {};
+        const formFieldsToObject: { [key: string]: string } = {};
         const validationFields = Object.keys(validationSchema.fields);
 
-        const formElementsArray = Array.from(form.current.elements);
-        formElementsArray.filter((item) => {
-            const element = item as HTMLInputElement;
-            return validationFields.includes(element.name);
-        }).forEach((item) => {
-            const element = item as HTMLInputElement;
-            formFieldsToObject[element.name] = element.value;
-        });
+        Array.from(form.current.elements)
+            .filter((item) => validationFields.includes((item as HTMLInputElement).name))
+            .forEach((item) => formFieldsToObject[(item as HTMLInputElement).name] = (item as HTMLInputElement).value);
+
         return formFieldsToObject;
     };
 
