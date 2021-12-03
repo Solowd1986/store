@@ -16,8 +16,6 @@ import ModalWrapper from "@components/Helpers/Hooks/ModalWrapper/ModalWrapper";
 import Confirm from "@components/Pages/Order/Confirm/Confirm";
 
 
-
-
 interface IOrderState {
     isUserConfirmOrder: boolean,
     isFormTouched: boolean,
@@ -42,12 +40,12 @@ interface IField {
     }
 }
 
+
 interface IError {
     fieldName: string,
     error: boolean,
     msg?: string
 }
-
 
 
 const initalState = {
@@ -145,10 +143,6 @@ type FieldProps = {
 };
 
 
-
-
-
-
 type Fields = formFieldsToObjectType & FieldsTypes;
 
 
@@ -196,7 +190,7 @@ const OrderForm = () => {
             fields.forEach((item: any) => item.value = cookieFormFields[item.name]);
             const formValiditaionData = validateForm();
 
-            if (!formValiditaionData.isFormValid) {
+            if (!formValiditaionData?.isFormValid) {
                 showAllFormErrors();
             }
         }
@@ -254,18 +248,14 @@ const OrderForm = () => {
      * Потом обходим получившийся массив DOM-элементов и вносим в обьект formFieldsToObject атрибуиы этих DOM-элементов:
      * Атрибут name - как имя поля обьекта, а атрибут value - как значение обьекта.
      *
-     *
-     *
-     *
      * Получаем все отслеживаемые поля формы, создаем пустой обьект и массив из ключей-полей формы, они основаны на схеме
      * валидации, то есть это список всех полей, коорые мы валидируем в этой форме. Далее отсеиваем из переданных
-     * в метод списка
-     * полей только те, что входят в список валидируемых.
+     * в метод списка полей только те, что входят в список валидируемых.
      * Далее в ицкле заполняем обьект набором "название поля формы - его значение" и возвращаем.
      */
     const getAllTrackedFields = () => {
         if (!form.current) return null;
-        const formFieldsToObject: formFieldsToObjectType = {};
+        const formFieldsToObject: any = {};
         const validationFields = Object.keys(validationSchema.fields);
         const formFields = Array.from(form.current.elements).filter((item: any) => validationFields.includes(item.name));
         formFields.forEach((item: any) => formFieldsToObject[item.name] = item.value);
@@ -307,7 +297,8 @@ const OrderForm = () => {
      */
     const validateForm = () => {
         const errors = [];
-        const allFormFields: any = getAllTrackedFields();
+        const allFormFields: { [key: string]: string } | null = getAllTrackedFields();
+        if (!allFormFields) return;
 
         for (const [key, value] of Object.entries(allFormFields)) {
             const field = checkSingleFieldErrorSync(key, value);
@@ -331,9 +322,9 @@ const OrderForm = () => {
      * новый обьект fields, где неизменные поля-обьекты доступны по ссылке, а измененные - заменены.
      */
     const showAllFormErrors = () => {
-        if (!validateForm().isFormValid) {
-            const fieldsWithError:IField = {};
-            validateForm().errors.forEach((item: IError) => {
+        if (!validateForm()?.isFormValid) {
+            const fieldsWithError: IField = {};
+            validateForm()?.errors.forEach((item: IError) => {
                 if (Object.keys(state.fields).includes(item.fieldName)) {
                     fieldsWithError[item.fieldName] = { error: true, msg: item.msg };
                 }
@@ -366,7 +357,7 @@ const OrderForm = () => {
      * этого будет проставлен атрибут cheсked для определенного input-а в radio-блоке. Если передана цена, то есть
      * был клик по shipping, то также устаналиваем и цену доставки, она нужна потом, для расчета общей стоимости товара.
      */
-    const handleRadioChange = ({ target: { id, name: inputName, dataset: { price } } }: {target: HTMLInputElement}) => {
+    const handleRadioChange = ({ target: { id, name: inputName, dataset: { price } } }: { target: HTMLInputElement }) => {
         setState(
             produce(state, (draft) => {
                 draft["fields"][inputName]["assignment"] = id;
@@ -382,7 +373,7 @@ const OrderForm = () => {
      * Данный блок используется только для сохранения значения поля в куке, чтобы не вводить верное значение
      * по новой при перезагрузке страницы. Но если введенный символ запрещен для поля - он не сохранится.
      */
-    const handleInputBlur = ({ target: { name: inputName, value: inputValue } }: {target: HTMLInputElement}) => {
+    const handleInputBlur = ({ target: { name: inputName, value: inputValue } }: { target: HTMLInputElement }) => {
         const checkedField = checkSingleFieldErrorSync(inputName, inputValue);
         if (!checkedField.error) saveFormValuesToCookie(inputName, inputValue);
     };
@@ -408,12 +399,13 @@ const OrderForm = () => {
      * 2. Ошибка для поля была получена. Если текст ошибки совпадает с тем, что уже был задан для данного поля, то просто
      * выходим из обработчика, так как менять state не нужно. Иначе прописываем данные об ошибке в state.
      */
-    const handleInputChange = ({ target, target: { name: inputName, value: inputValue } }: {target: HTMLInputElement}) => {
+    const handleInputChange = ({ target, target: { name: inputName, value: inputValue } }: { target: HTMLInputElement }) => {
         if (inputName === "phone") new Inputmask("+7 (999) 999-99-99").mask(target);
         if (state.isFormTouched) {
             const checkedField = checkSingleFieldErrorSync(inputName, inputValue);
             if (!checkedField.error) {
                 const formValiditaionData = validateForm();
+                if (!formValiditaionData) return;
                 setState(
                     produce(state, (draft) => {
                         draft["fields"][checkedField.fieldName].error = false;
@@ -455,7 +447,7 @@ const OrderForm = () => {
         evt.preventDefault();
         const target = evt.target as HTMLFormElement;
 
-        if (!validateForm().isFormValid) {
+        if (!validateForm()?.isFormValid) {
             showAllFormErrors();
             return;
         }
