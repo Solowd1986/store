@@ -496,12 +496,9 @@ const OrderForm = () => {
         if (!target.form) return;
 
         if (evt.key === "Enter") {
-            Array.from(target.form.elements).find((item: any) => {
-                if (item.attributes.type && item.attributes.type.value === "submit") {
-                    item.click();
-                    target.blur();
-                }
-            });
+            const submit = target.form.elements.namedItem("form-submit") as HTMLInputElement;
+            submit.click();
+            target.blur();
         }
     };
 
