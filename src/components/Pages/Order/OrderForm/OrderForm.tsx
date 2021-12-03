@@ -166,7 +166,7 @@ type Fields = formFieldsToObjectType & FieldsTypes;
  *
  */
 
-
+import ReactDOM from 'react-dom';
 
 const OrderForm = () => {
     const [state, setState] = useState<IOrderState>(initalState);
@@ -376,7 +376,7 @@ const OrderForm = () => {
      * Метод обработки события blur, при потере фокуса на поле ввода. Нужен только для записи значения в cookie
      *
      * Данный блок используется только для сохранения значения поля в куке, чтобы не вводить верное значение
-     * по новой при перезагрузке страницы.
+     * по новой при перезагрузке страницы. Но если введенный символ запрещен для поля - он не сохранится.
      */
     const handleInputBlur = ({ target: { name: inputName, value: inputValue } }: any) => {
         const checkedField = checkSingleFieldErrorSync(inputName, inputValue);
@@ -465,7 +465,7 @@ const OrderForm = () => {
      * Метод сброса state формы в изначальное состояние.
      * Вызывается при закрытии окна Confirm или нажатии на кнопку сброса формы.
      *
-     * 1. Блокируем поведение элемента, так как если это кнопка, то она может вызвать отправку формы.
+     * 1. Блокируем поведение элемента, так как если это кнопка, то она может вызвать событие отправки формы.
      * 2. Передать этот метод мы можем куда-то, где события не будет, поэтому проверяем на само событие.
      * 3. Очищаем куку, так как resetOrderForm может вызываться и не из handleSubmit, где кука тоже удаляется.
      * 4. Вызываем метод reset для формы.
@@ -473,6 +473,7 @@ const OrderForm = () => {
      */
     const resetOrderForm = (evt: any) => {
         if (evt) evt.preventDefault();
+
         Cookies.remove("form-data");
         form.current?.reset();
         setState(initalState);
@@ -481,15 +482,19 @@ const OrderForm = () => {
     /**
      * Метод обработки нажатия на кнопку Enter, когда курсор находится внутри поля ввода.
      *
+     *
      * Если нажата клавиша Enter, то вызываем клик по кнопке отправки формы и убираем фокус с поля. Это нужно для того,
      * чтобы помешать множественной отправке при зажатии клавиши.
      */
-    const handleKeyPress = (evt: any) => {
-        if (evt.keyCode === 13) {
-            Array.from(evt.target.form.elements).find((item: any) => {
+    const handleKeyPress = (evt: React.KeyboardEvent<HTMLElement>) => {
+        const target = evt.target as HTMLInputElement;
+        if (!target.form) return;
+
+        if (evt.key === "Enter") {
+            Array.from(target.form.elements).find((item: any) => {
                 if (item.attributes.type && item.attributes.type.value === "submit") {
                     item.click();
-                    evt.target.blur();
+                    target.blur();
                 }
             });
         }
