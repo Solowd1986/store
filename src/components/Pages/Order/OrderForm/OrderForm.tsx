@@ -86,64 +86,10 @@ const initalState = {
 const validationSchema = setValidateSchema(["name", "phone", "email", "address", "comment"]);
 
 
-type formFieldsToObjectType = {
-    [key: string]: any
-}
-
-type FieldProperties = {
-    error: boolean,
-    msg: string,
-    assignment: string,
-    price: number
-};
 
 
-type FieldsTypes = {
-    fields: {
-        name: {
-            error: false,
-            msg: "",
-        },
-        phone: {
-            error: false,
-            msg: "",
-        },
-        email: {
-            error: false,
-            msg: "",
-        },
-        address: {
-            error: false,
-            msg: "",
-        },
-        comment: {
-            error: false,
-            msg: "",
-        },
-        shipping: {
-            assignment: "moscow",
-            price: 400
-        },
-        payment: {
-            assignment: "cash"
-        },
-    }
 
 
-};
-
-
-type FieldProps = {
-    [key: string]: {
-        msg?: string,
-        error?: boolean,
-        assignment?: string,
-        price?: number
-    }
-};
-
-
-type Fields = formFieldsToObjectType & FieldsTypes;
 
 
 /**
@@ -163,9 +109,6 @@ type Fields = formFieldsToObjectType & FieldsTypes;
  *
  *
  */
-
-import ReactDOM from 'react-dom';
-
 const OrderForm = () => {
     const [state, setState] = useState<IOrderState>(initalState);
     const form = useRef<HTMLFormElement>(null);
@@ -468,7 +411,7 @@ const OrderForm = () => {
      * 4. Вызываем метод reset для формы.
      * 5. Заменяем весь state на initalState
      */
-    const resetOrderForm = (evt: React.MouseEvent) => {
+    const resetOrderForm = (evt: React.SyntheticEvent) => {
         if (evt) evt.preventDefault();
 
         Cookies.remove("form-data");
