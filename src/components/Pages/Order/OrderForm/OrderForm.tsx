@@ -145,6 +145,10 @@ type FieldProps = {
 };
 
 
+
+
+
+
 type Fields = formFieldsToObjectType & FieldsTypes;
 
 
@@ -362,11 +366,11 @@ const OrderForm = () => {
      * этого будет проставлен атрибут cheсked для определенного input-а в radio-блоке. Если передана цена, то есть
      * был клик по shipping, то также устаналиваем и цену доставки, она нужна потом, для расчета общей стоимости товара.
      */
-    const handleRadioChange = ({ target: { id, name: inputName, dataset: { price = null } } }: any) => {
+    const handleRadioChange = ({ target: { id, name: inputName, dataset: { price } } }: {target: HTMLInputElement}) => {
         setState(
             produce(state, (draft) => {
                 draft["fields"][inputName]["assignment"] = id;
-                if (price) draft["fields"][inputName]["price"] = price;
+                if (price) draft["fields"][inputName]["price"] = parseInt(price);
             })
         );
     };
@@ -378,7 +382,7 @@ const OrderForm = () => {
      * Данный блок используется только для сохранения значения поля в куке, чтобы не вводить верное значение
      * по новой при перезагрузке страницы. Но если введенный символ запрещен для поля - он не сохранится.
      */
-    const handleInputBlur = ({ target: { name: inputName, value: inputValue } }: any) => {
+    const handleInputBlur = ({ target: { name: inputName, value: inputValue } }: {target: HTMLInputElement}) => {
         const checkedField = checkSingleFieldErrorSync(inputName, inputValue);
         if (!checkedField.error) saveFormValuesToCookie(inputName, inputValue);
     };
@@ -404,7 +408,7 @@ const OrderForm = () => {
      * 2. Ошибка для поля была получена. Если текст ошибки совпадает с тем, что уже был задан для данного поля, то просто
      * выходим из обработчика, так как менять state не нужно. Иначе прописываем данные об ошибке в state.
      */
-    const handleInputChange = ({ target, target: { name: inputName, value: inputValue } }: any) => {
+    const handleInputChange = ({ target, target: { name: inputName, value: inputValue } }: {target: HTMLInputElement}) => {
         if (inputName === "phone") new Inputmask("+7 (999) 999-99-99").mask(target);
         if (state.isFormTouched) {
             const checkedField = checkSingleFieldErrorSync(inputName, inputValue);
@@ -447,17 +451,18 @@ const OrderForm = () => {
      * который служит для сброса всего state формы в изначальное состояние.
      * Сразу сбрасывать мы не может, так как Confirm не получится показать.
      */
-    const handleSubmit = (evt: any) => {
+    const handleSubmit = (evt: React.SyntheticEvent) => {
         evt.preventDefault();
+        const target = evt.target as HTMLFormElement;
 
         if (!validateForm().isFormValid) {
             showAllFormErrors();
             return;
         }
 
-        const formData = new FormData(evt.target);
+        const formData = new FormData(target);
         Cookies.remove("form-data");
-        evt.target.reset();
+        target.reset();
         setState({ ...state, isUserConfirmOrder: true });
     };
 
@@ -471,7 +476,7 @@ const OrderForm = () => {
      * 4. Вызываем метод reset для формы.
      * 5. Заменяем весь state на initalState
      */
-    const resetOrderForm = (evt: any) => {
+    const resetOrderForm = (evt: React.MouseEvent) => {
         if (evt) evt.preventDefault();
 
         Cookies.remove("form-data");
