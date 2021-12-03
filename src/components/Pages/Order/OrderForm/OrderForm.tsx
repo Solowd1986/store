@@ -87,7 +87,9 @@ const validationSchema = setValidateSchema(["name", "phone", "email", "address",
 
 
 
-
+interface NewType extends HTMLInputElement {
+    name: string;
+}
 
 
 
@@ -178,6 +180,7 @@ const OrderForm = () => {
     };
 
 
+
     /**
      * Метод для получения всех валидируемых полей формы и их значений в удобной форме обьекта. Возвращает обьект.
      *
@@ -198,10 +201,17 @@ const OrderForm = () => {
      */
     const getAllTrackedFields = () => {
         if (!form.current) return null;
-        const formFieldsToObject: any = {};
+        const formFieldsToObject: {[key: string]: string} = {};
         const validationFields = Object.keys(validationSchema.fields);
-        const formFields = Array.from(form.current.elements).filter((item: any) => validationFields.includes(item.name));
-        formFields.forEach((item: any) => formFieldsToObject[item.name] = item.value);
+
+        const formElementsArray = Array.from(form.current.elements);
+        formElementsArray.filter((item) => {
+            const element = item as HTMLInputElement;
+            return validationFields.includes(element.name);
+        }).forEach((item) => {
+            const element = item as HTMLInputElement;
+            formFieldsToObject[element.name] = element.value;
+        });
         return formFieldsToObject;
     };
 
