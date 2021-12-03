@@ -120,21 +120,31 @@ const OrderForm = () => {
      * Метод получения из куки данных для формы, чтобы не терять введенные данные при закрытии страницы.
      *
      * При монтировании формы забираем данные из кук, если они есть. Это позволяет не терять данные заполненной формы
-     * при случайно закрытой странице. Обходим массив полей из кук, ищем в форме одноименные поля и вписываем им
-     * значения, которые были сохранены в куке. Также учитываем, что форма могла быть закрыта с ошибками, поэтому
-     * сразу проверяем всю форму на ошибки и есои форма не валидна, то вызываем метод showAllFormErrors. По сути
-     * значение не запишется, если оно невалидное, но это так, на всякий случай.
+     * при случайно закрытой странице.
+     * 1. Получаем массив элементов формы.
+     * 2. Обходим его в цикле filter, выбирая те элементы формы, поле name которых есть в данных куки.
+     * 3. Обращаемся к полю value каждого этого поля и присваиваем ему значение, которое было записано в куке под
+     *    именем данного поля. То есть поле формы с name вида address, находим в обьекте куки поле address, берем из
+     *    него данные и прописываем в value одноименного поля формы.
+     *
+     * Также учитываем, что форма могла быть закрыта с ошибками, поэтому сразу проверяем всю форму на ошибки
+     * и есои форма не валидна, то вызываем метод showAllFormErrors. По сути значение не запишется,
+     * если оно невалидное, но это так, на всякий случай.
      */
     useEffect(() => {
         if (!form.current) return;
         if (Cookies.get("form-data")) {
             const cookieFormFields = Cookies.getJSON("form-data");
-            const formAray: any[] = Array.from(form.current.elements);
+            const formAray = Array.from(form.current.elements);
+            formAray.filter((item) => {
+                const element = item as HTMLInputElement;
+                return Object.keys(cookieFormFields).includes(element.name);
+            }).forEach((item) => {
+                const element = item as HTMLInputElement;
+                element.value = cookieFormFields[element.name]
+            });
 
-            const fields = formAray.filter((item) => Object.keys(cookieFormFields).includes(item.name));
-            fields.forEach((item: any) => item.value = cookieFormFields[item.name]);
             const formValiditaionData = validateForm();
-
             if (!formValiditaionData?.isFormValid) {
                 showAllFormErrors();
             }
