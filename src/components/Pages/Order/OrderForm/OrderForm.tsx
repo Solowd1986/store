@@ -87,11 +87,6 @@ const validationSchema = setValidateSchema(["name", "phone", "email", "address",
 
 
 
-interface NewType extends HTMLInputElement {
-    name: string;
-}
-
-
 
 
 /**
@@ -127,9 +122,6 @@ const OrderForm = () => {
      *    именем данного поля. То есть поле формы с name вида address, находим в обьекте куки поле address, берем из
      *    него данные и прописываем в value одноименного поля формы.
      *
-     * Также учитываем, что форма могла быть закрыта с ошибками, поэтому сразу проверяем всю форму на ошибки
-     * и есои форма не валидна, то вызываем метод showAllFormErrors. По сути значение не запишется,
-     * если оно невалидное, но это так, на всякий случай.
      */
     useEffect(() => {
         if (!form.current) return;
@@ -143,11 +135,6 @@ const OrderForm = () => {
                 const element = item as HTMLInputElement;
                 element.value = cookieFormFields[element.name]
             });
-
-            const formValiditaionData = validateForm();
-            if (!formValiditaionData?.isFormValid) {
-                showAllFormErrors();
-            }
         }
     }, []);
 
@@ -303,7 +290,6 @@ const OrderForm = () => {
         }
     };
 
-
     /**
      * Метод отвечает за переключение radio-кнопок выбора доставки и способа оплаты. Меняет state.
      *
@@ -334,11 +320,10 @@ const OrderForm = () => {
      * Метод обработки события blur, при потере фокуса на поле ввода. Нужен только для записи значения в cookie
      *
      * Данный блок используется только для сохранения значения поля в куке, чтобы не вводить верное значение
-     * по новой при перезагрузке страницы. Но если введенный символ запрещен для поля - он не сохранится.
+     * по новой при перезагрузке страницы.
      */
     const handleInputBlur = ({ target: { name: inputName, value: inputValue } }: { target: HTMLInputElement }) => {
-        const checkedField = checkSingleFieldErrorSync(inputName, inputValue);
-        if (!checkedField.error) saveFormValuesToCookie(inputName, inputValue);
+        saveFormValuesToCookie(inputName, inputValue);
     };
 
 
