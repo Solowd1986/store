@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { type } from "os";
+
 
 
 interface IFormInputCounter {
@@ -9,13 +9,23 @@ interface IFormInputCounter {
     maxValue: number,
 }
 
-interface IInputChange {
+interface IEventChange {
+    target: HTMLInputElement,
+    nativeEvent: any,
+}
+
+type Y = React.SyntheticEvent & {
+    target: {},
+
+}
+
+type HH = {
     target: {
-        value: any,
-    },
-    nativeEvent: {
-        inputType?: any
+        dataset: {
+            [key: string]: string
+        }
     }
+
 }
 
 
@@ -51,7 +61,7 @@ interface IInputChange {
 const FormInputCounter = (props: IFormInputCounter) => {
 
     const { initialValue, maxValue, getProcessedAmount, classList } = props;
-    const [value, setValue] = useState<number>(initialValue);
+    const [value, setValue] = useState<number | string>(initialValue);
 
     /**
      * Метод нормализующий любое переданное из поля ввода значение. Возвращает корректное значение.
@@ -86,10 +96,11 @@ const FormInputCounter = (props: IFormInputCounter) => {
      * 4. Нормализуем значение, чтобы оно оставалось в пределах допустимого.
      * 5. Устаналиваем его в локальный state и через метод getProcessedAmount ставим его и для Redux store
      */
-    const onChangeAmount = (evt: any) => {
+    const onChangeAmount = (evt: React.SyntheticEvent<HTMLButtonElement>) => {
         evt.preventDefault();
-        const { target: { dataset: { action } } } = evt;
-        const currentValue = action === "inc" ? value + 1 : value - 1;
+        const { dataset: { action } } = evt.target as HTMLButtonElement;
+        const intValue = typeof value === "number" ? value : Math.abs(parseInt(value, 10));
+        const currentValue = action === "inc" ? intValue + 1 : intValue - 1;
         const normalizedValue = amountNormalize(currentValue);
         getProcessedAmount(normalizedValue);
         setValue(normalizedValue);
@@ -119,7 +130,10 @@ const FormInputCounter = (props: IFormInputCounter) => {
      *
      * 3. На этом этапе контроль заканчивается. Приведение введенных значений в порядок выполняется на этапе blur
      */
-    const onInputChange = ({ target: { value }, nativeEvent: { inputType } }: any) => {
+    const onInputChange = (evt: React.SyntheticEvent<HTMLInputElement>) => {
+        const { value } = evt.target as HTMLInputElement;
+        const { inputType } = evt.nativeEvent as InputEvent;
+
         if (inputType === "deleteContentBackward" || inputType === "deleteContentForward") {
             setValue(value);
         } else {
