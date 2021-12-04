@@ -1,5 +1,4 @@
 import React from "react";
-import styles from "./submit-button.module.scss";
 
 const SubmitButton = ({ value = "Отправить", disabled = false, classList = "", handler = () => {} }) => (
     <input

@@ -7,7 +7,8 @@ import { connect } from "react-redux";
 import EmptyOrderPage from "./EmptyOrderPage/EmptyOrderPage";
 import OrderForm from "./OrderForm/OrderForm";
 
-const Order = (props:any) => {
+const Order = (props: { amountOfProductsInCart: number }) => {
+
     if (!props.amountOfProductsInCart) return <EmptyOrderPage />;
     return (
         <div className={cn("container", styles.container_checkout_bg)}>

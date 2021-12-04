@@ -1,8 +1,11 @@
 import React, { Component, useEffect, useMemo, useRef, useState } from "react";
 import styles from "./order-form.module.scss";
+import { IOrderState, IField, IError } from "@components/Pages/Order/types/Order";
 
 import OrderInfo from "./OrderInfo/OrderInfo";
 import OrderSummary from "./OrderSummary/OrderSummary";
+import ModalWrapper from "@components/Helpers/Hooks/ModalWrapper/ModalWrapper";
+import Confirm from "@components/Pages/Order/Confirm/Confirm";
 
 import setValidateSchema from "@components/Pages/Order/OrderForm/validationSchema/validationSchema";
 import Inputmask from "inputmask";
@@ -12,42 +15,7 @@ import Cookies from "js-cookie";
 import * as cartSelectors from "@redux/entities/cart/selectors/cartSelectors";
 import { connect } from "react-redux";
 
-import ModalWrapper from "@components/Helpers/Hooks/ModalWrapper/ModalWrapper";
-import Confirm from "@components/Pages/Order/Confirm/Confirm";
-
-
-interface IOrderState {
-    isUserConfirmOrder: boolean,
-    isFormTouched: boolean,
-    isFormValid: boolean,
-
-    fields: {
-        [key: string]: {
-            msg?: string,
-            error?: boolean,
-            assignment?: string,
-            price?: number
-        }
-    },
-}
-
-interface IField {
-    [key: string]: {
-        msg?: string,
-        error?: boolean,
-        assignment?: string,
-        price?: number
-    }
-}
-
-
-interface IError {
-    fieldName: string,
-    error: boolean,
-    msg?: string
-}
-
-
+const validationSchema = setValidateSchema(["name", "phone", "email", "address", "comment"]);
 const initalState = {
     isUserConfirmOrder: false,
     isFormTouched: false,
@@ -82,8 +50,6 @@ const initalState = {
         },
     },
 };
-
-const validationSchema = setValidateSchema(["name", "phone", "email", "address", "comment"]);
 
 
 /**

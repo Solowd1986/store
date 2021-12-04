@@ -4,5 +4,6 @@ export interface PropsModal {
 }
 
 export interface InnerComponentProps {
-    close?: () => void
+    [key: string]: (evt?: any) => void
+
 }
