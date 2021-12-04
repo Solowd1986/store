@@ -11,6 +11,8 @@ import * as cartSelectors from "@redux/entities/cart/selectors/cartSelectors";
 import { connect } from "react-redux";
 
 const OrderSummary = ({ listOfProducts, shipping, isFormValid, resetOrderForm }: IOrderSummary) => {
+    console.log(listOfProducts);
+    
     const classList = cn(styles.order_btn, {
         [styles.not_allowed]: !isFormValid,
     });
