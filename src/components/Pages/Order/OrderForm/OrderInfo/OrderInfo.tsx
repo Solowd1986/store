@@ -5,7 +5,7 @@ import { IOrderInfo } from "@components/Pages/Order/types/Order";
 import basketEpayment from "./img/basket-epayment.png";
 import basketShipping from "./img/basket-shipping.png";
 
-const OrderInfo = (props:IOrderInfo) => {
+const OrderInfo = (props: IOrderInfo) => {
     const {
         handleInputChange,
         handleRadioChange,

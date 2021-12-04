@@ -1,6 +1,4 @@
-import React, {  useEffect, useState, useRef } from "react";
-import { Redirect } from "react-router-dom";
-
+import React, { useEffect, useState, useRef } from "react";
 import { CategoryProps, ICategoryState } from "@components/Pages/Category/types/Category";
 import { usePreviousProps } from "@components/Helpers/Hooks/PreviousProps/PreviousProps";
 
@@ -10,13 +8,12 @@ import produce from "immer";
 import CategoryProductsList from "./CategoryProductsList/CategoryProductsList";
 import Spinner from "@components/Partials/Spinner/Spinner";
 import ModalWrapper from "@components/Helpers/Hooks/ModalWrapper/ModalWrapper";
+import { Redirect } from "react-router-dom";
 
 import * as categoryActions from "@redux/entities/category/actions";
 import * as categorySelectors from "@redux/entities/category/selectors/categorySelectors";
 import { connect } from "react-redux";
 
-import { RouteComponentProps } from 'react-router-dom';
-import { ProductTypes } from "@root/ts/types/types";
 
 /**
  * data - содержит два поля: main и data. Первое - это общие данные по категории, второе - массив товаров
@@ -38,36 +35,40 @@ import { ProductTypes } from "@root/ts/types/types";
  *
  */
 
-//      * componentDidUpdate отслеживает 4 ситуации:
-//      * 1. State компонента пуст (то есть это первый вход в блок категорий). Тогда просто при получении props - вписываем данные.
-//      * 2. Смена типа сортировки. По умолчанию тип сортировки приходит из Redux (иницилизирующее значение) Если state не пуст,
-//      *    и тип сортировки пришедший в props отличается - то меняем порядок элементов в текущем state. Проверка на пустоту state нужна,
-//      *    так как при переходе между категориями тип сортировки сбрасывает на стандартный). Это ведет к вызове метода сортировки, но
-//      *    также при переходе между категориями сбрасывается state, а значит, воообще нет данных для сортировки. Потому и нужна проверка.
 
-//      * 3. Смена route-пути между разными категориями. Это происходит лишь в рамках уже загруженного компонента Category,
-//           а значит, state должен быть не пуст.
-//           В этом случае проверяем alias текущей категории и поле match из props, если они разные - были переходы в рамках компонента.
-//      *    Может возникнуть вопрос: отчего не использовать для определения сортировки метод isRouteChanged? Проблема в том, что
-//      *    в рамках очики данных, метод безвреден: вернет false если state пуст, вернет false пути не поменялись и вернет true, толкьо
-//      *    если state не пуст и пути поменялись. Но если в сортирвоки вписать что-то типа: (prevSort !== nexSort && !isRouteChanged),
-//      *    то получится так: первая часть даст true при переходе, если тип сортировки меняли, так как придет иное значение, дефолтное,
-//      *    для сброса на исходные. Второе условие даст true, есл в него придет false. А false придет, так как state на определенном
-//      *    этапе будет временно пуст. Так мы попробуем соритрвоать пустой state и получим ошибку. Проще просто всего работать от непустого
-//      *    state.
-//      * 4. Получены доп. данные lazyLoad. Опять же, доп. данные могут быть получены только для уже загруженного компонента. Также
-//      *    проверяем, не пуст ли блок lazy из Redux и главное: разницу индексов. Изначально индексы равны: 0 тут в state и
-//      *    0 в Redux store. Но когда данные получены, индекс в Redux store меняется и прихоидт в виде props. Как результат - мы
-//      *    дополняем state данными, и устанавливаем новый index для state. Теперь в условие не попадем, пока не придет новый
-//      *    индекс.
-//      *
+/**
+ *
 
+ * componentDidUpdate отслеживает 4 ситуации:
+ * 1. State компонента пуст (то есть это первый вход в блок категорий). Тогда просто при получении props - вписываем данные.
+ * 2. Смена типа сортировки. По умолчанию тип сортировки приходит из Redux (иницилизирующее значение) Если state не пуст,
+ *    и тип сортировки пришедший в props отличается - то меняем порядок элементов в текущем state. Проверка на пустоту state нужна,
+ *    так как при переходе между категориями тип сортировки сбрасывает на стандартный). Это ведет к вызове метода сортировки, но
+ *    также при переходе между категориями сбрасывается state, а значит, воообще нет данных для сортировки. Потому и нужна проверка.
+
+ * 3. Смена route-пути между разными категориями. Это происходит лишь в рамках уже загруженного компонента Category,
+ а значит, state должен быть не пуст.
+ В этом случае проверяем alias текущей категории и поле match из props, если они разные - были переходы в рамках компонента.
+ *    Может возникнуть вопрос: отчего не использовать для определения сортировки метод isRouteChanged? Проблема в том, что
+ *    в рамках очики данных, метод безвреден: вернет false если state пуст, вернет false пути не поменялись и вернет true, толкьо
+ *    если state не пуст и пути поменялись. Но если в сортирвоки вписать что-то типа: (prevSort !== nexSort && !isRouteChanged),
+ *    то получится так: первая часть даст true при переходе, если тип сортировки меняли, так как придет иное значение, дефолтное,
+ *    для сброса на исходные. Второе условие даст true, есл в него придет false. А false придет, так как state на определенном
+ *    этапе будет временно пуст. Так мы попробуем соритрвоать пустой state и получим ошибку. Проще просто всего работать от непустого
+ *    state.
+ * 4. Получены доп. данные lazyLoad. Опять же, доп. данные могут быть получены только для уже загруженного компонента. Также
+ *    проверяем, не пуст ли блок lazy из Redux и главное: разницу индексов. Изначально индексы равны: 0 тут в state и
+ *    0 в Redux store. Но когда данные получены, индекс в Redux store меняется и прихоидт в виде props. Как результат - мы
+ *    дополняем state данными, и устанавливаем новый index для state. Теперь в условие не попадем, пока не придет новый
+ *    индекс.
+ *
+ */
 
 
 const Category = (props: CategoryProps) => {
     const { data, lastIndex, sortType, lazy, match, error, clearCategoryReduxState, fetchCategoryPageData } = props;
     const [state, setState] = useState<ICategoryState>({ products: null, lastIndex: 0 });
-    const prevProps: any = usePreviousProps(props);
+    const prevPropsSortType:string | undefined = usePreviousProps(props.sortType);
 
     const isStateEmpty = () => !state.products;
     const clearState = () => {
@@ -105,8 +106,7 @@ const Category = (props: CategoryProps) => {
 
     useEffect(() => {
         if (isStateEmpty() && data) setState((state) => ({ products: data, lastIndex: state.lastIndex }));
-        if (!isStateEmpty() && prevProps && prevProps.sortType !== sortType) sortProducts();
-
+        if (!isStateEmpty() && prevPropsSortType !== sortType) sortProducts();
 
         if (isRouteChanged()) {
             clearState();

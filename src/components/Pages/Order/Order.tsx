@@ -8,7 +8,6 @@ import OrderForm from "./OrderForm/OrderForm";
 import * as cartSelectors from "@redux/entities/cart/selectors/cartSelectors";
 import { connect } from "react-redux";
 
-
 const Order = (props: { amountOfProductsInCart: number }) => {
 
     if (!props.amountOfProductsInCart) return <EmptyOrderPage/>;

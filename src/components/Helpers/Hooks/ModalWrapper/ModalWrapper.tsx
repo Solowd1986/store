@@ -40,7 +40,6 @@ const ModalWrapper = (Component: React.FunctionComponent<InnerComponentProps>) =
             showModalStatus(false);
         };
 
-
         const closeModalFromChildren = () => showModalStatus(false);
 
         useLayoutEffect(() => {

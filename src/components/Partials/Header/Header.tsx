@@ -24,7 +24,6 @@ const Header = () => {
         }
     };
 
-
     useLayoutEffect(() => {
         if (header.current) {
             header.current.style.maxWidth = `${getHeaderCurrentwidth()}px`;

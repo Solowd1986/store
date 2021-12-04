@@ -1,17 +1,17 @@
 import React, { PureComponent, useEffect } from "react";
 import styles from "./lazy-load.module.scss";
 import cn from "classnames";
+import { LazyLoadProps } from "@components/Partials/LazyLoad/types/LazyLoad";
 
+import { RouteComponentProps } from "react-router";
 import { withRouter } from "react-router";
+
 import * as categoryActions from "@redux/entities/category/actions";
 import * as categorySelectors from "@redux/entities/category/selectors/categorySelectors";
 
 import { AnyAction, bindActionCreators, Dispatch } from "redux";
 import * as utils from "@components/Helpers/Functions/scrollbarHelper";
 import { connect } from "react-redux";
-
-import { RouteComponentProps } from "react-router";
-import { LazyLoadProps } from "@components/Partials/LazyLoad/types/LazyLoad";
 
 const LazyLoad = (props: RouteComponentProps & LazyLoadProps) => {
     const fetchLazyCategory = () => {

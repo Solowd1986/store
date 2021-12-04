@@ -24,7 +24,7 @@ const UpButton = () => {
             if (upBtnElem.current) {
                 upBtnElem.current.style.removeProperty("display");
                 const rightOffset = getComputedStyle(upBtnElem.current).getPropertyValue("right");
-                const leftOffset =  upBtnElem.current.offsetWidth + parseInt(rightOffset);
+                const leftOffset = upBtnElem.current.offsetWidth + parseInt(rightOffset);
                 const offset = document.documentElement.clientWidth - leftOffset;
                 upBtnElem.current.style.left = `${offset}px`;
             }
@@ -57,7 +57,7 @@ const UpButton = () => {
         [styles.show]: isPageScrolledToBottom,
     });
 
-    return <div ref={upBtnElem} onClick={scrollToTop} className={classList} />;
+    return <div ref={upBtnElem} onClick={scrollToTop} className={classList}/>;
 };
 
 export default UpButton;

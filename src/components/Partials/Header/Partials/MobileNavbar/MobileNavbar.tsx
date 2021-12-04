@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
 import styles from "./mobile-navbar.module.scss";
 import cn from "classnames";
+
 import { addScrollbarOffset, removeScrollbarOffset } from "@components/Helpers/Functions/scrollbarHelper";
+import { NavLink } from "react-router-dom";
 
 const MobileNavbar = () => {
     const [isMobileMenuVisible, mobileMenuToggle] = useState(false);

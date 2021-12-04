@@ -12,4 +12,4 @@ const Logo = ():JSX.Element => (
     </NavLink>
 );
 
-export default Logo;
+export default React.memo(Logo);

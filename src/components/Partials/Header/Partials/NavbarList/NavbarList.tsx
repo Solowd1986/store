@@ -271,4 +271,4 @@ const NavbarList = () => (
     </ul>
 );
 
-export default NavbarList;
+export default React.memo(NavbarList);

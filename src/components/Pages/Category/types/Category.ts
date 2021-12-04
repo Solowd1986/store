@@ -1,4 +1,4 @@
-import { CategoryTypes, Error } from "@root/ts/types/types";
+import { CategoryTypes, Error, ProductTypes } from "@root/ts/types/types";
 
 export interface CategoryProps {
     clearCategoryPageReduxData: () => void,
@@ -22,26 +22,16 @@ export interface ICategoryState {
 }
 
 
-
-interface MatchProps extends RouteComponentProps<MatchParams> {
+export interface ICategoryProps {
+    category: {
+        alias: string,
+        img: {
+            alt: string,
+            path: string
+        },
+        title: string
+    },
+    products: ProductTypes[],
 }
 
 
-
-import { RouteComponentProps } from 'react-router-dom';
-
-interface MatchParams {
-    name: string;
-}
-
-interface MatchProps extends RouteComponentProps<MatchParams> {
-}
-
-
-
-export interface match<P> {
-    params: P;
-    isExact: boolean;
-    path: string;
-    url: string;
-}

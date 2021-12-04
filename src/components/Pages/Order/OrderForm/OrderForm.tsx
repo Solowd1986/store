@@ -275,7 +275,7 @@ const OrderForm = () => {
      * Данный блок используется только для сохранения значения поля в куке, чтобы не вводить верное значение
      * по новой при перезагрузке страницы.
      */
-    const handleInputBlur = ({ target: { name: inputName, value: inputValue  } }: IElement) => {
+    const handleInputBlur = ({ target: { name: inputName, value: inputValue } }: IElement) => {
         saveFormValuesToCookie(inputName, inputValue);
     };
 

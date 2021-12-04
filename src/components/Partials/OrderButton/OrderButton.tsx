@@ -4,7 +4,7 @@ import cn from "classnames";
 import cartIcon from "./img/cart";
 
 import { IOrderButtonProps, buttonClickHandler, isProductInCart } from "@components/Partials/OrderButton/types/OrderButton";
-import {ProductTypes} from "@root/ts/types/types";
+import { ProductTypes } from "@root/ts/types/types";
 
 import { AnyAction, bindActionCreators, Dispatch } from "redux";
 import * as cartActions from "@redux/entities/cart/actions";
@@ -16,8 +16,7 @@ const OrderButton = (props: IOrderButtonProps) => {
     const { productsInCart = [], product, product: { title, id, rest } } = props;
     const delayAddingItem = useRef(0);
 
-
-    const buttonClickHandler:buttonClickHandler = (evt, product, callback) => {
+    const buttonClickHandler: buttonClickHandler = (evt, product, callback) => {
         if (!(evt.target instanceof HTMLButtonElement)) return;
         evt.target.classList.add(styles.disabled);
         evt.target.disabled = true;
@@ -37,7 +36,7 @@ const OrderButton = (props: IOrderButtonProps) => {
         };
     }, []);
 
-    const isProductInCart:isProductInCart = (productsInCart, title, id) =>
+    const isProductInCart: isProductInCart = (productsInCart, title, id) =>
         productsInCart.find((item: ProductTypes) => item.title === title && item.id === id);
 
     const isProductInCartStatus = isProductInCart(productsInCart, title, id);

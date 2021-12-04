@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import styles from "./product-card.module.scss";
 import { PromoProductCardProps } from "@components/Partials/ProductCard/types/ProductCard";
 
-const PromoProductCard = ({item: { alias, rest, adsType }}:{item: PromoProductCardProps}) => {
+const PromoProductCard = ({ item: { alias, rest, adsType } }: { item: PromoProductCardProps }) => {
     let promo = null;
 
     if (alias === "phones" && rest > 0) {
@@ -71,4 +71,4 @@ const PromoProductCard = ({item: { alias, rest, adsType }}:{item: PromoProductCa
     return <> {promo.map((item, i) => <React.Fragment key={i}>{item}</React.Fragment>)} </>
 };
 
-export default PromoProductCard;
+export default React.memo(PromoProductCard);
