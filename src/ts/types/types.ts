@@ -11,7 +11,7 @@ export interface ProductTypes {
     rest: number,
     ads_type: number,
     img: { md: string, lg_1: string, lg_2?: string, lg_3?: string },
-    promo: Array<{ id: number, title: string, desc: string, img_alt: string, img_path: string }>
+    promo: Array<{ id?: number, title: string, desc: string, img_alt: string, img_path: string }>
     specifications?: any
 }
 
