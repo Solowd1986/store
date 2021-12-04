@@ -11,7 +11,7 @@ import img from "./img/thanks_sir.png";
  *
  * Поэтому в цикле вызываются все пришедшие методы.
  */
-const Confirm = (props: { [key: string]: (evt?: any) => void }) => {
+const Confirm = (props: { [key: string]: (evt?: React.SyntheticEvent) => void }) => {
     const onClose = (evt: React.SyntheticEvent) => {
         Object.keys(props).forEach(propertyName => {
             if (typeof props[propertyName] === "function") props[propertyName](evt);

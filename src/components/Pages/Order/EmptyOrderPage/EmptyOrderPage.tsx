@@ -1,6 +1,6 @@
 import React from "react";
-import cn from "classnames";
 import styles from "./empty-order-page.module.scss";
+import cn from "classnames";
 
 const EmptyOrderPage = () => (
     <div className={cn("wrapper")}>

@@ -1,9 +1,12 @@
 import React from "react";
 import styles from "./order_price.module.scss";
+import { IOrderPrice, IProduct } from "@components/Pages/Order/types/Order";
 
-const OrderPrice = ({ listOfProducts, shipping: price }:any) => {
+const OrderPrice = ({ listOfProducts, shipping: price }: IOrderPrice) => {
+    if (!price) throw new Error("Product Database Error");
+
     const calctotalPrice = () =>
-        listOfProducts.reduce((total:any, item:any) => {
+        listOfProducts.reduce((total: number, item: IProduct) => {
             if (item.discount) {
                 const discount = item.price - (item.price * 10) / 100;
                 total += discount * item.quantity;
@@ -13,11 +16,13 @@ const OrderPrice = ({ listOfProducts, shipping: price }:any) => {
             return total;
         }, 0);
 
+
     const deliveryPrice = calctotalPrice() > 100000 || !price ? "бесплатно" : `${price} р.`;
+
     const totalPrice =
         calctotalPrice() > 100000
             ? `${new Intl.NumberFormat().format(calctotalPrice())} р.`
-            : `${new Intl.NumberFormat().format(calctotalPrice() + parseInt(price))} р.`;
+            : `${new Intl.NumberFormat().format(calctotalPrice() + +price)} р.`;
     return (
         <>
             <div className={styles.fieldset}>

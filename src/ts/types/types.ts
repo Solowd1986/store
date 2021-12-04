@@ -1,4 +1,4 @@
-import { ISlide, ISlides } from "@components/Pages/Index/Slider/types/Slider";
+import { ISlide } from "@components/Pages/Index/Slider/types/Slider";
 
 export interface ProductTypes {
     id: number,

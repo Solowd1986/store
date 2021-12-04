@@ -1,6 +1,6 @@
 import React, { Component, useEffect, useMemo, useRef, useState } from "react";
 import styles from "./order-form.module.scss";
-import { IOrderState, IField, IError } from "@components/Pages/Order/types/Order";
+import { IOrderState, IField, IError, IElement } from "@components/Pages/Order/types/Order";
 
 import OrderInfo from "./OrderInfo/OrderInfo";
 import OrderSummary from "./OrderSummary/OrderSummary";
@@ -275,7 +275,7 @@ const OrderForm = () => {
      * Данный блок используется только для сохранения значения поля в куке, чтобы не вводить верное значение
      * по новой при перезагрузке страницы.
      */
-    const handleInputBlur = ({ target: { name: inputName, value: inputValue } }: { target: HTMLInputElement }) => {
+    const handleInputBlur = ({ target: { name: inputName, value: inputValue  } }: IElement) => {
         saveFormValuesToCookie(inputName, inputValue);
     };
 
@@ -300,7 +300,7 @@ const OrderForm = () => {
      * 2. Ошибка для поля была получена. Если текст ошибки совпадает с тем, что уже был задан для данного поля, то просто
      * выходим из обработчика, так как менять state не нужно. Иначе прописываем данные об ошибке в state.
      */
-    const handleInputChange = ({ target, target: { name: inputName, value: inputValue } }: { target: HTMLInputElement }) => {
+    const handleInputChange = ({ target, target: { name: inputName, value: inputValue } }: IElement) => {
         if (inputName === "phone") new Inputmask("+7 (999) 999-99-99").mask(target);
         if (state.isFormTouched) {
             const checkedField = checkSingleFieldErrorSync(inputName, inputValue);
@@ -408,8 +408,8 @@ const OrderForm = () => {
                     handleRadioChange={handleRadioChange}
                     handleInputBlur={handleInputBlur}
                     fields={state.fields}
-                    shipping={state.fields.shipping}
-                    payment={state.fields.payment}
+                    shipping={state.fields.shipping.assignment}
+                    payment={state.fields.payment.assignment}
                 />
                 <OrderSummary
                     isFormValid={state.isFormValid}

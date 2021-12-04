@@ -1,33 +1,5 @@
 import React, { useState } from "react";
-
-
-
-interface IFormInputCounter {
-    classList: string,
-    getProcessedAmount: (quantity: number) => void,
-    initialValue: number,
-    maxValue: number,
-}
-
-interface IEventChange {
-    target: HTMLInputElement,
-    nativeEvent: any,
-}
-
-type Y = React.SyntheticEvent & {
-    target: {},
-
-}
-
-type HH = {
-    target: {
-        dataset: {
-            [key: string]: string
-        }
-    }
-
-}
-
+import { IFormInputCounter } from "@components/Pages/Order/types/Order";
 
 /**
  * Компонент отвечает лишь за приведение количества выбранного товара к нормализованному виду.
@@ -59,7 +31,6 @@ type HH = {
  *
  */
 const FormInputCounter = (props: IFormInputCounter) => {
-
     const { initialValue, maxValue, getProcessedAmount, classList } = props;
     const [value, setValue] = useState<number | string>(initialValue);
 
