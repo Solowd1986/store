@@ -1,6 +1,8 @@
 import { CategoryTypes, Error, ProductTypes } from "@root/ts/types/types";
+import { RouteComponentProps } from "react-router";
 
-export interface CategoryProps {
+
+export interface CategoryProps extends RouteComponentProps{
     clearCategoryPageReduxData: () => void,
     fetchCategoryPageData: (props:CategoryProps) => void,
     clearCategoryReduxState: () => void,
@@ -11,7 +13,7 @@ export interface CategoryProps {
 
     error: Error,
     data: CategoryTypes,
-    lazy: any[],
+    lazy: ProductTypes[],
     match: any
 }
 
