@@ -7,7 +7,7 @@ export interface CategoryProps {
     clearLazyReduxData: () => void,
     discardSortType: () => void,
     lastIndex: number,
-    sortType: string,
+    sortType: string | undefined,
 
     error: Error,
     data: CategoryTypes,
