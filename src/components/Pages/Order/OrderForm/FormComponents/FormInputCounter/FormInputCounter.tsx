@@ -19,18 +19,35 @@ interface IInputChange {
 }
 
 
-//region Description
 /**
  * Компонент отвечает лишь за приведение количества выбранного товара к нормализованному виду.
- * Эти данные он при onBlur сохраняет в своей state и возращает через отданный родителем метод.
- * Родитель, например компонент всей строки товара в корзине, уже исходя из этих данных может в своем
- * методе апдейтить глобальный стейт заказа, опираясь на title товара и прочие данные.
+ * Он получает на вход:
+ *
+ * 1. classList - стилизация компонента.
+ *
+ * 2. getProcessedAmount - метод из родительского компонента, для внесения данных по количеству товара Redux state
+ *
+ * 3. initialValue - начальное значение количества товара, берется из Redux state. Например, человек уже был на этой
+ *    странице и указал 4 единицы товара. Они были вписаны в Redux state, потом он ушел со страницы, но данные для
+ *    товара сохранены. Человек возвращается - и товар сразу в верном количестве.
+ *
+ * 4. maxValue - максимальное количество данного товара, заданное в БД.
+ *
+ * Сценарий работы:
+ *
+ * Мы позволяем пользователю любой ввод, если он числовой, также ввод можно редактировать, удалять.
+ * Все это вписывается в локальный state.
+ * Как только пользователь уходит из поля провоцируя blur, для данных из поля ввода выполняется нормализация.
+ * Ее результат - это всегда число от 1 до максимума для текущего товара. Эти данные сразу вводятся
+ * как в локальный state, так и в Redux state.
+ *
+ * Второй повод для вызова нормализации - клики по кнопкам "+"/"-". Этот результат нормализуется каждый клик,
+ * то есть тут пользователь не сможет ввести любые числа, он будет сразу ограничен длпустимым диапазоном.
+ *
+ * Попутно мы для разнообразия блокируем дефолтное поведение нажатия на Enter в поле ввода, это чтобы не вызывать
+ * отправку формы. По сути это не обязательно, так как это перехватывается в другом месте, но пусть будет.
+ *
  */
-    //endregion
-
-
-
-
 const FormInputCounter = (props: IFormInputCounter) => {
 
     const { initialValue, maxValue, getProcessedAmount, classList } = props;
@@ -53,7 +70,7 @@ const FormInputCounter = (props: IFormInputCounter) => {
      *
      * 4. В итоге возвращаем результат - число, укладывающееся в корректный диапазон.
      */
-    const amountNormalize = (inputValue: (number | string) ) => {
+    const amountNormalize = (inputValue: (number | string)) => {
         const value = typeof inputValue === "number" ? inputValue : Math.abs(parseInt(inputValue, 10));
         const currentAmount = isNaN(value) ? 1 : value;
         const max = isNaN(Math.abs(maxValue)) ? 99 : maxValue;
@@ -81,7 +98,7 @@ const FormInputCounter = (props: IFormInputCounter) => {
     /**
      * Метод установки количества товара при уходе из поля ввода. Меняет локальный state и Redux store
      */
-    const onInputBlur = ({ target: { value: inputValue } }: {target: {value: string}}) => {
+    const onInputBlur = ({ target: { value: inputValue } }: { target: { value: string } }) => {
         const value = amountNormalize(inputValue);
         getProcessedAmount(value);
         setValue(value);
