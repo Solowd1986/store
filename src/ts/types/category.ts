@@ -1,9 +1,9 @@
 import { RouteComponentProps } from "react-router";
 import { IProductTypes, IError } from "@root/ts/types/_core";
 
-export interface CategoryProps extends RouteComponentProps{
+export interface ICategoryProps extends RouteComponentProps{
     clearCategoryPageReduxData: () => void,
-    fetchCategoryPageData: (props:CategoryProps) => void,
+    fetchCategoryPageData: (props:ICategoryProps) => void,
     clearCategoryReduxState: () => void,
     clearLazyReduxData: () => void,
     discardSortType: () => void,
@@ -26,12 +26,17 @@ export interface CategoryTypes {
 }
 
 export interface CategoryState {
-    products: any | null,
+    products: CategoryTypes | null,
     lastIndex: number
 }
 
 
-export interface CategoryProductsListTypes {
+export interface IDraft {
+    [key: string]: any
+}
+
+
+export interface ICategoryProductsListProps {
     category: {
         alias: string,
         img: {
@@ -43,16 +48,7 @@ export interface CategoryProductsListTypes {
     products: IProductTypes[],
 }
 
-
-
-
-
-
-
-
-
-
-export interface SortProductsProps {
+export interface ISortProductsProps {
     readonly sortType: string,
     readonly changeSortType: (sortType: string) => void;
 }

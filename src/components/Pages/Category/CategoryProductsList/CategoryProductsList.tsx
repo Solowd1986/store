@@ -1,13 +1,13 @@
 import React from "react";
 import styles from "./category-products-list.module.scss";
 import cn from "classnames";
-import { CategoryProductsListTypes } from "@root/ts/types/category";
+import { ICategoryProductsListProps } from "@root/ts/types/category";
 
 import SortPorducts from "@components/Partials/SortProducts/SortProducts";
 import LazyLoad from "@components/Partials/LazyLoad/LazyLoad";
 import ProductCard from "@components/Partials/ProductCard/ProductCard";
 
-const CategoryProductsList = ({ category, products }: CategoryProductsListTypes) => {
+const CategoryProductsList = ({ category, products }: ICategoryProductsListProps) => {
     return (
         <div className={styles.category_wrapper}>
             <div className={styles.sign_bg}>

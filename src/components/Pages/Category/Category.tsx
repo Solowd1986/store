@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { CategoryProps, CategoryState } from "@root/ts/types/category";
+import { ICategoryProps, CategoryState, CategoryTypes, IDraft } from "@root/ts/types/category";
 import { usePreviousProps } from "@components/Helpers/Hooks/PreviousProps/PreviousProps";
 
 import arrayShuffle from "@components/Helpers/Functions/arrayShuffle";
@@ -65,10 +65,11 @@ import { connect } from "react-redux";
  */
 
 
-const Category = (props: CategoryProps) => {
+const Category = (props: ICategoryProps) => {
     const { data, lastIndex, sortType, lazy, match, error, clearCategoryReduxState, fetchCategoryPageData } = props;
     const [state, setState] = useState<CategoryState>({ products: null, lastIndex: 0 });
     const prevPropsSortType: string | undefined = usePreviousProps(props.sortType);
+    console.log(state);
 
     const isStateEmpty = () => !state.products;
     const clearState = () => {
@@ -76,11 +77,11 @@ const Category = (props: CategoryProps) => {
         clearCategoryReduxState();
     };
 
-    const isRouteChanged = () => !isStateEmpty() ? state.products.main.alias !== match.params.type : false;
+    const isRouteChanged = () => !isStateEmpty() ? state.products?.main.alias !== match.params.type : false;
     const isLazyLoadRecived = () => !isStateEmpty() && (state.lastIndex !== lastIndex) && lazy;
 
     const sortProducts = () => {
-        if (!state.products) return;
+        if (!state.products?.data) return;
         let productsList = [...state.products.data];
 
         switch (sortType) {
@@ -98,7 +99,7 @@ const Category = (props: CategoryProps) => {
             }
         }
         setState(
-            produce<CategoryState>(state, (draft) => {
+            produce(state, (draft: IDraft) => {
                 draft["products"].data = productsList;
             }),
         );
@@ -115,17 +116,13 @@ const Category = (props: CategoryProps) => {
 
         if (isLazyLoadRecived()) {
             setState(
-                produce<CategoryState>(state, (draft) => {
+                produce<CategoryState>(state, (draft: IDraft) => {
                     draft["lastIndex"] = lastIndex;
-                    draft["products"]["main"] = state.products.main;
-                    draft["products"]["data"] = [
-                        ...state.products.data,
-                        ...lazy,
-                    ];
+                    draft["products"]["main"] = state.products?.main;
+                    draft["products"]["data"] = state.products ? [...state.products.data, ...lazy,] : {};
                 }),
             );
         }
-
     }, [props]);
 
 
@@ -141,7 +138,7 @@ const Category = (props: CategoryProps) => {
         return <SpinnerModal/>;
     }
 
-    const { main: category, data: products } = state.products;
+    const { main: category, data: products } = state.products as CategoryTypes;
     return <CategoryProductsList category={category} products={products}/>;
 };
 

@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import styles from "./sort-products.module.scss";
 import cn from "classnames";
-import { SortProductsProps } from "@root/ts/types/category";
+import { ISortProductsProps } from "@root/ts/types/category";
 
 import { AnyAction, bindActionCreators, Dispatch } from "redux";
 import * as categoryActions from "@redux/entities/category/actions";
 import { connect } from "react-redux";
 
-const SortPorducts = ({ sortType = "по популярности", changeSortType }: SortProductsProps) => {
+const SortPorducts = ({ sortType = "по популярности", changeSortType }: ISortProductsProps) => {
     const [isSortPanelShow, toggleSortPanelVisibility] = useState(false);
     const listOfSortTypes = useRef<HTMLUListElement>(null);
 
