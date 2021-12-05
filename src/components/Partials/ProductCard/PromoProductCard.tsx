@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 import styles from "./product-card.module.scss";
-import { PromoProductCardProps } from "@components/Partials/ProductCard/types/ProductCard";
+import { PromoProductCardProps } from "@root/ts/types/product-card";
 
 const PromoProductCard = ({ item: { alias, rest, adsType } }: { item: PromoProductCardProps }) => {
     let promo = null;

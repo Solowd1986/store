@@ -2,9 +2,7 @@ import React, { Component } from "react";
 import styles from "./error-400.module.scss";
 import cn from "classnames";
 import img from "./img/error-400.png";
-
 import { RouteComponentProps, withRouter } from "react-router-dom";
-import { IResetErrorState } from "@components/Helpers/ErrorBoundary/types/ErrorBoundary";
 
 //region Описание
 /**
@@ -14,7 +12,7 @@ import { IResetErrorState } from "@components/Helpers/ErrorBoundary/types/ErrorB
  * Если не сбросить, то можно уйти в постоянный редирект
  */
     //endregion
-const Error400 = ({ history, resetErrorState = () => {} }:RouteComponentProps & IResetErrorState) => {
+const Error400 = ({ history, resetErrorState = () => {} }:RouteComponentProps & { resetErrorState: () => void }) => {
     const redirect = () => {
         resetErrorState();
         history.push("/");

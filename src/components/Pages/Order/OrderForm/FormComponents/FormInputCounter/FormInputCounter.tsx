@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { IFormInputCounter } from "@components/Pages/Order/types/Order";
+import { IFormInputCounter } from "@root/ts/types/types";
 
 /**
  * Компонент отвечает лишь за приведение количества выбранного товара к нормализованному виду.

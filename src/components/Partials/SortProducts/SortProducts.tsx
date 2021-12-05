@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import styles from "./sort-products.module.scss";
 import cn from "classnames";
-import { SortProductsProps } from "./types/SortProducts";
+import { SortProductsProps } from "@root/ts/types/category";
 
 import { AnyAction, bindActionCreators, Dispatch } from "redux";
 import * as categoryActions from "@redux/entities/category/actions";

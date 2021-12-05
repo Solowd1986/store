@@ -1,5 +1,5 @@
 import React from "react";
-import { ProductPriceInterface } from "./types/ProductPrice";
+import { ProductPriceInterface } from "@root/ts/types/product-price";
 
 const ProductPrice = ({ product: { price, discount, rest } }: ProductPriceInterface): JSX.Element | null => {
     if (!rest) return null;

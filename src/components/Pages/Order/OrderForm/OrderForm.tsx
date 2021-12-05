@@ -1,6 +1,6 @@
 import React, { Component, useEffect, useMemo, useRef, useState } from "react";
 import styles from "./order-form.module.scss";
-import { IOrderState, IField, IError, IElement } from "@components/Pages/Order/types/Order";
+import { IOrderState, IField, IElement } from "@root/ts/types/types";
 
 import OrderInfo from "./OrderInfo/OrderInfo";
 import OrderSummary from "./OrderSummary/OrderSummary";
@@ -227,7 +227,7 @@ const OrderForm = () => {
     const showAllFormErrors = () => {
         if (!validateForm()?.isFormValid) {
             const fieldsWithError: IField = {};
-            validateForm()?.errors.forEach((item: IError) => {
+            validateForm()?.errors.forEach((item) => {
                 if (Object.keys(state.fields).includes(item.fieldName)) {
                     fieldsWithError[item.fieldName] = { error: true, msg: item.msg };
                 }
@@ -408,12 +408,12 @@ const OrderForm = () => {
                     handleRadioChange={handleRadioChange}
                     handleInputBlur={handleInputBlur}
                     fields={state.fields}
-                    shipping={state.fields.shipping.assignment}
-                    payment={state.fields.payment.assignment}
+                    shipping={state.fields.shipping.assignment as string}
+                    payment={state.fields.payment.assignment as string}
                 />
                 <OrderSummary
                     isFormValid={state.isFormValid}
-                    shipping={state.fields.shipping.price}
+                    shipping={state.fields.shipping.price as number}
                     resetOrderForm={resetOrderForm}
                 />
             </form>

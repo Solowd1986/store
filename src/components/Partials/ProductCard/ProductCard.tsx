@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import styles from "./product-card.module.scss";
 import cn from "classnames";
-import { ProductCardProps } from "@components/Partials/ProductCard/types/ProductCard";
+import { ProductCardProps } from "@root/ts/types/product-card";
 
 import ProductPrice from "@components/Partials/ProductPrice/ProductPrice";
 import OrderButton from "@components/Partials/OrderButton/OrderButton";

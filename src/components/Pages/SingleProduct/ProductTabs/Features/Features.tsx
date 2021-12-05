@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./features.module.scss";
-import { IPromoSingleProduct } from "@components/Pages/SingleProduct/types/SingleProduct";
+import { IPromoSingleProduct } from "@root/ts/types/types";
 
 const Features = ({ promo }: IPromoSingleProduct) => (
     <>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { CategoryProps, ICategoryState } from "@components/Pages/Category/types/Category";
+import { CategoryProps, ICategoryState } from "@root/ts/types/types";
 import { usePreviousProps } from "@components/Helpers/Hooks/PreviousProps/PreviousProps";
 
 import arrayShuffle from "@components/Helpers/Functions/arrayShuffle";
@@ -68,7 +68,7 @@ import { connect } from "react-redux";
 const Category = (props: CategoryProps) => {
     const { data, lastIndex, sortType, lazy, match, error, clearCategoryReduxState, fetchCategoryPageData } = props;
     const [state, setState] = useState<ICategoryState>({ products: null, lastIndex: 0 });
-    const prevPropsSortType:string | undefined = usePreviousProps(props.sortType);
+    const prevPropsSortType: string | undefined = usePreviousProps(props.sortType);
 
     const isStateEmpty = () => !state.products;
     const clearState = () => {

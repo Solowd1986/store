@@ -3,8 +3,8 @@ import styles from "./order-button.module.scss";
 import cn from "classnames";
 import cartIcon from "./img/cart";
 
-import { IOrderButtonProps, buttonClickHandler, isProductInCart } from "@components/Partials/OrderButton/types/OrderButton";
-import { ProductTypes } from "@root/ts/types/types";
+import { ProductTypes } from "@root/ts/types/_core";
+import { OrderButtonProps, buttonClickHandler, isProductInCart } from "@root/ts/types/order-button";
 
 import { AnyAction, bindActionCreators, Dispatch } from "redux";
 import * as cartActions from "@redux/entities/cart/actions";
@@ -12,7 +12,7 @@ import * as cartSelector from "@redux/entities/cart/selectors/cartSelectors";
 import { connect } from "react-redux";
 
 
-const OrderButton = (props: IOrderButtonProps) => {
+const OrderButton = (props: OrderButtonProps) => {
     const { productsInCart = [], product, product: { title, id, rest } } = props;
     const delayAddingItem = useRef(0);
 

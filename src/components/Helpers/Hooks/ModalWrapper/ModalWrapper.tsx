@@ -1,10 +1,13 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import cn from "classnames";
 import * as util from "@components/Helpers/Functions/scrollbarHelper";
-import { InnerComponentProps } from "@components/Helpers/Hooks/ModalWrapper/types/ModalWrapperTypes";
+
 
 //<editor-fold desc="Описание">
 /**
+ *
+ * В типах мы указываем, что каждый компонент, который мы оборачиваем будет получать атрибут close указанной сигнатуры
+ *
  * 1. На вход приходит компонент, который нужно обернуть
  * 2. Сам ModalWrapper создает div, который позиционируется как fixed и занимает весь экран, центруя в себе переданный компонент
  * 2. Div имеет data-атрибут modal, он нужен для того, чтобы отслеживать, откуда пришел клик и не убирать оверлей при клике на
@@ -23,10 +26,13 @@ import { InnerComponentProps } from "@components/Helpers/Hooks/ModalWrapper/type
  *    как местный метод закрытия модального окна closeModalFromChildren так и все методы переданные обертке выше. Они
  *    все вызовутся при закрытии окна. Данный компонент тоже должен при закритии вызывать все методы которые ему переданы,
  *    кроме того, чтобы сбрамывать свой state.
+ *
+ *
  */
     //</editor-fold>
-const ModalWrapper = (Component: React.FunctionComponent<InnerComponentProps>) => {
-    return ({ bg = false, interactions = false,  ...props }) => {
+const ModalWrapper = (Component: React.FunctionComponent<{ [key: string]: (evt?: React.SyntheticEvent) => void}>) => {
+    return({ bg = false, interactions = false,  ...props }) => {
+
         const [isModalShow, showModalStatus] = useState(true);
 
         const closeModal = (evt: React.SyntheticEvent<HTMLElement>) => {

@@ -1,4 +1,4 @@
-import { ProductTypes } from "@root/ts/types//types";
+import { ProductTypes } from "@root/ts/types/_core";
 
 export interface ProductCardProps {
     item: ProductTypes,

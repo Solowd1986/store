@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import styles from "./slider.module.scss";
-import { ISlides, ISlide } from "@components/Pages/Index/Slider/types/Slider";
+import { ISlides, ISlide } from "@root/ts/types/types";
 import { NavLink } from "react-router-dom";
 
 const Slider = ({ slides }: ISlides) => {

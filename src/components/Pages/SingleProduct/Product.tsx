@@ -1,7 +1,7 @@
 import React, { Component, useEffect, useState } from "react";
 import styles from "./product.module.scss";
 import cn from "classnames";
-import { ISingleProduct, IProductPage } from "@components/Pages/SingleProduct/types/SingleProduct";
+import { ISingleProduct, IProductPage } from "@root/ts/types/types";
 import { Redirect } from "react-router";
 
 import ProductPrice from "@components/Partials/ProductPrice/ProductPrice";
@@ -29,7 +29,6 @@ import { connect } from "react-redux";
  */
     //endregion
 const Product = (props: IProductPage) => {
-    console.log(props);
     const [productState, setProduct] = useState<ISingleProduct>();
     const { product: productProps, error, fetchProductPageData, clearProductReduxState } = props;
 

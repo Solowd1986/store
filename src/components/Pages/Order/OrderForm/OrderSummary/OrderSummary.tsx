@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./order-summary.module.scss";
 import cn from "classnames";
-import { IOrderSummary } from "@components/Pages/Order/types/Order";
+import { IOrderSummary } from "@root/ts/types/types";
 
 import OrderPrice from "@components/Pages/Order/OrderForm/OrderSummary/OrderPrice/OrderPrice";
 import OrderItem from "@components/Pages/Order/OrderForm/OrderSummary/OrderItem/OrderItem";
@@ -11,8 +11,6 @@ import * as cartSelectors from "@redux/entities/cart/selectors/cartSelectors";
 import { connect } from "react-redux";
 
 const OrderSummary = ({ listOfProducts, shipping, isFormValid, resetOrderForm }: IOrderSummary) => {
-    console.log(listOfProducts);
-
     const classList = cn(styles.order_btn, {
         [styles.not_allowed]: !isFormValid,
     });

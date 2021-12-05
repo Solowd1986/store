@@ -1,9 +1,8 @@
 import React from "react";
 import styles from "./order_price.module.scss";
-import { IOrderPrice, IProduct } from "@components/Pages/Order/types/Order";
+import { IOrderPrice, IProduct } from "@root/ts/types/types";
 
 const OrderPrice = ({ listOfProducts, shipping: price }: IOrderPrice) => {
-    if (!price) throw new Error("Product Database Error");
 
     const calctotalPrice = () =>
         listOfProducts.reduce((total: number, item: IProduct) => {
@@ -22,7 +21,7 @@ const OrderPrice = ({ listOfProducts, shipping: price }: IOrderPrice) => {
     const totalPrice =
         calctotalPrice() > 100000
             ? `${new Intl.NumberFormat().format(calctotalPrice())} р.`
-            : `${new Intl.NumberFormat().format(calctotalPrice() + +price)} р.`;
+            : `${new Intl.NumberFormat().format(calctotalPrice() + price)} р.`;
     return (
         <>
             <div className={styles.fieldset}>

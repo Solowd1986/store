@@ -1,7 +1,7 @@
 import React, { Component, createRef, useEffect, useRef } from "react";
 import styles from "./tabs.module.scss";
 import cn from "classnames";
-import { IProductTabs } from "@components/Pages/SingleProduct/types/SingleProduct";
+import { IProductTabs } from "@root/ts/types/types";
 
 import Features from "./Features/Features";
 import Specification from "./Specification/Specification";
@@ -10,7 +10,7 @@ import ProductDelivery from "./ProductDelivery/ProductDelivery";
 const ProductTabs = (props: IProductTabs) => {
     const tabLinkList = useRef<HTMLElement>(null);
     const tabBodyList = useRef<HTMLUListElement>(null);
-    const { category: { alias }, product: { promo, specifications = null } } = props;
+    const { category: { alias }, product: { promo, specifications } } = props;
 
 
     useEffect(() => {
@@ -64,7 +64,7 @@ const ProductTabs = (props: IProductTabs) => {
                     <li className={styles.tab} id={"features"}>
                         <Features promo={promo}/>
                     </li>
-                    {alias === "phones" && (
+                    {alias === "phones" && specifications && (
                         <li className={styles.tab} id={"specifications"}>
                             <Specification specifications={specifications}/>
                         </li>

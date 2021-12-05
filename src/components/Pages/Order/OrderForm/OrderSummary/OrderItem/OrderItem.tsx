@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styles from "./order_item.module.scss";
-import { IOrderItem } from "@components/Pages/Order/types/Order";
+import { IOrderItem } from "@root/ts/types/types";
 
 import FormInputCounter from "@components/Pages/Order/OrderForm/FormComponents/FormInputCounter/FormInputCounter";
 import CancelButton from "@components/Pages/Order/OrderForm/FormComponents/CancelButton/CancelButton";
