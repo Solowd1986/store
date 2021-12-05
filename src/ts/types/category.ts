@@ -11,12 +11,12 @@ export interface ICategoryProps extends RouteComponentProps{
     sortType: string | undefined,
 
     error: IError,
-    data: CategoryTypes,
+    data: ICategoryTypes,
     lazy: IProductTypes[],
     match: any
 }
 
-export interface CategoryTypes {
+export interface ICategoryTypes {
     data: Array<IProductTypes>,
     main: {
         alias: string,
@@ -25,8 +25,8 @@ export interface CategoryTypes {
     }
 }
 
-export interface CategoryState {
-    products: CategoryTypes | null,
+export interface ICategoryState {
+    products: ICategoryTypes | null,
     lastIndex: number
 }
 

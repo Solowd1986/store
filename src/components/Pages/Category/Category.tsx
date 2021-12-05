@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { ICategoryProps, CategoryState, CategoryTypes, IDraft } from "@root/ts/types/category";
+import { ICategoryProps, ICategoryState, ICategoryTypes, IDraft } from "@root/ts/types/category";
 import { usePreviousProps } from "@components/Helpers/Hooks/PreviousProps/PreviousProps";
 
 import arrayShuffle from "@components/Helpers/Functions/arrayShuffle";
@@ -67,7 +67,7 @@ import { connect } from "react-redux";
 
 const Category = (props: ICategoryProps) => {
     const { data, lastIndex, sortType, lazy, match, error, clearCategoryReduxState, fetchCategoryPageData } = props;
-    const [state, setState] = useState<CategoryState>({ products: null, lastIndex: 0 });
+    const [state, setState] = useState<ICategoryState>({ products: null, lastIndex: 0 });
     const prevPropsSortType: string | undefined = usePreviousProps(props.sortType);
     console.log(state);
 
@@ -116,7 +116,7 @@ const Category = (props: ICategoryProps) => {
 
         if (isLazyLoadRecived()) {
             setState(
-                produce<CategoryState>(state, (draft: IDraft) => {
+                produce(state, (draft: IDraft) => {
                     draft["lastIndex"] = lastIndex;
                     draft["products"]["main"] = state.products?.main;
                     draft["products"]["data"] = state.products ? [...state.products.data, ...lazy,] : {};
@@ -138,7 +138,7 @@ const Category = (props: ICategoryProps) => {
         return <SpinnerModal/>;
     }
 
-    const { main: category, data: products } = state.products as CategoryTypes;
+    const { main: category, data: products } = state.products as ICategoryTypes;
     return <CategoryProductsList category={category} products={products}/>;
 };
 

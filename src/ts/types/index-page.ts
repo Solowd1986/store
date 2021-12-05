@@ -1,11 +1,11 @@
 import { IError } from "@root/ts/types/_core";
-import { CategoryTypes } from "@root/ts/types/category";
+import { ICategoryTypes } from "@root/ts/types/category";
 
 export interface IIndexPagePropducts {
     readonly index: {
-        phones: CategoryTypes
-        gadgets: CategoryTypes,
-        accessoires: CategoryTypes,
+        phones: ICategoryTypes
+        gadgets: ICategoryTypes,
+        accessoires: ICategoryTypes,
         slider: IMainPageSlide[]
     }
 }
