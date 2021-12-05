@@ -1,11 +1,11 @@
 import React from "react";
 import styles from "./order_price.module.scss";
-import { IOrderPrice, IProduct } from "@root/ts/types/types";
+import { IOrderPrice, Product } from "@root/ts/types/order";
 
 const OrderPrice = ({ listOfProducts, shipping: price }: IOrderPrice) => {
 
     const calctotalPrice = () =>
-        listOfProducts.reduce((total: number, item: IProduct) => {
+        listOfProducts.reduce((total: number, item: Product) => {
             if (item.discount) {
                 const discount = item.price - (item.price * 10) / 100;
                 total += discount * item.quantity;

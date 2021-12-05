@@ -1,7 +1,7 @@
 import React from "react";
-import { ProductPriceInterface } from "@root/ts/types/product-price";
+import { IProductPrice } from "@root/ts/types/product-price";
 
-const ProductPrice = ({ product: { price, discount, rest } }: ProductPriceInterface): JSX.Element | null => {
+const ProductPrice = ({ product: { price, discount, rest } }: IProductPrice): JSX.Element | null => {
     if (!rest) return null;
     const calcDiscount = (price: number): number => Math.round(((price - (price * 10) / 100) / 100) * 100);
     const formatPrice = (price: number): string => new Intl.NumberFormat().format(price);

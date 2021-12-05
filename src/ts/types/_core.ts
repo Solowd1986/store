@@ -1,5 +1,5 @@
 
-export interface ProductTypes {
+export interface IProductTypes {
     id: number,
     category_id?: number,
     title: string,
@@ -11,16 +11,14 @@ export interface ProductTypes {
     rest: number,
     ads_type: number,
     img: { sm?: string, md: string, lg_1: string, lg_2?: string, lg_3?: string },
-    promo: Array<{ id?: number, title: string, desc: string, img_alt: string, img_path: string }>
+    promo: Promo
     specifications?: { [key: string]: (string | number) } | undefined,
-    slider?: string[],
 }
 
-export interface CategoryTypes {
-    data: Array<ProductTypes>,
-    main: {
-        alias: string,
-        img: { path: string, alt: string },
-        title: string
-    }
+export type Promo = Array<{ id?: number, title: string, desc: string, img_alt: string, img_path: string }>;
+
+
+export interface IError {
+    recived: boolean,
+    code: number
 }

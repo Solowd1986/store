@@ -3,8 +3,8 @@ import styles from "./order-button.module.scss";
 import cn from "classnames";
 import cartIcon from "./img/cart";
 
-import { ProductTypes } from "@root/ts/types/_core";
-import { OrderButtonProps, buttonClickHandler, isProductInCart } from "@root/ts/types/order-button";
+import { IProductTypes } from "@root/ts/types/_core";
+import { IOrderButtonProps, IProductStatusHandler, IProductInCart } from "@root/ts/types/order-button";
 
 import { AnyAction, bindActionCreators, Dispatch } from "redux";
 import * as cartActions from "@redux/entities/cart/actions";
@@ -12,11 +12,11 @@ import * as cartSelector from "@redux/entities/cart/selectors/cartSelectors";
 import { connect } from "react-redux";
 
 
-const OrderButton = (props: OrderButtonProps) => {
+const OrderButton = (props: IOrderButtonProps) => {
     const { productsInCart = [], product, product: { title, id, rest } } = props;
     const delayAddingItem = useRef(0);
 
-    const buttonClickHandler: buttonClickHandler = (evt, product, callback) => {
+    const changeProductStatus: IProductStatusHandler = (evt, product, callback) => {
         if (!(evt.target instanceof HTMLButtonElement)) return;
         evt.target.classList.add(styles.disabled);
         evt.target.disabled = true;
@@ -36,17 +36,17 @@ const OrderButton = (props: OrderButtonProps) => {
         };
     }, []);
 
-    const isProductInCart: isProductInCart = (productsInCart, title, id) =>
-        productsInCart.find((item: ProductTypes) => item.title === title && item.id === id);
+    const isProductInCart: IProductInCart = (productsInCart, title, id) =>
+        productsInCart.find((item: IProductTypes) => item.title === title && item.id === id);
 
     const isProductInCartStatus = isProductInCart(productsInCart, title, id);
 
     const spinnerIcon = <span className={styles.loader}/>; //Спиннер появится при состоянии :disabled у кнопки
     const innerText = !rest ? "Нет в наличии" : !isProductInCartStatus ? "Добавить в заказ" : "Убрать из заказа";
 
-    const clickHandler = !isProductInCartStatus
-        ? (evt: React.MouseEvent<HTMLButtonElement>) => buttonClickHandler(evt, product, props.addItemToCart)
-        : (evt: React.MouseEvent<HTMLButtonElement>) => buttonClickHandler(evt, product, props.removeItemFromCart);
+    const processProductOrdering = !isProductInCartStatus
+        ? (evt: React.MouseEvent<HTMLButtonElement>) => changeProductStatus(evt, product, props.addItemToCart)
+        : (evt: React.MouseEvent<HTMLButtonElement>) => changeProductStatus(evt, product, props.removeItemFromCart);
 
 
     const classList = cn("btn", styles.order__btn, {
@@ -56,7 +56,7 @@ const OrderButton = (props: OrderButtonProps) => {
     });
 
     return (
-        <button className={classList} onClick={clickHandler} disabled={!rest}>
+        <button className={classList} onClick={processProductOrdering} disabled={!rest}>
             {cartIcon}
             {spinnerIcon}
             {innerText}

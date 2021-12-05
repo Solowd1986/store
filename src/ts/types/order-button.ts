@@ -1,18 +1,18 @@
 import React from "react";
-import { ProductTypes } from "@root/ts/types/_core";
+import { IProductTypes } from "@root/ts/types/_core";
 
-export interface OrderButtonProps {
-    product: ProductTypes,
-    productsInCart?: ProductTypes[],
-    addItemToCart?: (product: ProductTypes) => void,
+export interface IOrderButtonProps {
+    product: IProductTypes,
+    productsInCart?: IProductTypes[],
+    addItemToCart?: (product: IProductTypes) => void,
     removeItemFromCart?: () => void,
     classList?: string,
 }
 
-export type buttonClickHandler = (
+export type IProductStatusHandler = (
     evt: React.MouseEvent<HTMLButtonElement>,
-    product: ProductTypes,
-    callback?: (product: ProductTypes) => void
+    product: IProductTypes,
+    callback?: (product: IProductTypes) => void
 ) => void;
 
-export type isProductInCart = (productsInCart: ProductTypes[], title: string, id: number) => ProductTypes | undefined
+export type IProductInCart = (productsInCart: IProductTypes[], title: string, id: number) => IProductTypes | undefined

@@ -1,4 +1,4 @@
-export interface ProductPriceInterface {
+export interface IProductPrice {
     product: {
         price: number,
         discount: boolean,

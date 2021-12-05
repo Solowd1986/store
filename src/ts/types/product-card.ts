@@ -1,13 +1,13 @@
-import { ProductTypes } from "@root/ts/types/_core";
+import { IProductTypes } from "@root/ts/types/_core";
 
-export interface ProductCardProps {
-    item: ProductTypes,
+export interface IProductCardProps {
+    item: IProductTypes,
     category: {
         alias: string
     }
 }
 
-export interface PromoProductCardProps {
+export interface IPromoProductCardProps {
     alias: string,
     rest: number,
     adsType: number

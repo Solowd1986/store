@@ -1,8 +1,8 @@
 import React, { PureComponent } from "react";
 import styles from "./product-card.module.scss";
-import { PromoProductCardProps } from "@root/ts/types/product-card";
+import { IPromoProductCardProps } from "@root/ts/types/product-card";
 
-const PromoProductCard = ({ item: { alias, rest, adsType } }: { item: PromoProductCardProps }) => {
+const PromoProductCard = ({ item: { alias, rest, adsType } }: { item: IPromoProductCardProps }) => {
     let promo = null;
 
     if (alias === "phones" && rest > 0) {

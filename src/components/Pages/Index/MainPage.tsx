@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { IMainPage } from "@root/ts/types/types";
+import { IMainPageProps } from "@root/ts/types/index-page";
 
 import Spinner from "@components/Partials/Spinner/Spinner";
 import Slider from "./Slider/Slider";
@@ -16,7 +16,7 @@ import * as indexSelectors from "@redux/entities/index/selectors/indexSelectors"
 import { connect } from "react-redux";
 
 
-const MainPage = ({ index, error, fetchIndexPageData }: IMainPage) => {
+const MainPage = ({ index, error, fetchIndexPageData }: IMainPageProps) => {
 
     useEffect(() => {
         fetchIndexPageData();

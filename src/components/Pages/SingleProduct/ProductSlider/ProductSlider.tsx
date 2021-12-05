@@ -1,8 +1,8 @@
 import React, { Component, useEffect, useRef } from "react";
 import styles from "./product-slider.module.scss";
-import { IProductSliderProps } from "@root/ts/types/types";
+import { ISingleProductSlider } from "@root/ts/types/single-product";
 
-const ProductSlider = ({ list, alt }: IProductSliderProps) => {
+const ProductSlider = ({ list, alt }: ISingleProductSlider) => {
     const slideTransitionEnabled = useRef(false);
     const mainImgRef = useRef<HTMLImageElement>(null);
     const slideThumbnailList = useRef<HTMLDivElement>(null);

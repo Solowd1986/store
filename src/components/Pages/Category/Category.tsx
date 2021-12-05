@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { CategoryProps, ICategoryState } from "@root/ts/types/types";
+import { CategoryProps, CategoryState } from "@root/ts/types/category";
 import { usePreviousProps } from "@components/Helpers/Hooks/PreviousProps/PreviousProps";
 
 import arrayShuffle from "@components/Helpers/Functions/arrayShuffle";
@@ -67,7 +67,7 @@ import { connect } from "react-redux";
 
 const Category = (props: CategoryProps) => {
     const { data, lastIndex, sortType, lazy, match, error, clearCategoryReduxState, fetchCategoryPageData } = props;
-    const [state, setState] = useState<ICategoryState>({ products: null, lastIndex: 0 });
+    const [state, setState] = useState<CategoryState>({ products: null, lastIndex: 0 });
     const prevPropsSortType: string | undefined = usePreviousProps(props.sortType);
 
     const isStateEmpty = () => !state.products;
@@ -98,7 +98,7 @@ const Category = (props: CategoryProps) => {
             }
         }
         setState(
-            produce<ICategoryState>(state, (draft) => {
+            produce<CategoryState>(state, (draft) => {
                 draft["products"].data = productsList;
             }),
         );
@@ -115,7 +115,7 @@ const Category = (props: CategoryProps) => {
 
         if (isLazyLoadRecived()) {
             setState(
-                produce<ICategoryState>(state, (draft) => {
+                produce<CategoryState>(state, (draft) => {
                     draft["lastIndex"] = lastIndex;
                     draft["products"]["main"] = state.products.main;
                     draft["products"]["data"] = [

@@ -1,7 +1,7 @@
 import React, { Component, useEffect, useState } from "react";
 import styles from "./product.module.scss";
 import cn from "classnames";
-import { ISingleProduct, IProductPage } from "@root/ts/types/types";
+import { ISingleProductState, ISingleProductProps } from "@root/ts/types/single-product";
 import { Redirect } from "react-router";
 
 import ProductPrice from "@components/Partials/ProductPrice/ProductPrice";
@@ -28,8 +28,8 @@ import { connect } from "react-redux";
  * Но для единообразия я решил все же так прописать.
  */
     //endregion
-const Product = (props: IProductPage) => {
-    const [productState, setProduct] = useState<ISingleProduct>();
+const Product = (props: ISingleProductProps) => {
+    const [productState, setProduct] = useState<ISingleProductState>();
     const { product: productProps, error, fetchProductPageData, clearProductReduxState } = props;
 
     useEffect(() => {
