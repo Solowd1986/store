@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./about.module.scss";
 
-const About = () => (
+const About = ():JSX.Element => (
     <div className="container">
         <section className="wrapper">
             <h1 className={styles.promo__main_title}>Интернет-магазин OnePlus</h1>

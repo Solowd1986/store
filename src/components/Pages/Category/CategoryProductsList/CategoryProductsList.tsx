@@ -7,7 +7,7 @@ import SortPorducts from "@components/Partials/SortProducts/SortProducts";
 import LazyLoad from "@components/Partials/LazyLoad/LazyLoad";
 import ProductCard from "@components/Partials/ProductCard/ProductCard";
 
-const CategoryProductsList = ({ category, products }: ICategoryProductsListProps) => {
+const CategoryProductsList = ({ category, products }: ICategoryProductsListProps):JSX.Element => {
     return (
         <div className={styles.category_wrapper}>
             <div className={styles.sign_bg}>

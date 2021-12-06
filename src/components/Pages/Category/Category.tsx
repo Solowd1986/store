@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { ICategoryProps, ICategoryState, ICategoryTypes, IDraft } from "@root/ts/types/category";
 import { usePreviousProps } from "@components/Helpers/Hooks/PreviousProps/PreviousProps";
 
@@ -13,6 +13,7 @@ import { Redirect } from "react-router-dom";
 import * as categoryActions from "@redux/entities/category/actions";
 import * as categorySelectors from "@redux/entities/category/selectors/categorySelectors";
 import { connect } from "react-redux";
+import { IProductTypes } from "@root/ts/types/_core";
 
 
 /**
@@ -68,19 +69,18 @@ import { connect } from "react-redux";
 const Category = (props: ICategoryProps) => {
     const { data, lastIndex, sortType, lazy, match, error, clearCategoryReduxState, fetchCategoryPageData } = props;
     const [state, setState] = useState<ICategoryState>({ products: null, lastIndex: 0 });
-    const prevPropsSortType: string | undefined = usePreviousProps(props.sortType);
-    console.log(state);
+    const prevPropsSortType: unknown | undefined = usePreviousProps(props.sortType);
 
-    const isStateEmpty = () => !state.products;
-    const clearState = () => {
+    const isStateEmpty = ():boolean => !state.products;
+    const clearState = ():void => {
         setState(() => ({ products: null, lastIndex: 0 }));
         clearCategoryReduxState();
     };
 
-    const isRouteChanged = () => !isStateEmpty() ? state.products?.main.alias !== match.params.type : false;
-    const isLazyLoadRecived = () => !isStateEmpty() && (state.lastIndex !== lastIndex) && lazy;
+    const isRouteChanged = ():boolean => !isStateEmpty() ? state.products?.main.alias !== match.params.type : false;
+    const isLazyLoadRecived = ():boolean | IProductTypes[] => !isStateEmpty() && (state.lastIndex !== lastIndex) && lazy;
 
-    const sortProducts = () => {
+    const sortProducts = ():void => {
         if (!state.products?.data) return;
         let productsList = [...state.products.data];
 

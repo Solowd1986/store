@@ -6,7 +6,7 @@ import * as utils from "@components/Helpers/Functions/scrollbarHelper";
 const UpButton = () => {
     const [isPageScrolledToBottom, changePageScrolledStatus] = useState(false);
     const upBtnElem = useRef<HTMLDivElement>(null);
-    let resizeInactivityTimer = useRef(0);
+    const resizeInactivityTimer = useRef(0);
 
     const fixUpBtnWhenResize = () => {
         clearTimeout(resizeInactivityTimer.current);

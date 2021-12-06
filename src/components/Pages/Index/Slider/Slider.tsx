@@ -3,7 +3,7 @@ import styles from "./slider.module.scss";
 import { IMainPageSlides, IMainPageSlide } from "@root/ts/types/index-page";
 import { NavLink } from "react-router-dom";
 
-const Slider = ({ slides }: IMainPageSlides) => {
+const Slider = ({ slides }: IMainPageSlides):JSX.Element => {
     useEffect(() => {
         // Инициализация слайдера после отрисовки компонента. Была ошибка "cant't call add", это из-за
         // двойной инициализации, поэтому тут проверка - not('.slick-initialized'), и только потом инициализация

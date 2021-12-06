@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import styles from "./error-400.module.scss";
 import cn from "classnames";
 import img from "./img/error-400.png";
@@ -12,8 +12,8 @@ import { RouteComponentProps, withRouter } from "react-router-dom";
  * Если не сбросить, то можно уйти в постоянный редирект
  */
     //endregion
-const Error400 = ({ history, resetErrorState = () => {} }:RouteComponentProps & { resetErrorState: () => void }) => {
-    const redirect = () => {
+const Error400 = ({ history, resetErrorState = ():void => {} }:RouteComponentProps & { resetErrorState: () => void }):JSX.Element => {
+    const redirect = ():void => {
         resetErrorState();
         history.push("/");
     };

@@ -14,9 +14,6 @@ const OrderSummary = ({ listOfProducts, shipping, isFormValid, resetOrderForm }:
     const classList = cn(styles.order_btn, {
         [styles.not_allowed]: !isFormValid,
     });
-    console.log(listOfProducts);
-
-
 
     return (
         <section className={styles.summary}>

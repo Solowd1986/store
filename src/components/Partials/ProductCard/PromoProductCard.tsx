@@ -9,15 +9,15 @@ const PromoProductCard = ({ item: { alias, rest, adsType } }: { item: IPromoProd
         switch (adsType) {
             case 0: {
                 promo = [
-                    <div className={styles.new}>Новинка</div>,
-                    <div className={styles.most_endorsed}>Хит продаж</div>,
+                    <div key={adsType} className={styles.new}>Новинка</div>,
+                    <div key={adsType + rest} className={styles.most_endorsed}>Хит продаж</div>,
                 ];
                 break;
             }
             case 1: {
                 promo = [
-                    <div className={styles.installment}>Рассрочка 0-0-12</div>,
-                    <div className={styles.sim}>
+                    <div key={adsType} className={styles.installment}>Рассрочка 0-0-12</div>,
+                    <div key={adsType + rest} className={styles.sim}>
                         <span>SIM </span>
                         в подарок
                     </div>,
@@ -26,8 +26,8 @@ const PromoProductCard = ({ item: { alias, rest, adsType } }: { item: IPromoProd
             }
             case 2: {
                 promo = [
-                    <div className={styles.installment}>Рассрочка 0-0-12</div>,
-                    <div className={styles.gift}>
+                    <div key={adsType} className={styles.installment}>Рассрочка 0-0-12</div>,
+                    <div key={adsType + rest} className={styles.gift}>
                         <span>Подарок </span>
                         3 500 р.
                     </div>,
@@ -36,8 +36,8 @@ const PromoProductCard = ({ item: { alias, rest, adsType } }: { item: IPromoProd
             }
             case 3: {
                 promo = [
-                    <div className={styles.new}>Новинка</div>,
-                    <div className={styles.sim}>
+                    <div key={adsType} className={styles.new}>Новинка</div>,
+                    <div key={adsType + rest} className={styles.sim}>
                         <span>SIM </span>
                         в подарок
                     </div>,
@@ -49,20 +49,20 @@ const PromoProductCard = ({ item: { alias, rest, adsType } }: { item: IPromoProd
         switch (adsType) {
             case 0:
                 promo = [
-                    <div className={styles.gift}>
+                    <div key={adsType} className={styles.gift}>
                         <span>Подарок </span>
                         1 500 р.
                     </div>,
                 ];
                 break;
             case 1:
-                promo = [<div className={styles.most_endorsed}>Хит продаж</div>];
+                promo = [<div key={adsType} className={styles.most_endorsed}>Хит продаж</div>];
                 break;
             case 2:
-                promo = [<div className={styles.new}>Новинка</div>];
+                promo = [<div key={adsType} className={styles.new}>Новинка</div>];
                 break;
             case 3:
-                promo = [<div className={styles.installment}>Рассрочка 0-0-12</div>];
+                promo = [<div key={adsType} className={styles.installment}>Рассрочка 0-0-12</div>];
                 break;
         }
     }

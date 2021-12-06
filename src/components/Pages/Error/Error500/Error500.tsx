@@ -1,9 +1,9 @@
-import React, { Component } from "react";
+import React from "react";
 import styles from "./error-500.module.scss";
 import cn from "classnames";
 import { NavLink, withRouter } from "react-router-dom";
 
-const Error500 = () => {
+const Error500 = ():JSX.Element => {
     return (
         <div className={cn("overlay", "overlay__w-bg")}>
             <div className={styles.content}>

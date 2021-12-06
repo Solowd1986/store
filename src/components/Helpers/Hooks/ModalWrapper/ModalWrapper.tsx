@@ -1,7 +1,6 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import cn from "classnames";
 import * as util from "@components/Helpers/Functions/scrollbarHelper";
-
 
 //<editor-fold desc="Описание">
 /**
@@ -27,15 +26,17 @@ import * as util from "@components/Helpers/Functions/scrollbarHelper";
  *    все вызовутся при закрытии окна. Данный компонент тоже должен при закритии вызывать все методы которые ему переданы,
  *    кроме того, чтобы сбрамывать свой state.
  *
+ * Возвращается именованная функция, так как линтер в противном случае (возврате анонимной функции) дает ошибку вызова хуков
+ * вне пользовательских хуков или функциональных компонентов. Поэтому мы используем функцию с названием в верхнем регистре,
+ * чтобы выдать эту функцию за функциональный компонент.
  *
  */
     //</editor-fold>
 const ModalWrapper = (Component: React.FunctionComponent<{ [key: string]: (evt?: React.SyntheticEvent) => void}>) => {
-    return({ bg = false, interactions = false,  ...props }) => {
+    return function Comp({ bg = false, interactions = false, ...props }):JSX.Element | null {
 
         const [isModalShow, showModalStatus] = useState(true);
-
-        const closeModal = (evt: React.SyntheticEvent<HTMLElement>) => {
+        const closeModal = (evt: React.SyntheticEvent<HTMLElement>):void => {
 
             if (!(evt.target instanceof HTMLElement)) return;
             if (!("modal" in evt.target.dataset)) return;
@@ -46,18 +47,18 @@ const ModalWrapper = (Component: React.FunctionComponent<{ [key: string]: (evt?:
             showModalStatus(false);
         };
 
-        const closeModalFromChildren = () => showModalStatus(false);
+        const closeModalFromChildren = ():void => showModalStatus(false);
 
         useLayoutEffect(() => {
             isModalShow ? util.addScrollbarOffset() : util.removeScrollbarOffset();
-            return () => util.removeScrollbarOffset()
+            return ():void => util.removeScrollbarOffset()
         }, [isModalShow]);
 
         const options = {
             classList: cn("overlay", {
                 "overlay__b-bg": bg,
             }),
-            interactions: interactions ? closeModal : () => {}
+            interactions: interactions ? closeModal : ():void => {}
         };
 
         if (!isModalShow) return null;

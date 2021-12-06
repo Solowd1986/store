@@ -3,7 +3,7 @@ import cn from "classnames";
 import styles from "./delivery.module.scss";
 import deliveryBanner from "./img/_delivery-banner.png";
 
-const Delivery = () => {
+const Delivery = ():JSX.Element => {
     return (
         <>
             <div className={styles.sign_bg}>
