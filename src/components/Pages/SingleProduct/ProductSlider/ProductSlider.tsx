@@ -1,8 +1,8 @@
-import React, { Component, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import styles from "./product-slider.module.scss";
 import { ISingleProductSlider } from "@root/ts/types/single-product";
 
-const ProductSlider = ({ list, alt }: ISingleProductSlider) => {
+const ProductSlider = ({ list, alt }: ISingleProductSlider): JSX.Element => {
     const slideTransitionEnabled = useRef(false);
     const mainImgRef = useRef<HTMLImageElement>(null);
     const slideThumbnailList = useRef<HTMLDivElement>(null);
@@ -15,7 +15,7 @@ const ProductSlider = ({ list, alt }: ISingleProductSlider) => {
     }, []);
 
 
-    const slideClickHandler = (evt: React.SyntheticEvent<HTMLImageElement>) => {
+    const slideClickHandler = (evt: React.SyntheticEvent<HTMLImageElement>): void => {
         const target = evt.target as HTMLImageElement;
         if (!mainImgRef.current || !slideThumbnailList.current) return;
         const mainImg = mainImgRef.current;

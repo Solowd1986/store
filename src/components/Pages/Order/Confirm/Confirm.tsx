@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React from "react";
 import cn from "classnames";
 import styles from "./confirm.module.scss";
 import img from "./img/thanks_sir.png";
@@ -11,8 +11,8 @@ import img from "./img/thanks_sir.png";
  *
  * Поэтому в цикле вызываются все пришедшие методы.
  */
-const Confirm = (props: { [key: string]: (evt?: React.SyntheticEvent) => void }) => {
-    const onClose = (evt: React.SyntheticEvent) => {
+const Confirm = (props: { [key: string]: (evt?: React.SyntheticEvent) => void }):JSX.Element => {
+    const onClose = (evt: React.SyntheticEvent):void => {
         Object.keys(props).forEach(propertyName => {
             if (typeof props[propertyName] === "function") props[propertyName](evt);
         });

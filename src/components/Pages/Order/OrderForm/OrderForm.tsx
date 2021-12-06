@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import styles from "./order-form.module.scss";
-import { IOrderState, IElement } from "@root/ts/types/order";
+import { IOrderState, IElement, IOrderError } from "@root/ts/types/order";
 
 import OrderInfo from "./OrderInfo/OrderInfo";
 import OrderSummary from "./OrderSummary/OrderSummary";
@@ -69,7 +69,7 @@ const initalState = {
  *
  *
  */
-const OrderForm = () => {
+const OrderForm = (): JSX.Element => {
     const [state, setState] = useState<IOrderState>(initalState);
     const form = useRef<HTMLFormElement>(null);
     const ConfirmModalDialog = ModalWrapper(Confirm);
@@ -114,7 +114,7 @@ const OrderForm = () => {
      * Если значение в куки под переданным именем равно тому, что передано в метод, то делать ничего не нужно - выходим.
      * Если значение новое, то записываем в обьект новое значение и сохраняем куку, опять задавая 15 минут жизни.
      */
-    const saveFormValuesToCookie = (fieldName: string, fieldValue: string) => {
+    const saveFormValuesToCookie = (fieldName: string, fieldValue: string):void => {
         const cookieExpires = new Date(new Date().getTime() + 15 * 60 * 1000);
         const formField = { [fieldName]: fieldValue };
         const dataForm = Cookies.getJSON("form-data") || null;
@@ -153,7 +153,7 @@ const OrderForm = () => {
      * в метод списка полей только те, что входят в список валидируемых.
      * Далее в ицкле заполняем обьект набором "название поля формы - его значение" и возвращаем.
      */
-    const getAllTrackedFields = () => {
+    const getAllTrackedFields = (): null | { [key: string]: string } => {
         if (!form.current) return null;
         const formFieldsToObject: { [key: string]: string } = {};
         const validationFields = Object.keys(validationSchema.fields);
@@ -173,10 +173,10 @@ const OrderForm = () => {
      * Иначе - вернем обьект с именем поля, true-ошибкой и текстом этой оишбки.
      * Помни, что validateSyncAt требует обертки из try/catch
      */
-    const checkSingleFieldErrorSync = (inputName: string, inputValue: unknown) => {
+    const checkSingleFieldErrorSync = (inputName: string, inputValue: unknown): IOrderError => {
         try {
             validationSchema.validateSyncAt(inputName, { [inputName]: inputValue });
-            return { fieldName: inputName, error: false };
+            return { fieldName: inputName, error: false, msg: "" };
         } catch (error) {
             return { fieldName: inputName, error: true, msg: error.message };
         }
@@ -198,7 +198,7 @@ const OrderForm = () => {
      * isFormValid - валидна ли форма в целом (true/false)
      * errors - массив ошибок, либо пустой, либо нет.
      */
-    const validateForm = () => {
+    const validateForm = (): undefined | { isFormValid: boolean, errors: IOrderError[]} => {
         const errors = [];
         const allFormFields: { [key: string]: string } | null = getAllTrackedFields();
         if (!allFormFields) return;
@@ -224,7 +224,7 @@ const OrderForm = () => {
      * Далее, чтобы не мутировать state создаем новый обьект с полями содержащими ошибки, а потом создаем
      * новый обьект fields, где неизменные поля-обьекты доступны по ссылке, а измененные - заменены.
      */
-    const showAllFormErrors = () => {
+    const showAllFormErrors = (): void => {
         if (!validateForm()?.isFormValid) {
             const fieldsWithError: { [key: string]: { error: boolean, msg: string } } = {};
             validateForm()?.errors.forEach((item) => {
@@ -259,7 +259,7 @@ const OrderForm = () => {
      * этого будет проставлен атрибут cheсked для определенного input-а в radio-блоке. Если передана цена, то есть
      * был клик по shipping, то также устаналиваем и цену доставки, она нужна потом, для расчета общей стоимости товара.
      */
-    const handleRadioChange = ({ target: { id, name: inputName, dataset: { price } } }: { target: HTMLInputElement }) => {
+    const handleRadioChange = ({ target: { id, name: inputName, dataset: { price } } }: { target: HTMLInputElement }): void => {
         setState(
             produce(state, (draft) => {
                 draft["fields"][inputName]["assignment"] = id;
@@ -275,7 +275,7 @@ const OrderForm = () => {
      * Данный блок используется только для сохранения значения поля в куке, чтобы не вводить верное значение
      * по новой при перезагрузке страницы.
      */
-    const handleInputBlur = ({ target: { name: inputName, value: inputValue } }: IElement) => {
+    const handleInputBlur = ({ target: { name: inputName, value: inputValue } }: IElement): void => {
         saveFormValuesToCookie(inputName, inputValue);
     };
 
@@ -300,7 +300,7 @@ const OrderForm = () => {
      * 2. Ошибка для поля была получена. Если текст ошибки совпадает с тем, что уже был задан для данного поля, то просто
      * выходим из обработчика, так как менять state не нужно. Иначе прописываем данные об ошибке в state.
      */
-    const handleInputChange = ({ target, target: { name: inputName, value: inputValue } }: IElement) => {
+    const handleInputChange = ({ target, target: { name: inputName, value: inputValue } }: IElement): void => {
         if (inputName === "phone") new Inputmask("+7 (999) 999-99-99").mask(target);
         if (state.isFormTouched) {
             const checkedField = checkSingleFieldErrorSync(inputName, inputValue);
@@ -344,7 +344,7 @@ const OrderForm = () => {
      * который служит для сброса всего state формы в изначальное состояние.
      * Сразу сбрасывать мы не может, так как Confirm не получится показать.
      */
-    const handleSubmit = (evt: React.SyntheticEvent) => {
+    const handleSubmit = (evt: React.SyntheticEvent): void => {
         evt.preventDefault();
         const target = evt.target as HTMLFormElement;
 
@@ -353,7 +353,7 @@ const OrderForm = () => {
             return;
         }
 
-        const formData = new FormData(target);
+        //const formData = new FormData(target);
         Cookies.remove("form-data");
         target.reset();
         setState({ ...state, isUserConfirmOrder: true });
@@ -369,7 +369,7 @@ const OrderForm = () => {
      * 4. Вызываем метод reset для формы.
      * 5. Заменяем весь state на initalState
      */
-    const resetOrderForm = (evt: React.SyntheticEvent) => {
+    const resetOrderForm = (evt: React.SyntheticEvent): void => {
         if (evt) evt.preventDefault();
 
         Cookies.remove("form-data");
@@ -384,7 +384,7 @@ const OrderForm = () => {
      * Если нажата клавиша Enter, то вызываем клик по кнопке отправки формы и убираем фокус с поля. Это нужно для того,
      * чтобы помешать множественной отправке при зажатии клавиши.
      */
-    const handleKeyPress = (evt: React.KeyboardEvent<HTMLElement>) => {
+    const handleKeyPress = (evt: React.KeyboardEvent<HTMLElement>): void => {
         const target = evt.target as HTMLInputElement;
         if (!target.form) return;
 

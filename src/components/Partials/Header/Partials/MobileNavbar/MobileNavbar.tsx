@@ -5,7 +5,7 @@ import cn from "classnames";
 import { addScrollbarOffset, removeScrollbarOffset } from "@components/Helpers/Functions/scrollbarHelper";
 import { NavLink } from "react-router-dom";
 
-const MobileNavbar = () => {
+const MobileNavbar = (): JSX.Element => {
     const [isMobileMenuVisible, mobileMenuToggle] = useState(false);
 
     const toggleMobileMenu = (): void => {
@@ -15,7 +15,7 @@ const MobileNavbar = () => {
 
     const navItemClickHandler = (): void => closeMobileMenu();
 
-    const closeMobileMenu = () => {
+    const closeMobileMenu = ():void => {
         removeScrollbarOffset();
         mobileMenuToggle(() => false)
     };
@@ -32,7 +32,7 @@ const MobileNavbar = () => {
 
     useEffect(() => {
         window.addEventListener("resize", resizePageHandler);
-        return () => {
+        return (): void => {
             closeMobileMenu();
             window.removeEventListener("resize", resizePageHandler);
         }

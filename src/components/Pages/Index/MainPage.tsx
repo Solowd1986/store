@@ -15,8 +15,7 @@ import * as indexActions from "@redux/entities/index/actions";
 import * as indexSelectors from "@redux/entities/index/selectors/indexSelectors";
 import { connect } from "react-redux";
 
-
-const MainPage = ({ index, error, fetchIndexPageData }: IMainPageProps) => {
+const MainPage = ({ index, error, fetchIndexPageData }: IMainPageProps):JSX.Element => {
 
     useEffect(() => {
         fetchIndexPageData();
@@ -41,5 +40,5 @@ const MainPage = ({ index, error, fetchIndexPageData }: IMainPageProps) => {
     );
 };
 
-const mapStateToProps = (state: unknown) => indexSelectors.getIndexData(state);
+const mapStateToProps = (state: unknown):unknown => indexSelectors.getIndexData(state);
 export default connect(mapStateToProps, indexActions)(MainPage);

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import styles from "./spinner.module.scss";
 import img from "./img/three-dots.svg";
 

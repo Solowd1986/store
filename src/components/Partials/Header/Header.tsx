@@ -8,7 +8,7 @@ import NavbarList from "./Partials/NavbarList/NavbarList";
 import Userbar from "./Partials/Userbar/Userbar";
 import { calcScrollBarWidth } from "@components/Helpers/Functions/scrollbarHelper";
 
-const Header = () => {
+const Header = (): JSX.Element => {
     const [isPageScrolled, togglePageScrolledStatus] = useState(false);
     const header = useRef<HTMLHeadElement>(null);
     const headerPlaceholderElem = useRef<HTMLDivElement>(null);
@@ -31,7 +31,7 @@ const Header = () => {
         window.addEventListener("scroll", handleScroll);
         window.addEventListener("resize", handlerResizePage);
 
-        return () => {
+        return (): void => {
             window.removeEventListener("scroll", handleScroll);
             window.removeEventListener("resize", handlerResizePage);
         }

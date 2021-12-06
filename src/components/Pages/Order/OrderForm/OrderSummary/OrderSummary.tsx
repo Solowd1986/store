@@ -10,7 +10,7 @@ import SubmitButton from "@components/Pages/Order/OrderForm/FormComponents/Submi
 import * as cartSelectors from "@redux/entities/cart/selectors/cartSelectors";
 import { connect } from "react-redux";
 
-const OrderSummary = ({ listOfProducts, shipping, isFormValid, resetOrderForm }: IOrderSummaryProps) => {
+const OrderSummary = ({ listOfProducts, shipping, isFormValid, resetOrderForm }: IOrderSummaryProps): JSX.Element => {
     const classList = cn(styles.order_btn, {
         [styles.not_allowed]: !isFormValid,
     });

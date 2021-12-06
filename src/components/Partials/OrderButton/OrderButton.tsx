@@ -1,4 +1,4 @@
-import React, { PureComponent, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import styles from "./order-button.module.scss";
 import cn from "classnames";
 import cartIcon from "./img/cart";
@@ -12,7 +12,7 @@ import * as cartSelector from "@redux/entities/cart/selectors/cartSelectors";
 import { connect } from "react-redux";
 
 
-const OrderButton = (props: IOrderButtonProps) => {
+const OrderButton = (props: IOrderButtonProps): JSX.Element => {
     const { productsInCart = [], product, product: { title, id, rest } } = props;
     const delayAddingItem = useRef(0);
 
@@ -31,7 +31,7 @@ const OrderButton = (props: IOrderButtonProps) => {
 
 
     useEffect(() => {
-        return () => {
+        return ():void => {
             window.clearTimeout(delayAddingItem.current);
         };
     }, []);
@@ -45,8 +45,8 @@ const OrderButton = (props: IOrderButtonProps) => {
     const innerText = !rest ? "Нет в наличии" : !isProductInCartStatus ? "Добавить в заказ" : "Убрать из заказа";
 
     const processProductOrdering = !isProductInCartStatus
-        ? (evt: React.MouseEvent<HTMLButtonElement>) => changeProductStatus(evt, product, props.addItemToCart)
-        : (evt: React.MouseEvent<HTMLButtonElement>) => changeProductStatus(evt, product, props.removeItemFromCart);
+        ? (evt: React.MouseEvent<HTMLButtonElement>): void => changeProductStatus(evt, product, props.addItemToCart)
+        : (evt: React.MouseEvent<HTMLButtonElement>): void => changeProductStatus(evt, product, props.removeItemFromCart);
 
 
     const classList = cn("btn", styles.order__btn, {
@@ -64,7 +64,6 @@ const OrderButton = (props: IOrderButtonProps) => {
     );
 };
 
-
-const mapStateToProps = (state: unknown) => ({ productsInCart: cartSelector.cartItemsSelector(state) });
-const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => bindActionCreators(cartActions, dispatch);
+const mapStateToProps = (state: unknown): unknown => ({ productsInCart: cartSelector.cartItemsSelector(state) });
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): unknown => bindActionCreators(cartActions, dispatch);
 export default connect(mapStateToProps, mapDispatchToProps)(OrderButton);

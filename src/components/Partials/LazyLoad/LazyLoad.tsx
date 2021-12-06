@@ -1,4 +1,4 @@
-import React, { PureComponent, useEffect } from "react";
+import React, { useEffect } from "react";
 import styles from "./lazy-load.module.scss";
 import cn from "classnames";
 import { ILazyLoadProps } from "@root/ts/types/lazy-load";
@@ -8,11 +8,10 @@ import * as categoryActions from "@redux/entities/category/actions";
 import * as categorySelectors from "@redux/entities/category/selectors/categorySelectors";
 
 import * as utils from "@components/Helpers/Functions/scrollbarHelper";
-import { AnyAction, bindActionCreators, Dispatch } from "redux";
 import { connect } from "react-redux";
 
-const LazyLoad = (props: ILazyLoadProps) => {
-    const fetchLazyCategory = () => {
+const LazyLoad = (props: ILazyLoadProps): JSX.Element => {
+    const fetchLazyCategory = (): void => {
         const { categoryName, lastIndex } = props;
         props.fetchLazyCategoryProducts(categoryName, lastIndex);
     };
@@ -59,10 +58,7 @@ const LazyLoad = (props: ILazyLoadProps) => {
             </button>
         </div>
     );
-
-
 };
 
 const mapStateToProps = (state: unknown) => categorySelectors.getLazyParams(state);
-const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => bindActionCreators(categoryActions, dispatch);
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(LazyLoad));
+export default connect(mapStateToProps, categoryActions)(withRouter(LazyLoad));

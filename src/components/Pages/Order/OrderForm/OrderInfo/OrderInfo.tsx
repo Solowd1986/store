@@ -1,11 +1,11 @@
-import React, { Component } from "react";
+import React from "react";
 import styles from "./order-info.module.scss";
 import { IOrderInfoProps } from "@root/ts/types/order";
 
 import basketEpayment from "./img/basket-epayment.png";
 import basketShipping from "./img/basket-shipping.png";
 
-const OrderInfo = (props: IOrderInfoProps) => {
+const OrderInfo = (props: IOrderInfoProps): JSX.Element => {
     const {
         handleInputChange,
         handleRadioChange,

@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import styles from "./navbar-list.module.scss";
 
-const NavbarList = () => (
+const NavbarList = (): JSX.Element => (
     <ul className={styles.header__nav_list}>
         {/* Смартфоны */}
         <li className={styles.header__nav_item}>

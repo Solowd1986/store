@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 import * as cartSelectors from "@redux/entities/cart/selectors/cartSelectors";
 import { connect } from "react-redux";
 
-const Userbar = ({ amountOfProductsInCart }: { amountOfProductsInCart: number }) => {
+const Userbar = ({ amountOfProductsInCart }: { amountOfProductsInCart: number }): JSX.Element => {
     const userOrderCounter = amountOfProductsInCart ? (
         <span className={styles.basket_counter_bg}>
             <span className={styles.basket_counter}>{amountOfProductsInCart}</span>
@@ -56,5 +56,5 @@ const Userbar = ({ amountOfProductsInCart }: { amountOfProductsInCart: number })
     );
 };
 
-const mapStateToProps = (state: unknown) => ({ amountOfProductsInCart: cartSelectors.cartAmountOfGoodsSelector(state) });
+const mapStateToProps = (state: unknown): { amountOfProductsInCart: number } => ({ amountOfProductsInCart: cartSelectors.cartAmountOfGoodsSelector(state) });
 export default connect(mapStateToProps)(React.memo(Userbar));

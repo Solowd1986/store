@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./empty-order-page.module.scss";
 import cn from "classnames";
 
-const EmptyOrderPage = () => (
+const EmptyOrderPage = ():JSX.Element => (
     <div className={cn("wrapper")}>
         <div className={cn(styles.empty_order)}>
             <h1>Корзина покупок</h1>

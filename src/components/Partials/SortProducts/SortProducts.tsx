@@ -3,20 +3,19 @@ import styles from "./sort-products.module.scss";
 import cn from "classnames";
 import { ISortProductsProps } from "@root/ts/types/category";
 
-import { AnyAction, bindActionCreators, Dispatch } from "redux";
 import * as categoryActions from "@redux/entities/category/actions";
 import { connect } from "react-redux";
 
-const SortPorducts = ({ sortType = "по популярности", changeSortType }: ISortProductsProps) => {
+const SortPorducts = ({ sortType = "по популярности", changeSortType }: ISortProductsProps): JSX.Element => {
     const [isSortPanelShow, toggleSortPanelVisibility] = useState(false);
     const listOfSortTypes = useRef<HTMLUListElement>(null);
 
-    const toggleSortPanel = (evt: React.MouseEvent) => {
+    const toggleSortPanel = (evt: React.MouseEvent):void => {
         evt.stopPropagation();
         toggleSortPanelVisibility((isSortPanelShow: boolean) => !isSortPanelShow);
     };
 
-    const switchSortType = (evt: React.MouseEvent<HTMLElement>) => {
+    const switchSortType = (evt: React.MouseEvent<HTMLElement>): void => {
         evt.stopPropagation();
         if (!(evt.target instanceof HTMLElement)) return;
         if (evt.target.nodeName === "LI" && evt.target.innerText !== sortType) {
@@ -29,7 +28,7 @@ const SortPorducts = ({ sortType = "по популярности", changeSortTy
 
     useEffect(() => {
         window.addEventListener("click", closeSortPanelOnClickByWindow);
-        return () => {
+        return ():void => {
             window.removeEventListener("click", closeSortPanelOnClickByWindow);
         }
     }, []);
@@ -80,6 +79,5 @@ const SortPorducts = ({ sortType = "по популярности", changeSortTy
 };
 
 const mapStateToProps = (state: any) => ({ sortType: state.category.sortType });
-const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => bindActionCreators(categoryActions, dispatch);
-export default connect(mapStateToProps, mapDispatchToProps)(SortPorducts);
+export default connect(mapStateToProps, categoryActions)(SortPorducts);
 

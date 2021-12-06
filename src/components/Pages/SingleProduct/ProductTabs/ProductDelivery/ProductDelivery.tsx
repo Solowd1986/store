@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./delivery.module.scss";
 
-const ProductDelivery = () => (
+const ProductDelivery = (): JSX.Element => (
     <>
         <div className={styles.rules}>
             <h2 className={styles.shipping_title}>Доставка</h2>

@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React from "react";
 import styles from "./product-card.module.scss";
 import cn from "classnames";
 import { IProductCardProps } from "@root/ts/types/product-card";
@@ -8,7 +8,7 @@ import OrderButton from "@components/Partials/OrderButton/OrderButton";
 import PromoProductCard from "./PromoProductCard";
 import { NavLink } from "react-router-dom";
 
-const ProductCard = ({ category: { alias }, item, item: { id, title, rest, specifications } }: IProductCardProps) => {
+const ProductCard = ({ category: { alias }, item, item: { id, title, rest, specifications } }: IProductCardProps): JSX.Element => {
     return (
         <li className={styles.item}>
             <span className={cn(styles.tag, { [styles.not_in_stock]: !rest })}>В наличии</span>

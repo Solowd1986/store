@@ -1,6 +1,6 @@
 import React from "react";
 
-const SubmitButton = ({ value = "Отправить", disabled = false, classList = "", handler = () => {} }) => (
+const SubmitButton = ({ value = "Отправить", disabled = false, classList = "", handler = (): void => {} }): JSX.Element => (
     <input
         id="form-submit"
         type="submit"

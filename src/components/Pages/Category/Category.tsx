@@ -16,31 +16,22 @@ import { connect } from "react-redux";
 import { IProductTypes } from "@root/ts/types/_core";
 
 
+
+
+//region Описание
 /**
- * data - содержит два поля: main и data. Первое - это общие данные по категории, второе - массив товаров
- * lastIndex - индекс последнего элемента, добаленного через lazyload
- * sortType - тип сортировки
- * lazy - данные lazyload, подгружаемые дополнительно
- * match - поле от Роутера, в нем приходит путь по которому был переход, например, новая категория телефоны/гаджеты/etc
- * error - ошибка, при получении выполняется редирект на страницу ошибки
- * clearCategoryReduxState - метод для очистки redux state
- * fetchCategoryPageData - метод для запроса данных на сервер
+ * Получаемые props:
+ * 1.data - содержит два поля: main и data. Первое - это общие данные по категории, второе - массив товаров
+ * 2.lastIndex - индекс последнего элемента, добаленного через lazyload
+ * 3.sortType - тип сортировки
+ * 4.lazy - данные lazyload, подгружаемые дополнительно. По-умолчанию приходят со значением null
+ * 5.match - поле от Роутера, в нем приходит путь по которому был переход, например, новая категория телефоны/гаджеты/etc
+ * 6.error - ошибка, при получении выполняется редирект на страницу ошибки
+ * 7.clearCategoryReduxState - метод для очистки redux state
+ * 8.fetchCategoryPageData - метод для запроса данных на сервер
  *
+ * Принцип работы блока useEffect (при полчкнии props)
  *
- *
- *
- *
- *
- *
- *
- *
- */
-
-
-/**
- *
-
- * componentDidUpdate отслеживает 4 ситуации:
  * 1. State компонента пуст (то есть это первый вход в блок категорий). Тогда просто при получении props - вписываем данные.
  * 2. Смена типа сортировки. По умолчанию тип сортировки приходит из Redux (иницилизирующее значение) Если state не пуст,
  *    и тип сортировки пришедший в props отличается - то меняем порядок элементов в текущем state. Проверка на пустоту state нужна,
@@ -48,8 +39,8 @@ import { IProductTypes } from "@root/ts/types/_core";
  *    также при переходе между категориями сбрасывается state, а значит, воообще нет данных для сортировки. Потому и нужна проверка.
 
  * 3. Смена route-пути между разными категориями. Это происходит лишь в рамках уже загруженного компонента Category,
- а значит, state должен быть не пуст.
- В этом случае проверяем alias текущей категории и поле match из props, если они разные - были переходы в рамках компонента.
+ *    значит, state должен быть не пуст.
+ *   В этом случае проверяем alias текущей категории и поле match из props, если они разные - были переходы в рамках компонента.
  *    Может возникнуть вопрос: отчего не использовать для определения сортировки метод isRouteChanged? Проблема в том, что
  *    в рамках очики данных, метод безвреден: вернет false если state пуст, вернет false пути не поменялись и вернет true, толкьо
  *    если state не пуст и пути поменялись. Но если в сортирвоки вписать что-то типа: (prevSort !== nexSort && !isRouteChanged),
@@ -62,25 +53,26 @@ import { IProductTypes } from "@root/ts/types/_core";
  *    0 в Redux store. Но когда данные получены, индекс в Redux store меняется и прихоидт в виде props. Как результат - мы
  *    дополняем state данными, и устанавливаем новый index для state. Теперь в условие не попадем, пока не придет новый
  *    индекс.
- *
+ * @param props
+ * @constructor
  */
-
-
-const Category = (props: ICategoryProps) => {
+    //endregion
+const Category = (props: ICategoryProps): JSX.Element => {
     const { data, lastIndex, sortType, lazy, match, error, clearCategoryReduxState, fetchCategoryPageData } = props;
     const [state, setState] = useState<ICategoryState>({ products: null, lastIndex: 0 });
-    const prevPropsSortType: unknown | undefined = usePreviousProps(props.sortType);
+    const prevPropsSortType: string | undefined = usePreviousProps(props.sortType);
 
-    const isStateEmpty = ():boolean => !state.products;
-    const clearState = ():void => {
+
+    const isStateEmpty = (): boolean => !state.products;
+    const clearState = (): void => {
         setState(() => ({ products: null, lastIndex: 0 }));
         clearCategoryReduxState();
     };
 
-    const isRouteChanged = ():boolean => !isStateEmpty() ? state.products?.main.alias !== match.params.type : false;
-    const isLazyLoadRecived = ():boolean | IProductTypes[] => !isStateEmpty() && (state.lastIndex !== lastIndex) && lazy;
+    const isRouteChanged = (): boolean => !isStateEmpty() ? state.products?.main.alias !== match.params.type : false;
+    const isLazyLoadRecived = (): boolean | IProductTypes[] => !isStateEmpty() && (state.lastIndex !== lastIndex) && lazy;
 
-    const sortProducts = ():void => {
+    const sortProducts = (): void => {
         if (!state.products?.data) return;
         let productsList = [...state.products.data];
 
@@ -128,7 +120,7 @@ const Category = (props: ICategoryProps) => {
 
     useEffect(() => {
         fetchCategoryPageData(props);
-        return () => clearState() // очистка state и redux-store при каждом размонтировании компонента
+        return ():void => clearState() // очистка state и redux-store при каждом размонтировании компонента
     }, []);
 
 
@@ -143,5 +135,5 @@ const Category = (props: ICategoryProps) => {
 };
 
 
-const mapStateToProps = (state: unknown) => categorySelectors.getCategoryData(state);
+const mapStateToProps = (state: unknown):unknown => categorySelectors.getCategoryData(state);
 export default connect(mapStateToProps, categoryActions)(Category);

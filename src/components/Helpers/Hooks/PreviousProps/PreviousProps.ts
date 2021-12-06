@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 
-export function usePreviousProps(value: unknown):undefined | unknown {
-    const ref = useRef<undefined | unknown>();
+export function usePreviousProps(value: string | undefined):undefined | string {
+    const ref = useRef<undefined | string>();
     useEffect(() => {
         ref.current = value;
     });

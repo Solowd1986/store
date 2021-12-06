@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./product.module.scss";
 import cn from "classnames";
 import { ISingleProductState, ISingleProductProps } from "@root/ts/types/single-product";
@@ -28,7 +28,7 @@ import { connect } from "react-redux";
  * Но для единообразия я решил все же так прописать.
  */
     //endregion
-const Product = (props: ISingleProductProps) => {
+const Product = (props: ISingleProductProps): JSX.Element => {
     const [productState, setProduct] = useState<ISingleProductState>();
     const { product: productProps, error, fetchProductPageData, clearProductReduxState } = props;
 
@@ -38,7 +38,7 @@ const Product = (props: ISingleProductProps) => {
 
     useEffect(() => {
         fetchProductPageData(props);
-        return () => {
+        return (): void => {
             clearProductReduxState();
         }
     }, []);

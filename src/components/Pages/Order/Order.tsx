@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import styles from "@components/Pages/Order/order.module.scss";
 import cn from "classnames";
 
@@ -8,7 +8,7 @@ import OrderForm from "./OrderForm/OrderForm";
 import * as cartSelectors from "@redux/entities/cart/selectors/cartSelectors";
 import { connect } from "react-redux";
 
-const Order = (props: { amountOfProductsInCart: number }) => {
+const Order = (props: { amountOfProductsInCart: number }):JSX.Element => {
 
     if (!props.amountOfProductsInCart) return <EmptyOrderPage/>;
     return (
@@ -25,5 +25,5 @@ const Order = (props: { amountOfProductsInCart: number }) => {
     );
 };
 
-const mapStateToProps = (state: unknown) => ({ amountOfProductsInCart: cartSelectors.cartAmountOfGoodsSelector(state) });
+const mapStateToProps = (state: unknown):unknown => ({ amountOfProductsInCart: cartSelectors.cartAmountOfGoodsSelector(state) });
 export default connect(mapStateToProps)(Order);

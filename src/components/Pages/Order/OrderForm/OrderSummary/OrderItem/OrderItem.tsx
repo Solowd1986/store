@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import styles from "./order_item.module.scss";
 import { IOrderItem } from "@root/ts/types/order";
 
@@ -6,13 +6,12 @@ import FormInputCounter from "@components/Pages/Order/OrderForm/FormComponents/F
 import CancelButton from "@components/Pages/Order/OrderForm/FormComponents/CancelButton/CancelButton";
 
 import * as cartActions from "@redux/entities/cart/actions";
-import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 
-const OrderItem = ({ item, item: { img_alt: alt, img }, changeAmountOfProduct, removeItemFromCart }: IOrderItem) => {
-    const deleteFromOrder = () => removeItemFromCart(item);
+const OrderItem = ({ item, item: { img_alt: alt, img }, changeAmountOfProduct, removeItemFromCart }: IOrderItem): JSX.Element => {
+    const deleteFromOrder = (): void => removeItemFromCart(item);
 
-    const changeAmount = (quantity: number) => {
+    const changeAmount = (quantity: number): void => {
         const { id, title } = item;
         changeAmountOfProduct(id, title, quantity);
     };
@@ -42,5 +41,4 @@ const OrderItem = ({ item, item: { img_alt: alt, img }, changeAmountOfProduct, r
     );
 };
 
-const mapDispatchToProps = (dispatch: any) => (bindActionCreators(cartActions, dispatch));
-export default connect(null, mapDispatchToProps)(OrderItem);
+export default connect(null, cartActions)(OrderItem);

@@ -26,6 +26,13 @@ export interface IElement {
     target: HTMLInputElement| HTMLTextAreaElement
 }
 
+export interface IOrderError {
+    fieldName: string,
+    error: boolean,
+    msg: string
+}
+
+
 type OrderProductsListItem = {
     title: string,
     color: string,

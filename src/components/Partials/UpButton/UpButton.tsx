@@ -1,14 +1,14 @@
-import React, { PureComponent, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./up-button.module.scss";
 import cn from "classnames";
 import * as utils from "@components/Helpers/Functions/scrollbarHelper";
 
-const UpButton = () => {
+const UpButton = (): JSX.Element => {
     const [isPageScrolledToBottom, changePageScrolledStatus] = useState(false);
     const upBtnElem = useRef<HTMLDivElement>(null);
     const resizeInactivityTimer = useRef(0);
 
-    const fixUpBtnWhenResize = () => {
+    const fixUpBtnWhenResize = ():void => {
         clearTimeout(resizeInactivityTimer.current);
         // скрываем, чтобы не было видно смещений элемента на пересчете отступа
         if (upBtnElem.current) upBtnElem.current.style.display = "none";
@@ -42,14 +42,14 @@ const UpButton = () => {
         window.addEventListener("scroll", handleScroll);
         window.addEventListener("resize", fixUpBtnWhenResize);
 
-        return () => {
+        return ():void => {
             window.removeEventListener("scroll", handleScroll);
             window.removeEventListener("resize", fixUpBtnWhenResize);
             window.clearTimeout(resizeInactivityTimer.current);
         }
     }, []);
 
-    const scrollToTop = () => {
+    const scrollToTop = ():void => {
         if (isPageScrolledToBottom) utils.scrollToTop()
     };
 

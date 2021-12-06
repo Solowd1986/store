@@ -1,4 +1,4 @@
-import React, { Component, createRef, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import styles from "./tabs.module.scss";
 import cn from "classnames";
 import { IProductTabs } from "@root/ts/types/single-product";
@@ -7,7 +7,7 @@ import Features from "./Features/Features";
 import Specification from "./Specification/Specification";
 import ProductDelivery from "./ProductDelivery/ProductDelivery";
 
-const ProductTabs = (props: IProductTabs) => {
+const ProductTabs = (props: IProductTabs): JSX.Element => {
     const tabLinkList = useRef<HTMLElement>(null);
     const tabBodyList = useRef<HTMLUListElement>(null);
     const { category: { alias }, product: { promo, specifications } } = props;
@@ -21,7 +21,7 @@ const ProductTabs = (props: IProductTabs) => {
         Array.from(tabBodyList.current.children).forEach((item) => item.classList.add(...animationList));
     });
 
-    const tabClickHandler = (evt: React.SyntheticEvent<HTMLSpanElement>) => {
+    const tabClickHandler = (evt: React.SyntheticEvent<HTMLSpanElement>): void => {
         const target = evt.target as HTMLSpanElement;
         const { dataset: { tab: data } } = target;
         if (!tabLinkList.current || !tabBodyList.current) return;

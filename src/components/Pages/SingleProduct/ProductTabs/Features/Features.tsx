@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./features.module.scss";
 import { IPromoSingleProduct } from "@root/ts/types/single-product";
 
-const Features = ({ promo }: IPromoSingleProduct) => (
+const Features = ({ promo }: IPromoSingleProduct): JSX.Element => (
     <>
         {promo.map((item) => (
             <div key={item.title} className={styles.wrapper}>

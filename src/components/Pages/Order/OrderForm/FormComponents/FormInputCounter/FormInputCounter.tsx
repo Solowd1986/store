@@ -30,7 +30,7 @@ import { IFormInputCounter } from "@root/ts/types/order";
  * отправку формы. По сути это не обязательно, так как это перехватывается в другом месте, но пусть будет.
  *
  */
-const FormInputCounter = (props: IFormInputCounter) => {
+const FormInputCounter = (props: IFormInputCounter): JSX.Element => {
     const { initialValue, maxValue, getProcessedAmount, classList } = props;
     const [value, setValue] = useState<number | string>(initialValue);
 
@@ -51,7 +51,7 @@ const FormInputCounter = (props: IFormInputCounter) => {
      *
      * 4. В итоге возвращаем результат - число, укладывающееся в корректный диапазон.
      */
-    const amountNormalize = (inputValue: (number | string)) => {
+    const amountNormalize = (inputValue: (number | string)): number => {
         const value = typeof inputValue === "number" ? inputValue : Math.abs(parseInt(inputValue, 10));
         const currentAmount = isNaN(value) ? 1 : value;
         const max = isNaN(Math.abs(maxValue)) ? 99 : maxValue;
@@ -67,7 +67,7 @@ const FormInputCounter = (props: IFormInputCounter) => {
      * 4. Нормализуем значение, чтобы оно оставалось в пределах допустимого.
      * 5. Устаналиваем его в локальный state и через метод getProcessedAmount ставим его и для Redux store
      */
-    const onChangeAmount = (evt: React.SyntheticEvent<HTMLButtonElement>) => {
+    const onChangeAmount = (evt: React.SyntheticEvent<HTMLButtonElement>): void => {
         evt.preventDefault();
         const { dataset: { action } } = evt.target as HTMLButtonElement;
         const intValue = typeof value === "number" ? value : Math.abs(parseInt(value, 10));
@@ -80,7 +80,7 @@ const FormInputCounter = (props: IFormInputCounter) => {
     /**
      * Метод установки количества товара при уходе из поля ввода. Меняет локальный state и Redux store
      */
-    const onInputBlur = ({ target: { value: inputValue } }: { target: { value: string } }) => {
+    const onInputBlur = ({ target: { value: inputValue } }: { target: { value: string } }): void => {
         const value = amountNormalize(inputValue);
         getProcessedAmount(value);
         setValue(value);
@@ -101,7 +101,7 @@ const FormInputCounter = (props: IFormInputCounter) => {
      *
      * 3. На этом этапе контроль заканчивается. Приведение введенных значений в порядок выполняется на этапе blur
      */
-    const onInputChange = (evt: React.SyntheticEvent<HTMLInputElement>) => {
+    const onInputChange = (evt: React.SyntheticEvent<HTMLInputElement>): void => {
         const { value } = evt.target as HTMLInputElement;
         const { inputType } = evt.nativeEvent as InputEvent;
 
@@ -118,7 +118,7 @@ const FormInputCounter = (props: IFormInputCounter) => {
      *
      *  Вообще, не обязателен, это просто для разнообразия.
      */
-    const onKeyDown = (evt: React.KeyboardEvent) => {
+    const onKeyDown = (evt: React.KeyboardEvent): void => {
         if (evt.key === "Enter") {
             evt.stopPropagation();
             evt.preventDefault();

@@ -43,7 +43,6 @@ const validationSchemaFields = [
     },
 ];
 
-
 export default function setValidateSchema(requestedFields){
     const selectedFields = {};
     // на каждой итерации получаем поле обьекта validationSchemaFields(через Object.keys), если оно в запрошенном массиве,
