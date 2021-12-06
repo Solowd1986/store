@@ -1,7 +1,11 @@
 import { RouteComponentProps } from "react-router";
 import { IProductTypes, IError } from "@root/ts/types/_core";
 
-export interface ICategoryProps extends RouteComponentProps {
+interface MatchParams {
+    type?: string,
+}
+
+export interface ICategoryProps extends RouteComponentProps<MatchParams> {
     clearCategoryPageReduxData: () => void,
     fetchCategoryPageData: (props: ICategoryProps) => void,
     clearCategoryReduxState: () => void,
@@ -13,7 +17,6 @@ export interface ICategoryProps extends RouteComponentProps {
     error: IError,
     data: ICategoryTypes,
     lazy: IProductTypes[],
-    match: any
 }
 
 export interface ICategoryTypes {
