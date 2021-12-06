@@ -1,30 +1,18 @@
 import React from "react";
 
 
-export interface OrderState {
+export interface IOrderState {
     isUserConfirmOrder: boolean,
     isFormTouched: boolean,
     isFormValid: boolean,
 
-    fields: {
-        [key: string]: {
-            [key: string]: string | number | boolean;
-        }
-    }
+    fields: Fields
 }
 
-export interface Field {
+type Fields = {
     [key: string]: {
         [key: string]: string | number | boolean;
     }
-}
-
-
-
-export interface Error {
-    fieldName: string,
-    error: boolean,
-    msg: string
 }
 
 export interface IFormInputCounter {
@@ -34,56 +22,56 @@ export interface IFormInputCounter {
     maxValue: number,
 }
 
-export interface Element {
+export interface IElement {
     target: HTMLInputElement| HTMLTextAreaElement
 }
 
-export interface IOrderItem {
-    item: {
-        title: string,
-        color: string,
-        specifications?: {
-            color: string
-        },
-        id: number,
-        price: number,
-        discount: boolean,
-        rest: number,
-        quantity: number,
-        img_alt: string,
-        img: {
-            [key: string]: string
-        },
+type OrderProductsListItem = {
+    title: string,
+    color: string,
+    specifications?: {
+        color: string
     },
+    id: number,
+    price: number,
+    discount: boolean,
+    rest: number,
+    quantity: number,
+    img_alt: string,
+    img: {
+        [key: string]: string
+    },
+};
+
+export interface IOrderItem {
+    item: OrderProductsListItem,
     changeAmountOfProduct: (id: number, title:string, quantity: number) => void,
     removeItemFromCart: (item: any) => void
 }
 
-
-
 export interface IOrderPrice {
-    listOfProducts: any[],
+    listOfProducts: OrderProductsListItem[],
     shipping: number
 }
 
-export interface Product {
+export interface IProductInCart {
     price: number,
     quantity: number,
     discount: boolean
 }
 
-export interface OrderSummaryTypes {
-    listOfProducts: any[],
+export interface IOrderSummaryProps {
+    listOfProducts: OrderProductsListItem[],
     isFormValid: boolean,
     shipping: number,
     resetOrderForm: (evt: React.SyntheticEvent) => void
 }
 
-export interface OrderInfoTypes {
-    handleInputChange: ({ target, target: { name, value } }: Element) => void,
+export interface IOrderInfoProps {
+    handleInputChange: ({ target, target: { name, value } }: IElement) => void,
     handleRadioChange: ({ target: { id, name, dataset } }: { target: HTMLInputElement }) => void,
-    handleInputBlur: ({ target: { name, value } }: Element) => void,
-    fields: Field,
+    handleInputBlur: ({ target: { name, value } }: IElement) => void,
+    fields: Fields,
     shipping: string,
     payment: string
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./order-summary.module.scss";
 import cn from "classnames";
-import { OrderSummaryTypes } from "@root/ts/types/order";
+import { IOrderSummaryProps } from "@root/ts/types/order";
 
 import OrderPrice from "@components/Pages/Order/OrderForm/OrderSummary/OrderPrice/OrderPrice";
 import OrderItem from "@components/Pages/Order/OrderForm/OrderSummary/OrderItem/OrderItem";
@@ -10,10 +10,13 @@ import SubmitButton from "@components/Pages/Order/OrderForm/FormComponents/Submi
 import * as cartSelectors from "@redux/entities/cart/selectors/cartSelectors";
 import { connect } from "react-redux";
 
-const OrderSummary = ({ listOfProducts, shipping, isFormValid, resetOrderForm }: OrderSummaryTypes) => {
+const OrderSummary = ({ listOfProducts, shipping, isFormValid, resetOrderForm }: IOrderSummaryProps) => {
     const classList = cn(styles.order_btn, {
         [styles.not_allowed]: !isFormValid,
     });
+    console.log(listOfProducts);
+
+
 
     return (
         <section className={styles.summary}>

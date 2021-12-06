@@ -1,6 +1,6 @@
-import React, { Component, useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./order-form.module.scss";
-import { OrderState, Field, Element } from "@root/ts/types/order";
+import { IOrderState, IElement } from "@root/ts/types/order";
 
 import OrderInfo from "./OrderInfo/OrderInfo";
 import OrderSummary from "./OrderSummary/OrderSummary";
@@ -70,7 +70,7 @@ const initalState = {
  *
  */
 const OrderForm = () => {
-    const [state, setState] = useState<OrderState>(initalState);
+    const [state, setState] = useState<IOrderState>(initalState);
     const form = useRef<HTMLFormElement>(null);
     const ConfirmModalDialog = ModalWrapper(Confirm);
 
@@ -226,7 +226,7 @@ const OrderForm = () => {
      */
     const showAllFormErrors = () => {
         if (!validateForm()?.isFormValid) {
-            const fieldsWithError: Field = {};
+            const fieldsWithError: { [key: string]: { error: boolean, msg: string } } = {};
             validateForm()?.errors.forEach((item) => {
                 if (Object.keys(state.fields).includes(item.fieldName)) {
                     fieldsWithError[item.fieldName] = { error: true, msg: item.msg };
@@ -275,7 +275,7 @@ const OrderForm = () => {
      * Данный блок используется только для сохранения значения поля в куке, чтобы не вводить верное значение
      * по новой при перезагрузке страницы.
      */
-    const handleInputBlur = ({ target: { name: inputName, value: inputValue } }: Element) => {
+    const handleInputBlur = ({ target: { name: inputName, value: inputValue } }: IElement) => {
         saveFormValuesToCookie(inputName, inputValue);
     };
 
@@ -300,7 +300,7 @@ const OrderForm = () => {
      * 2. Ошибка для поля была получена. Если текст ошибки совпадает с тем, что уже был задан для данного поля, то просто
      * выходим из обработчика, так как менять state не нужно. Иначе прописываем данные об ошибке в state.
      */
-    const handleInputChange = ({ target, target: { name: inputName, value: inputValue } }: Element) => {
+    const handleInputChange = ({ target, target: { name: inputName, value: inputValue } }: IElement) => {
         if (inputName === "phone") new Inputmask("+7 (999) 999-99-99").mask(target);
         if (state.isFormTouched) {
             const checkedField = checkSingleFieldErrorSync(inputName, inputValue);

@@ -1,9 +1,9 @@
 import { RouteComponentProps } from "react-router";
 import { IProductTypes, IError } from "@root/ts/types/_core";
 
-export interface ICategoryProps extends RouteComponentProps{
+export interface ICategoryProps extends RouteComponentProps {
     clearCategoryPageReduxData: () => void,
-    fetchCategoryPageData: (props:ICategoryProps) => void,
+    fetchCategoryPageData: (props: ICategoryProps) => void,
     clearCategoryReduxState: () => void,
     clearLazyReduxData: () => void,
     discardSortType: () => void,
@@ -34,7 +34,6 @@ export interface ICategoryState {
 export interface IDraft {
     [key: string]: any
 }
-
 
 export interface ICategoryProductsListProps {
     category: {
