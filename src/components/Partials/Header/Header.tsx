@@ -13,6 +13,7 @@ const Header = (): JSX.Element => {
     const header = useRef<HTMLHeadElement>(null);
     const headerPlaceholderElem = useRef<HTMLDivElement>(null);
 
+
     const handleScroll = (): void => {
         if (isPageScrolled) return;
         togglePageScrolledStatus(true);
@@ -28,6 +29,7 @@ const Header = (): JSX.Element => {
         if (header.current) {
             header.current.style.maxWidth = `${getHeaderCurrentwidth()}px`;
         }
+
         window.addEventListener("scroll", handleScroll);
         window.addEventListener("resize", handlerResizePage);
 

@@ -48,16 +48,40 @@ const Product = (props: ISingleProductProps): JSX.Element => {
 
 
 
-    useEffect(() => {
-        if (!productState && productProps) setProduct({ ...productProps });
-    }, [productProps, productState]);
+
+    // useEffect(() => {
+    //     if (!productState && productProps) setProduct({ ...productProps });
+    // }, [productProps, productState]);
+    //
+    // useEffect(() => {
+    //     fetchProductPageData(path, categoryTitle, id);
+    //
+    //
+    //     return (): void => {
+    //         clearProductReduxState();
+    //     }
+    // }, [id, categoryTitle, path]);
+
 
     useEffect(() => {
-        fetchProductPageData(path, categoryTitle, id);
+        if (!productProps) fetchProductPageData(path, categoryTitle, id);
+    });
+
+    useEffect(() => {
+        if (!productState && productProps) setProduct({ ...productProps });
+    }, [productState, productProps]);
+
+    useEffect(() => {
         return (): void => {
             clearProductReduxState();
         }
-    }, [id, categoryTitle, path]);
+    }, []);
+
+
+
+
+      //  if (!productState && productProps) setProduct({ ...productProps });
+    //console.log('remder');
 
 
 
