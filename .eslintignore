@@ -1,10 +1,7 @@
-#src/*
 #src/components/*
+
+src/ts/*
 src/redux/*
-src/components/Helpers/Validation/*
+src/components/Pages/Order/OrderForm/validationSchema/*
+src/components/T_Not Project Files/*
 
-src/components/Pages/Order/OrderForm/validationSchema/validationSchema.js
-
-
-src/ts/nin.js
-src/ts/test.tsx

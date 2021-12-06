@@ -1,10 +1,16 @@
 import { RouteComponentProps } from "react-router";
 import { IProductTypes, IError, Promo } from "@root/ts/types/_core";
 
-export interface ISingleProductProps extends RouteComponentProps{
+
+interface MatchParams {
+    id?: string,
+    category?: string
+}
+
+export interface ISingleProductProps extends RouteComponentProps<MatchParams>{
     product: ISingleProductState,
     error: IError,
-    fetchProductPageData: (props: ISingleProductProps) => void,
+    fetchProductPageData: (path: string, id: string | undefined, category: string | undefined) => void,
     clearProductReduxState: () => void,
 }
 

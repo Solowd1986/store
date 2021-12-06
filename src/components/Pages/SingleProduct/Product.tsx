@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import styles from "./product.module.scss";
 import cn from "classnames";
 import { ISingleProductState, ISingleProductProps } from "@root/ts/types/single-product";
@@ -16,7 +16,6 @@ import * as productSelectors from "@redux/entities/product/selectors/productSele
 import { connect } from "react-redux";
 
 
-
 //region Описание
 /**
  *
@@ -30,18 +29,38 @@ import { connect } from "react-redux";
     //endregion
 const Product = (props: ISingleProductProps): JSX.Element => {
     const [productState, setProduct] = useState<ISingleProductState>();
-    const { product: productProps, error, fetchProductPageData, clearProductReduxState } = props;
+
+    const {
+        product: productProps,
+        error, fetchProductPageData,
+        clearProductReduxState,
+        match: { params: { id, category: categoryTitle }, path}
+    } = props;
+
+    //console.log(productState);
+    //console.log(props.product);
+    //console.log(id);
+   // console.log(categoryTitle);
+    //console.log(path);
+
+    //console.log(props);
+    //console.log(productState);
+
+
 
     useEffect(() => {
         if (!productState && productProps) setProduct({ ...productProps });
-    }, [props]);
+    }, [productProps, productState]);
 
     useEffect(() => {
-        fetchProductPageData(props);
+        fetchProductPageData(path, categoryTitle, id);
         return (): void => {
             clearProductReduxState();
         }
-    }, []);
+    }, [id, categoryTitle, path]);
+
+
+
 
     if (error.recived) return <Redirect to={error.code}/>;
     if (!productState) return <Spinner/>;
