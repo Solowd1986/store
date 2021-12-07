@@ -14,6 +14,11 @@ const Header = (): JSX.Element => {
     const header = useRef<HTMLHeadElement>(null);
     const headerPlaceholderElem = useRef<HTMLDivElement>(null);
 
+    /**
+     * Метод реакции на изменения размера страницы и подстройки ширины Hrader под новый размер страницы.
+     * Разделение методов handlerResizePage и handleScroll нужно потому, что handlerResizePage нужен постоянно,
+     * а handleScroll только один раз.
+     */
     useLayoutEffect(() => {
         const handlerResizePage = (): void => {
             if (header.current) {
