@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { IProductTypes, ReduxState } from "@root/ts/types/_core";
 import { ICategoryProps, ICategoryState, ICategoryTypes, IDraft, IReduxCategoryProps } from "@root/ts/types/category";
 
@@ -56,19 +56,26 @@ import { connect } from "react-redux";
  */
     //endregion
 const Category = (props: ICategoryProps): JSX.Element => {
-    const { data, lastIndex, sortType, lazy, match, error, clearCategoryReduxState, fetchCategoryPageData } = props;
+    const { data, lastIndex, sortType, lazy, match, error,
+        clearCategoryReduxState,
+        fetchCategoryPageData,
+        match: { params, path}
+    } = props;
+
     const [state, setState] = useState<ICategoryState>({ products: null, lastIndex: 0 });
     const prevPropsSortType: string | undefined = usePreviousProps(props.sortType);
 
 
-    const isStateEmpty = (): boolean => !state.products;
-    const clearState = (): void => {
+    const isStateEmpty = useCallback((): boolean => !state.products, [state.products]) ;
+
+
+    const clearState = useCallback((): void => {
         setState(() => ({ products: null, lastIndex: 0 }));
         clearCategoryReduxState();
-    };
+    }, [clearCategoryReduxState]);
+
 
     const isRouteChanged = (): boolean => !isStateEmpty() ? state.products?.main.alias !== match.params.type : false;
-    const isLazyLoadRecived = (): boolean | IProductTypes[] => !isStateEmpty() && (state.lastIndex !== lastIndex) && lazy;
 
     const sortProducts = (): void => {
         if (!state.products?.data) return;
@@ -95,14 +102,22 @@ const Category = (props: ICategoryProps): JSX.Element => {
         );
     };
 
-    useEffect(() => {
-        if (isStateEmpty() && data) setState((state) => ({ products: data, lastIndex: state.lastIndex }));
-        if (!isStateEmpty() && prevPropsSortType !== sortType) sortProducts();
 
+    useEffect(() => {
+        if (!isStateEmpty() && prevPropsSortType !== sortType) sortProducts();
         if (isRouteChanged()) {
             clearState();
-            fetchCategoryPageData(props);
+            fetchCategoryPageData(path, params,);
         }
+    });
+
+    useEffect(() => {
+        if (isStateEmpty() && data) setState((state) => ({ products: data, lastIndex: state.lastIndex }));
+    }, [isStateEmpty, data]);
+
+
+    useEffect(() => {
+        const isLazyLoadRecived = (): boolean | IProductTypes[] => !isStateEmpty() && (state.lastIndex !== lastIndex) && lazy;
 
         if (isLazyLoadRecived()) {
             setState(
@@ -113,13 +128,13 @@ const Category = (props: ICategoryProps): JSX.Element => {
                 }),
             );
         }
-    }, [props]);
+    }, [state, lazy, lastIndex, isStateEmpty]);
 
 
     useEffect(() => {
-        fetchCategoryPageData(props);
+        fetchCategoryPageData(path, params);
         return ():void => clearState() // очистка state и redux-store при каждом размонтировании компонента
-    }, []);
+    }, [path, params, fetchCategoryPageData, clearState]);
 
 
     if (error.recived) return <Redirect to={error.code}/>;

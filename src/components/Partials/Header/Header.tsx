@@ -13,12 +13,6 @@ const Header = (): JSX.Element => {
     const header = useRef<HTMLHeadElement>(null);
     const headerPlaceholderElem = useRef<HTMLDivElement>(null);
 
-
-    const handleScroll = (): void => {
-        if (isPageScrolled) return;
-        togglePageScrolledStatus(true);
-    };
-
     const handlerResizePage = (): void => {
         if (header.current) {
             header.current.style.maxWidth = `${window.innerWidth - calcScrollBarWidth()}px`;
@@ -26,6 +20,9 @@ const Header = (): JSX.Element => {
     };
 
     useLayoutEffect(() => {
+        if (isPageScrolled) return;
+        const handleScroll = (): void => togglePageScrolledStatus(true);
+
         if (header.current) {
             header.current.style.maxWidth = `${getHeaderCurrentwidth()}px`;
         }
@@ -37,7 +34,7 @@ const Header = (): JSX.Element => {
             window.removeEventListener("scroll", handleScroll);
             window.removeEventListener("resize", handlerResizePage);
         }
-    }, []);
+    }, [isPageScrolled]);
 
 
     const getHeaderCurrentHeight = (): number | null => {
