@@ -13,17 +13,19 @@ import * as utils from "@components/Helpers/Functions/scrollbarHelper";
 import { connect } from "react-redux";
 
 const LazyLoad = (props: ILazyLoadProps): JSX.Element => {
+    const { categoryName, lastIndex, fetchLazyCategoryProducts, hasLazyDataBeenAdded, discardLazyDataStatus} = props;
+
     const fetchLazyCategory = (): void => {
-        const { categoryName, lastIndex } = props;
-        props.fetchLazyCategoryProducts(categoryName, lastIndex);
+        fetchLazyCategoryProducts(categoryName, lastIndex);
     };
 
     useEffect(() => {
-        if (props.hasLazyDataBeenAdded) {
+        if (hasLazyDataBeenAdded) {
             utils.scrollToBottom();
-            props.discardLazyDataStatus();
+            discardLazyDataStatus();
         }
-    }, [props.hasLazyDataBeenAdded]);
+    }, [hasLazyDataBeenAdded, discardLazyDataStatus]);
+
 
     const classList = cn(styles.more, {
         [styles.active]: props.fetchingLazyDataStart,

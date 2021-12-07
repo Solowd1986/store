@@ -14,10 +14,6 @@ import * as types from "@redux/entities/product/constants/product";
  * @returns {Function}
  */
 export const fetchProductPageData = (path, ...params) => async (dispatch, getState, api) => {
-    console.log(path);
-    console.log(params);
-
-
     const uri = `${path.match(/\/([a-z]*)\/:/)[1]}/${params.join("/")}`;
     dispatch({ type: types.PRODUCT_START_FETCH_DATA });
 

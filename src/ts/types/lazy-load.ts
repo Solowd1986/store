@@ -2,7 +2,7 @@ import React from "react";
 import { RouteComponentProps } from "react-router";
 import { IError } from "@root/ts/types/_core";
 
-export interface ILazyLoadProps extends RouteComponentProps{
+export interface ILazyLoadProps extends RouteComponentProps {
     children: React.ReactNode,
     fetchingLazyDataStart: boolean,
     hasLazyDataBeenAdded: boolean,

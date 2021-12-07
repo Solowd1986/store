@@ -83,8 +83,17 @@ export interface IOrderInfoProps {
     payment: string
 }
 
-export interface ReduxListOfProducts {
+export interface IReduxListOfProducts {
     listOfProducts: OrderProductsListItem[],
 }
+
+export interface ISubmitButton {
+    value: string,
+    disabled: boolean,
+    classList: string,
+    handler?: () => void
+}
+
+
 
 

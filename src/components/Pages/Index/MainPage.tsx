@@ -19,7 +19,7 @@ const MainPage = ({ index, error, fetchIndexPageData }: IMainPageProps):JSX.Elem
 
     useEffect(() => {
         fetchIndexPageData();
-    }, []);
+    }, [fetchIndexPageData]);
 
     if (error.recived) return <Redirect to={error.code}/>;
 

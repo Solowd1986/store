@@ -17,6 +17,7 @@ import * as productSelectors from "@redux/entities/product/selectors/productSele
 import { connect } from "react-redux";
 
 
+
 //region Описание
 /**
  *
@@ -32,63 +33,24 @@ const Product = (props: ISingleProductProps): JSX.Element => {
     const [productState, setProduct] = useState<ISingleProductState>();
 
     const {
-        product: productProps,
+        product: singleProduct,
         error, fetchProductPageData,
         clearProductReduxState,
         match: { params: { id, category: categoryTitle }, path}
     } = props;
 
-    //console.log(productState);
-    //console.log(props.product);
-    //console.log(id);
-   // console.log(categoryTitle);
-    //console.log(path);
 
-    //console.log(props);
-    //console.log(productState);
-
-
-
-
-    // useEffect(() => {
-    //     if (!productState && productProps) setProduct({ ...productProps });
-    // }, [productProps, productState]);
-    //
-    // useEffect(() => {
-    //     fetchProductPageData(path, categoryTitle, id);
-    //
-    //
-    //     return (): void => {
-    //         clearProductReduxState();
-    //     }
-    // }, [id, categoryTitle, path]);
-
-
-    console.log('rend');
+    useEffect(() => {
+        if (!productState && singleProduct) setProduct({ ...singleProduct });
+    }, [productState, singleProduct]);
 
 
     useEffect(() => {
-        if (!productProps) fetchProductPageData(path, categoryTitle, id);
-    });
-
-    useEffect(() => {
-        if (!productState && productProps) setProduct({ ...productProps });
-    }, [productState, productProps]);
-
-
-    useEffect(() => {
+        fetchProductPageData(path, categoryTitle, id);
         return (): void => {
             clearProductReduxState();
         }
-    }, []);
-
-
-
-      //  if (!productState && productProps) setProduct({ ...productProps });
-    //console.log('remder');
-
-
-
+    }, [path, categoryTitle, id, fetchProductPageData, clearProductReduxState]);
 
     if (error.recived) return <Redirect to={error.code}/>;
     if (!productState) return <Spinner/>;

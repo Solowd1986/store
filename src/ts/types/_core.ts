@@ -30,3 +30,15 @@ export type ReduxState = ReturnType<typeof store.getState>
 // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
 export type ReduxDispatch = typeof store.dispatch
 
+
+export interface IComp {
+    [key: string]: any
+}
+
+
+
+
+
+
+
+

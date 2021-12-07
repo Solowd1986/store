@@ -3,7 +3,7 @@ import styles from "./order-summary.module.scss";
 import cn from "classnames";
 
 import { ReduxState } from "@root/ts/types/_core";
-import { IOrderSummaryProps, ReduxListOfProducts } from "@root/ts/types/order";
+import { IOrderSummaryProps, IReduxListOfProducts } from "@root/ts/types/order";
 
 import OrderPrice from "@components/Pages/Order/OrderForm/OrderSummary/OrderPrice/OrderPrice";
 import OrderItem from "@components/Pages/Order/OrderForm/OrderSummary/OrderItem/OrderItem";
@@ -34,5 +34,5 @@ const OrderSummary = ({ listOfProducts, shipping, isFormValid, resetOrderForm }:
 
 };
 
-const mapStateToProps = (state: ReduxState):ReduxListOfProducts => ({ listOfProducts: cartSelectors.cartItemsSelector(state) });
+const mapStateToProps = (state: ReduxState):IReduxListOfProducts => ({ listOfProducts: cartSelectors.cartItemsSelector(state) });
 export default connect(mapStateToProps)(OrderSummary);

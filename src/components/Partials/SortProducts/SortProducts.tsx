@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useCallback } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./sort-products.module.scss";
 import cn from "classnames";
 import { ISortProductsProps } from "@root/ts/types/category";
@@ -25,7 +25,7 @@ const SortPorducts = ({ sortType = "по популярности", changeSortTy
         }
     };
 
-    const closeSortPanelOnClickByWindow = useCallback(() => toggleSortPanelVisibility(false), []);
+    const closeSortPanelOnClickByWindow = (): void => toggleSortPanelVisibility(false);
 
     useEffect(() => {
         window.addEventListener("click", closeSortPanelOnClickByWindow);

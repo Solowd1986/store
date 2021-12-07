@@ -1,5 +1,6 @@
 import React, { useLayoutEffect, useState } from "react";
 import cn from "classnames";
+import { IComp } from "@root/ts/types/_core";
 import * as util from "@components/Helpers/Functions/scrollbarHelper";
 
 //<editor-fold desc="Описание">
@@ -33,7 +34,7 @@ import * as util from "@components/Helpers/Functions/scrollbarHelper";
  */
     //</editor-fold>
 const ModalWrapper = (Component: React.FunctionComponent<{ [key: string]: (evt?: React.SyntheticEvent) => void}>) => {
-    return function Comp({ bg = false, interactions = false, ...props }):JSX.Element | null {
+    return function Comp({ bg = false, interactions = false, ...props }: IComp):JSX.Element | null {
 
         const [isModalShow, showModalStatus] = useState(true);
         const closeModal = (evt: React.SyntheticEvent<HTMLElement>):void => {
