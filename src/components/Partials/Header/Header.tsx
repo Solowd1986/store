@@ -8,17 +8,45 @@ import NavbarList from "./Partials/NavbarList/NavbarList";
 import Userbar from "./Partials/Userbar/Userbar";
 import { calcScrollBarWidth } from "@components/Helpers/Functions/scrollbarHelper";
 
+
 const Header = (): JSX.Element => {
     const [isPageScrolled, togglePageScrolledStatus] = useState(false);
     const header = useRef<HTMLHeadElement>(null);
     const headerPlaceholderElem = useRef<HTMLDivElement>(null);
 
-    const handlerResizePage = (): void => {
-        if (header.current) {
-            header.current.style.maxWidth = `${window.innerWidth - calcScrollBarWidth()}px`;
+    useLayoutEffect(() => {
+        const handlerResizePage = (): void => {
+            if (header.current) {
+                header.current.style.maxWidth = `${window.innerWidth - calcScrollBarWidth()}px`;
+            }
+        };
+        window.addEventListener("resize", handlerResizePage);
+        return (): void => {
+            window.removeEventListener("resize", handlerResizePage);
         }
-    };
+    }, []);
 
+    /**
+     * useEffect для handleScroll.
+     *
+     * Метод для решения двух задач: установить maxWidth для Header, это позволит при выставлении fixed не смещать Header
+     * вправо из-за исчезновения скролла и поставить слушатель для события скролла, чтоб сменить isPageScrolled и за счет
+     * этого добавить для Header класс fixed. После этого state менять уже не нужно, он до конца жизни компонента будет таким,
+     * как и класс fixed для Header.
+     *
+     * Ход работы:
+     * 1. Компонент монтируется, входим в эффект. Если isPageScrolled = true, то выходим, но пока это не так.
+     * 2. Создаем метод handleScroll. Это нужно для addEventListener/removeEventListener
+     * 3. Ставим maxWidth для Header на будущее.
+     * 4. Ждем скролла.
+     * 5. После скролла срабатывает handleScroll и ставит isPageScrolled в true. Header получает класс fixed
+     * 6. isPageScrolled - это зависимость эффекта, значит опять заходим в эффект.
+     * 7. Первое что срабатывает - это метод очистки. Он сниимает слушатель handleScroll
+     * 8. Потом заходим в эффект, но поскольку isPageScrolled = true - сразу выходим
+     * 9. Таким образом, эффект выполнил задачи: поставил maxWidth при монтировании и сменил isPageScrolled при событии скролла
+     * 10. По сути, если бы не использовать return, он мог бы опять создать функцию и опять поставить слушатель, но это
+     * лишь выставило бы isPageScrolled в true опять и спровоцировало еще один бессмысленный render, ничего по изменив
+     */
     useLayoutEffect(() => {
         if (isPageScrolled) return;
         const handleScroll = (): void => togglePageScrolledStatus(true);
@@ -26,13 +54,9 @@ const Header = (): JSX.Element => {
         if (header.current) {
             header.current.style.maxWidth = `${getHeaderCurrentwidth()}px`;
         }
-
         window.addEventListener("scroll", handleScroll);
-        window.addEventListener("resize", handlerResizePage);
-
         return (): void => {
             window.removeEventListener("scroll", handleScroll);
-            window.removeEventListener("resize", handlerResizePage);
         }
     }, [isPageScrolled]);
 
@@ -41,7 +65,6 @@ const Header = (): JSX.Element => {
         const node: HTMLElement | null = header.current;
         return node ? node.clientHeight : null;
     };
-
 
     const getHeaderCurrentwidth = (): number | null => {
         const node: HTMLElement | null = header.current;
