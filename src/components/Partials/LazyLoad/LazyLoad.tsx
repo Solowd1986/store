@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
 import styles from "./lazy-load.module.scss";
 import cn from "classnames";
-import { ILazyLoadProps } from "@root/ts/types/lazy-load";
+
+import { ReduxState } from "@root/ts/types/_core";
+import { ILazyLoadProps, ReduxLazyProps } from "@root/ts/types/lazy-load";
 
 import { withRouter } from "react-router";
 import * as categoryActions from "@redux/entities/category/actions";
@@ -60,5 +62,5 @@ const LazyLoad = (props: ILazyLoadProps): JSX.Element => {
     );
 };
 
-const mapStateToProps = (state: unknown) => categorySelectors.getLazyParams(state);
+const mapStateToProps = (state: ReduxState): ReduxLazyProps => categorySelectors.getLazyParams(state);
 export default connect(mapStateToProps, categoryActions)(withRouter(LazyLoad));

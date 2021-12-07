@@ -46,3 +46,8 @@ export interface ISingleProductSlider {
 export interface IPromoSingleProduct {
     promo: Promo
 }
+
+export interface ReduxRecivedProps {
+    product: ISingleProductState,
+    error: IError
+}

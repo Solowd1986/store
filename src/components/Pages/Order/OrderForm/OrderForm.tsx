@@ -12,8 +12,6 @@ import Inputmask from "inputmask";
 import produce from "immer";
 import Cookies from "js-cookie";
 
-import * as cartSelectors from "@redux/entities/cart/selectors/cartSelectors";
-import { connect } from "react-redux";
 
 const validationSchema = setValidateSchema(["name", "phone", "email", "address", "comment"]);
 const initalState = {
@@ -421,5 +419,4 @@ const OrderForm = (): JSX.Element => {
     );
 };
 
-const mapStateToProps = (state: unknown) => ({ listOfProducts: cartSelectors.cartItemsSelector(state) });
-export default connect(mapStateToProps)(OrderForm);
+export default OrderForm;

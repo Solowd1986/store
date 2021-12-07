@@ -1,3 +1,4 @@
+import store from "@root/redux/store";
 
 export interface IProductTypes {
     id: number,
@@ -22,3 +23,10 @@ export interface IError {
     recived: boolean,
     code: number
 }
+
+// Infer the `RootState` and `AppDispatch` types from the store itself
+export type ReduxState = ReturnType<typeof store.getState>
+
+// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
+export type ReduxDispatch = typeof store.dispatch
+

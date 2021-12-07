@@ -16,3 +16,8 @@ export type IProductStatusHandler = (
 ) => void;
 
 export type IProductInCart = (productsInCart: IProductTypes[], title: string, id: number) => IProductTypes | undefined
+
+
+export interface ReduxCartList {
+    productsInCart: IProductTypes[],
+}

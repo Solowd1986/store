@@ -5,6 +5,7 @@ import { ISortProductsProps } from "@root/ts/types/category";
 
 import * as categoryActions from "@redux/entities/category/actions";
 import { connect } from "react-redux";
+import { ReduxState } from "@root/ts/types/_core";
 
 const SortPorducts = ({ sortType = "по популярности", changeSortType }: ISortProductsProps): JSX.Element => {
     const [isSortPanelShow, toggleSortPanelVisibility] = useState(false);
@@ -78,6 +79,6 @@ const SortPorducts = ({ sortType = "по популярности", changeSortTy
     );
 };
 
-const mapStateToProps = (state: any) => ({ sortType: state.category.sortType });
+const mapStateToProps = (state: ReduxState): { sortType: string} => ({ sortType: state.category.sortType });
 export default connect(mapStateToProps, categoryActions)(SortPorducts);
 

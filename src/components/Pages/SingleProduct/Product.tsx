@@ -1,7 +1,8 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./product.module.scss";
 import cn from "classnames";
-import { ISingleProductState, ISingleProductProps } from "@root/ts/types/single-product";
+import { ReduxState } from "@root/ts/types/_core";
+import { ISingleProductState, ISingleProductProps, ReduxRecivedProps } from "@root/ts/types/single-product";
 import { Redirect } from "react-router";
 
 import ProductPrice from "@components/Partials/ProductPrice/ProductPrice";
@@ -121,5 +122,5 @@ const Product = (props: ISingleProductProps): JSX.Element => {
     );
 };
 
-const mapStateToProps = (state: unknown) => productSelectors.getProductData(state);
+const mapStateToProps = (state: ReduxState):ReduxRecivedProps => productSelectors.getProductData(state);
 export default connect(mapStateToProps, productActions)(Product);

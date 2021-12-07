@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./userbar.module.scss";
 import { NavLink } from "react-router-dom";
+import { ReduxState } from "@root/ts/types/_core";
 
 import * as cartSelectors from "@redux/entities/cart/selectors/cartSelectors";
 import { connect } from "react-redux";
@@ -56,5 +57,5 @@ const Userbar = ({ amountOfProductsInCart }: { amountOfProductsInCart: number })
     );
 };
 
-const mapStateToProps = (state: unknown): { amountOfProductsInCart: number } => ({ amountOfProductsInCart: cartSelectors.cartAmountOfGoodsSelector(state) });
+const mapStateToProps = (state: ReduxState): { amountOfProductsInCart: number } => ({ amountOfProductsInCart: cartSelectors.cartAmountOfGoodsSelector(state) });
 export default connect(mapStateToProps)(React.memo(Userbar));

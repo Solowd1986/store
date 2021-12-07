@@ -1,5 +1,6 @@
-import { RouteComponentProps } from "react-router";
 import React from "react";
+import { RouteComponentProps } from "react-router";
+import { IError } from "@root/ts/types/_core";
 
 export interface ILazyLoadProps extends RouteComponentProps{
     children: React.ReactNode,
@@ -9,4 +10,11 @@ export interface ILazyLoadProps extends RouteComponentProps{
     lastIndex: number,
     discardLazyDataStatus: () => {},
     fetchLazyCategoryProducts: (categoryName: string, lastIndex: number ) => void;
+}
+
+export interface ReduxLazyProps {
+    lastIndex: number,
+    hasLazyDataBeenAdded: boolean,
+    fetchingLazyDataStart: boolean,
+    error: IError
 }

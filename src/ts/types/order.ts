@@ -82,3 +82,9 @@ export interface IOrderInfoProps {
     shipping: string,
     payment: string
 }
+
+export interface ReduxListOfProducts {
+    listOfProducts: OrderProductsListItem[],
+}
+
+

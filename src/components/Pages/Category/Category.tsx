@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { IProductTypes } from "@root/ts/types/_core";
 import { ICategoryProps, ICategoryState, ICategoryTypes, IDraft } from "@root/ts/types/category";
-import { usePreviousProps } from "@components/Helpers/Hooks/PreviousProps/PreviousProps";
 
+import { usePreviousProps } from "@components/Helpers/Hooks/PreviousProps/PreviousProps";
 import arrayShuffle from "@components/Helpers/Functions/arrayShuffle";
 import produce from "immer";
 
@@ -13,7 +14,6 @@ import { Redirect } from "react-router-dom";
 import * as categoryActions from "@redux/entities/category/actions";
 import * as categorySelectors from "@redux/entities/category/selectors/categorySelectors";
 import { connect } from "react-redux";
-import { IProductTypes } from "@root/ts/types/_core";
 
 
 //region Описание
