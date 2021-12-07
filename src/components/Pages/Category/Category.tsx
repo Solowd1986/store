@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { IProductTypes } from "@root/ts/types/_core";
-import { ICategoryProps, ICategoryState, ICategoryTypes, IDraft } from "@root/ts/types/category";
+import { IProductTypes, ReduxState } from "@root/ts/types/_core";
+import { ICategoryProps, ICategoryState, ICategoryTypes, IDraft, IReduxCategoryProps } from "@root/ts/types/category";
 
 import { usePreviousProps } from "@components/Helpers/Hooks/PreviousProps/PreviousProps";
 import arrayShuffle from "@components/Helpers/Functions/arrayShuffle";
@@ -133,5 +133,5 @@ const Category = (props: ICategoryProps): JSX.Element => {
 };
 
 
-const mapStateToProps = (state: unknown):unknown => categorySelectors.getCategoryData(state);
+const mapStateToProps = (state: ReduxState): IReduxCategoryProps => categorySelectors.getCategoryData(state);
 export default connect(mapStateToProps, categoryActions)(Category);

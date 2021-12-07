@@ -19,6 +19,16 @@ export interface ICategoryProps extends RouteComponentProps<MatchParams> {
     lazy: IProductTypes[],
 }
 
+export interface IReduxCategoryProps {
+    data: ICategoryTypes,
+    lazy: IProductTypes[],
+    lastIndex: number,
+    sortType: string | undefined,
+    error: IError
+}
+
+
+
 export interface ICategoryTypes {
     data: Array<IProductTypes>,
     main: {
