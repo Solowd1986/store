@@ -13,7 +13,7 @@ import * as types from "@redux/entities/category/constants/category";
  * @param params
  * @returns {Function}
  */
-export const fetchCategoryPageData = ({ match: { path, params } }) => async (dispatch, getState, api) => {
+export const fetchCategoryPageData = (path, params) => async (dispatch, getState, api) => {
     const uri = `${path.match(/\/([a-z]*)\/:/)[1]}/${Object.values(params).join("/")}`;
     dispatch({ type: types.CATEGORY_START_FETCH_DATA });
 
