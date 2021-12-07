@@ -65,5 +65,4 @@ const OrderButton = (props: IOrderButtonProps): JSX.Element => {
 };
 
 const mapStateToProps = (state: unknown): unknown => ({ productsInCart: cartSelector.cartItemsSelector(state) });
-const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): unknown => bindActionCreators(cartActions, dispatch);
-export default connect(mapStateToProps, mapDispatchToProps)(OrderButton);
+export default connect(mapStateToProps, cartActions)(OrderButton);

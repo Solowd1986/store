@@ -8,20 +8,20 @@ import CancelButton from "@components/Pages/Order/OrderForm/FormComponents/Cance
 import * as cartActions from "@redux/entities/cart/actions";
 import { connect } from "react-redux";
 
-const OrderItem = ({ item, item: { img_alt: alt, img }, changeAmountOfProduct, removeItemFromCart }: IOrderItem): JSX.Element => {
+const OrderItem = ({ item, changeAmountOfProduct, removeItemFromCart }: IOrderItem): JSX.Element => {
+
+    const changeAmount = (quantity: number): void => changeAmountOfProduct(item.id, item.title, quantity);
     const deleteFromOrder = (): void => removeItemFromCart(item);
 
-    const changeAmount = (quantity: number): void => {
-        const { id, title } = item;
-        changeAmountOfProduct(id, title, quantity);
-    };
+    const { price, quantity = 1, discount = false, rest } = item;
+    if (!price) throw new Error("Database Error");
 
-    const discount = item.discount ? item.price - (item.price * 10) / 100 : item.price;
-    const price = new Intl.NumberFormat().format(discount * item.quantity) + " р.";
+    const discountedPrice = discount ? price - (price * 10) / 100 : price;
+    const checkout = new Intl.NumberFormat().format(discountedPrice * quantity) + " р.";
 
     return (
         <div className={styles.info}>
-            <img width={82} height={82} className={styles.img_sm} src={img.md} alt={alt}/>
+            <img width={82} height={82} className={styles.img_sm} src={item.img.md} alt={item.img_alt}/>
             <div className={styles.info_inner_wrapper}>
                 <p className={styles.product_title}>
                     <span>{item.title}</span>
@@ -30,12 +30,12 @@ const OrderItem = ({ item, item: { img_alt: alt, img }, changeAmountOfProduct, r
 
                 <FormInputCounter
                     classList={styles.counter_wrapper}
-                    maxValue={item.rest}
-                    initialValue={item.quantity}
+                    maxValue={rest}
+                    initialValue={quantity}
                     getProcessedAmount={changeAmount}
                 />
             </div>
-            <span className={styles.price__sm}>{price}</span>
+            <span className={styles.price__sm}>{checkout}</span>
             <CancelButton classList={styles.delete} handler={deleteFromOrder}/>
         </div>
     );

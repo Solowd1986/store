@@ -16,8 +16,6 @@ import { connect } from "react-redux";
 import { IProductTypes } from "@root/ts/types/_core";
 
 
-
-
 //region Описание
 /**
  * Получаемые props:

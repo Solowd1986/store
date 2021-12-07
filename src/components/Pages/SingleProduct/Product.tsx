@@ -63,6 +63,9 @@ const Product = (props: ISingleProductProps): JSX.Element => {
     // }, [id, categoryTitle, path]);
 
 
+    console.log('rend');
+
+
     useEffect(() => {
         if (!productProps) fetchProductPageData(path, categoryTitle, id);
     });
@@ -71,12 +74,12 @@ const Product = (props: ISingleProductProps): JSX.Element => {
         if (!productState && productProps) setProduct({ ...productProps });
     }, [productState, productProps]);
 
+
     useEffect(() => {
         return (): void => {
             clearProductReduxState();
         }
     }, []);
-
 
 
 
