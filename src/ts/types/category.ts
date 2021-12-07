@@ -3,11 +3,12 @@ import { IProductTypes, IError } from "@root/ts/types/_core";
 
 interface MatchParams {
     type?: string,
+
 }
 
 export interface ICategoryProps extends RouteComponentProps<MatchParams> {
     clearCategoryPageReduxData: () => void,
-    fetchCategoryPageData: (props: ICategoryProps) => void,
+    fetchCategoryPageData: (path: string, params: unknown) => void,
     clearCategoryReduxState: () => void,
     clearLazyReduxData: () => void,
     discardSortType: () => void,
