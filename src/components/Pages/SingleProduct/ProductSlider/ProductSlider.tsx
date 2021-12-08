@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import styles from "./product-slider.module.scss";
-import { ISingleProductSlider } from "@root/ts/types/single-product";
+import { ISingleProductSlider } from "@root/types/single-product";
 
 const ProductSlider = ({ list, alt }: ISingleProductSlider): JSX.Element => {
     const slideTransitionEnabled = useRef(false);

@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { IProductTypes, ReduxState } from "@root/ts/types/_core";
-import { ICategoryProps, ICategoryState, ICategoryTypes, IDraft, IReduxCategoryProps } from "@root/ts/types/category";
+import { IProductTypes, ReduxState } from "@root/types/_core";
+import { ICategoryProps, ICategoryState, ICategoryTypes, IDraft, IReduxCategoryProps } from "@root/types/category";
 
 import { usePreviousProps } from "@components/Helpers/Hooks/PreviousProps/PreviousProps";
 import arrayShuffle from "@components/Helpers/Functions/arrayShuffle";
@@ -14,7 +14,6 @@ import { Redirect } from "react-router-dom";
 import * as categoryActions from "@redux/entities/category/actions";
 import * as categorySelectors from "@redux/entities/category/selectors/categorySelectors";
 import { connect } from "react-redux";
-
 
 //region Описание
 /**
@@ -107,7 +106,7 @@ const Category = (props: ICategoryProps): JSX.Element => {
         if (!isStateEmpty() && prevPropsSortType !== sortType) sortProducts();
         if (isRouteChanged()) {
             clearState();
-            fetchCategoryPageData(path, params,);
+            fetchCategoryPageData(path, params);
         }
     });
 

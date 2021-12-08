@@ -2,8 +2,8 @@ import React from "react";
 import styles from "./promo.module.scss";
 import cn from "classnames";
 
-import { IProductTypes } from "@root/ts/types/_core";
-import { IIndexPagePropducts } from "@root/ts/types/index-page";
+import { IProductTypes } from "@root/types/_core";
+import { IIndexPagePropducts } from "@root/types/index-page";
 
 import ProductCard from "@components/Partials/ProductCard/ProductCard";
 

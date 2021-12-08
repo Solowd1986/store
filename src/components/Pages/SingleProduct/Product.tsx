@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import styles from "./product.module.scss";
 import cn from "classnames";
-import { ReduxState } from "@root/ts/types/_core";
-import { ISingleProductState, ISingleProductProps, ReduxRecivedProps } from "@root/ts/types/single-product";
+import { ReduxState } from "@root/types/_core";
+import { ISingleProductState, ISingleProductProps, ReduxRecivedProps } from "@root/types/single-product";
 import { Redirect } from "react-router";
 
 import ProductPrice from "@components/Partials/ProductPrice/ProductPrice";

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import styles from "./slider.module.scss";
-import { IMainPageSlides, IMainPageSlide } from "@root/ts/types/index-page";
+import { IMainPageSlides, IMainPageSlide } from "@root/types/index-page";
 import { NavLink } from "react-router-dom";
 
 const Slider = ({ slides }: IMainPageSlides):JSX.Element => {

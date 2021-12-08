@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import styles from "./lazy-load.module.scss";
 import cn from "classnames";
 
-import { ReduxState } from "@root/ts/types/_core";
-import { ILazyLoadProps, ReduxLazyProps } from "@root/ts/types/lazy-load";
+import { ReduxState } from "@root/types/_core";
+import { ILazyLoadProps, ReduxLazyProps } from "@root/types/lazy-load";
 
 import { withRouter } from "react-router";
 import * as categoryActions from "@redux/entities/category/actions";

@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./product-card.module.scss";
 import cn from "classnames";
-import { IProductCardProps } from "@root/ts/types/product-card";
+import { IProductCardProps } from "@root/types/product-card";
 
 import ProductPrice from "@components/Partials/ProductPrice/ProductPrice";
 import OrderButton from "@components/Partials/OrderButton/OrderButton";

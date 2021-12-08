@@ -3,9 +3,9 @@ import styles from "./order-button.module.scss";
 import cn from "classnames";
 import cartIcon from "./img/cart";
 
-import { ReduxCartList } from "@root/ts/types/order-button";
-import { IProductTypes, ReduxState } from "@root/ts/types/_core";
-import { IOrderButtonProps, IProductStatusHandler, IProductInCart } from "@root/ts/types/order-button";
+import { ReduxCartList } from "@root/types/order-button";
+import { IProductTypes, ReduxState } from "@root/types/_core";
+import { IOrderButtonProps, IProductStatusHandler, IProductInCart } from "@root/types/order-button";
 
 import * as cartActions from "@redux/entities/cart/actions";
 import * as cartSelector from "@redux/entities/cart/selectors/cartSelectors";

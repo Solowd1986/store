@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import styles from "./order-form.module.scss";
-import { IOrderState, IElement, IOrderError } from "@root/ts/types/order";
+import { IOrderState, IElement, IOrderError } from "@root/types/order";
 
 import OrderInfo from "./OrderInfo/OrderInfo";
 import OrderSummary from "./OrderSummary/OrderSummary";

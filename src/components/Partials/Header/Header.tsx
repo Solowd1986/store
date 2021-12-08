@@ -8,7 +8,6 @@ import NavbarList from "./Partials/NavbarList/NavbarList";
 import Userbar from "./Partials/Userbar/Userbar";
 import { calcScrollBarWidth } from "@components/Helpers/Functions/scrollbarHelper";
 
-
 const Header = (): JSX.Element => {
     const [isPageScrolled, togglePageScrolledStatus] = useState(false);
     const header = useRef<HTMLHeadElement>(null);

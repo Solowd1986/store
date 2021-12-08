@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import styles from "./tabs.module.scss";
 import cn from "classnames";
-import { IProductTabs } from "@root/ts/types/single-product";
+import { IProductTabs } from "@root/types/single-product";
 
 import Features from "./Features/Features";
 import Specification from "./Specification/Specification";

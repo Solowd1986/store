@@ -1,6 +1,6 @@
 import React, { useLayoutEffect, useState } from "react";
 import cn from "classnames";
-import { IComp } from "@root/ts/types/_core";
+import { IComp } from "@root/types/_core";
 import * as util from "@components/Helpers/Functions/scrollbarHelper";
 
 //<editor-fold desc="Описание">

@@ -1,4 +1,4 @@
-import { IProductTypes } from "@root/ts/types/_core";
+import { IProductTypes } from "@root/types/_core";
 
 export interface IProductCardProps {
     item: IProductTypes,

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { IMainPageProps } from "@root/ts/types/index-page";
+import { IMainPageProps } from "@root/types/index-page";
 
 import Spinner from "@components/Partials/Spinner/Spinner";
 import Slider from "./Slider/Slider";

@@ -1,5 +1,5 @@
-import { IError } from "@root/ts/types/_core";
-import { ICategoryTypes } from "@root/ts/types/category";
+import { IError } from "@root/types/_core";
+import { ICategoryTypes } from "@root/types/category";
 
 export interface IIndexPagePropducts {
     readonly index: {

@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import styles from "./sort-products.module.scss";
 import cn from "classnames";
-import { ISortProductsProps } from "@root/ts/types/category";
+import { ISortProductsProps } from "@root/types/category";
 
 import * as categoryActions from "@redux/entities/category/actions";
 import { connect } from "react-redux";
-import { ReduxState } from "@root/ts/types/_core";
+import { ReduxState } from "@root/types/_core";
 
 const SortPorducts = ({ sortType = "по популярности", changeSortType }: ISortProductsProps): JSX.Element => {
     const [isSortPanelShow, toggleSortPanelVisibility] = useState(false);

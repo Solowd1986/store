@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./userbar.module.scss";
 import { NavLink } from "react-router-dom";
-import { ReduxState } from "@root/ts/types/_core";
+import { ReduxState } from "@root/types/_core";
 
 import * as cartSelectors from "@redux/entities/cart/selectors/cartSelectors";
 import { connect } from "react-redux";

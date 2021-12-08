@@ -1,4 +1,4 @@
-import { IProductTypes } from "@root/ts/types/_core";
+import { IProductTypes } from "@root/types/_core";
 
 export default function arrayShuffle(array: Array<IProductTypes>):Array<IProductTypes> {
     for (let i = array.length - 1; i > 0; i--) {

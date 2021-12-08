@@ -1,5 +1,5 @@
 import React from "react";
-import { IProductTypes } from "@root/ts/types/_core";
+import { IProductTypes } from "@root/types/_core";
 
 export interface IOrderButtonProps {
     product: IProductTypes,

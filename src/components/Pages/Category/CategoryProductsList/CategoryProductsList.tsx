@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./category-products-list.module.scss";
 import cn from "classnames";
-import { ICategoryProductsListProps } from "@root/ts/types/category";
+import { ICategoryProductsListProps } from "@root/types/category";
 
 import SortPorducts from "@components/Partials/SortProducts/SortProducts";
 import LazyLoad from "@components/Partials/LazyLoad/LazyLoad";

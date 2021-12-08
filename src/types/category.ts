@@ -1,5 +1,5 @@
 import { RouteComponentProps } from "react-router";
-import { IProductTypes, IError } from "@root/ts/types/_core";
+import { IProductTypes, IError } from "@root/types/_core";
 
 interface MatchParams {
     type?: string,

@@ -1,5 +1,5 @@
 import React from "react";
-import { ISubmitButton } from "@root/ts/types/order";
+import { ISubmitButton } from "@root/types/order";
 
 const SubmitButton = ({ value = "Отправить", disabled = false, classList = "", handler = (): void => {} }: ISubmitButton): JSX.Element => (
     <input

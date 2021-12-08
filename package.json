@@ -44,12 +44,6 @@
     "prettier-lint": "prettier-eslint --write ./src/**/*.js",
     "fix": "npx eslint . --fix"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
   "browserslist": {
     "production": [
       ">0.2%",

@@ -2,8 +2,8 @@ import React from "react";
 import styles from "./order-summary.module.scss";
 import cn from "classnames";
 
-import { ReduxState } from "@root/ts/types/_core";
-import { IOrderSummaryProps, IReduxListOfProducts } from "@root/ts/types/order";
+import { ReduxState } from "@root/types/_core";
+import { IOrderSummaryProps, IReduxListOfProducts } from "@root/types/order";
 
 import OrderPrice from "@components/Pages/Order/OrderForm/OrderSummary/OrderPrice/OrderPrice";
 import OrderItem from "@components/Pages/Order/OrderForm/OrderSummary/OrderItem/OrderItem";

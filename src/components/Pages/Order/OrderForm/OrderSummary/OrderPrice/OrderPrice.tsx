@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./order_price.module.scss";
-import { IOrderPrice, IProductInCart } from "@root/ts/types/order";
+import { IOrderPrice, IProductInCart } from "@root/types/order";
 
 const OrderPrice = ({ listOfProducts, shipping: price }: IOrderPrice): JSX.Element => {
     const calctotalPrice = (): number =>

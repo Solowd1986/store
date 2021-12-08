@@ -1,4 +1,4 @@
-import store from "@root/redux/store";
+import store from "@redux/store";
 
 export interface IProductTypes {
     id: number,

@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./order-info.module.scss";
-import { IOrderInfoProps } from "@root/ts/types/order";
+import { IOrderInfoProps } from "@root/types/order";
 
 import basketEpayment from "./img/basket-epayment.png";
 import basketShipping from "./img/basket-shipping.png";
