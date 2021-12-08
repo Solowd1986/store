@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./product-card.module.scss";
-import { IPromoProductCardProps } from "@root/ts/types/product-card";
+import { IPromoProductCardProps } from "@root/types/product-card";
 
 const PromoProductCard = ({ item: { alias, rest, adsType } }: { item: IPromoProductCardProps }): JSX.Element | null => {
     let promo = null;
