@@ -64,9 +64,7 @@ const Category = (props: ICategoryProps): JSX.Element => {
     const [state, setState] = useState<ICategoryState>({ products: null, lastIndex: 0 });
     const prevPropsSortType: string | undefined = usePreviousProps(props.sortType);
 
-
     const isStateEmpty = useCallback((): boolean => !state.products, [state.products]) ;
-
 
     const clearState = useCallback((): void => {
         setState(() => ({ products: null, lastIndex: 0 }));

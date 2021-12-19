@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { IMainPageProps } from "@root/types/index-page";
 
 import Spinner from "@components/Partials/Spinner/Spinner";
@@ -15,6 +15,31 @@ import * as indexActions from "@redux/entities/index/actions";
 import * as indexSelectors from "@redux/entities/index/selectors/indexSelectors";
 import { connect } from "react-redux";
 
+
+function Counter() {
+    const [count, setCount] = useState(0);
+
+    //console.log('red');
+
+    useEffect(() => {
+        const id = setInterval(() => {
+            console.log('ee');
+
+            setCount(count + 1);
+        }, 1000);
+        return (): void => {
+            console.log('eff');
+
+            clearInterval(id);
+        }
+
+    }, [count]);
+
+    return <h1>{count}</h1>;
+}
+
+
+
 const MainPage = ({ index, error, fetchIndexPageData }: IMainPageProps):JSX.Element => {
 
     useEffect(() => {
@@ -27,7 +52,6 @@ const MainPage = ({ index, error, fetchIndexPageData }: IMainPageProps):JSX.Elem
         const SpinnerModal = ModalWrapper(Spinner);
         return <SpinnerModal/>
     }
-
     return (
         <>
             <Slider slides={index.slider}/>

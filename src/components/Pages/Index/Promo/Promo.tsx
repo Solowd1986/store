@@ -7,7 +7,8 @@ import { IIndexPagePropducts } from "@root/types/index-page";
 
 import ProductCard from "@components/Partials/ProductCard/ProductCard";
 
-const Promo = ({ index: { phones, accessoires, gadgets } }: IIndexPagePropducts):JSX.Element => {
+const Promo = ({ index: { phones, accessoires, gadgets }}: IIndexPagePropducts):JSX.Element => {
+
     return (
         <section className={cn("container", styles.wrapper)}>
             <main className={cn("wrapper", styles.content)}>
