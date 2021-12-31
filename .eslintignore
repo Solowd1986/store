@@ -4,3 +4,4 @@ src/redux/*
 src/components/Pages/Order/OrderForm/validationSchema/*
 src/components/T_Not Project Files/*
 src/index.js
+src/components/Pages/Index/MainPage.tsx

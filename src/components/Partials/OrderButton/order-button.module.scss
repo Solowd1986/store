@@ -24,22 +24,6 @@
   }
 }
 
-.btn_cart {
-  position: absolute;
-  width: 24px;
-  height: 24px;
-  top: 50%;
-  left: 10px;
-  transform: translateY(-50%);
-  fill: $white;
-
-  &__order {
-    width: 30px;
-    height: 30px;
-    left: 24px;
-  }
-}
-
 .btn_grey_bg {
   padding: 14px 30px 14px;
   background-color: $grey-400;
@@ -78,25 +62,6 @@
   }
 }
 
-.add_to_cart {
-  width: 100%;
-  margin-bottom: 10px;
-  padding: 12px 15px 12px 30px;
-  font-size: 24px;
-  color: $white;
-
-  & svg {
-    width: 30px;
-    height: 30px;
-    left: 24px;
-  }
-}
-
-.remove_from_cart {
-  @extend .add_to_cart;
-  padding: 12px 15px 12px 12px;
-}
-
 .loader {
   display: none;
   box-sizing: border-box;
@@ -111,6 +76,7 @@
   transform: translate(-50%, -50%);
   animation: animloader 1s linear infinite alternate;
 }
+
 @keyframes animloader {
   0% {
     border-color: white rgba(255, 255, 255, 0) rgba(255, 255, 255, 0)

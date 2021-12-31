@@ -1,6 +1,5 @@
 @import "@scss/utils/utils.scss";
 
-
 .footer_bg {
   background-color: $white-400;
 }
@@ -14,7 +13,6 @@
   padding: 15px 0;
   @media (max-width: 590px) {
     flex-direction: column;
-
     // Все блоки первой вложенности, кроме копирайта (который выключили ранее) и последнего (иеонки соц. сетей)
     // получают отсуп снизу
     & > *:not(:last-child) {
@@ -39,8 +37,7 @@
   padding-left: 25px;
   font-size: 18px;
   color: $blue;
-  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAABLUlEQVQ4jZXSsUtCURTH8e95RhANRU7WpjS1WL0hon9ACIIGW2oKkhZpq7Y3Cc0OoQ5BS/CWbOiPkPdEIhsbFZscAimDdxr0IT6D7jvb/XHPh3sOV6j4LSDLpJ4p2PsYlgWkI9meaXMIdCLZEvcvizEA7c6kg+FunBc0/kiT5kDAUySr87X8aA582D7hHoQHIE9x/dsccCRAuQFA6VKwf0ybRwDAykIFeAcuuPU24wP5jSGqRcDCkjoVP2UKyNSp6l+jlIBXgrkc59nJH3HdBP30EZa06Wy1cSSYBVSFWrOGcgp0gUMKdmPUnLkDPRnf/AR6gDcNhEi1eQmUAEUpI5oEOf5/hKlxvBwqZSBjvoNouW/z9AdnIFfAWnwgLEctVr1tNHEAwQ5Iagz2fgHsDFjoN+mhLwAAAABJRU5ErkJggg==")
-    no-repeat left center;
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAABLUlEQVQ4jZXSsUtCURTH8e95RhANRU7WpjS1WL0hon9ACIIGW2oKkhZpq7Y3Cc0OoQ5BS/CWbOiPkPdEIhsbFZscAimDdxr0IT6D7jvb/XHPh3sOV6j4LSDLpJ4p2PsYlgWkI9meaXMIdCLZEvcvizEA7c6kg+FunBc0/kiT5kDAUySr87X8aA582D7hHoQHIE9x/dsccCRAuQFA6VKwf0ybRwDAykIFeAcuuPU24wP5jSGqRcDCkjoVP2UKyNSp6l+jlIBXgrkc59nJH3HdBP30EZa06Wy1cSSYBVSFWrOGcgp0gUMKdmPUnLkDPRnf/AR6gDcNhEi1eQmUAEUpI5oEOf5/hKlxvBwqZSBjvoNouW/z9AdnIFfAWnwgLEctVr1tNHEAwQ5Iagz2fgHsDFjoN+mhLwAAAABJRU5ErkJggg==") no-repeat left center;
 }
 
 .working_hours {

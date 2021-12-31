@@ -3,9 +3,8 @@ import React from "react";
 
 export interface IOrderState {
     isUserConfirmOrder: boolean,
-    isFormTouched: boolean,
+    isBeenAttemptToSendForm: boolean,
     isFormValid: boolean,
-
     fields: Fields
 }
 

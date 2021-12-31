@@ -16,7 +16,7 @@ import Cookies from "js-cookie";
 const validationSchema = setValidateSchema(["name", "phone", "email", "address", "comment"]);
 const initalState = {
     isUserConfirmOrder: false,
-    isFormTouched: false,
+    isBeenAttemptToSendForm: false,
     isFormValid: true,
     fields: {
         name: {
@@ -55,7 +55,7 @@ const initalState = {
  *
  * isUserConfirmOrder: - подтвердил ли пользователь заказ. Срабатывает когда нет ошибок и форму отправили.
  *
- * isFormTouched - воздействовал ли пользователь на форму. Ставится в true, если пользователь попробовал отправить форму
+ * isBeenAttemptToSendForm - воздействовал ли пользователь на форму. Ставится в true, если пользователь попробовал отправить форму
  * и в ней были ошибки. Так как если он отправляет и ошибок нет, то покажется Confirm-окно и форма сбросится на default.
  *
  * isFormValid - валидна ли форма. Форма получает статус true при инициализации, потом сбрасывается при ошибках.
@@ -233,7 +233,7 @@ const OrderForm = (): JSX.Element => {
 
             setState(
                 produce(state, (draft) => {
-                    draft["isFormTouched"] = true;
+                    draft["isBeenAttemptToSendForm"] = true;
                     draft["isFormValid"] = false;
                     draft["fields"] = { ...state.fields, ...fieldsWithError };
                 }),
@@ -283,7 +283,7 @@ const OrderForm = (): JSX.Element => {
      *
      * Если имя поля phone - то прогоняем ввод через Inputmask, для форматирования в телефонный номер.
      *
-     * Далее метод работает при условии, что isFormTouched = true. Это происходит только если была попытка отправки формы.
+     * Далее метод работает при условии, что isBeenAttemptToSendForm = true. Это происходит только если была попытка отправки формы.
      * До этого пользователь может вводить любые данные и ошибок не будет, чтобы не мешать ему на этом этапе.
      *
      * Итак, для формы были показаны ошибки, отправка формы заблокирована, пользователь выбирает поле и начинает опять
@@ -300,7 +300,7 @@ const OrderForm = (): JSX.Element => {
      */
     const handleInputChange = ({ target, target: { name: inputName, value: inputValue } }: IElement): void => {
         if (inputName === "phone") new Inputmask("+7 (999) 999-99-99").mask(target);
-        if (state.isFormTouched) {
+        if (state.isBeenAttemptToSendForm) {
             const checkedField = checkSingleFieldErrorSync(inputName, inputValue);
             if (!checkedField.error) {
                 const formValiditaionData = validateForm();

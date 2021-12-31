@@ -1,3 +1,98 @@
+
+
+/*-------------------------- АДАПТИРУЕМАЯ СЕТКА------------------------------------------------------------------*/
+/*
+Принцип работы:
+1. Создается элемент обертка - wrapper, в нем группа адаптируемых элементов - item. Поскольку тут используется вытягивание margin,
+   то может получиться так, что фон wrapper вылезет за его пределы, для этого можно окружить уже его элементом outer-wrapper
+   c overflow: hidden, это скроет фон wrapper.
+2. По-умолчанию используется 12 колонок и margin для адаптируемых элементов по 15px с каждой стороны, суммарно - 30. Эти 15px
+   используются для расчета вытягивания margin и для вычисления width на разной ширине экрана.
+3. Важный момент: либо в целом используются значения margin по-умолчанию, либо кастомные, не смешивая. Также, поскольку тут
+   не используются именованные параметры, то порядок передачи аргументов в миксин важен.
+
+Миксины:
+1. create-adaptive-container($margins: null) - он вызывается для wrapper-элемента. Если параметры ему не переданы, то
+   будет установлено стандартное flex поведение, а вытягивание будет на 30 / 2 с каждой стороны, взяв за основу константу
+   $default-item-left-right-sum-margin. Иначе будут использованы данные от пользователя. Если тут использовать не
+   дфеолтное значение, то это нужно учесть и прописать далее, для item.
+
+2. create-adaptive-elem($cols, $max-width-media-query: null, $margin: $default-item-left-right-sum-margin) - данный миксин
+   принимает первым аргументом количество колонок, которое он займет, это обязательный параметр. Также он вне зависимости от
+   переданных параметров устанавливает margin с двух сторон от элемента, просто это либо дефолтный margin, либо переданный.
+   Если больше параметров явно не передать, то элемент просто получит адаптируемую ширину и margin, основанный на дефолтном
+   значении 30. Далее можно передать медиазапрос с максимальной шириной, в этом случае width и margin элемента будут
+   вписаны в медиазапрос, margin также дефолтный 30. И тертьим аргументом можно передать margin в виде числа, представляющего
+   собой сумму с двух сторон, то есть 20/30/etc. Подчеркну, что если для wrapper изменен margin, то и тут это нужно отразить.
+
+Примеры.
+
+1. Для дефолтного поведения, просто меняем колонки на разной ширине.
+.outer-wrapper {
+  overflow: hidden; - используется, если нужно скрыть вытянутый фон wrapper
+}
+.wrapper {
+  @include create-adaptive-container(); - вытягиваем на 15 пикселей с каждой стороны по дефолту + flex-правила
+}
+.item {
+  @include create-adaptive-elem(4); - каждый элемент займет 4 колонки из 12, медиазапроса нет, margin дефолтный
+  @include create-adaptive-elem(6, "1200px"); - при ширине до 1200px каждый элемент занимает уже 6 колонок, margin дефолтный
+  @include create-adaptive-elem(8, "800px"); - при ширине до 800px каждый элемент занимает уже 8 колонок, margin дефолтный
+  @include create-adaptive-elem(12, "600px"); - при ширине до 600px каждый элемент занимает уже 12 колонок, margin дефолтный
+}
+
+2. Для кастомного margin, соблюдаем согласованность
+.outer-wrapper {
+  overflow: hidden; - используется, если нужно скрыть вытянутый фон wrapper
+}
+.wrapper {
+  @include create-adaptive-container(20); - вытягиваем на 10 пикселей с каждой стороны + flex-правила
+}
+.item {
+  @include create-adaptive-elem(4, null, 20); - пропускаем медиазапрос, так как это общий вариант, передаем согласованный margin
+  @include create-adaptive-elem(6, "1200px", 20); - до 1200px каждый элемент занимает 6 колонок, margin 10 с каждой стороны
+  @include create-adaptive-elem(8, "800px", 20); - до 800px каждый элемент занимает 8 колонок, margin 10 с каждой стороны
+  @include create-adaptive-elem(12, "600px", 20); - до 600px каждый элемент занимает 12 колонок, margin 10 с каждой стороны
+}
+*/
+
+// Дефолтные значения
+$default-columns-number: 12;
+$default-item-left-right-sum-margin: 30;
+
+@mixin create-adaptive-container($margins: null) {
+  display: flex;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+  @if $margins == null {
+    margin-left: -#{$default-item-left-right-sum-margin / 2} + px;
+    margin-right: -#{$default-item-left-right-sum-margin / 2} + px;
+  } @else {
+    margin-left: -#{$margins / 2} + px;
+    margin-right: -#{$margins / 2} + px;
+  }
+}
+
+@mixin create-adaptive-elem($cols, $max-width-media-query: null, $margin: $default-item-left-right-sum-margin) {
+  @if $max-width-media-query == null {
+    margin-left: #{$margin / 2} + px;;
+    margin-right: #{$margin / 2} + px;;
+    width: calc(100% / #{$default-columns-number} * #{$cols} - #{$margin}#{px});
+  } @else {
+    @media (max-width: #{$max-width-media-query}) {
+      margin-left: #{$margin / 2} + px;;
+      margin-right: #{$margin / 2} + px;;
+      width: calc(100% / #{$default-columns-number} * #{$cols} - #{$margin}#{px});
+    }
+  }
+}
+/*-----------------------------------------------------------------------------------------------------*/
+
+
+
+
+
+
 @mixin wrapper-negative-margins($margin: 15) {
   margin-left: -$margin + px;
   margin-right: -$margin + px;

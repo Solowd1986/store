@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { IMainPageProps } from "@root/types/index-page";
 
 import Spinner from "@components/Partials/Spinner/Spinner";
@@ -16,27 +16,42 @@ import * as indexSelectors from "@redux/entities/index/selectors/indexSelectors"
 import { connect } from "react-redux";
 
 
-function Counter() {
-    const [count, setCount] = useState(0);
 
-    //console.log('red');
+
+function Counter2() {
+    const [count, setCount] = useState(0);
+    const state = useRef(count);
 
     useEffect(() => {
         const id = setInterval(() => {
-            console.log('ee');
-
-            setCount(count + 1);
+            setCount(state.current + 1);
+            state.current = ++state.current;
         }, 1000);
-        return (): void => {
-            console.log('eff');
-
-            clearInterval(id);
-        }
-
-    }, [count]);
+        return () => clearInterval(id);
+    }, []);
 
     return <h1>{count}</h1>;
 }
+
+
+
+
+
+function Counter() {
+    const [count, setCount] = useState(0);
+
+
+    return(
+        <div style={{ textAlign: "center"}}>
+            <button style={{padding: "10px", backgroundColor: "red"}} onClick={() => setCount(count + 1)}>Inc</button>
+            <h1>{count}</h1>
+        </div>
+    )
+}
+
+
+
+
 
 
 
@@ -55,6 +70,9 @@ const MainPage = ({ index, error, fetchIndexPageData }: IMainPageProps):JSX.Elem
     return (
         <>
             <Slider slides={index.slider}/>
+
+            {/*<Counter2/>*/}
+
             <Promo index={index}/>
             <BrandStory/>
             <Announcements/>
