@@ -9,6 +9,7 @@ import Userbar from "./Partials/Userbar/Userbar";
 import { calcScrollBarWidth } from "@components/Helpers/Functions/scrollbarHelper";
 
 
+
 /**
  * Итак, это входная точка блока Header сайта, тут подключаются все прочие части.
  * Конкретно этот компонент крмое своей родительской функции выполняет следующую задачу:
@@ -35,6 +36,8 @@ const Header = (): JSX.Element => {
     const [isPageScrolled, togglePageScrolledStatus] = useState(false);
     const header = useRef<HTMLHeadElement>(null);
     const headerPlaceholderElem = useRef<HTMLDivElement>(null);
+
+
 
     /**
      * Метод реакции на изменения размера страницы и подстройки ширины Hrader под новый размер страницы.
