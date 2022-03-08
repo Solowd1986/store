@@ -38,7 +38,6 @@ const Header = (): JSX.Element => {
     const headerPlaceholderElem = useRef<HTMLDivElement>(null);
 
 
-
     /**
      * Метод реакции на изменения размера страницы и подстройки ширины Hrader под новый размер страницы.
      * Разделение методов handlerResizePage и handleScroll нужно потому, что handlerResizePage нужен постоянно,
@@ -94,7 +93,9 @@ const Header = (): JSX.Element => {
     }, [isPageScrolled]);
 
 
-    /** Фикисируем высоту div-заглушки на основе высоты header. Она встает на его место, когда он fixed и выпадает из потока.*/
+    /**
+     * Фикисируем высоту div-заглушки на основе высоты header. Она встает на его место, когда он fixed и выпадает из потока.
+     * */
     if (headerPlaceholderElem.current && header.current && isPageScrolled) {
         const currentHeaderHeight: number = header.current.clientHeight;
         headerPlaceholderElem.current.style.minHeight = `${currentHeaderHeight}px`;
