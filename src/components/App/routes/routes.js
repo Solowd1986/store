@@ -4,7 +4,7 @@ import loadable from "@loadable/component"; // динамический импо
 import pMinDelay from 'p-min-delay'; // задание задержки для более долгой демонстрации спиннера, чтоб не мелькал (в мс)
 import Spinner from "@components/Partials/Spinner/Spinner";
 
-const MainPage = loadable(() => pMinDelay(import("@components/Pages/Index/MainPage"), 200), { fallback: <Spinner/> });
+const MainPage = loadable(() => import("@components/Pages/Index/MainPage"));
 const Category = loadable(() => pMinDelay(import("@components/Pages/Category/Category"), 200), { fallback: <Spinner/> });
 const Product = loadable(() => pMinDelay(import("@components/Pages/SingleProduct/Product"), 200), { fallback: <Spinner/> });
 const Delivery = loadable(() => pMinDelay(import("@components/Pages/Delivery/Delivery"), 200), { fallback: <Spinner/> });
