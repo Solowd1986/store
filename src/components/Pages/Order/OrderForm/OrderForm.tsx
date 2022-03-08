@@ -12,12 +12,22 @@ import Inputmask from "inputmask";
 import produce from "immer";
 import Cookies from "js-cookie";
 
-
 const validationSchema = setValidateSchema(["name", "phone", "email", "address", "comment"]);
+/**
+ * Основные параметры state
+ *
+ * isUserConfirmOrder - подтвердил ли пользователь заказ. Срабатывает когда нет ошибок и форму отправили
+ * isBeenAttemptToSendForm - воздействовал ли пользователь на форму. Ставится в true, если пользователь попробовал отправить форму
+ * и в ней были ошибки. Так как если он отправляет и ошибок нет, то покажется Confirm-окно и форма сбросится на default
+ * isFormVali - валидна ли форма. Форма получает статус true при инициализации, потом сбрасывается при ошибках.
+ * Если все поля валидны - опять ставится true
+ * isFormPending - флаг, который указывает, что професс отправки формы на сервер начался.
+ */
 const initalState = {
     isUserConfirmOrder: false,
     isBeenAttemptToSendForm: false,
     isFormValid: true,
+    isFormPending: false,
     fields: {
         name: {
             error: false,
@@ -60,12 +70,6 @@ const initalState = {
  *
  * isFormValid - валидна ли форма. Форма получает статус true при инициализации, потом сбрасывается при ошибках.
  * Если все поля валидны - опять true.
- *
- *
- *
- *
- *
- *
  */
 const OrderForm = (): JSX.Element => {
     const [state, setState] = useState<IOrderState>(initalState);
@@ -82,7 +86,6 @@ const OrderForm = (): JSX.Element => {
      * 3. Обращаемся к полю value каждого этого поля и присваиваем ему значение, которое было записано в куке под
      *    именем данного поля. То есть поле формы с name вида address, находим в обьекте куки поле address, берем из
      *    него данные и прописываем в value одноименного поля формы.
-     *
      */
     useEffect(() => {
         if (!form.current) return;
@@ -132,7 +135,6 @@ const OrderForm = (): JSX.Element => {
         Cookies.set("form-data", dataForm, { expires: cookieExpires });
     };
 
-
     /**
      * Метод для получения всех валидируемых полей формы и их значений в удобной форме обьекта. Возвращает обьект.
      *
@@ -143,7 +145,7 @@ const OrderForm = (): JSX.Element => {
      * Через filter отбираем все элементы, которые вернули true на проверку вхождения в список валидируемых полей.
      * Проще говоря, отбираем из всех DOM-элементов формы те элементы, которые относятся к валидируемым.
      *
-     * Потом обходим получившийся массив DOM-элементов и вносим в обьект formFieldsToObject атрибуиы этих DOM-элементов:
+     * Потом обходим получившийся массив DOM-элементов и вносим в обьект formFieldsToObject атрибуты этих DOM-элементов:
      * Атрибут name - как имя поля обьекта, а атрибут value - как значение обьекта.
      *
      * Получаем все отслеживаемые поля формы, создаем пустой обьект и массив из ключей-полей формы, они основаны на схеме
@@ -354,7 +356,7 @@ const OrderForm = (): JSX.Element => {
         //const formData = new FormData(target);
         Cookies.remove("form-data");
         target.reset();
-        setState({ ...state, isUserConfirmOrder: true });
+        setState({ ...state, isUserConfirmOrder: true, isFormPending: true });
     };
 
     /**
@@ -369,7 +371,6 @@ const OrderForm = (): JSX.Element => {
      */
     const resetOrderForm = (evt: React.SyntheticEvent): void => {
         if (evt) evt.preventDefault();
-
         Cookies.remove("form-data");
         form.current?.reset();
         setState(initalState);

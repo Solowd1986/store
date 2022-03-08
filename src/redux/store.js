@@ -13,10 +13,10 @@ const preloadedState = {
     ...JSON.parse(decodeURIComponent(localStorage.getItem("auth"))),
 };
 
-const enhancedStore = composeEnhancers(applyMiddleware(...activeMiddlewareList));
+const enhancers = composeEnhancers(applyMiddleware(...activeMiddlewareList));
 const store = Object.keys(preloadedState).length
-    ? createStore(reducer, preloadedState, enhancedStore)
-    : createStore(reducer, enhancedStore);
+    ? createStore(reducer, preloadedState, enhancers)
+    : createStore(reducer, enhancers);
 
 
 store.subscribe(() => {

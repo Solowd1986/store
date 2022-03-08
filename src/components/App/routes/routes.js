@@ -1,13 +1,18 @@
-import MainPage from "@components/Pages/Index/MainPage";
-import Category from "@components/Pages/Category/Category";
-import Product from "@components/Pages/SingleProduct/Product";
-import Delivery from "@components/Pages/Delivery/Delivery";
-import Order from "@components/Pages/Order/Order";
 
-import Error400 from "@components/Pages/Error/Error400/Error400";
-import Error404 from "@components/Pages/Error/Error404/Error404";
-import Error500 from "@components/Pages/Error/Error500/Error500";
+import React from "react";
+import loadable from "@loadable/component"; // динамический импорт компонентов по надобности
+import pMinDelay from 'p-min-delay'; // задание задержки для более долгой демонстрации спиннера, чтоб не мелькал (в мс)
+import Spinner from "@components/Partials/Spinner/Spinner";
 
+const MainPage = loadable(() => pMinDelay(import("@components/Pages/Index/MainPage"), 200), { fallback: <Spinner/> });
+const Category = loadable(() => pMinDelay(import("@components/Pages/Category/Category"), 200), { fallback: <Spinner/> });
+const Product = loadable(() => pMinDelay(import("@components/Pages/SingleProduct/Product"), 200), { fallback: <Spinner/> });
+const Delivery = loadable(() => pMinDelay(import("@components/Pages/Delivery/Delivery"), 200), { fallback: <Spinner/> });
+const Order = loadable(() => pMinDelay(import("@components/Pages/Order/Order"), 200), { fallback: <Spinner/> });
+
+const Error400 = loadable(() => pMinDelay(import("@components/Pages/Error/Error400/Error400"), 200), { fallback: <Spinner/> });
+const Error404 = loadable(() => pMinDelay(import("@components/Pages/Error/Error404/Error404"), 200), { fallback: <Spinner/> });
+const Error500 = loadable(() => pMinDelay(import("@components/Pages/Error/Error500/Error500"), 200), { fallback: <Spinner/> });
 
 const routes = [
     { url: "/", component: MainPage, exact: true },
@@ -21,4 +26,22 @@ const routes = [
 ];
 
 export default routes;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

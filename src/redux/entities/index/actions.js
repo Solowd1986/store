@@ -12,7 +12,6 @@ import * as types from "@redux/entities/index/constants/index";
  */
 export const fetchIndexPageData = () => async (dispatch, getState, api) => {
     dispatch({ type: types.INDEX_START_FETCH_DATA });
-
     try {
         const response = await api.get("index");
         dispatch({

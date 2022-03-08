@@ -5,6 +5,7 @@ export interface IOrderState {
     isUserConfirmOrder: boolean,
     isBeenAttemptToSendForm: boolean,
     isFormValid: boolean,
+    isFormPending: boolean,
     fields: Fields
 }
 

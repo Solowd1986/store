@@ -27,7 +27,7 @@ import { connect } from "react-redux";
  * 7.clearCategoryReduxState - метод для очистки redux state
  * 8.fetchCategoryPageData - метод для запроса данных на сервер
  *
- * Принцип работы блока useEffect (при полчкнии props)
+ * Принцип работы блока useEffect (при получении props)
  *
  * 1. State компонента пуст (то есть это первый вход в блок категорий). Тогда просто при получении props - вписываем данные.
  * 2. Смена типа сортировки. По умолчанию тип сортировки приходит из Redux (иницилизирующее значение) Если state не пуст,
@@ -37,7 +37,7 @@ import { connect } from "react-redux";
 
  * 3. Смена route-пути между разными категориями. Это происходит лишь в рамках уже загруженного компонента Category,
  *    значит, state должен быть не пуст.
- *   В этом случае проверяем alias текущей категории и поле match из props, если они разные - были переходы в рамках компонента.
+ *    В этом случае проверяем alias текущей категории и поле match из props, если они разные - были переходы в рамках компонента.
  *    Может возникнуть вопрос: отчего не использовать для определения сортировки метод isRouteChanged? Проблема в том, что
  *    в рамках очики данных, метод безвреден: вернет false если state пуст, вернет false пути не поменялись и вернет true, толкьо
  *    если state не пуст и пути поменялись. Но если в сортирвоки вписать что-то типа: (prevSort !== nexSort && !isRouteChanged),
@@ -121,7 +121,7 @@ const Category = (props: ICategoryProps): JSX.Element => {
                 produce(state, (draft: IDraft) => {
                     draft["lastIndex"] = lastIndex;
                     draft["products"]["main"] = state.products?.main;
-                    draft["products"]["data"] = state.products ? [...state.products.data, ...lazy,] : {};
+                    draft["products"]["data"] = state.products ? [...state.products.data, ...lazy,] : null;
                 }),
             );
         }

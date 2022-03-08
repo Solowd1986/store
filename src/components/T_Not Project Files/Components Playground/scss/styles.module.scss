@@ -1,0 +1,28 @@
+@import "@scss/utils/utils.scss";
+
+.wrp {
+  margin: 40px auto;
+  min-width: 60%;
+  max-width: 60%;
+  border: 2px solid black;
+  background-color: lightgray;
+  padding: 10px;
+  text-align: center;
+}
+
+.innerPadding {
+  padding: 10px;
+  text-align: center;
+}
+
+
+.btn_add {
+  padding: 5px;
+  background-color: red;
+  color: white;
+  border-radius: 5px;
+
+  &:active {
+    background-color: grey;
+  }
+}

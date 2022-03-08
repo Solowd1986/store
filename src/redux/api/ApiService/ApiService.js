@@ -25,6 +25,13 @@ class ApiService {
         return request;
     };
 
+    /**
+     * Обработка слишком долгого ответа от сервера, код оишбки - ECONNABORTED.
+     * При каждом запросе срабатывает перехватчик handleSuccessRequest - он записывает данное об url запроса на сервер.
+     * handleFailResponse обрабатывает ответот сервера, если ошибка ECONNABORTED, то начинаем повторять попытки, увеличивая retryCount,
+     * и каждый раз отправляя запрос на url, который сохранен последним. Если результата нет, то выбрасывается ошибка, ее перехватыет
+     * action в Redux
+     */
     handleFailResponse = async (error) => {
         if (error.code === "ECONNABORTED" && this.retryCount < 3) {
             ++this.retryCount;
