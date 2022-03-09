@@ -13,8 +13,18 @@
 .innerPadding {
   padding: 10px;
   text-align: center;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
+.btn_change_page {
+  background-color: red;
+  color: white;
+  border-radius: 5px;
+  &:active {
+    background-color: grey;
+  }
+}
 
 .btn_add {
   padding: 5px;
@@ -26,3 +36,25 @@
     background-color: grey;
   }
 }
+
+.user_info {
+  padding: 5px;
+  margin: 5px;
+  border-radius: 3px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

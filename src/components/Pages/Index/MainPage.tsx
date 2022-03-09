@@ -19,7 +19,8 @@ import { connect } from "react-redux";
 
 
 // TEST
-import ScrollList from "@components/T_Not Project Files/Components Playground/ListScroll";
+import ScrollListInfinity from "@components/T_Not Project Files/Components Playground/ListScrollInfinity";
+import ScrollListPagination from "@components/T_Not Project Files/Components Playground/ScrollListPagination";
 
 
 interface IChildren {
@@ -126,9 +127,8 @@ const MainPage = ({ index, error, fetchIndexPageData }: IMainPageProps):JSX.Elem
         <>
             <Slider slides={index.slider}/>
 
-            <ScrollList/>
-
-
+            <ScrollListInfinity/>
+            <ScrollListPagination/>
 
             <Promo index={index}/>
             <BrandStory/>
