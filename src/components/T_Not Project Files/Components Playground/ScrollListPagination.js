@@ -4,25 +4,46 @@ import cn from "classnames";
 import axios from "axios";
 import { nanoid } from "nanoid";
 
+
+/**
+ *
+ * listOfItems - список элементов, выводимых на странице
+ *
+ * changePage - метод получет номер страницы, по которой кликнул пользователь, переводит его в число. Если страница не новая, то ничего не
+ * делаем. Если же новая - меняем state для page на новый номер.
+ *
+ * На изменение page завязан useEffect. При первой отрисовке компонента эффект в любом случае выполнится, происходит запрос к сервру,
+ * отдаем page (изначально она равна 1) и itemsPerPage, у нас это 5. Так мы получаем начальный набор элементов для первой страницы.
+ * При последующих сменах page эффект будет срабатывать снова, получая данные для нужных страниц.
+ *
+ * itemsPerPage - количество элементов на странице/в блоке
+ *
+ * ID_UNIQUE - уникальное имя поля, которое добвляется к каждому полученному обьекту, для вывода массива с полем key в JSX
+ *
+ * getOffset - метод для получения отступа для запроса к БД. В случае использования mockapi это не нужно, но сам принцип такой:
+ * 1. Берем номер страницы. Если это 1, то отступ 0, при запрос к БД получим первые 5 элементов.
+ * 2. Номер страницы теперь 2, значит считаем как 2 - 1 * 5 = 5, это отступ для БД: пропусти 5 элемнтов и верни 5.
+ * 3. Номер страницы теперь 3, значит считаем как 3 - 1 * 5 = 10, это отступ для БД: пропусти 10 элемнтов и верни 5.
+ * 4. И так далее.
+ *
+ */
+
 const ScrollListPagination = () => {
     const [page, setPage] = useState(1);
-    const [data, setData] = useState(null);
-
+    const [listOfItems, setListOfItems] = useState([]);
     const itemsPerPage = 5;
-    // Формируя offset мы создаем отступ для запроса БД, он не включает элементы, которые нужны.
-    // Например, мы вывели 4 страницы по 5 элементов, всего 20, жмем на страницу 5, считаем = (5 - 1) * 5 = 20.
-    // Отдаем это БД, запрос пропустит 20 записей и отдаст 5 записей после них.
-    // Второй способ - отдавать страницу и количество записей. Например, site.ru/page=2&items=5.
-    // Принцип расчета тот же, просто считается на сервере.
-    const getOffset = () => page > 1 ? ((page - 1) * itemsPerPage) : 1;
+    const ID_UNIQUE = "id_unique";
 
-    const generateId = (data) => data.map(item => ({id_unique: nanoid(), ...item}));
 
-    //console.log(getOffset());
+    const getOffset = () => page > 1 ? ((page - 1) * itemsPerPage) : 0;
+    /**
+     *     Возвращает массив из обьектов, каждый из которых получил новое поле id_unique
+     */
+    const generateId = (data) => data.map(item => ({[ID_UNIQUE]: nanoid(), ...item}));
 
     useEffect(() => {
         axios.get(`https://6224b26a6c0e3966204475cd.mockapi.io/users?page=${page}&limit=${itemsPerPage}`).then(response => {
-            setData(generateId(response.data));
+            setListOfItems(generateId(response.data));
         });
     }, [page]);
 
@@ -36,7 +57,7 @@ const ScrollListPagination = () => {
         <div className={styles.wrp}>
             <div className={styles.innerPadding}>List:</div>
             <ul className={styles.innerPadding}>
-                {data && (data.map(item => <li key={item.id_unique} className={styles.user_info}>{`${item.id} ${item.name}`}</li>))}
+                {listOfItems && (listOfItems.map(item => <li key={item[ID_UNIQUE]} className={styles.user_info}>{`${item.id} ${item.name}`}</li>))}
             </ul>
             <ul>
                 <li>
