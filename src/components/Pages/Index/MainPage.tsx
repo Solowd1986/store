@@ -21,6 +21,7 @@ import { connect } from "react-redux";
 // TEST
 import ScrollListInfinity from "@components/T_Not Project Files/Components Playground/ListScrollInfinity";
 import ScrollListPagination from "@components/T_Not Project Files/Components Playground/ScrollListPagination";
+import LoadingSpinner from "@components/T_Not Project Files/Components Playground/LoadingSpinner";
 
 
 interface IChildren {
@@ -48,63 +49,7 @@ function useIsMounted() {
 }
 
 
-function Hook() {
-    const [isMounted] = useIsMounted();
 
-    useEffect(() => {
-        if (isMounted) console.log("mounted");
-    })
-}
-
-
-
-
-
-const Pagination = () => {
-
-    const [page, pageStatus] = useState(1);
-
-    useEffect(() => {
-        const res = getDatat(1);
-
-    }, [page]);
-
-    const getDatat = async (page: number) => {
-        //const reposense = await axios.get(`site.ru/pages/${page}`);
-        return page;
-    };
-
-    return (
-        <div>
-            <div>
-                DATA
-            </div>
-            <div>
-                <ul>
-                    <li>1</li>
-                    <li>2</li>
-                    <li>3</li>
-                    <li>4</li>
-                    <li>5</li>
-                </ul>
-            </div>
-        </div>
-    )
-};
-
-
-const PaginationInifinity = () => {
-    return (
-        <div>
-            <div>
-                DATA
-            </div>
-            <div>
-                <button>Следующие товары</button>
-            </div>
-        </div>
-    )
-};
 
 
 
@@ -129,6 +74,7 @@ const MainPage = ({ index, error, fetchIndexPageData }: IMainPageProps):JSX.Elem
 
             <ScrollListInfinity/>
             <ScrollListPagination/>
+            <LoadingSpinner width={10}/>
 
             <Promo index={index}/>
             <BrandStory/>

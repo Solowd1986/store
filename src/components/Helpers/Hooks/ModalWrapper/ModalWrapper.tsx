@@ -3,6 +3,7 @@ import cn from "classnames";
 import { IComp } from "@root/types/_core";
 import * as util from "@components/Helpers/Functions/scrollbarHelper";
 
+
 //<editor-fold desc="Описание">
 /**
  *
@@ -37,8 +38,8 @@ const ModalWrapper = (Component: React.FunctionComponent<{ [key: string]: (evt?:
     return function Comp({ bg = false, interactions = false, ...props }: IComp):JSX.Element | null {
 
         const [isModalShow, showModalStatus] = useState(true);
-        const closeModal = (evt: React.SyntheticEvent<HTMLElement>):void => {
 
+        const closeModal = (evt: React.SyntheticEvent<HTMLElement>):void => {
             if (!(evt.target instanceof HTMLElement)) return;
             if (!("modal" in evt.target.dataset)) return;
 

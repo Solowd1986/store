@@ -50,10 +50,25 @@
 
 
 
+/**
+SPINNER
+ */
+
+.spinner-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.spinner {
+  width: 250px;
+  height: auto;
+}
 
 
-
-
+/***********/
 
 
 

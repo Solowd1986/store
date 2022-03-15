@@ -4,7 +4,6 @@ import cn from "classnames";
 import axios from "axios";
 import { nanoid } from "nanoid";
 
-
 /**
  *
  * listOfItems - список элементов, выводимых на странице
@@ -27,7 +26,6 @@ import { nanoid } from "nanoid";
  * 4. И так далее.
  *
  */
-
 const ScrollListPagination = () => {
     const [page, setPage] = useState(1);
     const [listOfItems, setListOfItems] = useState([]);
