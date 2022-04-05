@@ -10,6 +10,7 @@ import { Provider } from "react-redux";
 import store from "@redux/store";
 import routes from "@root/components/App/routes/routes";
 
+
 const App = (): JSX.Element => (
     <React.StrictMode>
         <Provider store={store}>
