@@ -8,6 +8,21 @@ import { nanoid } from "nanoid";
 import { useInView } from 'react-intersection-observer';
 
 
+const useGetScrollDirection = () => {
+    const [isDirectionGoDown, setDirection] = useState(null);
+    useEffect(() => {
+        const getDirection = (evt) => evt.wheelDelta > 0 ? setDirection(false) : setDirection(true);
+        window.addEventListener("wheel", getDirection);
+        return () => {
+            window.removeEventListener("wheel", getDirection);
+        }
+    },[]);
+    return [
+        isDirectionGoDown
+    ]
+};
+
+
 
 /**
  * listOfItems - список элементов, выводимых на странице
@@ -22,14 +37,16 @@ import { useInView } from 'react-intersection-observer';
  *
  * ID_UNIQUE - уникальное имя поля, которое добвляется к каждому полученному обьекту, для вывода массива с полем key в JSX
  */
-
 const ScrollListInfinity =  () => {
 
 
     const bottom = useRef(null);
 
+    const [isDirectionGoDown] = useGetScrollDirection();
+
     const [listOfItems, setListOfItems] = useState([]);
     const [cntOfAddedItemBlocks, setCntAddedItemBlocks] = useState(1);
+    console.log('dir', !!isDirectionGoDown);
 
 
     if (bottom.current) {
@@ -48,8 +65,11 @@ const ScrollListInfinity =  () => {
     // Создаем элемент под(!) блоком вывода и как только он входит во view или через rootMargin чуть ранее,
     // мы начинем подргужать элементы
 
+
+
+
     useEffect(() => {
-        if (!inView || loading) return;
+        if (!inView || loading || !isDirectionGoDown) return;
 
         console.log('in');
         setLoading(true);
@@ -57,7 +77,7 @@ const ScrollListInfinity =  () => {
 
         (async () => {
             const { data } = await axios.get(uri);
-            console.log(data);
+            //console.log(data);
 
             setListOfItems(state => ([...state.concat(...generateId(data))]));
             setCntAddedItemBlocks(cntOfAddedItemBlocks => ++cntOfAddedItemBlocks);
