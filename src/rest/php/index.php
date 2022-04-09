@@ -1,17 +1,15 @@
 <?php
 
+
 //sleep(8);
 //header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
 //die();
-
-
 
 require_once "./php/functions/functions.php";
 require_once "./php/db/RequestHandler.php";
 use php\db\RequestHandler as Request;
 
 //  /src/rest/php/index.php/api/category/phones
-
 
 
 

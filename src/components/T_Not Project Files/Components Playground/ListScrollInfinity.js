@@ -8,6 +8,8 @@ import { nanoid } from "nanoid";
 import { useInView } from 'react-intersection-observer';
 
 
+
+// Хук определения направления скролла, возвращает true, если направление "вниз"
 const useGetScrollDirection = () => {
     const [isDirectionGoDown, setDirection] = useState(null);
     useEffect(() => {
@@ -21,6 +23,8 @@ const useGetScrollDirection = () => {
         isDirectionGoDown
     ]
 };
+
+
 
 
 
@@ -39,81 +43,12 @@ const useGetScrollDirection = () => {
  */
 const ScrollListInfinity =  () => {
 
-
-    const bottom = useRef(null);
-
-    const [isDirectionGoDown] = useGetScrollDirection();
-
-    const [listOfItems, setListOfItems] = useState([]);
-    const [cntOfAddedItemBlocks, setCntAddedItemBlocks] = useState(1);
-    console.log('dir', !!isDirectionGoDown);
-
-
-    if (bottom.current) {
-        //console.log(bottom.current);
-    }
-
-
-    const [loading, setLoading] = useState(false);
-
-    const { ref, inView, entry } = useInView({
-        /* Optional options */
-        threshold: 0,
-    });
-
-
+    // Блок, который служит точкой, при достижении которой считается, что пора начинать подгрузку элементов.
     // Создаем элемент под(!) блоком вывода и как только он входит во view или через rootMargin чуть ранее,
     // мы начинем подргужать элементы
-
-
-
-
-    useEffect(() => {
-        if (!inView || loading || !isDirectionGoDown) return;
-
-        console.log('in');
-        setLoading(true);
-        const uri = `https://6224b26a6c0e3966204475cd.mockapi.io/users?page=${cntOfAddedItemBlocks}&limit=${itemsPerPage}`;
-
-        (async () => {
-            const { data } = await axios.get(uri);
-            //console.log(data);
-
-            setListOfItems(state => ([...state.concat(...generateId(data))]));
-            setCntAddedItemBlocks(cntOfAddedItemBlocks => ++cntOfAddedItemBlocks);
-            setLoading(false);
-        })();
-
-        return () => {
-            console.log('not');
-        }
-    }, [inView]);
-
-
-
-    // useEffect(() => {
-    //
-    //     const obs = new IntersectionObserver((entries, observer) => {
-    //         console.log('----');
-    //         console.log(entries);
-    //         console.log(observer);
-    //         console.log('----');
-    //     }, {
-    //         delay: 10000
-    //
-    //     });
-    //     if (bottom.current) {
-    //         obs.observe(bottom.current);
-    //     }
-    //     return () => {
-    //         if (bottom.current) {
-    //             obs.unobserve(bottom.current);
-    //         }
-    //     }
-    // }, []);
-
-
-    const [cursor, setCursor] = useState(false);
+    const bottom = useRef(null);
+    // Так мы определяем, направлен ли скролл вниз
+    const [isDirectionGoDown] = useGetScrollDirection();
 
     const itemsPerPage = 5;
     const ID_UNIQUE = "id_unique";
@@ -127,20 +62,46 @@ const ScrollListInfinity =  () => {
      */
     const addItems = () => setCntAddedItemBlocks(cntOfAddedItemBlocks => ++cntOfAddedItemBlocks);
 
-    /**
-     * Возвращаем массив, в который расширен массив state, который через операцию concat объединен с пришедшим доп. массивом от сервера
-     * Каждый массив проходит через generateId, чтобы иметь уникальные ключи при выводе в JSX
-     */
-    // useEffect(() => {
-    //     (async () => {
-    //         const { data } = await axios.get(`https://6224b26a6c0e3966204475cd.mockapi.io/users?page=${cntOfAddedItemBlocks}&limit=${itemsPerPage}`);
-    //         setListOfItems(state => ([...state.concat(...generateId(data))]));
-    //     })();
-    // }, [cntOfAddedItemBlocks]);
+    // Набор элементов для вывода
+    const [listOfItems, setListOfItems] = useState([]);
+    // Количество добавленных подгрузкой блоков
+    const [cntOfAddedItemBlocks, setCntAddedItemBlocks] = useState(1);
+    // Установка статуса загрузки элементов
+    const [loading, setLoading] = useState(false);
+    // Настройка компонента отвечающего за срабатывание события по достижению нужной точки экрана
+    const { ref, inView, entry } = useInView({
+        /* Optional options */
+        threshold: 0,
+    });
 
+    // Если элемент не в inView, то есть пока невидим, если loading равно true, то есть идет загрузка и если скролл направлен
+    // не вниз, то выходим из эффекта и ничего не делаем. Иначе ставим loading в true и стартуем асинхронный запрос.
+    // Когда рзультат получен - ставим loading в false, загружаем данные в state и переводим cntOfAddedItemBlocks на
+    // единицу в плюс. Кстати, как работает setCntAddedItemBlocks:
+    // 1. Начальное значение 1, это потому, что эффект сработает первый раз при монтировании компонента.
+    // 2. Отправим на uri количество блоков, сейчас это 1, и лимит - это 5. Вернется 1 блок из 5 элементов
+    // 3. Дальше это количество будет увеличиваться на 1, и будут приходить новые данные.
+    // 4. В целом, в данном конкретном случае мы отправлеяем запрос на mockapi.io, ему нужен просто номер страницы
+    //    и количество элементов, то есть у него в принципе номерная-постраничная пагинация. У меня же тут бесконечная,
+    //    но принцип один, просто блок, который по идее принадлежит некой странице дописывается в текущий список элементов
+    //    и так оно дополняется по мере прокрутки. Чтобы было удобнее отличать, я и назвал это setCntAddedItemBlocks. То есть
+    //    как бы блоки добавленные в текущий контейнер элементов.
+    useEffect(() => {
+        if (!inView || loading || !isDirectionGoDown) return;
+        setLoading(true);
+        const uri = `https://6224b26a6c0e3966204475cd.mockapi.io/users?page=${cntOfAddedItemBlocks}&limit=${itemsPerPage}`;
 
+        (async () => {
+            const { data } = await axios.get(uri);
+            setListOfItems(state => ([...state.concat(...generateId(data))]));
+            setCntAddedItemBlocks(cntOfAddedItemBlocks => ++cntOfAddedItemBlocks);
+            setLoading(false);
+        })();
 
+        return () => {
 
+        }
+    }, [inView]);
 
     return (
         <div className={styles.wrp}>

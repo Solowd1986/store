@@ -22,7 +22,7 @@ import { connect } from "react-redux";
 import ScrollListInfinity from "@components/T_Not Project Files/Components Playground/ListScrollInfinity";
 import ScrollListPagination from "@components/T_Not Project Files/Components Playground/ScrollListPagination";
 import LoadingSpinner from "@components/T_Not Project Files/Components Playground/LoadingSpinner";
-
+import PageForGuest from "@components/T_Not Project Files/Components Playground/PageForGuest";
 
 interface IChildren {
     children? : React.ReactNode
@@ -72,9 +72,10 @@ const MainPage = ({ index, error, fetchIndexPageData }: IMainPageProps):JSX.Elem
         <>
             <Slider slides={index.slider}/>
 
-            <ScrollListInfinity/>
-            <ScrollListPagination/>
-            <LoadingSpinner width={10}/>
+            <PageForGuest/>
+            {/*<ScrollListInfinity/>*/}
+            {/*<ScrollListPagination/>*/}
+            {/*<LoadingSpinner width={10}/>*/}
 
             <Promo index={index}/>
             <BrandStory/>
