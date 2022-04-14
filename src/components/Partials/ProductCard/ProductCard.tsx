@@ -19,7 +19,7 @@ const ProductCard = ({ category: { alias }, item, item: { id, title, rest, speci
 
             <div className={styles.title}>
                 <span>{title}</span>
-                {specifications ? <span>&apos;{specifications.color}&apos;</span> : null}
+                {specifications ? <span>&quot;{specifications.color}&quot;</span> : null}
             </div>
 
             <PromoProductCard item={{ alias, rest: item.rest, adsType: item["ads_type"] }}/>

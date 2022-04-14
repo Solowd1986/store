@@ -13,10 +13,9 @@ const Error500 = ():JSX.Element => {
                     <p>
                         Дела на стороне сервера немного <span>нестабильны</span>...
                     </p>
-                    <NavLink to="/" className={styles.link}>
+                    <NavLink to={"/"} className={styles.link}>
                         <p className={styles.link}>ВЕРНУТЬСЯ НА ГЛАВНУЮ</p>
                     </NavLink>
-
                 </div>
             </div>
         </div>

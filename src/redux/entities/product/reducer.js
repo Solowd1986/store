@@ -8,7 +8,6 @@ const initialState = {
         recived: false,
         code: null,
     }
-
 };
 
 export default (state = initialState, action) => {

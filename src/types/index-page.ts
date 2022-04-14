@@ -12,7 +12,8 @@ export interface IIndexPagePropducts {
 
 export interface IMainPageProps extends IIndexPagePropducts{
     error: IError,
-    fetchIndexPageData: () => void
+    fetchIndexPageData: () => void,
+    clearIndexReduxState: () => void,
 }
 
 export interface IMainPageSlide {

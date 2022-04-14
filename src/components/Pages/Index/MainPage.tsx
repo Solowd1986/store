@@ -49,6 +49,8 @@ function useIsMounted() {
 }
 
 
+const foo = <T,>(data:T):T => data;
+foo("ad");
 
 
 
@@ -56,13 +58,28 @@ function useIsMounted() {
 
 
 
-const MainPage = ({ index, error, fetchIndexPageData }: IMainPageProps):JSX.Element => {
+const MainPage = ({ index, error, fetchIndexPageData, clearIndexReduxState }: IMainPageProps):JSX.Element => {
+
 
     useEffect(() => {
         fetchIndexPageData();
     }, [fetchIndexPageData]);
 
-    if (error.recived) return <Redirect to={error.code}/>;
+
+    useEffect(() => {
+        if (error.recived) {
+            clearIndexReduxState();
+        }
+    }, [error.recived]);
+
+
+
+    if (error.recived) {
+        return <Redirect to={error.code}/>
+    }
+
+
+
 
     if (!index) {
         const SpinnerModal = ModalWrapper(Spinner);
