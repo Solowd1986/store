@@ -134,7 +134,22 @@ const Category = (props: ICategoryProps): JSX.Element => {
     }, [path, params, fetchCategoryPageData, clearState]);
 
 
+    /**
+     * Два блока ниже - useEffect и if (error.recived) работают вместе и их порядок важен, так как есть return, а код
+     * должен быть достижим. Итак, проблема в редиректе в том, что для каждой страницы, которая обращается к серверу
+     * есть переход на страницу 500, если сервер не ответил, и статус этой ошибки хранится в Redux. Если его не сбросить,
+     * то каждый переход на такую страницу будет провоцировать редирект.
+     * Поэтому, если ошибка получена, мы сначала вызываем соответствующий метод сброса для Redux полей ошибки
+     * такой страницы, а уже потом выполняем редирект.
+     * */
+    useEffect(() => {
+        if (error.recived) {
+            clearCategoryReduxState();
+        }
+    }, [clearCategoryReduxState, error.recived]);
     if (error.recived) return <Redirect to={error.code}/>;
+
+
     if (isStateEmpty()) {
         const SpinnerModal = ModalWrapper(Spinner);
         return <SpinnerModal/>;
