@@ -8,6 +8,23 @@ import { nanoid } from "nanoid";
 import { useInView } from 'react-intersection-observer';
 
 
+const gai = Array.from(document.querySelectorAll("div#index > table > tbody > tr.gai"));
+const tum = Array.from(document.querySelectorAll("div#index > table > tbody > tr.tum"));
+const allRows = gai.concat(tum);
+const result = allRows.map((item) => {
+    item.childNodes.forEach((item) => {
+        console.dir(item);
+        if (item.nodeName === "TD" && item.lastElementChild === "IMG") {
+            console.log(item);
+        }
+    });
+});
+
+//console.dir(result);
+
+
+
+
 
 // Хук определения направления скролла, возвращает true, если направление "вниз"
 const useGetScrollDirection = () => {

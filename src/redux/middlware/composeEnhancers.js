@@ -1,13 +1,11 @@
 import { compose } from "redux";
 
 /**
- * Инициализация блока для отладки redux компонента, в возвращаемую им
- * функцию нужно обернуть в нативный Middlwere для redux
- * Смысл в том, что в composeEnhancers попадает либо базовая функция compose из redux или она же из devtools,
- * в случае, если devtools установлен. В любом случае оборачивая собой middleware, но в первом
- * случае добавляя еще и фунцию отладки
+ * Данный код в любом случае возвращает функцию compose для обьединения разных "расширения" в createStore, будь это
+ * middlware или dev-отладчик. Отличие лишь в том, что если первое условие выполняется, то вернется специфическая версия
+ * compose c фунцией отладки из расширения devtools, если же нет - то обычный compose из Redux.
  */
-const devtools = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
+const devtools = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__; // Это как раз тот "специфический" compose
 const composeEnhancers =
     typeof window === "object" && process.env.NODE_ENV === "development" && devtools
         ? devtools({

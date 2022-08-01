@@ -24,6 +24,8 @@ import ScrollListPagination from "@components/T_Not Project Files/Components Pla
 import LoadingSpinner from "@components/T_Not Project Files/Components Playground/LoadingSpinner";
 import PageForGuest from "@components/T_Not Project Files/Components Playground/PageForGuest";
 
+import Breadcrumbs from "@components/T_Not Project Files/Breadcrumbs/Breadcrumbs";
+
 interface IChildren {
     children? : React.ReactNode
 }
@@ -49,6 +51,19 @@ function useIsMounted() {
 }
 
 
+import { useRouteMatch, useLocation } from "react-router-dom";
+
+const Roo = () => {
+
+
+    return (
+        <div>
+            <div>This is the user page</div>
+        </div>
+    );
+};
+
+
 const foo = <T,>(data:T):T => data;
 foo("ad");
 
@@ -64,7 +79,6 @@ const MainPage = ({ index, error, fetchIndexPageData, clearIndexReduxState }: IM
     useEffect(() => {
         fetchIndexPageData();
     }, [fetchIndexPageData]);
-
 
 
     /**
@@ -83,6 +97,7 @@ const MainPage = ({ index, error, fetchIndexPageData, clearIndexReduxState }: IM
     if (error.recived) return <Redirect to={error.code}/>;
 
 
+
     if (!index) {
         const SpinnerModal = ModalWrapper(Spinner);
         return <SpinnerModal/>
@@ -92,6 +107,10 @@ const MainPage = ({ index, error, fetchIndexPageData, clearIndexReduxState }: IM
             <Slider slides={index.slider}/>
 
             <PageForGuest/>
+            <Breadcrumbs/>
+
+            <Roo/>
+
             {/*<ScrollListInfinity/>*/}
             {/*<ScrollListPagination/>*/}
             {/*<LoadingSpinner width={10}/>*/}
